@@ -1,0 +1,160 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
+
+	<title>带复选框架的表格</title>
+	
+	<!-- css区域 -->
+	<link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.css">
+	
+	<!-- js区域 -->
+	<script type="text/javascript" language="javascript" src="../../../js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" language="javascript" src="../../../js/json.js"></script>
+	<script type="text/javascript" language="javascript" src="../js/jquery.dataTables.man.js"></script>
+	<script type="text/javascript" language="javascript" class="init">
+
+$(document).ready(function() {
+	
+    var dt = $('#example').DataTable( {
+		
+		"ajax": {
+            "url": "data/server.txt",
+            "type": "POST"
+        },
+		"processing": true,
+        "serverSide": true,
+		"searching" : false,
+		"columns": [
+			{ "data": "name" },
+			{ "data": "position" },
+			{ "data": "office" },
+			{ "data": "extn" },
+			{ "data": "start_date" },
+			{ "data": "salary" }
+		],
+		"columnDefs": [ 
+			{
+				"render": function ( data, type, row ) {
+					return "<input type='checkbox' value='"+ data +"'>";
+				},
+				"targets": 0
+			}
+		]
+	} );
+	
+	
+	
+	$('#example tbody').on( 'click', 'tr', function () {
+		
+		var tr = $(this);
+		tr.toggleClass('selected');
+		
+		var cls = tr.prop('class');
+		
+		var input = $('td>input',this);
+		
+		if(cls.indexOf('selected')!=-1){
+
+			input.prop('checked',true);
+
+		}else{
+			input.prop('checked',false);
+		}
+		//console.log(input.prop('value'));
+	} );
+	
+	
+	$('#example tbody').on( 'dblclick', 'tr', function () {
+		
+		var tr = $(this);
+		
+		
+		console.log(tr);
+		console.log(dt);
+		var tds = tr.children();
+		var input = $('td>input',this);
+		var id = input.val();
+		var tdata = $.risen.getData(id);
+		$.each(tds,function(i){
+			var td = $(tds[i]);
+			
+			if (i == 2) {
+				
+				td.empty();
+				td.append('<input type="text" name="office" value="'+tdata['office'] +'">');
+				console.log(td);
+				return true;
+			}
+			
+			
+		});
+		//console.log();
+		
+	} );
+	
+	$.rr = dt;
+	$.rr.getData = function(id){
+		
+		if(!dt.mmdd){
+			
+			dt.mmdd = {};	
+			var mydata = dt.data();
+	
+			$.each(mydata,function(idx){
+				
+				dt.mmdd[mydata[idx].name]=mydata[idx] ;
+				//console.log(i);
+			});
+		}
+		return dt.mmdd[id];
+	};
+
+	
+	$('#button').click( function () {
+		
+		alert( dt.rows('.selected').data().length +' row(s) selected' );
+	} );
+	
+} );
+
+
+
+/**
+
+$('#example tbody').on( 'click', 'tr', function () {
+		$(this).toggleClass('selected');
+} );
+
+ */
+
+
+	</script>
+</head>
+<body>
+	
+	</div><button id="button">Row count</button>
+	<table id="example" class="display" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th style="width:40px">Name</th>
+						<th>Position</th>
+						<th>Office</th>
+						<th>Extn.</th>
+						<th>Start date</th>
+						<th>Salary</th>
+					</tr>
+				</thead>
+
+				<tfoot>
+					<tr>
+						<th>Name</th>
+						<th>Position</th>
+						<th>Office</th>
+						<th>Extn.</th>
+						<th>Start date</th>
+						<th>Salary</th>
+					</tr>
+				</tfoot>
+			</table>
+</body>

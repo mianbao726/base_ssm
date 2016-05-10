@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="base_user">
+	<parameterMap id="paraMap" type="java.util.HashMap" />
+	<select id="index" parameterMap="paraMap" resultType="hashmap">
+		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
+		SELECT
+		id, user_name, password, age
+		FROM
+		man_user a
+		WHERE
+		a.del_flag = 0
+		<if test="filter != null">
+			and ${filter}
+		</if>
+		<![CDATA[) t ]]>
+		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
+		<if test="sort == null">ORDER BY id desc</if>
+		<if test="start != null"> <![CDATA[ limit ${start},${limit}]]></if>
+	</select>
+
+	<!-- count -->
+	<select id="indexCount" parameterMap="paraMap" resultType="int">
+		select count(1) from man_user a
+		where
+		a.del_flag=0
+		<if test="filter != null">
+			and ${filter}
+		</if>
+	</select>
+
+	<select id="selectOne" parameterMap="paraMap" resultType="hashmap">
+		select
+		id, user_name, password, age
+		from man_user
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from man_user
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterMap="paraMap">
+		insert into man_user (
+		user_name,
+		password,
+		created_at,
+		del_flag,
+		age)
+		values (
+		#{userName,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		now(),
+		#{del_flag,jdbcType=VARCHAR},
+		#{age,jdbcType=INTEGER})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="hashmap">
+		update man_user
+		set
+		<if test="userName != null">
+			user_name = #{userName,jdbcType=VARCHAR},
+		</if>
+		<if test="password != null">
+			password = #{password,jdbcType=VARCHAR},
+		</if>
+		<if test="age != null">
+			age = #{age,jdbcType=VARCHAR},
+		</if>
+		<if test="del_flag != null">
+			del_flag = #{del_flag,jdbcType=INTEGER},
+		</if>
+		updated_at = now()
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
