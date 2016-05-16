@@ -39,7 +39,7 @@
 			
 		if(opts.disableAll){
 			if(opts.disableMsg){
-				sunny_show_msg(opts.disableHeight,opts.disableMsg)	
+				sunny_show_msg(opts.disableHeight,opts.disableMsg);
 			}else{
 				sunny_show(opts.disableHeight);
 			}
