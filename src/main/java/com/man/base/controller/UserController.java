@@ -49,6 +49,20 @@ public class UserController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 	
+	@RequestMapping("/registe.do")
+	public @ResponseBody String registe(HttpServletRequest request, Model model) throws Exception {
+		Map ret = new HashMap();
+		log.info(request.getParameter("user_name"));
+		if("sunny".equals(request.getParameter("user_name"))){
+			ret.put("code", "200");
+		}else{
+			ret.put("code", "202");
+		}
+		return JSONObject.toJSONString(ret);
+	}
+	
+	
+	
 	@RequestMapping("/index.html")
 	public String index(HttpServletRequest request, Model model) throws Exception {
 		return "user/index";
@@ -80,12 +94,23 @@ public class UserController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 
-	@RequestMapping(value = "/add.do", method = RequestMethod.POST)
-	public @ResponseBody String add(@RequestBody Map param, HttpServletRequest request, HttpServletResponse response) {
-		param.put("del_flag", "0");
-		Map ret = this.userService.insert(param);
+//	@RequestMapping(value = "/add.do")
+//	public @ResponseBody String add(@RequestBody Map param, HttpServletRequest request, HttpServletResponse response) {
+//		param.put("del_flag", "0");
+//		Map ret = this.userService.insert(param);
+//		return JSONObject.toJSONString(ret);
+//	}
+	
+	@RequestMapping("/add.do")
+	public @ResponseBody String add(HttpServletRequest request, Model model) throws Exception {
+//		param.put("del_flag", "0");
+//		Map ret = this.userService.insert(param);
+		request.getParameter("params");
+		Map ret = new HashMap();
+		ret.put("code", "200");
 		return JSONObject.toJSONString(ret);
 	}
+	
 
 	@RequestMapping(value = "/update.do", method = RequestMethod.POST)
 	public @ResponseBody String update(@RequestBody Map param, HttpServletRequest request, HttpServletResponse response) {

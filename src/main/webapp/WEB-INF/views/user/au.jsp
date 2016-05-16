@@ -797,14 +797,15 @@ String id = request.getParameter("id");
 		params['userName'] = $("#form-field-1").val();
 		params['password'] = $("#form-field-2").val();
 		params['age'] = $("#form-field-3").val();
-		$.ajax({
+		$.sunny.ajax({
  			contentType : 'application/json; charset=utf-8',
  			url : url,
  			type : "post",
  			dataType : "json",
- 			data : JSON.stringify(params),
+			params : params,
  			success : function(data) {
- 				window.location.href = '<%=path%>/user/index.html';
+ 				alert("success : " + data.code);
+<%--  				window.location.href = '<%=path%>/user/index.html'; --%>
  			}
  		});
 	});

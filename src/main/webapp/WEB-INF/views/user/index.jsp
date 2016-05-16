@@ -779,13 +779,14 @@
 		params['id'] = id;
 		$.man.confirm("确定删除当前1条记录?", function(result) {
 			if(result) {
-// 		 		$.man.ajax({
-		 			$.ajax({
+		 		$.man.ajax({
+// 		 			$.ajax({
 		 			contentType : 'application/json; charset=utf-8',
 		 			url : "../user/delete.do",
 		 			type : "post",
 		 			dataType : "json",
-		 			data : JSON.stringify(params),
+// 		 			data : JSON.stringify(params),
+					params : params,
 		 			success : function(data) {
 		 				window.location.href = '<%=path%>/user/index.html';
 		 			}

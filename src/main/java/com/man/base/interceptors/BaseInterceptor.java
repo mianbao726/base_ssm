@@ -19,20 +19,22 @@ public class BaseInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		if (Util.exceptReq(request.getRequestURI())) {// 请求
-			log.info("request.getServletPath()  :  " + request.getServletPath());
-			if (Arrays.asList(C.SPECIAL_REQUEST).contains(request.getServletPath())) {// 除外请求
-				log.info("除外请求 ---");
+		log.info("" + request.getServletPath());
+		if (Util.exceptReq(request.getRequestURI())) {// request
+			if (Arrays.asList(C.SPECIAL_REQUEST).contains(request.getServletPath())) {// except request
+				log.info("except request ---" + request.getServletPath());
 				return true;
 			} else {
+				log.info("normal request ---" + request.getServletPath());
 				Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("permissions");
-				if (user_permissions.containsKey(request.getRequestURI())) {// can
-					return true;
-				} else {// can't
-					return false;
-				}
+//				if (user_permissions.containsKey(request.getRequestURI())) {// can
+//					return true;
+//				} else {// can't
+//					return false;
+//				}
+				return true;
 			}
-		} else {// 资源文件全部放过
+		} else {// resource files
 			return true;
 		}
 	}

@@ -155,11 +155,11 @@ function checkEmail(email) {
 	var flag = false;
 	var params = {};
 	params['user_name'] = email;
-	$.ajax({
+	$.man.ajax({
 		url : "../user/checkUniqueEmail.do",
 		type : "post",
 		dataType : "json",
-		data : params,
+		params : params,
 		async : false,
 		success : function(data) {
 			flag = "200" == data.code ? true : false;
