@@ -20,7 +20,6 @@ public class BaseInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		if (Util.exceptReq(request.getRequestURI())) {// 请求
-			log.info("request.getRequestURI()  :  " + request.getRequestURI());
 			log.info("request.getServletPath()  :  " + request.getServletPath());
 			if (Arrays.asList(C.SPECIAL_REQUEST).contains(request.getServletPath())) {// 除外请求
 				log.info("除外请求 ---");
@@ -28,10 +27,8 @@ public class BaseInterceptor implements HandlerInterceptor {
 			} else {
 				Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("permissions");
 				if (user_permissions.containsKey(request.getRequestURI())) {// can
-
 					return true;
 				} else {// can't
-
 					return false;
 				}
 			}

@@ -11,6 +11,27 @@ jQuery(function($) {
 		$(target).addClass('visible');// show target
 	});
 
+	$("#new_account").click(function() {
+		$("#register_form").data('bootstrapValidator').resetForm();
+		$("#register_form")[0].reset()
+	});
+
+	$("#now_login").click(function() {
+		$("#login_form").data('bootstrapValidator').resetForm();
+		$("#login_form")[0].reset()
+	});
+	$("#go_login").click(function() {
+		$("#login_form").data('bootstrapValidator').resetForm();
+		$("#login_form")[0].reset()
+	});
+	$("#go_reset_pwd").click(function() {
+		$("#reset_pwd").data('bootstrapValidator').resetForm();
+		$("#reset_pwd")[0].reset()
+	});
+	
+	
+
+
 	// register button
 	$("#register").click(
 			function() {
@@ -20,11 +41,35 @@ jQuery(function($) {
 				}
 				alert("success");
 			});
-
+	//login button
+	$("#login_btn").click(
+			function() {
+				if (!$("#login_form").data('bootstrapValidator').validate()
+						.isValid()) {
+					return false;
+				}
+				alert("success_login");
+			});
+	
 	$("#register_reset").click(function() {
 		$("#register_form").data('bootstrapValidator').resetForm();
 	});
 
+	
+	//重置密码
+	$('#reset_pwd').bootstrapValidator(
+			{
+				fields : {
+				}
+			});
+	// 登陆
+	$('#login_form').bootstrapValidator(
+			{
+				fields : {
+				}
+			});
+
+	// 注册
 	$('#register_form')
 			.bootstrapValidator(
 					{
@@ -74,32 +119,34 @@ jQuery(function($) {
 						}
 					});
 
-	$("#bootbox-regular").click(function() {
-		
-		bootbox.dialog({
-			message: "<span class='bigger-110'>用户协议 <br> 1.111111111111111<br> 1.111111111111111<br> 1.111111111111111<br> 1.111111111111111<br> 1.111111111111111</span>",
-			buttons: 			
-			{
-				"success" :
-				 {
-					"label" : "<i class='ace-icon fa fa-check'></i> 同&nbsp;意！",
-					"className" : "btn-sm btn-success",
-					"callback": function() {
-						$("#agree").attr("checked" , "checked");
-						$("#register_form").data('bootstrapValidator').resetForm();
-					}
-				},
-				"danger" :
-				{
-					"label" : "不同意",
-					"className" : "btn-sm btn-danger",
-					"callback": function() {
-						//Example.show("uh oh, look out!");
-					}
-				}
-			}
-		});
-	});
+	$("#bootbox-regular")
+			.click(
+					function() {
+
+						bootbox
+								.dialog({
+									message : "<span class='bigger-110'>用户协议 <br> 1.111111111111111<br> 1.111111111111111<br> 1.111111111111111<br> 1.111111111111111<br> 1.111111111111111</span>",
+									buttons : {
+										"success" : {
+											"label" : "<i class='ace-icon fa fa-check'></i> 同&nbsp;意！",
+											"className" : "btn-sm btn-success",
+											"callback" : function() {
+												$("#agree").attr("checked",
+														"checked");
+												$("#register_form").data(
+														'bootstrapValidator')
+														.resetForm();
+											}
+										},
+										"danger" : {
+											"label" : "不同意",
+											"className" : "btn-sm btn-danger",
+											"callback" : function() {
+											}
+										}
+									}
+								});
+					});
 
 	// end
 });

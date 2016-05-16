@@ -36,15 +36,28 @@
 										</h4>
 
 										<div class="space-6"></div>
+										
 
-										<form>
+										<form id = "login_form" method="post" class="form-horizontal"
+											data-bv-message="This value is not valid"
+											data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+											data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
+											data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
 											<fieldset>
-												<label class="block clearfix"> <span class="block input-icon input-icon-right">
-														<input type="text" class="form-control" placeholder="用户名" /> <i
+											
+												<label class="block clearfix  col-sm-13 form-group"> <span class="block input-icon input-icon-right">
+														<input type="text" class="form-control" placeholder="用户名" 
+														data-bv-notempty="true"
+														name = "username"
+														data-bv-notempty-message="用户名不能为空" /> <i
 														class="ace-icon fa fa-user"></i>
 												</span>
-												</label> <label class="block clearfix"> <span class="block input-icon input-icon-right">
-														<input type="password" class="form-control" placeholder="密 码" /> <i
+												</label> <label class="block clearfix col-sm-13 form-group"> <span class="block input-icon input-icon-right">
+														<input type="password" class="form-control"
+														data-bv-notempty="true"
+														name = "username"
+														data-bv-notempty-message="密码不能为空" 
+														 placeholder="密 码" /> <i
 														class="ace-icon fa fa-lock"></i>
 												</span>
 												</label>
@@ -56,7 +69,7 @@
 															十天内免登录&nbsp;&nbsp;</span>
 													</label>
 
-													<button type="button" class="width-30 pull-right btn btn-sm btn-primary">
+													<button type="button" id = "login_btn" class="width-30 pull-right btn btn-sm btn-primary">
 														<i class="ace-icon fa fa-key"></i> <span class="bigger-110">登&nbsp;&nbsp;陆</span>
 													</button>
 												</div>
@@ -82,13 +95,13 @@
 
 									<div class="toolbar clearfix">
 										<div>
-											<a href="#" data-target="#forgot-box" class="forgot-password-link"> <i
+											<a href="#" data-target="#forgot-box" id = "go_reset_pwd" class="forgot-password-link"> <i
 												class="ace-icon fa fa-arrow-left"></i> 忘记密码?
 											</a>
 										</div>
 
 										<div>
-											<a href="#" data-target="#signup-box" class="user-signup-link"> 注册新账号 <i
+											<a href="#" id = "new_account" data-target="#signup-box" class="user-signup-link"> 注册新账号 <i
 												class="ace-icon fa fa-arrow-right"></i>
 											</a>
 										</div>
@@ -108,7 +121,7 @@
 										<div class="space-6"></div>
 										<p>请输入注册时的邮箱</p>
 
-										<form>
+										<form id = "reset_pwd">
 											<fieldset>
 												<label class="block clearfix"> <span class="block input-icon input-icon-right">
 														<input type="email" class="form-control" placeholder="邮箱地址" /> <i
@@ -127,7 +140,7 @@
 									<!-- /.widget-main -->
 
 									<div class="toolbar center">
-										<a href="#" data-target="#login-box" class="back-to-login-link"> 立即登陆 <i
+										<a href="#" data-target="#login-box" id= "go_login" class="back-to-login-link"> 立即登陆 <i
 											class="ace-icon fa fa-arrow-right"></i>
 										</a>
 									</div>
@@ -225,7 +238,7 @@
 									</div>
 
 									<div class="toolbar center">
-										<a href="#" data-target="#login-box" class="back-to-login-link"> <i
+										<a href="#" data-target="#login-box" id="now_login" class="back-to-login-link"> <i
 											class="ace-icon fa fa-arrow-left"></i> 立即登陆
 										</a>
 									</div>
