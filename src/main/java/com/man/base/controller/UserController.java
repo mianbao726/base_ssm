@@ -105,9 +105,11 @@ public class UserController extends BaseController {
 	public @ResponseBody String add(HttpServletRequest request, Model model) throws Exception {
 //		param.put("del_flag", "0");
 //		Map ret = this.userService.insert(param);
-		request.getParameter("params");
-		Map ret = new HashMap();
-		ret.put("code", "200");
+		log.info(request.getParameter("userName"));
+  		Map ret = new HashMap();
+		ret.put("status_code", "200");
+//		int c =1/0;
+		log.info("finish ... ");
 		return JSONObject.toJSONString(ret);
 	}
 	

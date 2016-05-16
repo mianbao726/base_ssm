@@ -711,19 +711,19 @@ String id = request.getParameter("id");
 										<div class="form-group" style="margin-top: 16px;">
 											<label class="col-sm-3 control-label no-padding-right" for="form-field-1">名称</label>
 											<div class="col-sm-6">
-												<input type="text" id="form-field-1" name="name" class="col-xs-10 col-sm-12">
+												<input type="text" id="form-field-1" name="name" class="col-xs-10 col-sm-12" value = "三">
 											</div>
 										</div>
 										<div class="form-group" style="margin-top: 16px;">
 											<label class="col-sm-3 control-label no-padding-right" for="form-field-1">密码</label>
 											<div class="col-sm-6">
-												<input type="text" id="form-field-2" name="password" class="col-xs-10 col-sm-12">
+												<input type="text" id="form-field-2" name="password" class="col-xs-10 col-sm-12" value = "1">
 											</div>
 										</div>
 										<div class="form-group" style="margin-top: 16px;">
 											<label class="col-sm-3 control-label no-padding-right" for="form-field-1">年龄</label>
 											<div class="col-sm-6">
-												<input type="text" id="form-field-3" name="age" class="col-xs-10 col-sm-12">
+												<input type="text" id="form-field-3" name="age" class="col-xs-10 col-sm-12" value = "2">
 											</div>
 										</div>
 										<div class="col-md-offset-1 col-md-9">
@@ -797,6 +797,7 @@ String id = request.getParameter("id");
 		params['userName'] = $("#form-field-1").val();
 		params['password'] = $("#form-field-2").val();
 		params['age'] = $("#form-field-3").val();
+		alert(12312321);
 		$.sunny.ajax({
  			contentType : 'application/json; charset=utf-8',
  			url : url,
@@ -804,8 +805,7 @@ String id = request.getParameter("id");
  			dataType : "json",
 			params : params,
  			success : function(data) {
- 				alert("success : " + data.code);
-<%--  				window.location.href = '<%=path%>/user/index.html'; --%>
+ 				alert("success : " + data.status_code);
  			}
  		});
 	});

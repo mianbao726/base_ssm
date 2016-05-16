@@ -31,8 +31,6 @@
 	};
 
 	sunny.ajax = function(opts){
-		alert("sunny");
-//		sunny_show();
 		var ops = {};
 		var status = 200;
 		var rsp = null;
@@ -50,16 +48,15 @@
 		ops.data={'params': JSON.stringify(params)},
 		console.log(ops.data);
 		ops.type=(opts.type==undefined)?'post':opts.type,
-		ops.async=(opts.type==undefined)?true:opts.async,
+		ops.async=(opts.async==undefined)?true:opts.async,
+				alert("ops.async  :  " + ops.async);
 		ops.success=opts.success;
 		
 		if(opts.dataType!=null){
 			ops.dataType = opts.dataType;
 		}
 		if(ops.async==false){
-			
 			try{
-				
 				rsp = $.ajax(ops);
 				if(opts.disableAll){
 					sunny_hide();
@@ -75,47 +72,44 @@
 		}
 		
 		try{			
-			ops.error = function(rsp){
-				console.log(rsp);
+			
+			
+			var sopts = {};
+			sopts.url = opts.url;
+			sopts.type = (opts.type==undefined)?'post':opts.type;
+			sopts.dataType = "json";
+			sopts.data = opts.params;
+			sopts.async = (opts.async==undefined)?true:opts.async;
+			sopts.url = opts.url;
+			sopts.url = opts.url;
+			
+			sopts.success = function(rsp){
+//				if(opts.disableAll){
+//					sunny_hide();
+//				}
+				var obj = sunny.json.decode(rsp.responseText);
+				if(rsp.status_code=='505'){
+					sunny.alert('提示信息',rsp.error_msg);
+					return false;
+				}else if(rsp.status_code=='600'){//返回状态600,ajax登陆请求登陆超时,跳转到登陆页面
+					window.location.href = '/'+project_name+'/login/login.html';
+				}
+				opts.success(rsp);	
+			};	
+			
+			sopts.error = function(rsp){
 				if(opts.disableAll){
 					sunny_hide();
 				}
 				if(rsp.status==601){
 					window.location.href = 'error.jsp';
 				}else{
-					sunny.alert('提示信息','系统错误,$.sunny.ajax请求异常,请联系管理员2');
+					sunny.alert('提示信息','系统错误,$.sunny.ajax请求异常,请联系管理员');
 				}
 			};
-			
-			ops.success = function(rsp){
-				if(opts.disableAll){
-					sunny_hide();
-				}
-				alert(123);
-				var obj = sunny.json.decode(rsp.responseText);
-				if(rsp.status_code=='505'){
-					sunny.alert('提示信息',rsp.error_msg);
-					return false;
-				}else if(rsp.status_code=='600'){//返回状态600,ajax登陆请求登陆超时,跳转到登陆页面
-					window.location.href = '/'+project_name+'/login.jsp';
-				}
-				opts.success(rsp);	
-			};			
-//			$.ajax(ops);
-			alert(ops.url);
-			$.ajax({
-	 			contentType : 'application/json; charset=utf-8',
-	 			url : ops.url,
-	 			type : "post",
-	 			dataType : "json",
-				params : params,
-	 			success : function(data) {
-	 				alert(data.code);
-	 			}
-	 		});
+			$.ajax(sopts);
 		}catch(e){			
 			sunny.alert('提示信息','返回信息解析异常');
-			
 			return null;
 		}		
 		
