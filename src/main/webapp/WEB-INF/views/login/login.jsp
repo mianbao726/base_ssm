@@ -8,7 +8,6 @@
 <meta charset="utf-8" />
 <title>jqGrid - Ace Admin</title>
 
-<jsp:include page="../include/header.jsp" flush="true" />
 </head>
 <body class="login-layout">
 

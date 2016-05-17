@@ -49,7 +49,6 @@
 		console.log(ops.data);
 		ops.type=(opts.type==undefined)?'post':opts.type,
 		ops.async=(opts.async==undefined)?true:opts.async,
-				alert("ops.async  :  " + ops.async);
 		ops.success=opts.success;
 		
 		if(opts.dataType!=null){
@@ -72,8 +71,6 @@
 		}
 		
 		try{			
-			
-			
 			var sopts = {};
 			sopts.url = opts.url;
 			sopts.type = (opts.type==undefined)?'post':opts.type;
@@ -98,14 +95,10 @@
 			};	
 			
 			sopts.error = function(rsp){
-				if(opts.disableAll){
-					sunny_hide();
-				}
-				if(rsp.status==601){
-					window.location.href = 'error.jsp';
-				}else{
-					sunny.alert('提示信息','系统错误,$.sunny.ajax请求异常,请联系管理员');
-				}
+//				if(opts.disableAll){
+//					sunny_hide();
+//				}
+				window.location.href = '/'+project_name+'/sys/500.html';
 			};
 			$.ajax(sopts);
 		}catch(e){			

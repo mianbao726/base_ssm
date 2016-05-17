@@ -797,7 +797,6 @@ String id = request.getParameter("id");
 		params['userName'] = $("#form-field-1").val();
 		params['password'] = $("#form-field-2").val();
 		params['age'] = $("#form-field-3").val();
-		alert(12312321);
 		$.sunny.ajax({
  			contentType : 'application/json; charset=utf-8',
  			url : url,
