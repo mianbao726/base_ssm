@@ -31,5 +31,12 @@ public class C {
 	public static final String PARAM_DATE_UD =  "0";
 	//的那个前登人-id
 	public static final String PARAM_CURRENT_USER_ID =  "CURRENT_USER_ID";
+	
+	//STATUS_CODE
+	public static final String STATUS_CODE =  "status_code";
+	//STATUS_CODE
+	public static final String STATUS_INFO =  "status_info";
+	
+	
 }
 

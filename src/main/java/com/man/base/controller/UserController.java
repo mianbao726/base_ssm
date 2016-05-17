@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.man.base.service.IUserService;
+import com.man.base.util.QMap;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Controller
@@ -28,23 +29,21 @@ public class UserController extends BaseController {
 	@RequestMapping("/checkUniqueEmail.do")
 	public @ResponseBody String checkUniqueEmail(HttpServletRequest request, Model model) throws Exception {
 		Map ret = new HashMap();
-		Map params = super.getParams(request);
-		if("sunny@163.com".equals(params.get("email"))){
-			ret.put("code", "200");
+		if(userService.checkUniqueEmail(super.getParams(request))<=0){
+			ret = new QMap("200");
 		}else{
-			ret.put("code", "202");
+			ret = new QMap("202");
 		}
 		return JSONObject.toJSONString(ret);
 	}
 	
 	@RequestMapping("/checkUniqueUsername.do")
 	public @ResponseBody String checkUniqueUsername(HttpServletRequest request, Model model) throws Exception {
-		Map params = super.getParams(request);
-		Map ret = new HashMap();
-		if("sunny".equals(params.get("user_name"))){
-			ret.put("code", "200");
+		Map ret = null;
+		if(userService.checkUniqueUsername(super.getParams(request))<=0){
+			ret = new QMap("200");
 		}else{
-			ret.put("code", "202");
+			ret = new QMap("202");
 		}
 		return JSONObject.toJSONString(ret);
 	}
@@ -53,15 +52,14 @@ public class UserController extends BaseController {
 	public @ResponseBody String register(HttpServletRequest request, Model model) throws Exception {
 		Map ret = new HashMap();
 		userService.register(super.getParams(request));
-		if("sunny".equals(request.getParameter("user_name"))){
-			ret.put("code", "200");
-		}else{
-			ret.put("code", "202");
-		}
 		return JSONObject.toJSONString(ret);
 	}
 	
-	
+	@RequestMapping("/login.do")
+	public @ResponseBody String login(HttpServletRequest request, Model model) throws Exception {
+		Map ret = userService.login(super.getParams(request));
+		return JSONObject.toJSONString(ret);
+	}
 	
 	@RequestMapping("/index.html")
 	public String index(HttpServletRequest request, Model model) throws Exception {

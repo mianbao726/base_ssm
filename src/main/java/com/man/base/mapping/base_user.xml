@@ -5,7 +5,7 @@
 	<select id="index" parameterMap="paraMap" resultType="hashmap">
 		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
 		SELECT
-		id, user_name, password, age
+		id, username, password, age
 		FROM
 		man_user a
 		WHERE
@@ -31,9 +31,30 @@
 
 	<select id="selectOne" parameterMap="paraMap" resultType="hashmap">
 		select
-		id, user_name, password, age
+		id, username, password, age
 		from man_user
 		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="checkUniqueEmail" parameterMap="paraMap" resultType="hashmap">
+		select
+		count(id) as count
+		from man_user
+		where email = #{email}
+	</select>
+	
+	<select id="checkUniqueUsername" parameterMap="paraMap" resultType="hashmap">
+		select
+		count(id) as count
+		from man_user
+		where username = #{username}
+	</select>
+	
+	<select id="login" parameterMap="paraMap" resultType="hashmap">
+		select
+		*
+		from man_user
+		where username = #{username}
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -42,7 +63,7 @@
 	</delete>
 	<insert id="insert" parameterMap="paraMap">
 		insert into man_user (
-		user_name,
+		username,
 		password,
 		email,
 		created_at,
@@ -58,7 +79,7 @@
 		update man_user
 		set
 		<if test="userName != null">
-			user_name = #{userName,jdbcType=VARCHAR},
+			username = #{userName,jdbcType=VARCHAR},
 		</if>
 		<if test="password != null">
 			password = #{password,jdbcType=VARCHAR},

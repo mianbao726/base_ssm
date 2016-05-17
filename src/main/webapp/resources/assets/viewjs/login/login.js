@@ -182,10 +182,10 @@ function checkEmail(email) {
 	return flag;
 };
 
-function checkUsername(user_name) {
+function checkUsername(username) {
 	var flag = false;
 	var params = {};
-	params['user_name'] = user_name;
+	params['username'] = username;
 	$.sunny.ajax({
 		url : "../user/checkUniqueUsername.do",
 		type : "post",
