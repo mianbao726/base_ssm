@@ -14,7 +14,7 @@ public class SysController extends BaseController {
 	@Resource
 	private IUserService userService;
 
-	@RequestMapping("/500.html") 
+	@RequestMapping("/500.html")
 	public String checkUniqueEmail(HttpServletRequest request) throws Exception {
 		return "error";
 	}
