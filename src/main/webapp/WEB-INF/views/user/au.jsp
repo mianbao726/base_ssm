@@ -782,6 +782,28 @@ String id = request.getParameter("id");
 	 		});
 	}
 	
+	
+	$.sunny.ajax({
+			contentType : 'application/json; charset=utf-8',
+			url : "../user/te.do",
+			type : "post",
+			dataType : "json",
+			async : false,
+			success : function(data) {
+// 				alert("success : " + data.status_code);
+			}
+		});
+	$.sunny.ajax({
+		contentType : 'application/json; charset=utf-8',
+		url : "../user/te.do",
+		type : "post",
+		dataType : "json",
+		async : false,
+		success : function(data) {
+// 			alert("success : " + data.status_code);
+		}
+	});
+	
 	//保存
 	$("#save").click(function() {
 		if (!$("#form").data('bootstrapValidator').validate().isValid()) {

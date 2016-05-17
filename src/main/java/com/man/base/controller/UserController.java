@@ -108,8 +108,16 @@ public class UserController extends BaseController {
 		log.info(request.getParameter("userName"));
   		Map ret = new HashMap();
 		ret.put("status_code", "200");
-		int c =1/0;
+//		int c =1/0;
 		log.info("finish ... ");
+		return JSONObject.toJSONString(ret);
+	}
+	
+	@RequestMapping("/te.do")
+	public @ResponseBody String te(HttpServletRequest request, Model model) throws Exception {
+		Map ret = new HashMap();
+		ret.put("status_code", "200");
+		log.info("te ... ... ");
 		return JSONObject.toJSONString(ret);
 	}
 	
