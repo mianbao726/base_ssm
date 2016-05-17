@@ -2,6 +2,8 @@ package com.man.base.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 @SuppressWarnings("rawtypes")
 public interface IUserService {
 	public Map index(Map param);
@@ -13,7 +15,7 @@ public interface IUserService {
 	public Long checkUniqueEmail(Map param);
 	public Long checkUniqueUsername(Map param);
 	
-	public Map login(Map param);
+	public Map login(Map param,HttpServletRequest request);
 	
 }
 

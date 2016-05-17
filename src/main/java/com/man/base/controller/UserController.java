@@ -1,7 +1,6 @@
 package com.man.base.controller;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -28,7 +27,7 @@ public class UserController extends BaseController {
 
 	@RequestMapping("/checkUniqueEmail.do")
 	public @ResponseBody String checkUniqueEmail(HttpServletRequest request, Model model) throws Exception {
-		Map ret = new HashMap();
+		Map ret = null;
 		if(userService.checkUniqueEmail(super.getParams(request))<=0){
 			ret = new QMap("200");
 		}else{
@@ -50,14 +49,21 @@ public class UserController extends BaseController {
 	
 	@RequestMapping("/register.do")
 	public @ResponseBody String register(HttpServletRequest request, Model model) throws Exception {
-		Map ret = new HashMap();
+		Map ret = null;
 		userService.register(super.getParams(request));
+		return JSONObject.toJSONString(ret);
+	}
+	
+	@RequestMapping("/getUserInfo.do")
+	public @ResponseBody String getUserInfo(HttpServletRequest request, Model model) throws Exception {
+		Map ret = new QMap(200);
+		ret.put("username", ((Map<String, Object>) request.getSession().getAttribute("userInfo")).get("username"));
 		return JSONObject.toJSONString(ret);
 	}
 	
 	@RequestMapping("/login.do")
 	public @ResponseBody String login(HttpServletRequest request, Model model) throws Exception {
-		Map ret = userService.login(super.getParams(request));
+		Map ret = userService.login(super.getParams(request),request);
 		return JSONObject.toJSONString(ret);
 	}
 	
@@ -112,4 +118,5 @@ public class UserController extends BaseController {
 		Map ret = this.userService.update(param);
 		return JSONObject.toJSONString(ret);
 	}
+	
 }

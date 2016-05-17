@@ -11,6 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.man.base.util.C;
+import com.man.base.util.QMap;
 import com.man.base.util.Util;
 
 @SuppressWarnings("unchecked")
@@ -28,9 +29,9 @@ public class BaseInterceptor implements HandlerInterceptor {
 			} else {
 				log.info("normal request ---" + request.getServletPath());
 				Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("userInfo");
-				if(null == user_permissions){//
-					((HttpServletResponse)response).sendRedirect("/"+C.PROJECT_NAME+"/login/login.html");
-				}
+//				if(null == user_permissions){//
+//					((HttpServletResponse)response).sendRedirect("/"+C.PROJECT_NAME+"/login/login.html");
+//				}
 //				if (user_permissions.containsKey(request.getRequestURI())) {// can
 //					return true;
 //				} else {// can't

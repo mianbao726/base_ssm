@@ -54,13 +54,13 @@
 												</label> <label class="block clearfix col-sm-13 form-group"> <span class="block input-icon input-icon-right">
 														<input type="password" class="form-control"
 														data-bv-notempty="true"
-														name = "username"
+														name = "password"
 														data-bv-notempty-message="密码不能为空" 
 														 placeholder="密 码" /> <i
 														class="ace-icon fa fa-lock"></i>
 												</span>
 												</label>
-
+												<label id ="login_info" style="color: red"></label>
 												<div class="space"></div>
 
 												<div class="clearfix">

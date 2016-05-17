@@ -49,20 +49,27 @@ jQuery(function($) {
 					}
 				});
 				
-				$.sunny.ajax({
-					url : "../user/checkUniqueEmail.do",
-					
-					
-					
-					
-				})
 			});
 	// login button
 	$("#login_btn").click(function() {
+		$("#login_info").html("");
 		if (!$("#login_form").data('bootstrapValidator').validate().isValid()) {
 			return false;
 		}
-		alert("success_login");
+		var params = $("#login_form").serializeObject();
+		$.sunny.ajax({
+			url : "../user/login.do",
+			type : "post",
+			params : params,
+			success : function(data) {
+				if(data.status_code == 200){
+					window.location.href = "../main.html";
+				}else{
+					$("#login_info").html(data.status_info);
+					$("#login_form").data('bootstrapValidator').resetForm();
+				}
+			}
+		});
 	});
 
 	$("#register_reset").click(function() {
@@ -176,7 +183,7 @@ function checkEmail(email) {
 		params : params,
 		async : false,
 		success : function(data) {
-			flag = "200" == data.code ? true : false;
+			flag = "200" == data.status_code ? true : false;
 		}
 	});
 	return flag;
@@ -193,7 +200,7 @@ function checkUsername(username) {
 		params : params,
 		async : false,
 		success : function(data) {
-			flag = "200" == data.code ? true : false;
+			flag = "200" == data.status_code ? true : false;
 		}
 	});
 	return flag;

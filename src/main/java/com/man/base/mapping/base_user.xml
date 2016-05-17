@@ -7,7 +7,7 @@
 		SELECT
 		id, username, password, age
 		FROM
-		man_user a
+		sys_user a
 		WHERE
 		a.del_flag = 0
 		<if test="filter != null">
@@ -21,7 +21,7 @@
 
 	<!-- count -->
 	<select id="indexCount" parameterMap="paraMap" resultType="int">
-		select count(1) from man_user a
+		select count(1) from sys_user a
 		where
 		a.del_flag=0
 		<if test="filter != null">
@@ -32,37 +32,37 @@
 	<select id="selectOne" parameterMap="paraMap" resultType="hashmap">
 		select
 		id, username, password, age
-		from man_user
+		from sys_user
 		where id = #{id,jdbcType=INTEGER}
 	</select>
 	
 	<select id="checkUniqueEmail" parameterMap="paraMap" resultType="hashmap">
 		select
 		count(id) as count
-		from man_user
+		from sys_user
 		where email = #{email}
 	</select>
 	
 	<select id="checkUniqueUsername" parameterMap="paraMap" resultType="hashmap">
 		select
 		count(id) as count
-		from man_user
+		from sys_user
 		where username = #{username}
 	</select>
 	
 	<select id="login" parameterMap="paraMap" resultType="hashmap">
 		select
 		*
-		from man_user
+		from sys_user
 		where username = #{username}
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from man_user
+		delete from sys_user
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterMap="paraMap">
-		insert into man_user (
+		insert into sys_user (
 		username,
 		password,
 		email,
@@ -76,7 +76,7 @@
 		#{DEL_FLAG})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="hashmap">
-		update man_user
+		update sys_user
 		set
 		<if test="userName != null">
 			username = #{userName,jdbcType=VARCHAR},

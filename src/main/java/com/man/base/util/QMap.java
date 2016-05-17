@@ -1,6 +1,7 @@
 package com.man.base.util;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -31,5 +32,19 @@ public class QMap extends HashMap<Object, Object> {
 
 	public QMap(int status_code) {
 		this(status_code + "");
+	}
+
+	public static void showMap(Map map) {
+
+		Iterator entries = map.entrySet().iterator();
+
+		while (entries.hasNext()) {
+
+			Map.Entry entry = (Map.Entry) entries.next();
+
+			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+
+		}
+
 	}
 }

@@ -39,6 +39,7 @@
 				// if(opts.disableAll){
 				// sunny_hide();
 				// }
+				console.log(rsp);
 				if (rsp.status_code == '600') {
 					window.location.href = '/' + project_name
 							+ '/login/login.html';
@@ -50,6 +51,8 @@
 				// if(opts.disableAll){
 				// sunny_hide();
 				// }
+				console.log(rsp);
+				alert(1);
 				window.location.href = '/' + project_name + '/sys/500.html';
 			};
 			$.ajax(sunny_opts);

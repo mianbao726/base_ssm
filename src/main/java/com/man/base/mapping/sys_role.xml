@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="baseFrame_sys_role"> 
+	<parameterMap type="java.util.HashMap" id="paraMap" />
+	
+	<!--获取[角色表]列表 -->
+	<select id="selectAll" parameterMap="paraMap" resultType="hashmap">
+		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
+			select a.id,a.role_name,a.role_type,a.role_info,a.del_state,a.create_user,a.create_date,a.update_user,a.update_date from sys_role a   
+ 		<if test="filter != null">
+			<where>${filter}</where>
+		</if>	
+		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
+		<if test="sort == null">ORDER BY ID DESC</if>	
+		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>		
+	</select>
+	
+	<!--获取[角色表]列表总数 -->
+	<select id="selectAllTotal" parameterMap="paraMap" resultType="int">
+			select count(1) from sys_role a
+		<if test="filter != null">
+			<where>${filter}</where>
+		</if>
+	</select>
+	
+	
+	<!--向[角色表]中插入数据 -->
+	<insert id="insert" parameterMap="paraMap">
+			insert into sys_role(role_name,role_main,role_type,role_info,del_state,create_user,create_date,update_user,update_date) values (#{role_name,jdbcType=VARCHAR},#{role_main,jdbcType=VARCHAR},#{role_type,jdbcType=VARCHAR},#{role_info,jdbcType=VARCHAR},#{del_state,jdbcType=VARCHAR},#{create_user,jdbcType=VARCHAR},#{create_date,jdbcType=DATE},#{update_user,jdbcType=VARCHAR},#{update_date,jdbcType=DATE})
+			<selectKey resultType="int" order="AFTER" keyProperty="id"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
+	</insert>
+	
+	<!--向[role-action]中插入数据 -->
+	<insert id="insert_ra" parameterMap="paraMap">
+			 insert into sys_action_role
+			 	(ACTION_ID,ROLE_ID,DATA_ID,CREATER_ID,CREATE_DATE)
+			 values 
+			 	(#{id,jdbcType=VARCHAR},#{role_id,jdbcType=VARCHAR},#{data_id,jdbcType=VARCHAR},#{create_user,jdbcType=VARCHAR},#{create_date})
+	</insert>
+	
+	<!--删除[角色表]的对应ID的数据 -->
+	<delete id="delete" parameterMap="paraMap">
+		delete from sys_role where id in 
+		<foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!--删除[角色表]的对应ID的数据 -->
+	<delete id="del_related_ar" parameterMap="paraMap">
+		delete from sys_action_role where role_id = #{id} 
+	</delete>
+	
+	
+	<!--更新[角色表]的对应ID的数据 -->
+	<update id="updateOne" parameterMap="paraMap">
+		update sys_role set 
+			role_name=#{role_name},
+			<!-- role_type=#{role_type}, -->
+			role_info=#{role_info},
+			<!-- del_state=#{del_state}, -->
+			<!-- create_user=#{create_user},
+			create_date=#{create_date}, -->
+			role_main=#{role_main},
+			update_user=#{update_user},
+			update_date=#{update_date} 
+		where id=#{id}		
+	</update>
+	
+	<!--根据ID查询[角色表]的数据 -->
+	<select id="selectOne" parameterMap="paraMap" resultType="hashmap">
+		select a.id, a.role_main,a.role_name,a.role_type,a.role_info,a.del_state,a.create_user,a.create_date,a.update_user,a.update_date from sys_role a where a.id=#{id}
+	</select>
+	
+	<select id="getRoleActions" parameterMap="paraMap" resultType="hashmap">
+		select action_id from sys_action_role where role_id = #{role_id} 
+	</select>
+	
+	<!--更新[角色表]的部分数据 -->
+	<update id="update" parameterMap="paraMap">
+		update sys_role set role_name=#{role_name,jdbcType=VARCHAR},role_type=#{role_type,jdbcType=VARCHAR},role_info=#{role_info,jdbcType=VARCHAR},del_state=#{del_state,jdbcType=VARCHAR},creater_id=#{creater_id,jdbcType=VARCHAR},create_date=#{create_date,jdbcType=DATE},updater_id=#{updater_id,jdbcType=VARCHAR},update_date=#{update_date,jdbcType=DATE} where ID in 
+		<foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+	<!--查询所有角色-->
+	<select id="getAllRole" parameterMap="paraMap" resultType="hashmap">
+		select a.id,a.role_name,a.role_type,a.role_info,a.del_state,a.create_user,a.create_date,a.update_user,a.update_date from sys_role a where a.del_state = '0';
+	</select>
+</mapper>
