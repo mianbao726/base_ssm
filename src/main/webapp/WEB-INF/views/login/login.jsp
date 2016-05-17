@@ -166,7 +166,8 @@
 											<fieldset>
 												<label class="block clearfix col-sm-13 form-group"> <span
 													class="block input-icon input-icon-right"> <input type="text"
-														class="form-control" name="email" placeholder="邮箱地址" 
+														class="form-control" name="email" placeholder="邮箱地址"
+														value= "sunny@163.com" 
 														data-bv-notempty="true"
 														data-bv-notempty-message="请填写邮箱地址" 
 														data-bv-emailaddress="true"
@@ -175,7 +176,7 @@
 												</label> <label class="block clearfix col-sm-13 form-group"> <span
 													class="block input-icon input-icon-right"> <input type="text"
 														class="form-control" placeholder="用户名" name="username"
-														 
+														 value= "sunny"
 														data-bv-notempty="true"
 														data-bv-notempty-message="用户名不能为空" 
 														
@@ -188,6 +189,7 @@
 													class="block input-icon input-icon-right"> <input type="password"
 														class="form-control" placeholder="密码" name="password" 
 														
+														value = "111111"
 														data-bv-notempty="true"
 														data-bv-notempty-message="请填写密码" 
 														
@@ -201,6 +203,7 @@
 												</span>
 												</label> <label class="block clearfix col-sm-13 form-group"> <span
 													class="block input-icon input-icon-right"> <input type="password"
+														value = "111111"
 														class="form-control" placeholder="确认密码" name="confirmPassword" data-bv-notempty="true"
 														data-bv-notempty-message="请填写密码" data-bv-identical="true"
 														data-bv-identical-field="password" data-bv-identical-message="两次密码不一致" />

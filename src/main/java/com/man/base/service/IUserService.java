@@ -8,4 +8,8 @@ public interface IUserService {
 	public Map update(Map param);
 	public Map insert(Map param);
 	public Map selectOne(Map param);
+	
+	public int register(Map param);
+	
 }
+

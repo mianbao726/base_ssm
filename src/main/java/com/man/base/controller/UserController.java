@@ -28,10 +28,9 @@ public class UserController extends BaseController {
 	@RequestMapping("/checkUniqueEmail.do")
 	public @ResponseBody String checkUniqueEmail(HttpServletRequest request, Model model) throws Exception {
 		Map ret = new HashMap();
-		log.info(request.getParameter("user_name"));
-		if("sunny@163.com".equals(request.getParameter("user_name"))){
+		Map params = super.getParams(request);
+		if("sunny@163.com".equals(params.get("email"))){
 			ret.put("code", "200");
-			log.info("bingdo 。！！！");
 		}else{
 			ret.put("code", "202");
 		}
@@ -40,9 +39,9 @@ public class UserController extends BaseController {
 	
 	@RequestMapping("/checkUniqueUsername.do")
 	public @ResponseBody String checkUniqueUsername(HttpServletRequest request, Model model) throws Exception {
+		Map params = super.getParams(request);
 		Map ret = new HashMap();
-		log.info(request.getParameter("user_name"));
-		if("sunny".equals(request.getParameter("user_name"))){
+		if("sunny".equals(params.get("user_name"))){
 			ret.put("code", "200");
 		}else{
 			ret.put("code", "202");
@@ -50,10 +49,10 @@ public class UserController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 	
-	@RequestMapping("/registe.do")
-	public @ResponseBody String registe(HttpServletRequest request, Model model) throws Exception {
+	@RequestMapping("/register.do")
+	public @ResponseBody String register(HttpServletRequest request, Model model) throws Exception {
 		Map ret = new HashMap();
-		log.info(request.getParameter("user_name"));
+		userService.register(super.getParams(request));
 		if("sunny".equals(request.getParameter("user_name"))){
 			ret.put("code", "200");
 		}else{

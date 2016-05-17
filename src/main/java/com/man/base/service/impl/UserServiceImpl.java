@@ -11,11 +11,19 @@ import com.alibaba.fastjson.JSON;
 import com.man.base.dao.BaseDao;
 import com.man.base.dao.PageServiceDao;
 import com.man.base.service.IUserService;
+import com.man.base.util.MD5Util;
 
 @Service("userService")
 public class UserServiceImpl extends PageServiceDao implements IUserService  {
 	@Resource
 	private BaseDao baseDao;
+	
+	@Override
+	public int register(Map param){
+		param.put("password", MD5Util.MD5(param.get("username").toString() + param.get("password")));
+		int count = baseDao.insert("base_user.insert", param);
+		return count;
+	}
 
 	public Map selectOne(Map param){
 		Map  ret = this.baseDao.selectOne("base_user.selectOne", param);

@@ -1,6 +1,7 @@
 package com.man.base.controller;
 
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +13,11 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.man.base.util.C;
+import com.man.base.util.TimestampTool;
 
 @Controller
+@SuppressWarnings({ "rawtypes" })
 public class BaseController {
 	protected static Logger log = Logger.getLogger(BaseController.class);
 	public HttpServletResponse response;// response相应对象
@@ -58,10 +62,11 @@ public class BaseController {
 	}
 
 	/**
-	 * 显示全部参数
+	 * 返回全部参数
 	 * 
 	 * @param request
 	 */
+	
 	protected Map<String, Object> getParams(HttpServletRequest request) {
 		Map<String, Object> paramsMap = null;
 		String paramsStr = request.getParameter("params");
@@ -69,6 +74,15 @@ public class BaseController {
 			paramsMap = JSONObject.parseObject(paramsStr);
 		} else {
 			paramsMap = new HashMap<String, Object>();
+		}
+		//默认删除标志
+		paramsMap.put(C.DEL_FLAG, C.PARAM_DATE_UD);
+		//系统时间
+		paramsMap.put(C.PARAM_DATE, TimestampTool.parseDateYYYYMMDDHHMMSS(new Date()));
+		if(null != request.getSession().getAttribute("userInfo") ){
+			paramsMap.put(C.PARAM_CURRENT_USER_ID, ((Map)request.getSession().getAttribute("userInfo")).get("user_id"));
+		}else{
+			paramsMap.put(C.PARAM_CURRENT_USER_ID, -1);
 		}
 		return paramsMap;
 	}

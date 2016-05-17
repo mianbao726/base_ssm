@@ -28,9 +28,6 @@ jQuery(function($) {
 		$("#reset_pwd").data('bootstrapValidator').resetForm();
 		$("#reset_pwd")[0].reset()
 	});
-	
-	
-
 
 	// register button
 	$("#register").click(
@@ -39,35 +36,47 @@ jQuery(function($) {
 						.isValid()) {
 					return false;
 				}
-				alert("success");
+				var params = $("#register_form").serializeObject();
+				$.sunny.ajax({
+					url : "../user/register.do",
+					type : "post",
+					params : params,
+					async : false,
+					success : function(data) {
+						if(data.status_code == 200){
+							$("#go_login").click();
+						}
+					}
+				});
+				
+				$.sunny.ajax({
+					url : "../user/checkUniqueEmail.do",
+					
+					
+					
+					
+				})
 			});
-	//login button
-	$("#login_btn").click(
-			function() {
-				if (!$("#login_form").data('bootstrapValidator').validate()
-						.isValid()) {
-					return false;
-				}
-				alert("success_login");
-			});
-	
+	// login button
+	$("#login_btn").click(function() {
+		if (!$("#login_form").data('bootstrapValidator').validate().isValid()) {
+			return false;
+		}
+		alert("success_login");
+	});
+
 	$("#register_reset").click(function() {
 		$("#register_form").data('bootstrapValidator').resetForm();
 	});
 
-	
-	//重置密码
-	$('#reset_pwd').bootstrapValidator(
-			{
-				fields : {
-				}
-			});
+	// 重置密码
+	$('#reset_pwd').bootstrapValidator({
+		fields : {}
+	});
 	// 登陆
-	$('#login_form').bootstrapValidator(
-			{
-				fields : {
-				}
-			});
+	$('#login_form').bootstrapValidator({
+		fields : {}
+	});
 
 	// 注册
 	$('#register_form')
@@ -82,13 +91,18 @@ jQuery(function($) {
 											var email = validator
 													.getFieldElements('email')
 													.val();
+											console.log("email  :  " + email);
 											if (email == "") {
+												console.log("email  :  null ");
 												return true;
 											} else if (new RegExp(
 													"[a-z0-9A-Z]{1,}[@][a-z0-9A-Z]{1,}[.][0-9a-zA-Z]{1,}")
 													.test(email)) {
+												console.log("email  matched ");
 												return checkEmail(email);
 											} else {
+												console
+														.log("email  : not matched ");
 												return true;
 											}
 										}
@@ -154,8 +168,8 @@ jQuery(function($) {
 function checkEmail(email) {
 	var flag = false;
 	var params = {};
-	params['user_name'] = email;
-	$.man.ajax({
+	params['email'] = email;
+	$.sunny.ajax({
 		url : "../user/checkUniqueEmail.do",
 		type : "post",
 		dataType : "json",
@@ -164,7 +178,7 @@ function checkEmail(email) {
 		success : function(data) {
 			flag = "200" == data.code ? true : false;
 		}
-	})
+	});
 	return flag;
 };
 
@@ -172,15 +186,15 @@ function checkUsername(user_name) {
 	var flag = false;
 	var params = {};
 	params['user_name'] = user_name;
-	$.ajax({
+	$.sunny.ajax({
 		url : "../user/checkUniqueUsername.do",
 		type : "post",
 		dataType : "json",
-		data : params,
+		params : params,
 		async : false,
 		success : function(data) {
 			flag = "200" == data.code ? true : false;
 		}
-	})
+	});
 	return flag;
 };

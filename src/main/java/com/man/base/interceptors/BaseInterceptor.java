@@ -13,10 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.man.base.util.C;
 import com.man.base.util.Util;
 
+@SuppressWarnings("unchecked")
 public class BaseInterceptor implements HandlerInterceptor {
 
 	protected static Logger log = Logger.getLogger(BaseInterceptor.class);
 
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		if (Util.exceptReq(request.getRequestURI())) {// request
@@ -25,7 +27,10 @@ public class BaseInterceptor implements HandlerInterceptor {
 				return true;
 			} else {
 				log.info("normal request ---" + request.getServletPath());
-				Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("permissions");
+				Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("userInfo");
+				if(null == user_permissions){//
+					((HttpServletResponse)response).sendRedirect("/"+C.PROJECT_NAME+"/login/login.html");
+				}
 //				if (user_permissions.containsKey(request.getRequestURI())) {// can
 //					return true;
 //				} else {// can't

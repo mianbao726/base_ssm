@@ -44,15 +44,15 @@
 		insert into man_user (
 		user_name,
 		password,
+		email,
 		created_at,
-		del_flag,
-		age)
+		del_flag)
 		values (
-		#{userName,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
-		now(),
-		#{del_flag,jdbcType=VARCHAR},
-		#{age,jdbcType=INTEGER})
+		#{email},
+		#{PARAM_DATE},
+		#{DEL_FLAG})
 	</insert>
 	<update id="updateByPrimaryKey" parameterType="hashmap">
 		update man_user
