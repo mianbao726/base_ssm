@@ -817,8 +817,10 @@ String id = request.getParameter("id");
 		}
 		
 		params['userName'] = $("#form-field-1").val();
-		params['password'] = $("#form-field-2").val();
-		params['age'] = $("#form-field-3").val();
+		var filter = [];
+		filter.push("aaa1");
+		filter.push("bbb2");
+		params['age'] = filter;
 		$.sunny.ajax({
  			contentType : 'application/json; charset=utf-8',
  			url : url,
@@ -826,7 +828,7 @@ String id = request.getParameter("id");
  			dataType : "json",
 			params : params,
  			success : function(data) {
- 				alert("success : " + data.status_code);
+ 				alert("success : " + data.age[0]);
  			}
  		});
 	});

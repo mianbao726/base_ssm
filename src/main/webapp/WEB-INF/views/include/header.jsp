@@ -24,5 +24,5 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootbox.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/sunny.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/sunny.js"></script>
 

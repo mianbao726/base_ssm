@@ -1,15 +1,17 @@
 package com.man.base.controller;
 
 import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 
-import com.man.base.dao.PageServiceDao;
+import com.alibaba.fastjson.JSONObject;
 
 @Controller
 public class BaseController {
@@ -39,5 +41,35 @@ public class BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 显示全部参数
+	 * 
+	 * @param request
+	 */
+	protected void showParams(HttpServletRequest request) {
+		Enumeration rnames = request.getParameterNames();
+		for (Enumeration e = rnames; e.hasMoreElements();) {
+			String thisName = e.nextElement().toString();
+			String thisValue = request.getParameter(thisName);
+			System.out.println(thisName + "-------" + thisValue);
+		}
+	}
+
+	/**
+	 * 显示全部参数
+	 * 
+	 * @param request
+	 */
+	protected Map<String, Object> getParams(HttpServletRequest request) {
+		Map<String, Object> paramsMap = null;
+		String paramsStr = request.getParameter("params");
+		if (paramsStr != null && !"".equals(paramsStr) && !"null".equals(paramsStr)) {
+			paramsMap = JSONObject.parseObject(paramsStr);
+		} else {
+			paramsMap = new HashMap<String, Object>();
+		}
+		return paramsMap;
 	}
 }

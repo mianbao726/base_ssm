@@ -1,6 +1,7 @@
 package com.man.base.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -94,23 +95,11 @@ public class UserController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 
-//	@RequestMapping(value = "/add.do")
-//	public @ResponseBody String add(@RequestBody Map param, HttpServletRequest request, HttpServletResponse response) {
-//		param.put("del_flag", "0");
-//		Map ret = this.userService.insert(param);
-//		return JSONObject.toJSONString(ret);
-//	}
-	
 	@RequestMapping("/add.do")
-	public @ResponseBody String add(HttpServletRequest request, Model model) throws Exception {
-//		param.put("del_flag", "0");
-//		Map ret = this.userService.insert(param);
-		log.info(request.getParameter("userName"));
-  		Map ret = new HashMap();
-		ret.put("status_code", "200");
-//		int c =1/0;
-		log.info("finish ... ");
-		return JSONObject.toJSONString(ret);
+	public @ResponseBody String add(HttpServletRequest request) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
 	}
 	
 	@RequestMapping("/te.do")
@@ -121,7 +110,6 @@ public class UserController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 	
-
 	@RequestMapping(value = "/update.do", method = RequestMethod.POST)
 	public @ResponseBody String update(@RequestBody Map param, HttpServletRequest request, HttpServletResponse response) {
 		Map ret = this.userService.update(param);
