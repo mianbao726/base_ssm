@@ -53,7 +53,7 @@
 				// }
 				console.log(rsp);
 				alert(1);
-				window.location.href = '/' + project_name + '/sys/500.html';
+//				window.location.href = '/' + project_name + '/sys/500.html';
 			};
 			$.ajax(sunny_opts);
 		} catch (e) {

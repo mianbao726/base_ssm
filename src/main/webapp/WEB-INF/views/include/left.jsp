@@ -63,20 +63,19 @@
 				</script>
 			
 			<script type="text/javascript">
-// 	          $(document).ready(function() {
-// 	        	var params = {};
-// 	  			params['type'] = '1';
-// 	  			params['action_level'] = '1';
-// 	  			$.sunny.ajax({
-<%-- 	  				  url: "<%=path%>/base/getUserMenu.do", --%>
-// 	  				  type:"post",
-// 	  				  dataType:"json",
-// 	  				  params:params,
-// 	  				  success:function(menuData){
-	  					
-<%-- 	  					$("#menu").menu({data: menuData.data_list, ulId:"baseMenu", itemId:'<%=itemId%>', foder:<%=parent%>}); --%>
-// 	  				  }
-// 	  			});
-// 	});
+	          $(document).ready(function() {
+	        	var params = {};
+	  			params['type'] = '1';
+	  			params['action_level'] = '1';
+	  			$.sunny.ajax({
+	  				  url: "user/getUserMenu.do",
+	  				  type:"post",
+	  				  dataType:"json",
+	  				  params:params,
+	  				  success:function(menuData){
+	  					$("#menu").menu({data: menuData.data_list, ulId:"baseMenu", itemId:'<%=itemId%>', foder:<%=parent%>});
+	  				  }
+	  			});
+	});
 
 	</script>
