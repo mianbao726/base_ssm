@@ -43,7 +43,7 @@
 <script type="text/javascript">
 	var d_operate = "insert";
 	function getDeptForCompany(){
-// 		$("#pid").empty();
+		$("#pid").empty();
 // 		$.sunny.ajax({
 // 			  url: "../base/getDeptForCompany.do",
 // 			  type:"post",
@@ -130,7 +130,7 @@
 					ids.push(n.user_id);
 				});			
 				if(ids.length<=0){			
-					$.zkbr.alert('提示信息','至少选择一条记录');
+					$.sunny.alert('提示信息','至少选择一条记录');
 					return false;
 				}
 				*/
@@ -142,11 +142,11 @@
 		           	i = i+1;
 		        });
 		        if("" == ids){
-		        	$.zkbr.alert('提示信息','请选择需要删除的选项！');
+		        	$.sunny.alert('提示信息','请选择需要删除的选项！');
 		        	return;
 		        }
 				var params = {ids: ids};
-				$.zkbr.confirm("确定删除当前"+ids.length+"条记录?", function(result) {
+				$.sunny.confirm("确定删除当前"+ids.length+"条记录?", function(result) {
 					if(result) {
 						$.sunny.ajax({
 							  url: "../../base/delUser.do",
@@ -196,23 +196,23 @@
 			var url = "../../base/addDept.do";
 			if(d_operate == "update"){
 				if($("#pid").eq(0).find("option:selected").val() == $("#department_id").val()){
-					$.zkbr.alert('提示信息','不可选择本部门！');
+					$.sunny.alert('提示信息','不可选择本部门！');
 					return false;	
 				}
 				params['id'] = $("#department_id").val();			
 				url = "../../base/updateDept.do";
 			}
 			if($("#department_name").val()==""){
-				$.zkbr.alert('提示信息','部门名称不可以为空');
+				$.sunny.alert('提示信息','部门名称不可以为空');
 				return false;
 			}
-			$.zkbr.ajax({
+			$.sunny.ajax({
 				  url: url,
 				  type:"post",
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-						$.zkbr.alert('提示信息','保存成功');
+						$.sunny.alert('提示信息','保存成功');
 						$('#myModal').modal('hide');
 						$.fn.zTree.init($("#tree"), setting);
 						cancel();
@@ -247,7 +247,7 @@
 	        var removeBtn = $("#removeBtn_"+treeNode.tId);
 	        if (removeBtn) removeBtn.bind("click", function(){
 	        	if(treeNode.children==undefined){
-		    		$.zkbr.confirm("确定删除'"+treeNode.department_name+"'部门吗?", function(result) {
+		    		$.sunny.confirm("确定删除'"+treeNode.department_name+"'部门吗?", function(result) {
 		    			if(result) {
 			    				var ids = [];		
 			    				ids.push(treeNode.id);	
@@ -258,7 +258,7 @@
 					        	a.value = treeNode.id;
 					        	filter.push(a);
 					        	var params1 = {filter: filter};
-			    				$.zkbr.ajax({
+			    				$.sunny.ajax({
 			    					  url: "../../base/getUserPageList.do",
 			    					  type:"post",
 			    					  dataType:"json",
@@ -266,7 +266,7 @@
 			    					  async: false,
 			    					  success:function(data){
 			    						  if(data.data.length == 0){
-		   							  		  $.zkbr.ajax({
+		   							  		  $.sunny.ajax({
 					    					  url: "../../base/delDept.do",
 					    					  type:"post",
 					    					  dataType:"json",
@@ -276,14 +276,14 @@
 					    					  }
 						    				  });	  
 			    						  }else{
-			    							  $.zkbr.alert('提示信息','存在员工，不可以删除!');
+			    							  $.sunny.alert('提示信息','存在员工，不可以删除!');
 			    						  }
 			    					  }
 			    				});
 		    			}
 		    		});
 	        	}else{
-					$.zkbr.alert('提示信息','存在子机构,不可以删除');
+					$.sunny.alert('提示信息','存在子机构,不可以删除');
 				}
 
 	        });
@@ -362,9 +362,9 @@
 			is_available = "0";
 		}
 		params['is_available'] = is_available;
-		$.zkbr.confirm("确定"+message+"当前"+ids.length+"条记录?", function(result) {
+		$.sunny.confirm("确定"+message+"当前"+ids.length+"条记录?", function(result) {
 			if(result) {
-				$.zkbr.ajax({
+				$.sunny.ajax({
 					  url: "../base/updateUserStatus.do",
 					  type:"post",
 					  dataType:"json",
@@ -392,9 +392,9 @@
 		}
 		params['user_id'] = user_id;
 		params['is_bind'] = is_bind;
-		$.zkbr.confirm("确定当前用户"+message+"?", function(result) {
+		$.sunny.confirm("确定当前用户"+message+"?", function(result) {
 			if(result) {
-				$.zkbr.ajax({
+				$.sunny.ajax({
 					  url: "../base/updateUserBind.do",
 					  type:"post",
 					  dataType:"json",
@@ -412,9 +412,9 @@
 		var ids = [];		
 		ids.push(user_id);	
 		var params = {ids: ids};
-		$.zkbr.confirm("确定删除当前"+ids.length+"条记录?", function(result) {
+		$.sunny.confirm("确定删除当前"+ids.length+"条记录?", function(result) {
 			if(result) {
-				$.zkbr.ajax({
+				$.sunny.ajax({
 					  url: "../base/delUser.do",
 					  type:"post",
 					  dataType:"json",
@@ -437,9 +437,9 @@
 	/*******刪除******/
 	function delRole(id){
 		var params = {id: id};
-		$.zkbr.confirm("删除该角色后所有该角色的人员都将无法登陆，确定删除当前条记录? ", function(result) {
+		$.sunny.confirm("删除该角色后所有该角色的人员都将无法登陆，确定删除当前条记录? ", function(result) {
 			if(result) {
-				$.zkbr.ajax({
+				$.sunny.ajax({
 					  url: "../base/deleteRole.do",
 					  type:"post",
 					  dataType:"json",

@@ -13,6 +13,23 @@
 			title : title
 		});
 	};
+	
+	sunny.confirm = function(message,fun){
+		bootbox.confirm({
+			message: message,
+			buttons: {
+			  confirm: {
+				 label: "确定",
+				 className: "btn-primary btn-sm",
+			  },
+			  cancel: {
+				 label: "取消",
+				 className: "btn-sm",
+			  }
+			},
+			callback: fun
+		  })
+	};
 
 	sunny.ajax = function(opts) {
 		// if(opts.disableAll){
@@ -39,7 +56,6 @@
 				// if(opts.disableAll){
 				// sunny_hide();
 				// }
-				console.log(rsp);
 				if (rsp.status_code == '600') {
 					window.location.href = '/' + project_name
 							+ '/login/login.html';
@@ -51,7 +67,6 @@
 				// if(opts.disableAll){
 				// sunny_hide();
 				// }
-				console.log(rsp);
 				alert(1);
 //				window.location.href = '/' + project_name + '/sys/500.html';
 			};

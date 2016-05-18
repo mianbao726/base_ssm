@@ -80,7 +80,7 @@
 								
 								<script type="text/javascript">
 								function logout(){
-									window.location.href = '<%=path%>/zk/login_loginout.action';
+									window.location.href = '<%=path%>/login.html';
 								}
 								
 								function goEditPWD(){

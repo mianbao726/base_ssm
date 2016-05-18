@@ -58,12 +58,12 @@ jQuery(function($) {
 		}
 		var params = $("#login_form").serializeObject();
 		$.sunny.ajax({
-			url : "../user/login.do",
+			url : "user/login.do",
 			type : "post",
 			params : params,
 			success : function(data) {
 				if(data.status_code == 200){
-					window.location.href = "../main.html";
+					window.location.href = "main.html";
 				}else{
 					$("#login_info").html(data.status_info);
 					$("#login_form").data('bootstrapValidator').resetForm();
@@ -177,7 +177,7 @@ function checkEmail(email) {
 	var params = {};
 	params['email'] = email;
 	$.sunny.ajax({
-		url : "../user/checkUniqueEmail.do",
+		url : "user/checkUniqueEmail.do",
 		type : "post",
 		dataType : "json",
 		params : params,
@@ -194,7 +194,7 @@ function checkUsername(username) {
 	var params = {};
 	params['username'] = username;
 	$.sunny.ajax({
-		url : "../user/checkUniqueUsername.do",
+		url : "user/checkUniqueUsername.do",
 		type : "post",
 		dataType : "json",
 		params : params,

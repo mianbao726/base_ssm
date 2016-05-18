@@ -20,7 +20,7 @@ public class SysController extends BaseController {
 	
 	@RequestMapping("/main.html")
 	public String main(HttpServletRequest request) throws Exception {
-		return "user/index";
+		return "role/index";
 	}
 	
 }

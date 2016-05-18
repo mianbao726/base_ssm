@@ -4,7 +4,7 @@
 	<parameterMap type="java.util.HashMap" id="paraMap" />
 	
 	<!--获取[角色表]列表 -->
-	<select id="selectAll" parameterMap="paraMap" resultType="hashmap">
+	<select id="index" parameterMap="paraMap" resultType="hashmap">
 		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
 			select a.id,a.role_name,a.role_type,a.role_info,a.del_state,a.create_user,a.create_date,a.update_user,a.update_date from sys_role a   
  		<if test="filter != null">
@@ -16,7 +16,7 @@
 	</select>
 	
 	<!--获取[角色表]列表总数 -->
-	<select id="selectAllTotal" parameterMap="paraMap" resultType="int">
+	<select id="indexCount" parameterMap="paraMap" resultType="int">
 			select count(1) from sys_role a
 		<if test="filter != null">
 			<where>${filter}</where>

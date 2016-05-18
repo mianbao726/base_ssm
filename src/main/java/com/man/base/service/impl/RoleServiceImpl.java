@@ -92,7 +92,7 @@ public class RoleServiceImpl extends PageServiceDao implements IRoleService{
 	@Override
 	public Map<String, Object> queryPageForMap(Map<String, Object> map) {
 //		return queryPageResult("baseFrame_sys_role.selectAll", map);
-		return null;
+		return index("baseFrame_sys_role.index", map);
 	}
 
 	@Override

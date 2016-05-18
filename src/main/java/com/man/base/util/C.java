@@ -17,7 +17,7 @@ public class C {
 
 	//除外请求
 	public static final String[] SPECIAL_REQUEST = { //
-			"/login/login.html",//登陆页面
+			"/login.html",//登陆页面
 			"/user/checkUniqueUsername.do",//验证唯一用户名
 			"/user/checkUniqueEmail.do",//验证唯一邮箱
 			"",//

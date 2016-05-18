@@ -24,5 +24,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootbox.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
 
+<!-- TODO TOBE REWRITE -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/sunny.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/plugin-menu.js"></script>
 
+<!-- TODO DATATABLES TOBE REWRITE -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.sunny.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.bootstrap.js"></script>

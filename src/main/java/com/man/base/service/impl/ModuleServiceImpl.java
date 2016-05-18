@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.man.base.dao.BaseDao;
 import com.man.base.dao.PageServiceDao;
 import com.man.base.service.IModuleService;
+import com.man.base.util.QMap;
 import com.man.base.util.TimestampTool;
 @Transactional
 @Service
@@ -146,13 +147,17 @@ public class ModuleServiceImpl extends PageServiceDao implements IModuleService{
 		        Integer action_id = Integer.parseInt(role_menu_map.get("action_id").toString());
 		        Map<String,Object> menu_map = new HashMap<String, Object>();
 		        menu_map.put("id", action_id);
-		        menu_map.put("action_level", map.get("action_level"));
+		        //XXX
+		        //menu_map.put("action_level", map.get("action_level"));
+		        menu_map.put("action_level", "1");
 		        Map<String,Object> Menu = this.baseDao.selectOne("baseFrame_sys_action.selectOne", menu_map);
 		        if(Menu!=null){
 			        //把数据域放入菜单中
 			        Menu.put("data_id", role_menu_map.get("data_id"));
 			        user_menu_list.add(Menu);
 			        user_role_menu.add(Menu);
+		        }else{
+		        	System.out.println("action_id L  " +action_id);
 		        }
 		      }
 		      role_map.put(role.get("role_id").toString(), user_role_menu);
@@ -188,6 +193,7 @@ public class ModuleServiceImpl extends PageServiceDao implements IModuleService{
 		if(list!=null&&list.size()>0){
 			for(Iterator<Map<String,Object>> it = list.iterator();it.hasNext();){
 				Map<String,Object> map_1 = it.next();
+				QMap.showMap(map_1);
 				Integer pid_1 =Integer.parseInt(map_1.get("pid").toString());
 				if(pid_1==0&&"1".equals(map_1.get("action_level"))){//取得一级菜单,必须为菜单资源
 					Map<String,Object> menu_map = new HashMap<String, Object>();
