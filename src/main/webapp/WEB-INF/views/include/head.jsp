@@ -90,7 +90,7 @@
 								$(function(){
 									var params = {};
 									$.sunny.ajax({
-										  url: "user/getUserInfo.do",
+										  url: '<%=path%>/user/getUserInfo.do',
 										  type:"post",
 										  dataType:"json",
 										  params:params,

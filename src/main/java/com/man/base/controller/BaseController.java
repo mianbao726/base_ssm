@@ -57,7 +57,7 @@ public class BaseController {
 		for (Enumeration e = rnames; e.hasMoreElements();) {
 			String thisName = e.nextElement().toString();
 			String thisValue = request.getParameter(thisName);
-			System.out.println(thisName + "-------" + thisValue);
+//			System.out.println(thisName + "-------" + thisValue);
 		}
 	}
 

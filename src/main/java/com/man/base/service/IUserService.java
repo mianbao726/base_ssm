@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 @SuppressWarnings("rawtypes")
 public interface IUserService {
 	public Map index(Map param);
-	public Map update(Map param);
+	public int update(Map param);
 	public Map insert(Map param);
 	public Map selectOne(Map param);
 	

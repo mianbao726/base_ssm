@@ -6,31 +6,21 @@
 <jsp:include page="../include/head.jsp" flush="true">
 <jsp:param name="itemId" value="<%=itemId%>" />
 <jsp:param name="parentId" value="<%=parentId%>" />
-<jsp:param name="title" value="角色管理" />
-<jsp:param name="link1" value="角色管理" />
+<jsp:param name="title" value="人员管理" />
+<jsp:param name="link1" value="人员管理" />
 <jsp:param name="link2" value="" /> 
 </jsp:include>
 <div class="main-content">
 	<div class="page-content">
 		<div class="page-content-area">
-			<form class="form-inline well well-sm" id="search_form">
-				<div class="form-group">
-					<label>角色名称：</label> <input type="text" placeholder="" class="input-small" id="role_name">
-				</div>
-				<a href="javascript:void(0)" class="btn btn-sm" id="serach">搜索</a>
-			</form>
-			<p>
-				<button class="btn btn-success btn-sm" id="addRole">
-					<i class="fa fa-plus"></i> 新增角色
-				</button>
-			</p>
 			<div class="row">
 				<div class="col-sm-12">
 					<table id="example" class="table table-striped table-bordered table-hover dataTable" cellspacing="0" width="100%">
 						<thead>
 							<tr>
-								<th style="width: 200px;">角色名称</th>
-								<th>角色描述</th>
+								<th style="width: 200px;">用户名</th>
+								<th>邮箱</th>
+								<th>注册时间</th>
 								<th style="width: 120px;">操作</th>
 							</tr>
 						</thead>
@@ -42,19 +32,6 @@
 </div>
 <script type="text/javascript">
 	var d_operate = "insert";
-	function getDeptForCompany(){
-// 		$("#pid").empty();
-// 		$.sunny.ajax({
-// 			  url: "../base/getDeptForCompany.do",
-// 			  type:"post",
-// 			  dataType:"json",
-// 			  success:function(data){
-// 					$.each(data.data_list,function(i,n){
-// 						$("#pid").append("<option value="+n.id+" class="+n.level+">"+n.department_name+"</option>")
-// 					})
-// 			  }
-// 		});
-	}
 	
 	var dataTables;
 	/***新增人员页面跳转***/
@@ -84,8 +61,7 @@
 	            "pagingType": "full_numbers",//用于指定分页器风格 "full_numbers"" or ""two_button""， default ""two_button""
 	            "bAutoWidth": false,			 //是否主动策画表格各列宽度
 	            "ajax": {
-	                "url": "role/getRoles.do",
-	                
+	                "url": '<%=path%>/user/index.do',
 	                "type": "POST",
 	                "dataType": "json"
 	            },
@@ -97,9 +73,9 @@
 	            "dom": '<"top">t<"bottom"lip><"clear">',
 	            "order": [[0, 'asc']],
 	            "columns": [
-// 							{"data":"id"},
-	                        {"data":"role_name"},
-	                        {"data":"role_info"},
+	                        {"data":"username"},
+	                        {"data":"email"},
+							{"data":"create_at"},
 	                       ],
                  "columnDefs": [
                     {
@@ -107,7 +83,7 @@
                			 return '<input class="btn btn-xs btn-success" type="button" value="编辑" onclick="updateRole(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-danger" type="button" value="删除" onclick="delRole(\''+row.id+'\')">'                        	 
                      },
                      "orderable": false,
-                     "targets": 2
+                     "targets": 3
                  }]
 	        } );
 			dataTables.on('draw.dt',function(){  
@@ -124,16 +100,6 @@
 			/***删除用户***/
 			$("#delete").click(function(){
 				var data = dataTables.rows('.selected').data();
-				/*
-				var ids = [];			
-				$.each( data, function(i, n){				
-					ids.push(n.user_id);
-				});			
-				if(ids.length<=0){			
-					$.zkbr.alert('提示信息','至少选择一条记录');
-					return false;
-				}
-				*/
 				var ids=new Array();
 		    	var i=0;
 		        $('input[name="cbSingle"]:checked').each(function(){
@@ -142,11 +108,11 @@
 		           	i = i+1;
 		        });
 		        if("" == ids){
-		        	$.zkbr.alert('提示信息','请选择需要删除的选项！');
+		        	$.sunny.alert('提示信息','请选择需要删除的选项！');
 		        	return;
 		        }
 				var params = {ids: ids};
-				$.zkbr.confirm("确定删除当前"+ids.length+"条记录?", function(result) {
+				$.sunny.confirm("确定删除当前"+ids.length+"条记录?", function(result) {
 					if(result) {
 						$.sunny.ajax({
 							  url: "../../base/delUser.do",
@@ -183,7 +149,6 @@
 
 
 		/***获取上级部门列表select***/
-		getDeptForCompany();
 		
 		var operate = "insert";
 		/***新增部门开始***/
@@ -196,23 +161,23 @@
 			var url = "../../base/addDept.do";
 			if(d_operate == "update"){
 				if($("#pid").eq(0).find("option:selected").val() == $("#department_id").val()){
-					$.zkbr.alert('提示信息','不可选择本部门！');
+					$.sunny.alert('提示信息','不可选择本部门！');
 					return false;	
 				}
 				params['id'] = $("#department_id").val();			
 				url = "../../base/updateDept.do";
 			}
 			if($("#department_name").val()==""){
-				$.zkbr.alert('提示信息','部门名称不可以为空');
+				$.sunny.alert('提示信息','部门名称不可以为空');
 				return false;
 			}
-			$.zkbr.ajax({
+			$.sunny.ajax({
 				  url: url,
 				  type:"post",
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-						$.zkbr.alert('提示信息','保存成功');
+						$.sunny.alert('提示信息','保存成功');
 						$('#myModal').modal('hide');
 						$.fn.zTree.init($("#tree"), setting);
 						cancel();
@@ -247,7 +212,7 @@
 	        var removeBtn = $("#removeBtn_"+treeNode.tId);
 	        if (removeBtn) removeBtn.bind("click", function(){
 	        	if(treeNode.children==undefined){
-		    		$.zkbr.confirm("确定删除'"+treeNode.department_name+"'部门吗?", function(result) {
+		    		$.sunny.confirm("确定删除'"+treeNode.department_name+"'部门吗?", function(result) {
 		    			if(result) {
 			    				var ids = [];		
 			    				ids.push(treeNode.id);	
@@ -258,7 +223,7 @@
 					        	a.value = treeNode.id;
 					        	filter.push(a);
 					        	var params1 = {filter: filter};
-			    				$.zkbr.ajax({
+			    				$.sunny.ajax({
 			    					  url: "../../base/getUserPageList.do",
 			    					  type:"post",
 			    					  dataType:"json",
@@ -266,7 +231,7 @@
 			    					  async: false,
 			    					  success:function(data){
 			    						  if(data.data.length == 0){
-		   							  		  $.zkbr.ajax({
+		   							  		  $.sunny.ajax({
 					    					  url: "../../base/delDept.do",
 					    					  type:"post",
 					    					  dataType:"json",
@@ -276,14 +241,14 @@
 					    					  }
 						    				  });	  
 			    						  }else{
-			    							  $.zkbr.alert('提示信息','存在员工，不可以删除!');
+			    							  $.sunny.alert('提示信息','存在员工，不可以删除!');
 			    						  }
 			    					  }
 			    				});
 		    			}
 		    		});
 	        	}else{
-					$.zkbr.alert('提示信息','存在子机构,不可以删除');
+					$.sunny.alert('提示信息','存在子机构,不可以删除');
 				}
 
 	        });
@@ -362,9 +327,9 @@
 			is_available = "0";
 		}
 		params['is_available'] = is_available;
-		$.zkbr.confirm("确定"+message+"当前"+ids.length+"条记录?", function(result) {
+		$.sunny.confirm("确定"+message+"当前"+ids.length+"条记录?", function(result) {
 			if(result) {
-				$.zkbr.ajax({
+				$.sunny.ajax({
 					  url: "../base/updateUserStatus.do",
 					  type:"post",
 					  dataType:"json",
@@ -392,9 +357,9 @@
 		}
 		params['user_id'] = user_id;
 		params['is_bind'] = is_bind;
-		$.zkbr.confirm("确定当前用户"+message+"?", function(result) {
+		$.sunny.confirm("确定当前用户"+message+"?", function(result) {
 			if(result) {
-				$.zkbr.ajax({
+				$.sunny.ajax({
 					  url: "../base/updateUserBind.do",
 					  type:"post",
 					  dataType:"json",
@@ -412,9 +377,9 @@
 		var ids = [];		
 		ids.push(user_id);	
 		var params = {ids: ids};
-		$.zkbr.confirm("确定删除当前"+ids.length+"条记录?", function(result) {
+		$.sunny.confirm("确定删除当前"+ids.length+"条记录?", function(result) {
 			if(result) {
-				$.zkbr.ajax({
+				$.sunny.ajax({
 					  url: "../base/delUser.do",
 					  type:"post",
 					  dataType:"json",
@@ -430,23 +395,21 @@
 
 	}
 	function updateRole(id){
-		operate = "update";
 // 		window.location.href="ADDROLE.jsp?operate="+operate+"&id="+id;
-		window.location.href = '<%=path%>/zk/role_au.action?id='+id;
+		window.location.href = '<%=path%>/user/au.html?id='+id;
 	}
 	/*******刪除******/
 	function delRole(id){
 		var params = {id: id};
-		$.zkbr.confirm("删除该角色后所有该角色的人员都将无法登陆，确定删除当前条记录? ", function(result) {
+		$.sunny.confirm("确定删除当前条记录? ", function(result) {
 			if(result) {
-				$.zkbr.ajax({
-					  url: "../base/deleteRole.do",
+				$.sunny.ajax({
+					  url: '<%=path%>/user/delete.do',
 					  type:"post",
 					  dataType:"json",
 					  params:params,
 					  success:function(ret){
 						  window.location.reload();
-						  datatables.ajax.reloadData({'filter':null});
 							
 					  }
 				});;

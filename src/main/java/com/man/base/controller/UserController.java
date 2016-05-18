@@ -56,7 +56,11 @@ public class UserController extends BaseController {
 	@RequestMapping("/register.do")
 	public @ResponseBody String register(HttpServletRequest request, Model model) throws Exception {
 		Map ret = null;
-		userService.register(super.getParams(request));
+		if(1==userService.register(super.getParams(request))){
+			ret = new QMap(200);
+		}else{
+			ret = new QMap(202,"注册失败");
+		}
 		return JSONObject.toJSONString(ret);
 	}
 
@@ -120,10 +124,16 @@ public class UserController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 
-	@RequestMapping(value = "/delete.do", method = RequestMethod.POST)
-	public @ResponseBody String delete(@RequestBody Map param, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/delete.do")
+	public @ResponseBody String delete(HttpServletRequest request, HttpServletResponse response) {
+		Map ret = null;
+		Map param = super.getParams(request);
 		param.put("del_flag", "1");
-		Map ret = this.userService.update(param);
+		if(1 == this.userService.update(param)){
+			ret = new QMap(200);
+		}else{
+			ret = new QMap(202,"操作失败");
+		}
 		return JSONObject.toJSONString(ret);
 	}
 
@@ -144,7 +154,8 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/update.do", method = RequestMethod.POST)
 	public @ResponseBody String update(@RequestBody Map param, HttpServletRequest request, HttpServletResponse response) {
-		Map ret = this.userService.update(param);
+		int count = this.userService.update(param);
+		Map ret = null;
 		return JSONObject.toJSONString(ret);
 	}
 

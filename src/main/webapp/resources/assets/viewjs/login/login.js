@@ -38,7 +38,7 @@ jQuery(function($) {
 				}
 				var params = $("#register_form").serializeObject();
 				$.sunny.ajax({
-					url : "../user/register.do",
+					url : "user/register.do",
 					type : "post",
 					params : params,
 					async : false,

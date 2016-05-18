@@ -77,9 +77,9 @@ public class UserServiceImpl extends PageServiceDao implements IUserService {
 		return index("base_user.index", param);
 	}
 
-	public Map update(Map param) {
+	public int update(Map param) {
 		int count = baseDao.update("base_user.updateByPrimaryKey", param);
-		return null;
+		return count;
 	}
 
 	public Map insert(Map param) {

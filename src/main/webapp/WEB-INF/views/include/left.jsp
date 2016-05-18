@@ -68,7 +68,7 @@
 	  			params['type'] = '1';
 	  			params['action_level'] = '1';
 	  			$.sunny.ajax({
-	  				  url: "user/getUserMenu.do",
+	  				  url: '<%=path%>/user/getUserMenu.do',
 	  				  type:"post",
 	  				  dataType:"json",
 	  				  params:params,

@@ -157,7 +157,6 @@ public class ModuleServiceImpl extends PageServiceDao implements IModuleService{
 			        user_menu_list.add(Menu);
 			        user_role_menu.add(Menu);
 		        }else{
-		        	System.out.println("action_id L  " +action_id);
 		        }
 		      }
 		      role_map.put(role.get("role_id").toString(), user_role_menu);
@@ -193,7 +192,6 @@ public class ModuleServiceImpl extends PageServiceDao implements IModuleService{
 		if(list!=null&&list.size()>0){
 			for(Iterator<Map<String,Object>> it = list.iterator();it.hasNext();){
 				Map<String,Object> map_1 = it.next();
-				QMap.showMap(map_1);
 				Integer pid_1 =Integer.parseInt(map_1.get("pid").toString());
 				if(pid_1==0&&"1".equals(map_1.get("action_level"))){//取得一级菜单,必须为菜单资源
 					Map<String,Object> menu_map = new HashMap<String, Object>();

@@ -13,12 +13,6 @@
 <div class="main-content">
 	<div class="page-content">
 		<div class="page-content-area">
-			<form class="form-inline well well-sm" id="search_form">
-				<div class="form-group">
-					<label>角色名称：</label> <input type="text" placeholder="" class="input-small" id="role_name">
-				</div>
-				<a href="javascript:void(0)" class="btn btn-sm" id="serach">搜索</a>
-			</form>
 			<p>
 				<button class="btn btn-success btn-sm" id="addRole">
 					<i class="fa fa-plus"></i> 新增角色
@@ -42,19 +36,6 @@
 </div>
 <script type="text/javascript">
 	var d_operate = "insert";
-	function getDeptForCompany(){
-		$("#pid").empty();
-// 		$.sunny.ajax({
-// 			  url: "../base/getDeptForCompany.do",
-// 			  type:"post",
-// 			  dataType:"json",
-// 			  success:function(data){
-// 					$.each(data.data_list,function(i,n){
-// 						$("#pid").append("<option value="+n.id+" class="+n.level+">"+n.department_name+"</option>")
-// 					})
-// 			  }
-// 		});
-	}
 	
 	var dataTables;
 	/***新增人员页面跳转***/
@@ -84,8 +65,7 @@
 	            "pagingType": "full_numbers",//用于指定分页器风格 "full_numbers"" or ""two_button""， default ""two_button""
 	            "bAutoWidth": false,			 //是否主动策画表格各列宽度
 	            "ajax": {
-	                "url": "role/getRoles.do",
-	                
+	                "url": '<%=path%>/role/getRoles.do',
 	                "type": "POST",
 	                "dataType": "json"
 	            },
@@ -124,16 +104,6 @@
 			/***删除用户***/
 			$("#delete").click(function(){
 				var data = dataTables.rows('.selected').data();
-				/*
-				var ids = [];			
-				$.each( data, function(i, n){				
-					ids.push(n.user_id);
-				});			
-				if(ids.length<=0){			
-					$.sunny.alert('提示信息','至少选择一条记录');
-					return false;
-				}
-				*/
 				var ids=new Array();
 		    	var i=0;
 		        $('input[name="cbSingle"]:checked').each(function(){
@@ -183,7 +153,6 @@
 
 
 		/***获取上级部门列表select***/
-		getDeptForCompany();
 		
 		var operate = "insert";
 		/***新增部门开始***/
@@ -432,7 +401,7 @@
 	function updateRole(id){
 		operate = "update";
 // 		window.location.href="ADDROLE.jsp?operate="+operate+"&id="+id;
-		window.location.href = '<%=path%>/zk/role_au.action?id='+id;
+		window.location.href = '<%=path%>/role/au.html?id='+id;
 	}
 	/*******刪除******/
 	function delRole(id){
@@ -440,7 +409,7 @@
 		$.sunny.confirm("删除该角色后所有该角色的人员都将无法登陆，确定删除当前条记录? ", function(result) {
 			if(result) {
 				$.sunny.ajax({
-					  url: "../base/deleteRole.do",
+					  url: '<%=path%>/role/delete.do',
 					  type:"post",
 					  dataType:"json",
 					  params:params,

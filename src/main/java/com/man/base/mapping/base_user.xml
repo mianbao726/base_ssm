@@ -5,7 +5,7 @@
 	<select id="index" parameterMap="paraMap" resultType="hashmap">
 		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
 		SELECT
-		id, username, password, age
+		id, username, password, email , date_format(a.created_at,'%Y-%m-%d') as create_at
 		FROM
 		sys_user a
 		WHERE

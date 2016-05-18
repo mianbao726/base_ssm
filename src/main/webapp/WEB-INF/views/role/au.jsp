@@ -3,7 +3,7 @@
 <%	String itemId = request.getAttribute("item_id")+"";%>
 <%	String parentId = request.getAttribute("item_pid")+"";%> 
 
-<jsp:include page="/biz-eg/include/head.jsp" flush="true">
+<jsp:include page="../include/head.jsp" flush="true">
 <jsp:param name="itemId" value="<%=itemId%>" />
 <jsp:param name="parentId" value="<%=parentId%>" />
 <jsp:param name="title" value="角色管理" />
@@ -291,8 +291,8 @@ var datatables;
 	if(!addEditFlag){
 		var params = {};
 		params['id'] = attid;
-		$.zkbr.ajax({
-		  url: "../base/goEdit.do",
+		$.sunny.ajax({
+		  url: "../role/getRoleInfo.do",
 		  type:"post",
 		  dataType:"json",
 		  params:params,
@@ -376,7 +376,7 @@ var datatables;
 		
 		//返回
 		$("#back").click(function() {
-			window.location.href = '<%=path%>/zk/role_index.action';
+			window.location.href = '<%=path%>/role/index.html';
 		});
 	})
 	
@@ -493,13 +493,6 @@ var datatables;
 	 		$('#countGoods').html('已选择产品'+n+'个');
 			$("#selectCpDlg").modal('hide');
 		}
-	$('.date-picker').datepicker({
-		autoclose : true,
-		todayHighlight : true,
-		language : 'zh-CN'
-	}).next().on(ace.click_event, function() {
-		$(this).prev().focus();
-	});
 	
 	/***sousuo***/
 	$("#queryTd").click(
@@ -519,11 +512,12 @@ var datatables;
 	
 </script>
 	<!-- 当前页面专用 start -->
-	<script src="../assets/ux/z-tree/js/jquery.ztree.all-3.5.min.js"></script>
-	<script src="../assets/ux/ace/js/fuelux/data/fuelux.tree-sample-demo-data.js"></script>
-	<script src="../assets/ux/ace/js/fuelux/fuelux.tree.min.js"></script>
-	<link rel="stylesheet" href="../assets/ux/z-tree/css/zTreeStyle/metro.css">
-	<script src="../assets/js/role/perssion_tree.js"></script><!-- 权限树相关 -->
-	<script src="../assets/js/role/au_new_permission.js"></script><!-- 添加\修改 子权限相关 -->
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/z-tree/js/jquery.ztree.all-3.5.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/fuelux/data/fuelux.tree-sample-demo-data.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/fuelux/fuelux.tree.min.js"></script>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/z-tree/css/zTreeStyle/metro.css">
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/role/au_new_permission.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/role/perssion_tree.js"></script>
 	<!-- 当前页面专用 end -->
 						
