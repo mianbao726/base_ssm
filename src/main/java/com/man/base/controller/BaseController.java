@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.man.base.util.C;
+import com.man.base.util.QMap;
 import com.man.base.util.TimestampTool;
 
 @Controller
@@ -68,6 +69,9 @@ public class BaseController {
 	 */
 	
 	protected Map<String, Object> getParams(HttpServletRequest request) {
+		System.out.println("--param start ...");
+		QMap.showMap(request.getParameterMap());
+		System.out.println("--param end ...");
 		Map<String, Object> paramsMap = null;
 		String paramsStr = request.getParameter("params");
 		if (paramsStr != null && !"".equals(paramsStr) && !"null".equals(paramsStr)) {

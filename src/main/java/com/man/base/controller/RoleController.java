@@ -34,7 +34,7 @@ public class RoleController extends BaseController {
 	@RequestMapping(value = "/getRoles.do", method = RequestMethod.POST)
 	public @ResponseBody String getRoles(HttpServletRequest request, HttpServletResponse response) {
 		Map page = super.getParams(request);
-		request.getParameterMap();
+		System.out.println(request.getParameter("draw"));;
 		Map ret = this.roleService.queryPageForMap(page);
 		return JSONObject.toJSONString(ret);
 	}

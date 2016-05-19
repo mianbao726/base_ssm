@@ -42,7 +42,7 @@ public class QMap extends HashMap<Object, Object> {
 
 			Map.Entry entry = (Map.Entry) entries.next();
 
-			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue().toString());
 
 		}
 

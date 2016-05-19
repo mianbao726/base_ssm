@@ -29,5 +29,9 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/plugin-menu.js"></script>
 
 <!-- TODO DATATABLES TOBE REWRITE -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.sunny.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.bootstrap.js"></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.sunny.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.bootstrap.js"></script> 
+ --%>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/datatables-1.10.11/media/css/jquery.dataTables.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datatables-1.10.11/media/js/jquery.dataTables.js"></script>
