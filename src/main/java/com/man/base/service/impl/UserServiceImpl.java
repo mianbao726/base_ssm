@@ -45,6 +45,7 @@ public class UserServiceImpl extends PageServiceDao implements IUserService {
 		List<Map<String,Object>> role_list = roleService.selectRoleForUser(userinfo);
 		userinfo.put("userRoles", role_list);
 		List<Map<String,Object>> menu_list = moduleService.selectMenuForUser(request,userinfo);
+		
 //		if(null != role_list && role_list.size()>0){
 //			userinfo.put("main_page", role_list.get(0).get("role_main"));
 //		}

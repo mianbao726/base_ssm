@@ -67,8 +67,8 @@
 				// if(opts.disableAll){
 				// sunny_hide();
 				// }
-				alert(1);
-//				window.location.href = '/' + project_name + '/sys/500.html';
+//				alert(1);
+				window.location.href = '/' + project_name + '/login.html';
 			};
 			$.ajax(sunny_opts);
 		} catch (e) {
