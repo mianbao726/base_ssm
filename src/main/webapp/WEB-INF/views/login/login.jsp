@@ -51,7 +51,8 @@
 														data-bv-notempty-message="用户名不能为空" /> <i
 														class="ace-icon fa fa-user"></i>
 												</span>
-												</label> <label class="block clearfix col-sm-13 form-group"> <span class="block input-icon input-icon-right">
+												</label> 
+												<label class="block clearfix col-sm-13 form-group"> <span class="block input-icon input-icon-right">
 														<input type="password" class="form-control"
 														data-bv-notempty="true"
 														name = "password"
@@ -60,13 +61,25 @@
 														class="ace-icon fa fa-lock"></i>
 												</span>
 												</label>
+												
+												<label class="block clearfix col-sm-13 form-group"> <span class="block input-icon input-icon-right">
+														<select id = "login_as" name = "login_as">
+														</select>
+												<span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-content="帮助信息 ！！！ ！！！.">?</span>		
+												</span>
+												
+												</label>
+												
+												
+												
+												
 												<label id ="login_info" style="color: red"></label>
 												<div class="space"></div>
 
 												<div class="clearfix">
-													<label class="inline"> <input type="checkbox" class="ace" /> <span class="lbl">
+													<!-- <label class="inline" > <input type="checkbox" class="ace" /> <span class="lbl">
 															十天内免登录&nbsp;&nbsp;</span>
-													</label>
+													</label> -->
 
 													<button type="button" id = "login_btn" class="width-30 pull-right btn btn-sm btn-primary">
 														<i class="ace-icon fa fa-key"></i> <span class="bigger-110">登&nbsp;&nbsp;陆</span>
@@ -93,7 +106,7 @@
 									<!-- /.widget-main -->
 
 									<div class="toolbar clearfix">
-										<div>
+										<div style="display: none">
 											<a href="#" data-target="#forgot-box" id = "go_reset_pwd" class="forgot-password-link"> <i
 												class="ace-icon fa fa-arrow-left"></i> 忘记密码?
 											</a>

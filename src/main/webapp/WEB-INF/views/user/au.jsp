@@ -44,6 +44,16 @@ String id = request.getParameter("id");%>
 											</div>
 										</div>
 										
+										<div class="form-group" style="margin-top: 16px;">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-1">角色</label>
+											<div class="col-sm-9" >
+											<div id= "role_set">
+											</div>
+											<small id ="role_info" class="help-block" style="color: #d16e6c; display: none" >至少选择一个角色</small>
+											</div>
+											
+										</div>
+										
 										<div class="col-md-offset-1 col-md-9">
 											<button class="btn btn-info" type="button" id="save">
 												<i class="ace-icon fa fa-check bigger-110"></i> 确定添加
@@ -67,6 +77,20 @@ String id = request.getParameter("id");%>
 	</div>
 <script type="text/javascript">
 var id = '<%=id %>';
+
+$.sunny.ajax({
+		contentType : 'application/json; charset=utf-8',
+		url : "../role/getAllRole.do",
+		type : "post",
+		dataType : "json",
+		data : JSON.stringify(params),
+		success : function(data) {
+			$.each(data.data,function(i,n){
+					$("#role_set").append('<input type = "checkbox" name = "roles" id = "role_'+n.id+'" value = "'+n.id+'"><label for = "role_'+n.id+'">'+n.role_name+'('+n.role_info+')</label><br/>');
+			})
+		}
+	});
+
 if(id != 'null'){
 	var params = {};
 	params['id'] = id;
@@ -86,6 +110,7 @@ if(id != 'null'){
 
 //保存
 $("#save").click(function() {
+	$("#role_info").hide();
 	if (!$("#form").data('bootstrapValidator').validate().isValid()) {
 		return false;
 	}
@@ -97,6 +122,19 @@ $("#save").click(function() {
 	}
 	
 	params['age'] = $("#form-field-4").val();
+	var chk_value =[]; 
+	$('input[name="roles"]:checked').each(function(){ 
+	  chk_value.push($(this).val()); 
+	}); 
+	if(chk_value.length==0 ){
+		
+		$("#role_info").show();
+		
+		return false;
+	}else{
+		params['role'] = chk_value;
+	}
+	
 	$.sunny.ajax({
 			contentType : 'application/json; charset=utf-8',
 			url : url,

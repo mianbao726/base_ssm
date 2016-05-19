@@ -195,6 +195,12 @@
 					</connectors>
 					<!-- <scanIntervalSeconds>2</scanIntervalSeconds> -->
 					<webDefaultXml>src/main/resources/webdefault.xml</webDefaultXml>
+					<systemProperties> 
+			            <systemProperty> 
+			                <name>org.mortbay.jetty.Request.maxFormContentSize</name> 
+			                <value>-1</value> 
+			            </systemProperty> 
+			        </systemProperties> 
 					<reload>automatic</reload>  
              		<scanIntervalSeconds>1</scanIntervalSeconds> 
 				</configuration>

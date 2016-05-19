@@ -32,13 +32,13 @@
 	};
 
 	sunny.ajax = function(opts) {
-		// if(opts.disableAll){
-		// if(opts.disableMsg){
-		// sunny_show_msg(opts.disableHeight,opts.disableMsg);
-		// }else{
-		// sunny_show(opts.disableHeight);
-		// }
-		// }
+		 if (opts.disableAll) {
+			if (opts.disableMsg) {
+				sunny_show_msg(opts.disableHeight, opts.disableMsg);
+			} else {
+				sunny_show(opts.disableHeight);
+			}
+		}
 		try {
 			var sunny_opts = {};
 			sunny_opts.url = opts.url;
@@ -68,7 +68,7 @@
 				// sunny_hide();
 				// }
 //				alert(1);
-				window.location.href = '/' + project_name + '/login.html';
+//				window.location.href = '/' + project_name + '/login.html';
 			};
 			$.ajax(sunny_opts);
 		} catch (e) {

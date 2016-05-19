@@ -39,6 +39,65 @@ public class RoleController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 	
+//	@RequestMapping(value = "/getAllRole.do")
+//	public @ResponseBody String getAllRole(HttpServletRequest request, HttpServletResponse response) {
+//		Map map = super.getParams(request);
+//		Map responseMap = new QMap(200);
+//		responseMap.put("current_role_id", request.getSession());
+//		responseMap.put("data", roleService.getAllRole(map));
+//		return JSONObject.toJSONString(responseMap);
+//	}
+	
+	@RequestMapping(value = "/getAllRole.do", method = RequestMethod.POST)
+	public @ResponseBody String getAllRole(HttpServletRequest request, HttpServletResponse response) {
+		Map map = super.getParams(request);
+		Map<String,Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("status_code", "200");
+		responseMap.put("error_msg", "");
+		responseMap.put("data", roleService.getAllRole(map));
+		return JSONObject.toJSONString(responseMap);
+	}
+	
+	@RequestMapping(value = "/addModule.do", method = RequestMethod.POST)
+	public @ResponseBody String addModule(HttpServletRequest request, HttpServletResponse response) {
+		Map map = super.getParams(request);
+		Map<String,Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("error_msg", "");
+		responseMap.put("status_code", "200");
+		responseMap.put("id", moduleService.add(map));
+		return JSONObject.toJSONString(responseMap);
+	}
+	
+	@RequestMapping(value = "/deleteModule.do", method = RequestMethod.POST)
+	public @ResponseBody String deleteModule(HttpServletRequest request, HttpServletResponse response) {
+		Map map = super.getParams(request);
+		Map<String,Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("error_msg", "");
+		responseMap.put("status_code", "200");
+		responseMap.put("rows", moduleService.del(map));
+		return JSONObject.toJSONString(responseMap);
+	}
+	
+	@RequestMapping(value = "/getPermissonInfo.do", method = RequestMethod.POST)
+	public @ResponseBody String getPermissonInfo(HttpServletRequest request, HttpServletResponse response) {
+		Map map = super.getParams(request);
+		Map<String,Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("error_msg", "");
+		responseMap.put("status_code", "200");
+		responseMap.put("obj", moduleService.getPermissonInfo(map));
+		return JSONObject.toJSONString(responseMap);
+	}
+	
+	@RequestMapping(value = "/updateModule.do", method = RequestMethod.POST)
+	public @ResponseBody String updateModule(HttpServletRequest request, HttpServletResponse response) {
+		Map map = super.getParams(request);
+		Map<String,Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("error_msg", "");
+		responseMap.put("status_code", "200");
+		responseMap.put("rows", moduleService.update(map));
+		return JSONObject.toJSONString(responseMap);
+	}
+	
 	@RequestMapping(value = "/delete.do", method = RequestMethod.POST)
 	public @ResponseBody String delete(HttpServletRequest request, HttpServletResponse response) {
 		Map<String,Object> map = super.getParams(request);
@@ -94,6 +153,7 @@ public class RoleController extends BaseController {
 	@RequestMapping(value = "/getWebModuleTree.do", method = RequestMethod.POST)
 	public @ResponseBody String getWebModuleTree(HttpServletRequest request, HttpServletResponse response) {
 		Map<String,Object> map = super.getParams(request);
+		map.put("roleid", request.getParameter("roleid"));
 		Map<String,Object> responseMap = new HashMap<String, Object>();
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
 		list = moduleService.getWebModuleTree(map);

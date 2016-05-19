@@ -19,8 +19,8 @@ $(function() {
 				var params = {};
 				params['id'] = treeNode.id;
 				$("#au_flag").val("1");
-				$.zkbr.ajax({
-					url : "../base/getPermissonInfo.do",
+				$.sunny.ajax({
+					url : current_path+"/role/getPermissonInfo.do",
 					type : "post",
 					dataType : "json",
 					params : params,
@@ -94,7 +94,7 @@ $(function() {
 		var removeBtn = $("#removeBtn_" + treeNode.tId);
 		if (removeBtn)
 			removeBtn.bind("click", function() {
-				$.zkbr.confirm("确定删除'" + treeNode.action_name + "'部门吗以及子资源?",
+				$.sunny.confirm("确定删除22'" + treeNode.action_name + "'以及子资源?",
 						function(result) {
 							if (result) {
 								var ids = [];
@@ -102,21 +102,20 @@ $(function() {
 								var params = {
 									ids : ids
 								};
-								$.zkbr.ajax({
-									url : "../base/deleteModule.do",
+								$.sunny.ajax({
+									url : current_path+"/role/deleteModule.do",
 									type : "post",
 									dataType : "json",
 									params : params,
 									success : function(menuData) {
 //										$.fn.zTree.init($("#tree"), setting);
 										if((attid == '')){
-											window.location.href = current_path+'/zk/role_au.action';
+											window.location.href = current_path+'/role/au.html';
 										}else{
-											window.location.href = current_path+'/zk/role_au.action?id='+attid;
+											window.location.href = current_path+'/role/au.html?id='+attid;
 										}
 //										$("#loading_hint").css("");// 隐藏等待提示
 									}
-
 								});
 							}
 						});
@@ -149,7 +148,7 @@ $(function() {
 		if (b01 || b02 || b03 || b04 || b05) {
 			return false;
 		}
-		$.zkbr.ajax({
+		$.sunny.ajax({
 			url : "../../attendanceLocation/addAttendance.do",
 			type : "post",
 			dataType : "json",

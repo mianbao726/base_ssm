@@ -14,6 +14,7 @@ import com.man.base.dao.PageServiceDao;
 import com.man.base.service.IModuleService;
 import com.man.base.service.IRoleService;
 import com.man.base.service.IUserService;
+import com.man.base.util.C;
 import com.man.base.util.MD5Util;
 import com.man.base.util.QMap;
 
@@ -46,9 +47,9 @@ public class UserServiceImpl extends PageServiceDao implements IUserService {
 		userinfo.put("userRoles", role_list);
 		List<Map<String,Object>> menu_list = moduleService.selectMenuForUser(request,userinfo);
 		
-//		if(null != role_list && role_list.size()>0){
-//			userinfo.put("main_page", role_list.get(0).get("role_main"));
-//		}
+		if(null != role_list && role_list.size()>0){//用户默认主页
+			userinfo.put("main_page", role_list.get(0).containsKey("role_main") && !("".equals(role_list.get(0).get("role_main").toString().trim())) ? role_list.get(0).get("role_main").toString().trim() : C.DEFAULT_DASHBOARD);
+		}
 		userinfo.put("data_list", menu_list);
 		session.setAttribute("userInfo", userinfo);
 	}

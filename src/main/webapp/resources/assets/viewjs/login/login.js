@@ -28,6 +28,19 @@ jQuery(function($) {
 		$("#reset_pwd").data('bootstrapValidator').resetForm();
 		$("#reset_pwd")[0].reset()
 	});
+	
+	
+	$.sunny.ajax({
+		contentType : 'application/json; charset=utf-8',
+		url : "role/getAllRole.do",
+		type : "post",
+		dataType : "json",
+		success : function(data) {
+			$.each(data.data,function(i,n){
+					$("#login_as").append('<option value = "'+n.id+'">'+n.role_name+'</option>');
+			})
+		}
+	});
 
 	// register button
 	$("#register").click(

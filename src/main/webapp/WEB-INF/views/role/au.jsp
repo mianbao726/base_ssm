@@ -10,6 +10,11 @@
 <jsp:param name="link1" value="角色管理" />
 <jsp:param name="link2" value="角色信息维护" /> 
 </jsp:include>
+<style type="text/css">
+.ztree li a {
+	padding-left: 5px;
+}
+</style>
 			<div class="col-sm-12" style="background-color: white;overflow-x:hidden">
 				<form class="form-horizontal" role="form" id="form">
 					<div class="widget-box" style="margin-bottom: 16px;">
@@ -284,7 +289,7 @@ var datatables;
 	<!--编辑页面-->
 	//
 	var current_path = '<%=path%>';
-	var attid = "${param.id}";
+	var attid = '${param.id}';
 	var current_level= -1;
 	//add=>true  edit=>false
 	var addEditFlag = (attid == '');

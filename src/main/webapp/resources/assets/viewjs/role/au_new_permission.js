@@ -67,12 +67,12 @@ function save_permissoin() {
 	if (!a_check()) {
 		var params = $("#from_permission").serializeObject();
 		params['pid'] = $("#gloable_pid").val();
-		var url = "../base/addModule.do";//添加url
+		var url = current_path+"/role/addModule.do";//添加url
 		if('1' == $("#au_flag").val()){//修改url
-			url = "../base/updateModule.do";
+			url = current_path+"/role/updateModule.do";
 			params['id'] = $('#edit_current_action_id').val();
 		}
-		$.zkbr.ajax({
+		$.sunny.ajax({
 			url : url,
 			type : "post",
 			dataType : "json",
@@ -81,9 +81,9 @@ function save_permissoin() {
 				$("#add_new_permission").modal('hide');
 				var id = $("#edit_current_id").val();
 				if((attid == '')){
-					window.location.href = current_path+'/zk/role_au.action';
+					window.location.href = current_path+'/role/au.html';
 				}else{
-					window.location.href = current_path+'/zk/role_au.action?id='+attid;
+					window.location.href = current_path+'/role/au.html?id='+attid;
 				}
 				
 			}

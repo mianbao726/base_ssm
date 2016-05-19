@@ -2,6 +2,7 @@ package com.man.base.util;
 
 public class C {
 	public static final String PROJECT_NAME = "base";
+	public static final String DEFAULT_DASHBOARD = "dashboard.html";
 	// admin ID
 	public static final String ADMIN_ID = "1";
 	// admin ROLE ID
