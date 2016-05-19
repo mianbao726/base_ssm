@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.man.base.service.IModuleService;
 import com.man.base.service.IRoleService;
+import com.man.base.util.QMap;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Controller
@@ -50,6 +51,24 @@ public class RoleController extends BaseController {
 		responseMap.put("id", roleService.del(map));
 		return JSONObject.toJSONString(responseMap);
 	}
+	
+	@RequestMapping(value = "/addRole.do", method = RequestMethod.POST)
+	public @ResponseBody String addRole(HttpServletRequest request, HttpServletResponse response) {
+		Map<String,Object> map = super.getParams(request);
+		Map responseMap = new QMap(200);
+		responseMap.put("id",  roleService.add(map));
+		return JSONObject.toJSONString(responseMap);
+	}
+	
+	@RequestMapping(value = "/updateRole.do", method = RequestMethod.POST)
+	public @ResponseBody String updateRole(HttpServletRequest request, HttpServletResponse response) {
+		Map<String,Object> map = super.getParams(request);
+		Map responseMap = new QMap(200);
+		responseMap.put("id", roleService.update(map));
+		return JSONObject.toJSONString(responseMap);
+	}
+	
+	
 	
 	@RequestMapping(value = "/getRoleInfo.do", method = RequestMethod.POST)
 	public @ResponseBody String getRoleInfo(HttpServletRequest request, HttpServletResponse response) {

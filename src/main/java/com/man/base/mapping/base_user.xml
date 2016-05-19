@@ -5,7 +5,7 @@
 	<select id="index" parameterMap="paraMap" resultType="hashmap">
 		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
 		SELECT
-		id, username, password, email , date_format(a.created_at,'%Y-%m-%d') as create_at
+		id, username, case when ''=age or  age is NULL  then ''  else age end as age, email , date_format(a.created_at,'%Y-%m-%d') as create_at
 		FROM
 		sys_user a
 		WHERE
@@ -31,7 +31,7 @@
 
 	<select id="selectOne" parameterMap="paraMap" resultType="hashmap">
 		select
-		id, username, password, age
+		id, username, email, case when ''=age or  age is NULL  then ''  else age end as age, date_format(created_at,'%Y-%m-%d') as create_at
 		from sys_user
 		where id = #{id,jdbcType=INTEGER}
 	</select>

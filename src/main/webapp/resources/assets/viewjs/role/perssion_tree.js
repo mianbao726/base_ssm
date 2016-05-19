@@ -187,6 +187,7 @@ $(function() {
 		async : {
 			enable : true,
 			type : "post",
+			dataType: "json",
 			url : '../role/getWebModuleTree.do',
 			autoParam : [ "id=pid" ],
 			dataFilter : ajaxDataFilter,
@@ -247,12 +248,12 @@ $(function() {
 		params['nodes'] = nodes;
 		var url;
 		if (addEditFlag) {// 添加
-			url = "../base/addRole.do";
+			url = "../role/addRole.do";
 		} else {
-			url = "../base/updateRole.do";
+			url = "../role/updateRole.do";
 			params['id'] = $("#edit_current_id").val();
 		}
-		$.zkbr.ajax({
+		$.sunny.ajax({
 			url : url,
 			type : "post",
 			dataType : "json",
@@ -261,7 +262,7 @@ $(function() {
 			disableMsg : "保存中，请稍后!",
 			params : params,
 			success : function(data) {
-				window.location.href = current_path+'/zk/role_index.action';
+				window.location.href = current_path+'/role/index.html';
 			}
 		});
 

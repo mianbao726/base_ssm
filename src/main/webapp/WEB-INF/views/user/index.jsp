@@ -21,6 +21,7 @@
 								<th style="width: 200px;">用户名</th>
 								<th>邮箱</th>
 								<th>注册时间</th>
+								<th>年龄</th>
 								<th style="width: 120px;">操作</th>
 							</tr>
 						</thead>
@@ -76,14 +77,26 @@
 	                        {"data":"username"},
 	                        {"data":"email"},
 							{"data":"create_at"},
+							{"data":"age"},
 	                       ],
                  "columnDefs": [
+					{
+					    "render": function(data, type, row){
+					    	if (row.age == '') {
+					    		return '<span class="badge badge-info">暂未填写</span>'; 
+							}else {
+								return row.age; 	
+							}                        	 
+					    },
+					    "orderable": false,
+					    "targets": 3
+					},
                     {
                      "render": function(data, type, row){
                			 return '<input class="btn btn-xs btn-success" type="button" value="编辑" onclick="updateRole(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-danger" type="button" value="删除" onclick="delRole(\''+row.id+'\')">'                        	 
                      },
                      "orderable": false,
-                     "targets": 3
+                     "targets": 4
                  }]
 	        } );
 			dataTables.on('draw.dt',function(){  
@@ -133,13 +146,13 @@
 			
 			/***查询用户***/
 			$("#serach").click(function(){
-				var role_name = $("#role_name").val();
+				var username = $("#username").val();
 				var filter = [];
-				if(role_name!=""){
+				if(username!=""){
 		        	var c = {};        	
-		        	c.key = 'a.role_name';
+		        	c.key = 'a.username';
 		        	c.mode = "%",
-		        	c.value = role_name;
+		        	c.value = username;
 		        	filter.push(c);
 				}
 	        	dataTables.ajax.reloadData({'filter':filter});				

@@ -40,8 +40,7 @@
 	var dataTables;
 	/***新增人员页面跳转***/
 	$("#addRole").click(function(){
-// 		window.location.href="addRole.jsp?operate="+operate;
-		window.location.href = '<%=path%>/zk/role_au.action';
+		window.location.href = '<%=path%>/role/au.html';
 	});
 	$("#leadingInUser").click(function(){
 		window.location.href="leadingInUser.jsp";

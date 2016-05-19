@@ -152,10 +152,17 @@ public class UserController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 
-	@RequestMapping(value = "/update.do", method = RequestMethod.POST)
-	public @ResponseBody String update(@RequestBody Map param, HttpServletRequest request, HttpServletResponse response) {
-		int count = this.userService.update(param);
+	@RequestMapping(value = "/update.do")
+	public @ResponseBody String update(HttpServletRequest request, HttpServletResponse response) {
+		
 		Map ret = null;
+		Map params = super.getParams(request);
+		
+		if(1 == this.userService.update(params)){
+			ret = new QMap(200);
+		}else{
+			ret = new QMap(202,"操作失败");	
+		}
 		return JSONObject.toJSONString(ret);
 	}
 
