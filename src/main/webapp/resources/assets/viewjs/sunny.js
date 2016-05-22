@@ -68,7 +68,8 @@
 				// sunny_hide();
 				// }
 //				alert(1);
-//				window.location.href = '/' + project_name + '/login.html';
+				window.location.href = '/' + project_name + '/login.html';
+				
 			};
 			$.ajax(sunny_opts);
 		} catch (e) {

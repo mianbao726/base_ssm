@@ -40,6 +40,7 @@
 	var dataTables;
 	/***新增人员页面跳转***/
 	$("#addRole").click(function(){
+		alert(123);
 		window.location.href = '<%=path%>/role/au.html';
 	});
 	$("#leadingInUser").click(function(){

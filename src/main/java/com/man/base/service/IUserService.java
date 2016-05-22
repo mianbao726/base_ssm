@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface IUserService {
 	public Map index(Map param);
 	public int update(Map param);
+	public int delete(Map param);
 	public Map insert(Map param);
 	public Map selectOne(Map param);
 	

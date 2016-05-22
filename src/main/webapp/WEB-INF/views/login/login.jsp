@@ -62,13 +62,13 @@
 												</span>
 												</label>
 												
-												<label class="block clearfix col-sm-13 form-group"> <span class="block input-icon input-icon-right">
+												<!-- <label class="block clearfix col-sm-13 form-group" > <span class="block input-icon input-icon-right">
 														<select id = "login_as" name = "login_as">
 														</select>
 												<span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-content="帮助信息 ！！！ ！！！.">?</span>		
 												</span>
 												
-												</label>
+												</label> -->
 												
 												
 												

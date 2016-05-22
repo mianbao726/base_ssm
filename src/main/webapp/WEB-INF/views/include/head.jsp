@@ -64,13 +64,13 @@
 
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 							
-								<li>
+								<!-- <li>
 									<a href="#" onclick="goEditPWD()">
 										<i class="ace-icon fa fa-cog"></i> 修改密码
 									</a>
-								</li>
+								</li> -->
 
-								<li class="divider"></li>
+								<!-- <li class="divider"></li> -->
 
 								<li>
 									<a href="#" onclick="logout()">

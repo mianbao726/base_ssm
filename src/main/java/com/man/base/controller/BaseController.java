@@ -69,9 +69,9 @@ public class BaseController {
 	 */
 	
 	protected Map<String, Object> getParams(HttpServletRequest request) {
-		System.out.println("--param start ...");
-		QMap.showMap(request.getParameterMap());
-		System.out.println("--param end ...");
+//		System.out.println("--param start ...");
+//		QMap.showMap(request.getParameterMap());
+//		System.out.println("--param end ...");
 		Map<String, Object> paramsMap = null;
 		String paramsStr = request.getParameter("params");
 		if (paramsStr != null && !"".equals(paramsStr) && !"null".equals(paramsStr)) {
@@ -84,9 +84,11 @@ public class BaseController {
 		//系统时间
 		paramsMap.put(C.PARAM_DATE, TimestampTool.parseDateYYYYMMDDHHMMSS(new Date()));
 		if(null != request.getSession().getAttribute("userInfo") ){
-			paramsMap.put(C.PARAM_CURRENT_USER_ID, ((Map)request.getSession().getAttribute("userInfo")).get("user_id"));
+			paramsMap.put(C.PARAM_CURRENT_USER_ID, ((Map)request.getSession().getAttribute("userInfo")).get("id"));
+			paramsMap.put(C.PARAM_CURRENT_USER_NAME, ((Map)request.getSession().getAttribute("userInfo")).get("username"));
 		}else{
 			paramsMap.put(C.PARAM_CURRENT_USER_ID, -1);
+			paramsMap.put(C.PARAM_CURRENT_USER_NAME, -1);
 		}
 		return paramsMap;
 	}

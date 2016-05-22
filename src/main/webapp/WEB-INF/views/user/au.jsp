@@ -78,18 +78,8 @@ String id = request.getParameter("id");%>
 <script type="text/javascript">
 var id = '<%=id %>';
 
-$.sunny.ajax({
-		contentType : 'application/json; charset=utf-8',
-		url : "../role/getAllRole.do",
-		type : "post",
-		dataType : "json",
-		data : JSON.stringify(params),
-		success : function(data) {
-			$.each(data.data,function(i,n){
-					$("#role_set").append('<input type = "checkbox" name = "roles" id = "role_'+n.id+'" value = "'+n.id+'"><label for = "role_'+n.id+'">'+n.role_name+'('+n.role_info+')</label><br/>');
-			})
-		}
-	});
+var current_roleid ;
+
 
 if(id != 'null'){
 	var params = {};
@@ -99,14 +89,33 @@ if(id != 'null'){
  			url : "../user/selectOne.do",
  			type : "post",
  			dataType : "json",
+ 			async:false,
  			data : JSON.stringify(params),
  			success : function(data) {
  				$("#form-field-1").val(data.username);
  				$("#form-field-3").val(data.email);
  				$("#form-field-4").val(data.age);
+ 				current_roleid=data.role_id;
  			}
  		});
 }
+
+
+$.sunny.ajax({
+	contentType : 'application/json; charset=utf-8',
+	url : "../role/getAllRole.do",
+	type : "post",
+	dataType : "json",
+	data : JSON.stringify(params),
+	success : function(data) {
+		$.each(data.data,function(i,n){
+// 			alert( current_roleid + '  ' +i.id );
+// 			alert( );
+			var chk = current_roleid == n.id ? ' checked = "checked" ':'';
+				$("#role_set").append('<input type = "radio" name = "roles" id = "role_'+n.id+'" value = "'+n.id+'"  '+ chk +' /><label for = "role_'+n.id+'">'+n.role_name+'('+n.role_info+')</label><br/>');
+		})
+	}
+});
 
 //保存
 $("#save").click(function() {

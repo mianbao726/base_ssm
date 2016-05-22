@@ -66,6 +66,11 @@ public class UserServiceImpl extends PageServiceDao implements IUserService {
 	public int register(Map param) {
 		param.put("password", MD5Util.MD5(param.get("username").toString() + param.get("password")));
 		int count = baseDao.insert("base_user.insert", param);
+		
+		param.put("id" ,param.get("ID")); 
+        param.put("role_id",C.DEFAULT_ROLE_ID); 
+        param.put("au_flag","add");
+		baseDao.update("base_user.insert_user_role", param);
 		return count;
 	}
 
@@ -80,6 +85,17 @@ public class UserServiceImpl extends PageServiceDao implements IUserService {
 	}
 
 	public int update(Map param) {
+		baseDao.update("base_user.delete_user_role", param);
+		
+		param.put("role_id", ((List)param.get("role")).get(0));
+		
+		baseDao.update("base_user.insert_user_role", param);
+		
+		int count = baseDao.update("base_user.updateByPrimaryKey", param);
+		return count;
+	}
+	
+	public int delete(Map param) {
 		int count = baseDao.update("base_user.updateByPrimaryKey", param);
 		return count;
 	}

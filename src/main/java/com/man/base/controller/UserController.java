@@ -129,7 +129,7 @@ public class UserController extends BaseController {
 		Map ret = null;
 		Map param = super.getParams(request);
 		param.put("del_flag", "1");
-		if(1 == this.userService.update(param)){
+		if(1 == this.userService.delete(param)){
 			ret = new QMap(200);
 		}else{
 			ret = new QMap(202,"操作失败");
