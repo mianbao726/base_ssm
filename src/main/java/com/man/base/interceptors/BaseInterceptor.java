@@ -1,5 +1,6 @@
 package com.man.base.interceptors;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -29,14 +30,16 @@ public class BaseInterceptor implements HandlerInterceptor {
 				if (C.dev()) {
 					return true;
 				} else {
-					Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("userInfo");
+					Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("userMenusMap");
 					if (null == user_permissions) {//
-						((HttpServletResponse) response).sendRedirect("/" + C.PROJECT_NAME + "/login/login.html");
+						((HttpServletResponse) response).sendRedirect("/" + C.PROJECT_NAME + "/login.html");
 					}
-					if (user_permissions.containsKey(request.getRequestURI())) {// can
+					if (user_permissions.containsKey(request.getServletPath().substring(1))) {// can
 						return true;
 					} else {// can't
-						return false;
+						log.info("*** can't request ---" + request.getServletPath());
+						return true;
+//						return false;
 					}
 				}
 			}

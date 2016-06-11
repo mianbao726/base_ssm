@@ -10,8 +10,8 @@ public class C {
 	// DEFAULT_ROLE_ID
 	public static final String DEFAULT_ROLE_ID = "16";
 
-	// 开发标志 0=>开发中 1=>非开发中
-	public static final String DEV = "0";
+	// 开发标志 0=>开发中 1=>产品
+	public static final String DEV = "1";
 
 	// 图片类型
 	public static final String[] IMAGE_TYPE = { ".png", ".jpg" };
