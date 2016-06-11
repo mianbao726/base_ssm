@@ -10,6 +10,7 @@
 <jsp:param name="link1" value="角色管理" />
 <jsp:param name="link2" value="" /> 
 </jsp:include>
+<input id = "serach" type = "button" value ="serach"/>
 <div class="main-content">
 	<div class="page-content">
 		<div class="page-content-area">
@@ -40,7 +41,6 @@
 	var dataTables;
 	/***新增人员页面跳转***/
 	$("#addRole").click(function(){
-		alert(123);
 		window.location.href = '<%=path%>/role/au.html';
 	});
 	$("#leadingInUser").click(function(){
@@ -137,7 +137,7 @@
 			
 			/***查询用户***/
 			$("#serach").click(function(){
-				var role_name = $("#role_name").val();
+				var role_name = "管理";
 				var filter = [];
 				if(role_name!=""){
 		        	var c = {};        	
