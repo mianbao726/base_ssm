@@ -20,7 +20,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		if (Util.exceptReq(request.getRequestURI())) {// request
+		if (Util.exceptReq(request.getRequestURI())) {// request  test
 			if (Arrays.asList(C.SPECIAL_REQUEST).contains(request.getServletPath())) {// except_request
 				log.info("except request ---" + request.getServletPath());
 				return true;
