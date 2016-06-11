@@ -15,6 +15,7 @@ public class Util {
 		Matcher matcher = Pattern.compile(C.RESOURCE_PATTERN).matcher(url);
 		return matcher.find() ? false : true;
 	}
+	
 
 	/**
 	 * 合并数组
