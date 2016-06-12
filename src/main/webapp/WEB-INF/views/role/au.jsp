@@ -517,7 +517,6 @@ var datatables;
 	
 </script>
 	<!-- 当前页面专用 start -->
-	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/z-tree/js/jquery.ztree.all-3.5.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/fuelux/data/fuelux.tree-sample-demo-data.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/fuelux/fuelux.tree.min.js"></script>
