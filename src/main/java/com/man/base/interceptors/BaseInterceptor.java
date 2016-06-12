@@ -36,6 +36,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 					if (user_permissions.containsKey(request.getRequestURI())) {// can
 						return true;
 					} else {// can't
+						log.info("can't access ... ... ");
 						return false;
 					}
 				}

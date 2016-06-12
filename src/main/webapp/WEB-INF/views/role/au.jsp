@@ -522,7 +522,7 @@ var datatables;
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/fuelux/data/fuelux.tree-sample-demo-data.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/fuelux/fuelux.tree.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/z-tree/css/zTreeStyle/metro.css">
-	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/role/au_new_permission.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/role/perssion_tree.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/role/au-new-permission.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/role/perssion-tree.js"></script>
 	<!-- 当前页面专用 end -->
 						
