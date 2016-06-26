@@ -39,7 +39,6 @@ public class BaseInterceptor implements HandlerInterceptor {
 					} else {// can't
 						log.info("*** can't request ---" + request.getServletPath());
 						return true;
-//						return false;
 					}
 				}
 			}
