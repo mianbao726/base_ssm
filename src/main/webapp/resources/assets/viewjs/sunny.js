@@ -1,3 +1,5 @@
+var APP = "base";
+var BASE = "/"+APP;
 (function($) {
 	var project_name = "base";
 	var sunny = {};
