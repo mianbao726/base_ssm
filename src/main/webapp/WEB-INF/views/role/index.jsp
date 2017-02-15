@@ -10,7 +10,7 @@
 <jsp:param name="link1" value="角色管理" />
 <jsp:param name="link2" value="" /> 
 </jsp:include>
-<input id = "serach" type = "button" value ="serach"/>
+<!-- <input id = "serach" type = "button" value ="serach"/> -->
 <div class="main-content">
 	<div class="page-content">
 		<div class="page-content-area">

@@ -140,7 +140,7 @@
 					{
 					    "render": function(data, type, row){
 					    	 if(row.role_id == 1){
-	                    		 return '<span class="badge badge-warning">管理员</span>';
+	                    		 return '<span class="badge badge-warning">超级管理员</span>';
 	                    	 }else if(row.role_id != 16){
 					    		 return '<span class="badge badge-info">审核通过(管理员无需审核)</span>';
 					    	 }else{

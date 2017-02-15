@@ -24,7 +24,6 @@ import com.man.base.util.QMap;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Controller
-@RequestMapping("/home")
 public class OutsideController extends BaseController {
 	@Resource
 	private IUserService userService;
@@ -32,7 +31,7 @@ public class OutsideController extends BaseController {
 	@Resource
 	private IModuleService moduleService;
 	
-	@RequestMapping("/index.html")
+	@RequestMapping("/home.html")
 	public String index(HttpServletRequest request, Model model) throws Exception {
 		return "home/login";
 	}

@@ -18,10 +18,10 @@
 					<div class="login-container">
 						<div class="center">
 							<h1>
-								<i class="ace-icon fa fa-leaf green"></i> <span class="red">SUNNY</span> <span class="white"
-									id="id-text2">Application</span>
+								<i class="ace-icon fa fa-leaf green"></i> <span class="red">沈阳</span> <span class="white"
+									id="id-text2">赏金猎人</span>
 							</h1>
-							<h4 class="blue" id="id-company-text">&copy; zhuwj726@gmail.com&nbsp;&nbsp;:&nbsp;)</h4>
+							<h4 class="blue" id="id-company-text">contact me&nbsp;&nbsp;:&nbsp;)&nbsp;&nbsp;&copy; zhuwj726@gmail.com&nbsp;&nbsp;</h4>
 						</div>
 
 						<div class="space-6"></div>
@@ -177,29 +177,19 @@
 											data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
 											data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
 											<fieldset>
-												<label class="block clearfix col-sm-13 form-group"> <span
+												 <label class="block clearfix col-sm-13 form-group"> <span
 													class="block input-icon input-icon-right"> <input type="text"
-														class="form-control" name="email" placeholder="邮箱地址"
+														class="form-control" placeholder="电话号" name="username"
 														data-bv-notempty="true"
-														data-bv-notempty-message="请填写邮箱地址" 
-														data-bv-emailaddress="true"
-														data-bv-emailaddress-message="请输入正确邮箱" /> <i class="ace-icon fa fa-envelope"></i>
-												</span>
-												</label> <label class="block clearfix col-sm-13 form-group"> <span
-													class="block input-icon input-icon-right"> <input type="text"
-														class="form-control" placeholder="用户名" name="username"
-														data-bv-notempty="true"
-														data-bv-notempty-message="用户名不能为空" 
-														
-														pattern="^[\w_]{5,20}$"
-                										data-bv-regexp-message="只能输入5-20位字母数字下划线"
+														data-bv-notempty-message="电话号不能为空" 
+														pattern="^[0-9]{11}$"
+                										data-bv-regexp-message="请输入11位电话号"
 														/>
-														<i class="ace-icon fa fa-user"></i>
+														<i class="ace-icon fa fa-signal"></i>
 												</span>
-												</label> <label class="block clearfix col-sm-13 form-group"> <span
+												</label><label class="block clearfix col-sm-13 form-group"> <span
 													class="block input-icon input-icon-right"> <input type="password"
 														class="form-control" placeholder="密码" name="password" 
-														
 														data-bv-notempty="true"
 														data-bv-notempty-message="请填写密码" 
 														
@@ -219,14 +209,75 @@
 														<i class="ace-icon fa fa-retweet"></i>
 												</span>
 												</label>
-
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"> <input type="text"
+														class="form-control" name="realname" placeholder="姓名"
+														data-bv-notempty="true"
+														data-bv-notempty-message="请填写姓名" 
+														data-bv-emailaddress="true"
+														data-bv-emailaddress-message="请输入姓名" /> <i class="ace-icon fa fa-user"></i>
+												</span>
+												</label> 
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"> <input type="text"
+														class="form-control" placeholder="住址" name="address"
+														data-bv-notempty="true"
+														data-bv-notempty-message="住址不能为空" 
+														
+														pattern="^[\w_]{5,20}$"
+                										data-bv-regexp-message="请输入50位以内字符"
+														/>
+														<i class="ace-icon fa fa-envelope"></i>
+												</span>
+												</label> 
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"> <input type="text"
+														class="form-control" placeholder="身份证号" name="idcard"
+														data-bv-notempty="true"
+														data-bv-notempty-message="身份证号不能为空" 
+														
+														pattern="^[\w_]{5,20}$"
+                										data-bv-regexp-message="请输入正确身份证号"
+														/>
+														<i class="ace-icon fa fa-key"></i>
+												</span>
+												</label> 
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"> <input type="text"
+														class="form-control" placeholder="性别" name="username"
+														data-bv-notempty="true"
+														data-bv-notempty-message="用户名不能为空" 
+														
+														pattern="^[\w_]{5,20}$"
+                										data-bv-regexp-message="只能输入5-20位字母数字下划线"
+														/>
+														<i class="ace-icon fa fa-user"></i>
+												</span>
+												</label> 
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"> <input type="text"
+														class="form-control" placeholder="年龄" name="username"
+														data-bv-notempty="true"
+														data-bv-notempty-message="年龄不能为空" 
+														
+														pattern="^[\w_]{2,3}$"
+                										data-bv-regexp-message="请输入正确年龄"
+														/>
+														<i class="ace-icon fa fa-heart"></i>
+												</span>
+												</label> 
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"> <input type="text"
+														class="form-control" placeholder="个人简介" name="Introduction"
+														/>
+														<i class="ace-icon fa fa-tag"></i>
+												</span>
+												</label> 
 												<div class="form-group">
 													<div class="block col-lg-13">
 														<div class="checkbox">
-															<label> <input type="checkbox" name="languages[]" value="english"
-																id = "agree"
-																data-bv-message="请接受用户使用协议" data-bv-notempty="true" /> <span
-																class="lbl"> 我接受 <a href="javascript:;" id = "bootbox-regular">用户协议</a>
+															<label >  <span
+																class="lbl" style = "color:red"> 请填写正确身份信息，我们会保护您的个人信息
 															</span>
 															</label>
 														</div>
@@ -275,5 +326,5 @@
 	</div>
 	<!-- /.main-container -->
 	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/assets/viewjs/login/login.js"></script>
+		src="${pageContext.request.contextPath}/assets/viewjs/home/login.js"></script>
 </body>
