@@ -12,17 +12,54 @@
 </jsp:include>
 <div class="main-content">
 	<div class="page-content">
+	
+	<div class="tab-content">
+			<div id="maintab1" class="tab-pane in active">
+				<form class="form-inline well well-sm" id="form_a">
+					<div>
+						<div class="form-group">
+							<label style="width: 100px;">申请人姓名：</label>
+							<div class="input-group">
+								<input type="text" name="a_name" id="a_name"
+									style="width: 210px;">
+							</div>
+						</div>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="form-group">
+							<label style="width: 100px;">证件号码：</label>
+							<div class="input-group">
+								<input type="text" id="a_idCard" name="a_idCard"
+									style="width: 210px;">
+							</div>
+						</div>
+					</div>
+					&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+					<div>
+						<button type="button" class="btn btn-sm" id="searchone">搜&nbsp;索</button>
+						&nbsp;&nbsp;
+						<button class="btn btn-sm btn-danger" type="reset"
+							>清&nbsp;空</button>
+						&nbsp;&nbsp;
+					</div>
+				</form>
+			</div>
 		<div class="page-content-area">
+			<p>
+				<button class="btn btn-success btn-sm" id="add">
+					<i class="fa fa-plus"></i> 新增
+				</button>
+			</p>
 			<div class="row">
 				<div class="col-sm-12">
 					<table id="example" class="table table-striped table-bordered table-hover dataTable" cellspacing="0" width="100%">
 						<thead>
 							<tr>
-								<th style="width: 200px;">用户名</th>
-								<th>邮箱</th>
+								<th style="width: 200px;">账号(电话号)</th>
+								<th>身份信息</th>
 								<th>注册时间</th>
 								<th>年龄</th>
-								<th style="width: 120px;">操作</th>
+								<th style="width: 230px;">审核状态</th>
+								<th style="width: 250px;">操作</th>
 							</tr>
 						</thead>
 					</table>
@@ -31,14 +68,14 @@
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript">
 	var d_operate = "insert";
 	
 	var dataTables;
-	/***新增人员页面跳转***/
-	$("#addRole").click(function(){
-// 		window.location.href="addRole.jsp?operate="+operate;
-		window.location.href = '<%=path%>/zk/role_au.action';
+	/***新增页面跳转***/
+	$("#add").click(function(){
+		window.location.href = '<%=path%>/user/au.html';
 	});
 	$("#leadingInUser").click(function(){
 		window.location.href="leadingInUser.jsp";
@@ -78,8 +115,17 @@
 	                        {"data":"email"},
 							{"data":"create_at"},
 							{"data":"age"},
+							{"data":"status"},
 	                       ],
                  "columnDefs": [
+                	 {
+ 					    "render": function(data, type, row){
+// 				    		return '<span class="badge badge-info">暂未填写</span>'; 
+ 					    	return row.realname+"(<font color ='red'>"+row.sex+"</font>)("+row.idcard+")";
+ 					    },
+ 					    "orderable": false,
+ 					    "targets": 1
+ 					},
 					{
 					    "render": function(data, type, row){
 					    	if (row.age == '') {
@@ -91,12 +137,40 @@
 					    "orderable": false,
 					    "targets": 3
 					},
+					{
+					    "render": function(data, type, row){
+					    	 if(row.role_id == 1){
+	                    		 return '<span class="badge badge-warning">管理员</span>';
+	                    	 }else if(row.role_id != 16){
+					    		 return '<span class="badge badge-info">审核通过(管理员无需审核)</span>';
+					    	 }else{
+						    	if (row.status == 0) {
+						    		return '<span class="badge badge-danger">等待审核</span>'; 
+								}else {
+									return '<span class="badge badge-success">审核通过</span>'; 	
+								}
+					    	 }
+					    },
+					    "orderable": false,
+					    "targets": 4
+					},
                     {
                      "render": function(data, type, row){
-               			 return '<input class="btn btn-xs btn-success" type="button" value="编辑" onclick="updateRole(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-danger" type="button" value="删除" onclick="delRole(\''+row.id+'\')">'                        	 
+                    	 if(row.role_id == 1){
+                    		 return '<input class="btn btn-xs btn-primary" type="button" value="编辑" onclick="updateRole(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-warning" type="button" value="重置密码" onclick="resetpwd(\''+row.id+'\')">'
+                    	 }else if(row.role_id != 16){
+                    		 return '<input class="btn btn-xs btn-primary" type="button" value="编辑" onclick="updateRole(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-warning" type="button" value="重置密码" onclick="resetpwd(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-danger" type="button" value="删除" onclick="delRole(\''+row.id+'\')">'
+                    	 }else{
+	                    	 if(row.status == 0){
+	                    		 return '<input class="btn btn-xs btn-primary" type="button" value="编辑" onclick="updateRole(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-warning" type="button" value="重置密码" onclick="resetpwd(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-danger" type="button" value="删除" onclick="delRole(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-success" type="button" value="审核通过" onclick="pass(\''+row.id+'\')">'	 
+	                    	 }else{
+	                    		 return '<input class="btn btn-xs btn-primary" type="button" value="编辑" onclick="updateRole(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-warning" type="button" value="重置密码" onclick="resetpwd(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-danger" type="button" value="删除" onclick="delRole(\''+row.id+'\')">&nbsp;<input class="btn btn-xs btn-default" type="button" value="审核拒绝" onclick="refuse(\''+row.id+'\')">'
+	                    	 }
+                    	 }
+               			                         	 
                      },
                      "orderable": false,
-                     "targets": 4
+                     "targets": 5
                  }]
 	        } );
 			dataTables.on('draw.dt',function(){  
@@ -155,7 +229,7 @@
 		        	c.value = username;
 		        	filter.push(c);
 				}
-	        	dataTables.ajax.reloadData({'filter':filter});				
+				dataTables.ajax.reloadData({'filter':filter});				
 				
 			})
 			
@@ -197,6 +271,33 @@
 				  }
 			});
 		})
+		$( "#searchone" ).click(function(){
+			var a_name = $("#a_name").val();
+			var a_idCard = $("#a_idCard").val();
+			var filter = [];
+			if (a_name != "") {
+				var c = {};
+				c.key = 'realname';
+				c.mode = "%", c.value = a_name;
+				filter.push(c);
+			}
+			if (a_idCard != "") {
+				var c = {};
+				c.key = 'idcard';
+				c.mode = "%", c.value = a_idCard;
+				filter.push(c);
+			}
+			dataTables.ajax.reloadData({
+				'filter' : filter
+			});
+			
+			
+			
+			
+			
+			
+		})
+		
 		/*********************************************机构zTree树列表开始*******************************************************/
 	    function addHoverDom(treeId, treeNode) {
 	        var sObj = $("#" + treeNode.tId + "_span");
@@ -411,6 +512,43 @@
 // 		window.location.href="ADDROLE.jsp?operate="+operate+"&id="+id;
 		window.location.href = '<%=path%>/user/au.html?id='+id;
 	}
+	
+	function pass(id){
+		var params = {id: id};
+		$.sunny.confirm("确定审核通过? ", function(result) {
+			if(result) {
+				$.sunny.ajax({
+					  url: '<%=path%>/user/pass.do',
+					  type:"post",
+					  dataType:"json",
+					  params:params,
+					  success:function(ret){
+						  window.location.reload();
+							
+					  }
+				});;
+			}
+		});
+	}
+	
+	function refuse(id){
+		var params = {id: id};
+		$.sunny.confirm("确定审核拒绝? ", function(result) {
+			if(result) {
+				$.sunny.ajax({
+					  url: '<%=path%>/user/refuse.do',
+					  type:"post",
+					  dataType:"json",
+					  params:params,
+					  success:function(ret){
+						  window.location.reload();
+							
+					  }
+				});;
+			}
+		});
+	}
+	
 	/*******刪除******/
 	function delRole(id){
 		var params = {id: id};
@@ -418,6 +556,24 @@
 			if(result) {
 				$.sunny.ajax({
 					  url: '<%=path%>/user/delete.do',
+					  type:"post",
+					  dataType:"json",
+					  params:params,
+					  success:function(ret){
+						  window.location.reload();
+							
+					  }
+				});;
+			}
+		});
+	}
+	
+	function resetpwd(id){
+		var params = {id: id};
+		$.sunny.confirm("重置选中账号密码? ", function(result) {
+			if(result) {
+				$.sunny.ajax({
+					  url: '<%=path%>/user/resetpwd.do',
 					  type:"post",
 					  dataType:"json",
 					  params:params,

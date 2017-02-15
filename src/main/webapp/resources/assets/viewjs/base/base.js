@@ -4,7 +4,7 @@ function logout() {
 }
 
 function goEditPWD() {
-	window.location.href = BASE + '/zk/user_pwd.action';
+	window.location.href = BASE + '/user/pwd.html';
 }
 
 $(function() {

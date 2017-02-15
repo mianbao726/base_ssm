@@ -17,6 +17,9 @@ public interface IUserService {
 	public Long checkUniqueUsername(Map param);
 	
 	public Map login(Map param,HttpServletRequest request);
+	public int pass(Map param);
+	public Map editpwd(Map param);
+	
 	
 }
 

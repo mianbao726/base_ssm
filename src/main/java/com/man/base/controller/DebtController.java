@@ -24,13 +24,29 @@ import com.man.base.util.QMap;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Controller
-@RequestMapping("/user")
-public class UserController extends BaseController {
+@RequestMapping("/debt")
+public class DebtController extends BaseController {
 	@Resource
 	private IUserService userService;
 	
 	@Resource
 	private IModuleService moduleService;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@RequestMapping("/checkUniqueEmail.do")
 	public @ResponseBody String checkUniqueEmail(HttpServletRequest request, Model model) throws Exception {

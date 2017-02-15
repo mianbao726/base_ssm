@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.man.base.dao.BaseDao;
 import com.man.base.dao.PageServiceDao;
 import com.man.base.service.IModuleService;
@@ -30,7 +31,7 @@ public class UserServiceImpl extends PageServiceDao implements IUserService {
 	public Map login(Map param, HttpServletRequest request) {
 		Map ret = null;
 		Map userinfo = this.baseDao.selectOne("base_user.login", param);
-		if (null != userinfo && userinfo.get("password").equals(MD5Util.MD5(param.get("username").toString() + param.get("password")))) {
+		if (null != userinfo && userinfo.get("password").equals(MD5Util.MD5(param.get("password")+""))) {
 			ret = new QMap(200);
 			userinfo.remove("password");
 			login_success(request, userinfo);
@@ -79,18 +80,36 @@ public class UserServiceImpl extends PageServiceDao implements IUserService {
 		return ret;
 	}
 
+	public Map editpwd(Map param) {
+		param.put("id", param.get("CURRENT_USER_ID"));
+		Map ret = this.baseDao.selectOne("base_user.selectOne", param);
+		if(ret.get("password").toString().equals(MD5Util.MD5(param.get("pwd_ori").toString()))){
+			param.put("password", MD5Util.MD5(param.get("pwd_new").toString()));
+			this.baseDao.update("base_user.updateByPrimaryKey", param);
+			ret.put("status_code", "200");
+		}else{
+			ret.put("status_code", "400");
+		}
+		return ret;
+	}
+	
 	@Override
 	public Map index(Map param) {
 		return index("base_user.index", param);
 	}
 
 	public int update(Map param) {
-		baseDao.update("base_user.delete_user_role", param);
-		
-		param.put("role_id", ((List)param.get("role")).get(0));
-		
-		baseDao.update("base_user.insert_user_role", param);
-		
+//		baseDao.update("base_user.delete_user_role", param);
+//		
+//		param.put("role_id", ((List)param.get("role")).get(0));
+//		
+//		baseDao.update("base_user.insert_user_role", param);
+		param.remove("password");
+		int count = baseDao.update("base_user.updateByPrimaryKey", param);
+		return count;
+	}
+	
+	public int pass(Map param) {
 		int count = baseDao.update("base_user.updateByPrimaryKey", param);
 		return count;
 	}
@@ -101,7 +120,15 @@ public class UserServiceImpl extends PageServiceDao implements IUserService {
 	}
 
 	public Map insert(Map param) {
-		int count = baseDao.insert("base_user.insert", param);
+		
+//		List<String> roles = (ArrayList<String>)param.get("role");
+		 JSONArray array = (JSONArray)param.get("role");  
+		 param.put("password", MD5Util.MD5(param.get("password").toString()));
+		int id = baseDao.insert("base_user.insert", param);
+		for (int i = 0; i < array.size(); i++) {  
+			param.put("role_id", array.get(i));
+			baseDao.insert("base_user.insert_role", param);
+		}
 		return null;
 	}
 

@@ -33,12 +33,14 @@ public class BaseInterceptor implements HandlerInterceptor {
 					Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("userMenusMap");
 					if (null == user_permissions) {//
 						((HttpServletResponse) response).sendRedirect("/" + C.PROJECT_NAME + "/login.html");
-					}
-					if (user_permissions.containsKey(request.getServletPath().substring(1))) {// can
 						return true;
-					} else {// can't
-						log.info("*** can't request ---" + request.getServletPath());
-						return true;
+					}else{
+						if (user_permissions.containsKey(request.getServletPath().substring(1))) {// can
+							return true;
+						} else {// can't
+							log.info("*** can't request ---" + request.getServletPath());
+							return false;
+						}
 					}
 				}
 			}

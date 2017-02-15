@@ -5,11 +5,12 @@
 	<select id="index" parameterMap="paraMap" resultType="hashmap">
 		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
 		SELECT
-		id, username, case when ''=age or  age is NULL  then ''  else age end as age, email , date_format(a.created_at,'%Y-%m-%d') as create_at
+		a.id,a.realname,case when a.sex =0 then '男' else '女' end as sex,a.idcard,a.status,ur.role_id, username, case when ''=age or  age is NULL  then ''  else age end as age, email , date_format(a.created_at,'%Y-%m-%d') as create_at
 		FROM
-		sys_user a
+		sys_user a , sys_user_role ur
 		WHERE
-		a.del_flag = 0
+		a.id = ur.USER_ID
+		and a.del_flag = 0
 		<if test="filter != null">
 			and ${filter}
 		</if>
@@ -46,9 +47,11 @@
 
 	<!-- count -->
 	<select id="indexCount" parameterMap="paraMap" resultType="int">
-		select count(1) from sys_user a
-		where
-		a.del_flag=0
+		select count(1) FROM
+		sys_user a , sys_user_role ur
+		WHERE
+		a.id = ur.USER_ID
+		and a.del_flag = 0
 		<if test="filter != null">
 			and ${filter}
 		</if>
@@ -60,6 +63,13 @@
 		    t.id,
 		    t.username,
 		    t.email,
+		    t.password,
+		    r.role_name,
+		    t.realname,
+		    t.address,
+		    t.idcard,
+		    t.Introduction,
+		    t.sex,
 		    CASE
 		        WHEN '' = t.age OR t.age IS NULL THEN ''
 		        ELSE t.age
@@ -67,9 +77,11 @@
 		    DATE_FORMAT(t.created_at, '%Y-%m-%d') AS create_at
 		FROM
 		    sys_user t,
-		    sys_user_role ur
+		    sys_user_role ur,
+		    sys_role r
 		WHERE
 		    t.id = ur.USER_ID
+		   	and ur.role_id = r.id
     and t.id = #{id,jdbcType=INTEGER}
 	</select>
 	
@@ -103,16 +115,46 @@
 		username,
 		password,
 		email,
+		age,
+		realname,
+		address,
+		idcard,
+		Introduction,
+		sex,
 		created_at,
 		del_flag)
 		values (
-		#{username,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
 		#{password,jdbcType=VARCHAR},
 		#{email},
+		#{age},
+		#{realname},
+		#{address},
+		#{idcard},
+		#{Introduction},
+		#{sex},
 		#{PARAM_DATE},
 		#{DEL_FLAG})
 		<selectKey resultType="int" order="AFTER" keyProperty="ID"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
 	</insert>
+	<insert id="insert_role" parameterMap="paraMap">
+		insert into sys_user_role (
+		ROLE_ID,
+		USER_ID,
+		ROLE_CODE,
+		USER_NAME,
+		CREATE_DATE,
+		CREATE_USER)
+		values (
+		#{role_id},
+		#{ID},
+		#{role_id},
+		#{name},
+		#{PARAM_DATE},
+		#{CURRENT_USER_ID})
+		<selectKey resultType="int" order="AFTER" keyProperty="ID"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
+	</insert>
+	
 	<update id="updateByPrimaryKey" parameterType="hashmap">
 		update sys_user
 		set
@@ -127,6 +169,28 @@
 		</if>
 		<if test="del_flag != null">
 			del_flag = #{del_flag,jdbcType=INTEGER},
+		</if>
+		<if test="status != null">
+			status = #{status},
+		</if>
+		<if test="sex != null">
+			sex = #{sex},
+		</if>
+		
+		<if test="address != null">
+			address = #{address},
+		</if>
+		<if test="Introduction != null">
+			Introduction = #{Introduction},
+		</if>
+		<if test="idcard != null">
+			idcard = #{idcard},
+		</if>
+		<if test="name != null">
+			username = #{name},
+		</if>
+		<if test="realname != null">
+			realname = #{realname},
 		</if>
 		updated_at = now()
 		where id = #{id,jdbcType=INTEGER}

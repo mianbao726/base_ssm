@@ -24,13 +24,20 @@ import com.man.base.util.QMap;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Controller
-@RequestMapping("/user")
-public class UserController extends BaseController {
+@RequestMapping("/home")
+public class OutsideController extends BaseController {
 	@Resource
 	private IUserService userService;
 	
 	@Resource
 	private IModuleService moduleService;
+	
+	@RequestMapping("/index.html")
+	public String index(HttpServletRequest request, Model model) throws Exception {
+		return "home/login";
+	}
+	
+	
 
 	@RequestMapping("/checkUniqueEmail.do")
 	public @ResponseBody String checkUniqueEmail(HttpServletRequest request, Model model) throws Exception {
@@ -99,11 +106,6 @@ public class UserController extends BaseController {
 	public @ResponseBody String login(HttpServletRequest request, Model model) throws Exception {
 		Map ret = userService.login(super.getParams(request), request);
 		return JSONObject.toJSONString(ret);
-	}
-
-	@RequestMapping("/index.html")
-	public String index(HttpServletRequest request, Model model) throws Exception {
-		return "user/index";
 	}
 
 	@RequestMapping("/au.html")
