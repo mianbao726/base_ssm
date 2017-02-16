@@ -1,4 +1,4 @@
-package com.man.base.controller;
+package com.man.wb.course.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.man.base.controller.BaseController;
 import com.man.base.service.IModuleService;
 import com.man.base.service.IUserService;
 import com.man.base.util.MD5Util;
 import com.man.base.util.QMap;
+import com.man.wb.course.service.IDebtService;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Controller
@@ -28,11 +30,70 @@ import com.man.base.util.QMap;
 public class DebtController extends BaseController {
 	@Resource
 	private IUserService userService;
+	@Resource
+	private IDebtService debtService;
 	
 	@Resource
 	private IModuleService moduleService;
 	
+	@RequestMapping("/index_1.html")
+	public String index(HttpServletRequest request, Model model) throws Exception {
+		return "debt/index";
+	}
 	
+	@RequestMapping(value = "/index.do", method = RequestMethod.POST)
+	public @ResponseBody String index(HttpServletRequest request, HttpServletResponse response) {
+		Map page = (Map) JSONObject.parse(request.getParameter("params").toString());
+		request.getParameterMap();
+		Map ret = this.debtService.index(page);
+		return JSONObject.toJSONString(ret);
+	}
+	
+	@RequestMapping(value = "/delete.do")
+	public @ResponseBody String delete(HttpServletRequest request, HttpServletResponse response) {
+		Map ret = null;
+		Map param = super.getParams(request);
+		param.put("del_flag", "1");
+		if(1 == this.debtService.delete(param)){
+			ret = new QMap(200);
+		}else{
+			ret = new QMap(202,"操作失败");
+		}
+		return JSONObject.toJSONString(ret);
+	}
+	
+	@RequestMapping("/au.html")
+	public String au(HttpServletRequest request, Model model) {
+		return "debt/au";
+	}
+	
+	@RequestMapping("/add.do")
+	public @ResponseBody String add(HttpServletRequest request) throws Exception {
+		Map paramsMap = super.getParams(request);
+		debtService.insert(paramsMap);
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
+	
+	@RequestMapping(value = "/selectOne.do", method = RequestMethod.POST)
+	public @ResponseBody String getSearchUserProfiles(@RequestBody Map search, HttpServletRequest request, HttpServletResponse response) {
+		Map userInfo = debtService.selectOne(search);
+		return JSONObject.toJSONString(userInfo);
+	}
+	
+	@RequestMapping(value = "/update.do")
+	public @ResponseBody String update(HttpServletRequest request, HttpServletResponse response) {
+		
+		Map ret = null;
+		Map params = super.getParams(request);
+		
+		if(1 == this.debtService.update(params)){
+			ret = new QMap(200);
+		}else{
+			ret = new QMap(202,"操作失败");	
+		}
+		return JSONObject.toJSONString(ret);
+	}
 	
 	
 	
@@ -117,15 +178,9 @@ public class DebtController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 
-	@RequestMapping("/index.html")
-	public String index(HttpServletRequest request, Model model) throws Exception {
-		return "user/index";
-	}
+	
 
-	@RequestMapping("/au.html")
-	public String au(HttpServletRequest request, Model model) {
-		return "user/au";
-	}
+
 	
 	@RequestMapping("/pwd.html")
 	public String pwd(HttpServletRequest request, Model model) {
@@ -140,33 +195,8 @@ public class DebtController extends BaseController {
 		return JSONObject.toJSONString(userInfo);
 	}
 
-	@RequestMapping(value = "/selectOne.do", method = RequestMethod.POST)
-	public @ResponseBody String getSearchUserProfiles(@RequestBody Map search, HttpServletRequest request, HttpServletResponse response) {
-		Map userInfo = userService.selectOne(search);
-		return JSONObject.toJSONString(userInfo);
-	}
-
-	@RequestMapping(value = "/index.do", method = RequestMethod.POST)
-	public @ResponseBody String index(HttpServletRequest request, HttpServletResponse response) {
-		Map page = (Map) JSONObject.parse(request.getParameter("params").toString());
-		request.getParameterMap();
-		Map ret = this.userService.index(page);
-		return JSONObject.toJSONString(ret);
-	}
-
-	@RequestMapping(value = "/delete.do")
-	public @ResponseBody String delete(HttpServletRequest request, HttpServletResponse response) {
-		Map ret = null;
-		Map param = super.getParams(request);
-		param.put("del_flag", "1");
-		if(1 == this.userService.delete(param)){
-			ret = new QMap(200);
-		}else{
-			ret = new QMap(202,"操作失败");
-		}
-		return JSONObject.toJSONString(ret);
-	}
 	
+
 	@RequestMapping(value = "/pass.do")
 	public @ResponseBody String pass(HttpServletRequest request, HttpServletResponse response) {
 		Map ret = null;
@@ -206,13 +236,7 @@ public class DebtController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 	
-	@RequestMapping("/add.do")
-	public @ResponseBody String add(HttpServletRequest request) throws Exception {
-		Map paramsMap = super.getParams(request);
-		userService.insert(paramsMap);
-		paramsMap.put("status_code", "200");
-		return JSONObject.toJSONString(paramsMap);
-	}
+
 
 	@RequestMapping("/te.do")
 	public @ResponseBody String te(HttpServletRequest request, Model model) throws Exception {
@@ -222,18 +246,5 @@ public class DebtController extends BaseController {
 		return JSONObject.toJSONString(ret);
 	}
 
-	@RequestMapping(value = "/update.do")
-	public @ResponseBody String update(HttpServletRequest request, HttpServletResponse response) {
-		
-		Map ret = null;
-		Map params = super.getParams(request);
-		
-		if(1 == this.userService.update(params)){
-			ret = new QMap(200);
-		}else{
-			ret = new QMap(202,"操作失败");	
-		}
-		return JSONObject.toJSONString(ret);
-	}
 
 }
