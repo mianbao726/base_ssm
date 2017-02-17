@@ -101,16 +101,6 @@ if(id != 'null'){
  		});
 }
 	
-// 	$('.form_date').datetimepicker({
-//         language:  'zh-CN',
-//         weekStart: 1,
-//         todayBtn:  1,
-// 		autoclose: 1,
-// 		todayHighlight: 1,
-// 		startView: 2,
-// 		minView: 2,
-// 		forceParse: 0
-//     });
 $.sunny.ajax({
 	contentType : 'application/json; charset=utf-8',
 	url : "../role/getAllRole.do",
