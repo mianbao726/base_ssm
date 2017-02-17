@@ -60,8 +60,9 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	
-	
-	
+	<select id="loadMore" parameterMap="paraMap" resultType="hashmap">
+		 select * from sjlr_package where id >(select id from sjlr_package where uuid = #{uuid}) limit 10 
+	</select>
 	
 	<!--根据ID查询[课时表]的数据 -->
 	<select id="getCoursesCount" parameterMap="paraMap" resultType="hashmap">
@@ -72,7 +73,9 @@
 	
 	<!--向[课时表]中插入数据 -->
 	<insert id="insert" parameterMap="paraMap">
-			insert into sjlr_package(type	,
+			insert into sjlr_package(
+				uuid    ,
+				type	,
 				status	,
 				name	,
 				amount	,
@@ -80,7 +83,7 @@
 				s_date	,
 				e_date	,
 				updated_at	
-				) values (#{type} , #{status}, #{name},#{amount},#{address},now(),now(),now())
+				) values ( #{uuid} , #{type} , #{status}, #{name},#{amount},#{address},now(),now(),now())
 			<selectKey resultType="int" order="AFTER" keyProperty="id"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
 	</insert>
 	

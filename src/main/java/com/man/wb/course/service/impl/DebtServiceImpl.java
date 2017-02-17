@@ -1,7 +1,9 @@
 package com.man.wb.course.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONArray;
 import com.man.base.dao.BaseDao;
 import com.man.base.dao.PageServiceDao;
 import com.man.base.service.IModuleService;
@@ -28,6 +29,13 @@ public class DebtServiceImpl extends PageServiceDao implements IDebtService {
 	private IRoleService roleService;
 	@Resource
 	private IModuleService moduleService;
+	
+	public Map loadMore(Map param){
+		Map ret = new HashMap();
+		ret.put("data", baseDao.selectList("sjlr_debt.loadMore", param));
+		return ret;
+	}
+	
 	public Map login(Map param, HttpServletRequest request) {
 		Map ret = null;
 		Map userinfo = this.baseDao.selectOne("sjlr_user.login", param);
@@ -118,6 +126,7 @@ public class DebtServiceImpl extends PageServiceDao implements IDebtService {
 //		List<String> roles = (ArrayList<String>)param.get("role");
 		param.put("type", "0");
 		param.put("status", "0");
+		param.put("uuid", UUID.randomUUID().toString());
 		int id = baseDao.insert("sjlr_debt.insert", param);
 		return null;
 	}

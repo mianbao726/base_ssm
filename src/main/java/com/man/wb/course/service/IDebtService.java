@@ -20,6 +20,8 @@ public interface IDebtService {
 	public int pass(Map param);
 	public Map editpwd(Map param);
 	
+	public Map loadMore(Map param);
+	
 	
 }
 
