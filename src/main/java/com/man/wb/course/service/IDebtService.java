@@ -21,7 +21,8 @@ public interface IDebtService {
 	public Map editpwd(Map param);
 	
 	public Map loadMore(Map param);
-	
+	public Map target(Map param);
+	public Map uploadFile(Map param);
 	
 }
 

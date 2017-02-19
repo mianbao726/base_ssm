@@ -96,14 +96,30 @@ public class HomeController extends BaseController {
 	}
 	
 	@RequestMapping("/loadMore.do")
-	public @ResponseBody String loadMore(@RequestBody Map search, HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody String loadMore(@RequestBody Map search, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map ret = null;
 		Map params = super.getParams(request);
+		//temp start
+		if("-1".equals(params.get("CURRENT_USER_NAME").toString())){
+			throw new Exception("not login");
+		}
+		//temp end
+		
 		params.putAll(search);
 		ret = new QMap(200);
+		ret.put("hi", params.get("CURRENT_USER_NAME"));
 		ret.putAll(this.debtService.loadMore(params));
 		return JSONObject.toJSONString(ret);
 	}
+	@RequestMapping("/detial.html")
+	public String detial(HttpServletRequest request, Model model) {
+		return "home/detial";
+	}
+	@RequestMapping("/alert.html")
+	public String alert(HttpServletRequest request, Model model) {
+		return "home/alert";
+	}
+
 	
 	
 	

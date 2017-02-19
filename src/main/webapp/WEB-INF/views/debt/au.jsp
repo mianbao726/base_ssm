@@ -18,6 +18,7 @@ String id = request.getParameter("id");%>
 			<!-- #section:settings.box -->
 			<div class="page-content-area">
 					<div class="col-xs-12">
+					<div id="result"></div>
 						<!-- PAGE CONTENT BEGINS -->
 						<div class="row">
 							<div class="col-sm-7">
@@ -32,7 +33,7 @@ String id = request.getParameter("id");%>
 										<div class="form-group" style="margin-top: 16px;">
 											<label class="col-sm-3 control-label no-padding-right" for="form-field-2">债务包金额</label>
 											<div class="col-sm-8">
-												<input type="text" id="form-field-2" name="amount" class="col-xs-10 col-sm-12"  >
+												<input type="text" id="form-field-2" name="amount" class="col-xs-10 col-sm-12"  placeholder="万元">
 											</div>
 										</div>
 										<div class="form-group" style="margin-top: 16px;">
@@ -42,16 +43,30 @@ String id = request.getParameter("id");%>
 											</div>
 										</div>
 										<div class="form-group" style="margin-top: 16px;">
-											<label class="col-sm-3 control-label no-padding-right" for="form-field-4">债务周期</label>
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-3">附件</label>
 											<div class="col-sm-8">
+												<input type="file" id="myBlogImage" name="myfiles" onchange = "ajaxFileUpload()"/>
+												<div id  = "myBlogImage_download_div" style ="display:none">
+													<a href="#" id = "myBlogImage_download"></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onclick="reupload()">重新上传</a>
+												</div>
+											</div>
+										</div>
+										
+										
+										<div class="form-group" style="margin-top: 16px;">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-4">债务周期</label>
+											<div class="col-sm-9">
 												<div class="input-daterange input-group">
 													<input type="text" id="form-field-4" class="input-sm form-control form_date" name="start"  readonly = "readonly"/>
 													<span class="input-group-addon"> <i
 														class="fa fa-exchange"></i>
 													</span> <input type="text" id="form-field-5"  class="input-sm form-control form_date" name="end"    readonly = "readonly"/>
-												</div>
+												
+											</div>
+ 											<small id ="date_hint" class="help-block" style="color: #d16e6c; display: none" >请填写完整债务日期</small> 
+ 											<small id ="date_hint_compare" class="help-block" style="color: #d16e6c; display: none" >债务结束日期不能早于债务开始日期</small>
+											</div>
 										</div>
-											
 										</div>
 										
 										<div class="col-md-offset-1 col-md-9">
@@ -69,6 +84,8 @@ String id = request.getParameter("id");%>
 						</div>
 						<!-- PAGE CONTENT ENDS -->
 					</div>
+					<!-- <input  id="pic_uuid"> -->
+					<input type = "hidden" id="pic_uuid">
 					<!-- /.col -->
 			</div>
 			<!-- /.page-content-area -->
@@ -76,6 +93,43 @@ String id = request.getParameter("id");%>
 		<!-- /.page-content -->
 	</div>
 <script type="text/javascript">
+function ajaxFileUpload(){
+    //开始上传文件时显示一个图片,文件上传完成将图片隐藏
+//     $("#loading").ajaxStart(function(){$(this).show();}).ajaxComplete(function(){$(this).hide();});
+    //执行上传文件操作的函数
+    $.ajaxFileUpload({
+        //处理文件上传操作的服务器端地址(可以传参数,已亲测可用)
+        url:'fileUpload?uuid=玄玉',
+        secureuri:false,                           //是否启用安全提交,默认为false 
+        fileElementId:'myBlogImage',               //文件选择框的id属性
+        dataType:'json',                           //服务器返回的格式,可以是json或xml等
+        success:function(data, status){            //服务器响应成功时的处理函数
+        	console.log(data);
+	        if(data.status_code == '200'){
+	        	
+	        	$("#myBlogImage").hide();
+	        	$("#myBlogImage_download").html(data.filename);
+	        	$("#myBlogImage_download_div").show();
+	        	$("#pic_uuid").val(data.uuid);
+	        }else{
+	        	alert('failed!');
+	        }
+        },
+        error:function(data, status, e){ //服务器响应失败时的处理函数
+        	alert('failed!');
+        }
+    });
+}
+
+
+function reupload(){
+	$("#myBlogImage").show();
+	$("#myBlogImage_download").html("");
+	$("#myBlogImage_download_div").hide();
+	$("#pic_uuid").val("");
+}
+
+
 var id = '<%=id %>';
 // alert(id  +' ___  ' +(id != 'null'));
 // alert(typeof(id)=="null");
@@ -95,8 +149,25 @@ if(id != 'null'){
  				$("#form-field-1").val(data.name);
  				$("#form-field-2").val(data.amount);
  				$("#form-field-3").val(data.address);
- 				$("#form-field-4").val(data.s_date);
- 				$("#form-field-5").val(data.e_date);
+ 				var registration_datea = data.s_date.substr(0, 4);
+ 				var registration_dateb = data.s_date.substr(5, 2);
+ 				var registration_datec = data.s_date.substr(8, 2);
+ 				var registration_datea1 = data.e_date.substr(0, 4);
+ 				var registration_dateb1 = data.e_date.substr(5, 2);
+ 				var registration_datec1 = data.e_date.substr(8, 2);
+ 				$("#form-field-4").val(registration_datea + "年" + registration_dateb+ "月" + registration_datec + "日");
+ 				$("#form-field-5").val(registration_datea1 + "年" + registration_dateb1+ "月" + registration_datec1 + "日");
+ 				
+ 				if(data.filename_ori==""||data.filename_ori==null||data.filename_ori==undefined){
+ 					$("#myBlogImage").show();
+ 					$("#myBlogImage_download").html("");
+ 					$("#myBlogImage_download_div").hide();
+ 				}else{
+ 					$("#myBlogImage").hide();
+ 		        	$("#myBlogImage_download").html(data.filename_ori);
+ 		        	$("#myBlogImage_download_div").show();
+ 		        	$("#pic_uuid").val(data.pic_uuid);
+ 				}
  			}
  		});
 }
@@ -120,9 +191,36 @@ $.sunny.ajax({
 
 //保存
 $("#save").click(function() {
+	$("#date_hint").hide();
+	$("#date_hint_compare").hide();
+	
 	if (!$("#form").data('bootstrapValidator').validate().isValid()) {
 		return false;
 	}
+	var form4 = $("#form-field-4").val();
+	var form5 = $("#form-field-5").val();
+	if(form4==""||form4==null||form4==undefined||form5==""||form5==null||form5==undefined){
+		$("#date_hint").show();
+		return;
+	}
+	
+	var registration_datea = form4.substr(0, 4);
+	var registration_dateb = form4.substr(5, 2);
+	var registration_datec = form4.substr(8, 2);
+	var registration_datea1 = form5.substr(0, 4);
+	var registration_dateb1 = form5.substr(5, 2);
+	var registration_datec1 = form5.substr(8, 2);
+	if(registration_datea > registration_datea1){
+		$("#date_hint_compare").show();
+		return;
+	}else if (registration_dateb > registration_dateb1){
+		$("#date_hint_compare").show();
+		return;
+	}else if (registration_datec > registration_datec1){
+		$("#date_hint_compare").show();
+		return;
+	}
+	
 	var params = {};
 	var url = "../debt/add.do";
 	if(id != 'null'){
@@ -133,8 +231,12 @@ $("#save").click(function() {
 	params['name'] = $("#form-field-1").val();
 	params['amount'] = $("#form-field-2").val();
 	params['address'] = $("#form-field-3").val();
-	params['start'] = $("#form-field-4").val();
-	params['end'] = $("#form-field-5").val();
+
+	params['pic_uuid'] = $("#pic_uuid").val();
+	
+	params['start'] = registration_datea + "-" + registration_dateb+ "-" + registration_datec + " " + "00:00:00";
+	
+	params['end'] = registration_datea1 + "-" + registration_dateb1+ "-" + registration_datec1 + " " + "00:00:00";
 	$.sunny.ajax({
 			contentType : 'application/json; charset=utf-8',
 			url : url,
@@ -151,7 +253,19 @@ $("#back").click(function() {
 	window.location.href = '<%=path%>/debt/index_1.html';
 });
 
+$("#form-field-4").datepicker({
+	autoclose : true,
+	todayHighlight : true,
+	language : 'zh-CN'
+}).next().on(ace.click_event, function() {
+	$(this).prev().focus();
+});
 
+$("#form-field-5").datepicker({
+	autoclose : true,
+	todayHighlight : true,
+	language : 'zh-CN'
+})
 var dataTables;
 jQuery(function($) {
 	$('#form')
@@ -222,6 +336,7 @@ jQuery(function($) {
 									}
 								}
 							},
+							
 							
 						}
 					});

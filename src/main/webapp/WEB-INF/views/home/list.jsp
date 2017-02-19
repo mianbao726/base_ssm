@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
-	String path = request.getContextPath();
+	String path = request.getContextPath(); 
 %>
 <!DOCTYPE html>
 <!-- saved from url=(0040)https://m.anrunjinrong.com/loanAction.do -->
@@ -30,20 +30,24 @@
 	      type: 'post',
 	      dataType : "json",
 	      url: '../home/loadMore.do' ,
-	      data : JSON.stringify({'uuid':'f519b396-cfa5-4744-b940-d317870e5113','type':type} ),
+	      data : JSON.stringify({'uuid':id,'type':type} ),
 	      success: function(data){
+	    	  $("#hi").html("hi! "+data.hi);
 			for(var i=0;i<data.data.length;i++){
 			var item = data.data[i];
-			var div="<div class=\"list list_2 list_3\" onclick=\"detail('"+item.id+"');\">";
+			var div="<div class=\"list list_2 list_3\" onclick=\"detail('"+item.uuid+"');\">";
 			div+="<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
 			div+="<tbody><tr><td colspan=\"3\"></td><td style=\"width:40px;\"></td></tr><tr><td colspan=\"4\" class=\"list_r1\">";
-			if(item.type==1){
-			div+="<i class=\"mark1\">实</i>";
+			if(item.type==0){
+			div+="<i class=\"mark1\">个</i>";
+			div+="<i class=\"mark1\">人</i>";
 			}
 			if(item.type==1){
-			div+="<i class=\"mark2\">抵</i>";
+			div+="<i class=\"mark2\">银</i>";
+			div+="<i class=\"mark2\">行</i>";
 			}
-			if(item.type==1){
+			if(item.type==2){
+			div+="<i class=\"mark3\" style=\"margin-right:10px;\">担</i>";
 			div+="<i class=\"mark3\" style=\"margin-right:10px;\">担</i>";
 			}
 			
@@ -53,40 +57,39 @@
 			//div+="</font>";
 			div+=" "+item.name
 			div+="</td></tr><tr><td colspan=\"3\" class=\"list_r2\"><span><font>ID</font>";
-			div+=item.name;
+			div+=item.serial_id;
 			div+="</span>";
-			if("SETTLED"==item.status||"FROZEN"==item.status||"FINISHED"==item.status||"CLEARED"==item.status){
 				div+="<div class=\"loading\"><i style=\"width:100%;\"></i></div>";
-			}else if("OPENED"==item.status){
-				div+="<div class=\"loading\"><i style=\"width:";
-				div+=item.finishRate;
-				div+="%;\"></i></div>";
-			}
-			if("SETTLED"==item.status||"FROZEN"==item.status||"FINISHED"==item.status||"CLEARED"==item.status){
-				div+="<font class=\"fl_l\">100%</font>";
-			}else if("OPENED"==item.status){
-				div+="<font class=\"fl_l\">";
-				div+=item.finishRate;
-				div+="%</font>";
-			}
-			if("SCHEDULED"==item.status){
-				div+="<div class=\"begintime\" id=\"";
-				div+=item.id;
-				div+="span\"></div>";
-			}
+// 			if("SETTLED"==item.status||"FROZEN"==item.status||"FINISHED"==item.status||"CLEARED"==item.status){
+// 			}else if("OPENED"==item.status){
+// 				div+="<div class=\"loading\"><i style=\"width:";
+// 				div+=item.finishRate;
+// 				div+="%;\"></i></div>";
+// 			}
+// 			if("SETTLED"==item.status||"FROZEN"==item.status||"FINISHED"==item.status||"CLEARED"==item.status){
+// 				div+="<font class=\"fl_l\">100%</font>";
+// 			}else if("OPENED"==item.status){
+// 				div+="<font class=\"fl_l\">";
+// 				div+=item.finishRate;
+// 				div+="%</font>";
+// 			}
+// 			if("SCHEDULED"==item.status){
+// 				div+="<div class=\"begintime\" id=\"";
+// 				div+=item.id;
+// 				div+="span\"></div>";
+// 			}
 			div+="</td><td rowspan=\"3\" align=\"right\" class=\"gobut-item\">";
 // 			div+=a(item.status,item.id);
 			div+="<a href=\"javascript:;void(0);\" class=\"gobut manb\">悬赏中</a>"
 			
 			div+="</td></tr><tr>";
-			div+="<td class=\"list_r3\"><font>"+item.amount+"万元</font> "+ item.e_date+"</td>";
-			div+="<td class=\"list_r3\"><font></font></td>";
+			div+="<td class=\"list_r3\"><font>"+item.amount+"万元</font> "+ "</td>";
+			div+="<td class=\"list_r3\"><font></font>"+item.e_date+"~"+item.e_date+"</td>";
 			
 			div+="</tr></tbody></table></div>";
 					 
-				
-				if(i==data.length-1){//最后一条数据信息
-					$("#lastId").val(item.id);
+				if(i==data.data.length-1){//最后一条数据信息
+					$("#lastId").val(item.uuid);
 					
 				}
 				$("#moreLoad").before(div);
@@ -96,6 +99,12 @@
 			}
 	      	document.getElementById('loadmore').style.display = "";
 	      	document.getElementById('loadmoremsg').style.display = "none";
+	      	
+	      	if(0==data.data.length){
+	      		document.getElementById('loadmoremsg').style.display = "";
+		      	document.getElementById('loadmoremsg').innerHTML = "已无更多内容";
+		      	document.getElementById('loadmore').style.display = "none";
+	      	}
 	      } ,
 	      error:function(data){
 	      	document.getElementById('loadmoremsg').style.display = "";
@@ -106,6 +115,7 @@
 		});
 		
 	}
+	
 	
 	function a(type,id){
 		var href="";
@@ -141,10 +151,10 @@
 		return href;
 	}
 	function investPage(id){//投资页面
-		window.location.href="investAction!investPage.do?id="+id;
+		window.location.href="investAction!investPage.html?id="+id;
 	}
 	function detail(id){
-		window.location.href="loanAction!detail.do?id="+id;
+		window.location.href="<%=path%>/home/detial.html?uuid="+id;
 	}
 	function gotoHome(){
 		window.location.href="homeAction.do";
@@ -168,13 +178,16 @@ function CountDown(){
 	}
 }  
 timer = setInterval("CountDown()",1000); 
+
+
+
 </script>
 </head>
 
 <body>
 	<input type="hidden" id="pageSize" name="pageSize" value="7">
 	<input type="hidden" id="lastId" name="lastId"
-		value="E7CA7D7E-A382-4F9A-8888-0506EC5120FD" style="width: 400px;">
+		value="" style="width: 400px;">
 	<input type="hidden" id="type" value="" style="width: 400px;">
 
 	<script type="text/javascript">
@@ -186,10 +199,10 @@ timer = setInterval("CountDown()",1000);
 		window.location.href="loginAction!registerPage.do?flag=0";
 	}
 	function out(){
-	window.location.href="homeAction!out.do";
+		window.location.href='<%=path%>/logout.html';
 	}
 	function myAccount(){
-		window.location.href="accountAction.do";
+		return;
 	}
 	function loanPage(type){//投资页面
 	if(type=='aplan'){
@@ -263,14 +276,13 @@ $("#topdown").hide();//表示display:none;
 
 	<div class="header">
 		<h1 class="fl_l">
-			<a href="javascript:;toGoHome();"><img src="${pageContext.request.contextPath}/assets/sjlr/logo.png" width="155" height="44"></a></a>
+			<a href="javascript:;toGoHome();"><img src="${pageContext.request.contextPath}/assets/sjlr/logo.png" width="119" height="44"></a>
 		</h1>
 
-		<!--未登录-->
-		 <div class="login fl_r">
-			<a href="javascript:;registerPage();" class="fl_l">hi！张三</a> 
-		</div> 
-
+	<div class="loging fl_r">
+		<a href="javascript:;myAccount();" class="fl_l" id = "hi">hi,m***o</a>
+		<a id="out" href="javascript:;out();">退出</a>
+	</div>
 
 	</div>
 	<!-- <ul class="tabar">
@@ -283,134 +295,6 @@ $("#topdown").hide();//表示display:none;
 
 
 
-		<div class="list list_2 list_3"
-			onclick="detail(&#39;6E3EB711-6C11-4B63-8DE9-831ACEC09B33&#39;);">
-
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tbody>
-					<tr>
-						<td colspan="3"></td>
-						<td style="width: 40px;"></td>
-					</tr>
-					<tr>
-						<td colspan="4" class="list_r1"><i class="mark1">个</i> <i
-							class="mark1" style="margin-right: 10px;">人</i> 安牧贷-内蒙古-四子王旗某牧民 </td>
-					</tr>
-					<tr>
-						<td colspan="3" class="list_r2"><span><font>ID</font>SZWQ2016113006Z</span>
-
-						<div class="loading"> 
-								<i style="width: 100%;"></i> 
-						</div> <font class="fl_l"></font></td> 
-
-
-						<td rowspan="3" align="right" class="gobut-item"><a
-							href="javascript:;void(0);" class="gobut manb">悬赏中</a></td>
-
-					</tr>
-					<tr>
-						<td class="list_r3"><font>10.0万元</font> 2017年10月20～2017年11月22日</td>
-						<td class="list_r3"><font></font></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="list list_2 list_3"
-			onclick="detail(&#39;6E3EB711-6C11-4B63-8DE9-831ACEC09B33&#39;);">
-
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tbody>
-					<tr>
-						<td colspan="3"></td>
-						<td style="width: 40px;"></td>
-					</tr>
-					<tr>
-						<td colspan="4" class="list_r1"><i class="mark1">个</i> <i
-							class="mark1" style="margin-right: 10px;">人</i> 安牧贷-内蒙古-四子王旗某牧民 </td>
-					</tr>
-					<tr>
-						<td colspan="3" class="list_r2"><span><font>ID</font>SZWQ2016113006Z</span>
-
-						<div class="loading"> 
-								<i style="width: 100%;"></i> 
-						</div> <font class="fl_l"></font></td> 
-
-
-						<td rowspan="3" align="right" class="gobut-item"><a
-							href="javascript:;void(0);" class="gobut manb">悬赏中</a></td>
-
-					</tr>
-					<tr>
-						<td class="list_r3"><font>10.0万元</font> 2017年10月20～2017年11月22日</td>
-						<td class="list_r3"><font></font></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="list list_2 list_3"
-			onclick="detail(&#39;6E3EB711-6C11-4B63-8DE9-831ACEC09B33&#39;);">
-
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tbody>
-					<tr>
-						<td colspan="3"></td>
-						<td style="width: 40px;"></td>
-					</tr>
-					<tr>
-						<td colspan="4" class="list_r1"><i class="mark1">个</i> <i
-							class="mark1" style="margin-right: 10px;">人</i> 安牧贷-内蒙古-四子王旗某牧民 </td>
-					</tr>
-					<tr>
-						<td colspan="3" class="list_r2"><span><font>ID</font>SZWQ2016113006Z</span>
-
-						<div class="loading"> 
-								<i style="width: 100%;"></i> 
-						</div> <font class="fl_l"></font></td> 
-
-
-						<td rowspan="3" align="right" class="gobut-item"><a
-							href="javascript:;void(0);" class="gobut manb">悬赏中</a></td>
-
-					</tr>
-					<tr>
-						<td class="list_r3"><font>10.0万元</font> 2017年10月20～2017年11月22日</td>
-						<td class="list_r3"><font></font></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="list list_2 list_3"
-			onclick="detail(&#39;6E3EB711-6C11-4B63-8DE9-831ACEC09B33&#39;);">
-
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tbody>
-					<tr>
-						<td colspan="3"></td>
-						<td style="width: 40px;"></td>
-					</tr>
-					<tr>
-						<td colspan="4" class="list_r1"><i class="mark1">个</i> <i
-							class="mark1" style="margin-right: 10px;">人</i> 安牧贷-内蒙古-四子王旗某牧民 </td>
-					</tr>
-					<tr>
-						<td colspan="3" class="list_r2"><span><font>ID</font>SZWQ2016113006Z</span>
-
-						<div class="loading"> 
-								<i style="width: 100%;"></i> 
-						</div> <font class="fl_l"></font></td> 
-
-
-						<td rowspan="3" align="right" class="gobut-item"><a
-							href="javascript:;void(0);" class="gobut manb">悬赏中</a></td>
-
-					</tr>
-					<tr>
-						<td class="list_r3"><font>10.0万元</font> 2017年10月20～2017年11月22日</td>
-						<td class="list_r3"><font></font></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
 
 		<div id="moreLoad"></div>
 		<a href="javascript:;loadMore();" class="more more2" id="loadmore">加载更多项目</a>
@@ -440,7 +324,11 @@ $("#topdown").hide();//表示display:none;
 
 	<div id="puttimeDiv"></div>
 	<script>
-document.body.addEventListener('touchstart', function () { });
+	document.body.addEventListener('touchstart', function () { });
+	$(document).ready(function(){ 
+		//do something 
+			loadMore();
+		}) 
 </script>
 </body>
 </html>

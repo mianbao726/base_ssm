@@ -103,7 +103,13 @@
 		select
 		*
 		from sys_user
-		where username = #{username}
+		where username = #{username} 
+	</select>
+	<select id="login_wap" parameterMap="paraMap" resultType="hashmap">
+		select
+		*
+		from sys_user
+		where username = #{username} 
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

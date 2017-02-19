@@ -190,7 +190,7 @@
 					<contextPath>/base</contextPath>
 					<connectors>
 						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-							<port>8081</port>
+							<port>8080</port>
 						</connector>
 					</connectors>
 					<!-- <scanIntervalSeconds>2</scanIntervalSeconds> -->

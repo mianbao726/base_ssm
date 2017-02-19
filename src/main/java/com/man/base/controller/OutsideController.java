@@ -36,6 +36,30 @@ public class OutsideController extends BaseController {
 		return "home/login";
 	}
 	
+	@RequestMapping("/login.do")
+	public @ResponseBody String login(HttpServletRequest request, Model model) throws Exception {
+		Map param = super.getParams(request);
+		param.put("wap", "y");
+		Map ret = userService.login(param, request);
+		return JSONObject.toJSONString(ret);
+	}
+	
+	@RequestMapping("/logout.html")
+	public String logout(HttpServletRequest request, Model model) throws Exception {
+		request.getSession().invalidate();
+		Map responseMap = new QMap(200);
+		return "home/login";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	@RequestMapping("/checkUniqueEmail.do")
@@ -98,12 +122,6 @@ public class OutsideController extends BaseController {
 	public @ResponseBody String getUserInfo(HttpServletRequest request, Model model) throws Exception {
 		Map ret = new QMap(200);
 		ret.put("username", ((Map<String, Object>) request.getSession().getAttribute("userInfo")).get("username"));
-		return JSONObject.toJSONString(ret);
-	}
-
-	@RequestMapping("/login.do")
-	public @ResponseBody String login(HttpServletRequest request, Model model) throws Exception {
-		Map ret = userService.login(super.getParams(request), request);
 		return JSONObject.toJSONString(ret);
 	}
 

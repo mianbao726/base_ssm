@@ -88,6 +88,13 @@ public class UserController extends BaseController {
 		return JSONObject.toJSONString(responseMap);
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/getUserInfo.do")
 	public @ResponseBody String getUserInfo(HttpServletRequest request, Model model) throws Exception {
 		Map ret = new QMap(200);

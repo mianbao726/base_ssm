@@ -6,22 +6,24 @@
 	<!--获取[课时表]列表 -->
 	<select id="index" parameterMap="paraMap" resultType="hashmap">
 		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
-			SELECT id	,
-					type	,
-					status	,
-					name	,
-					amount	,
-					address	,
+			select t.id	,
+					t.type	,
+					t.status	,
+					t.name	,
+					t.amount	,
+					t.address	,
+                    u.username,
+                    u.realname,
+					t.craeted_at,
 					date_format(t.s_date,'%Y-%m-%d') as s_date	,
-					date_format(t.e_date,'%Y-%m-%d') as e_date	 FROM sjlr_package t
- 		WHERE
-		t.del_flag = 0
+					date_format(t.e_date,'%Y-%m-%d') as e_date	 FROM sjlr_package t left join sys_user u  on t.target = u.id
+              where t.del_flag = 0
 		<if test="filter != null">
 			and ${filter}
 		</if>
 		<!-- <if test="sort != null">ORDER BY ${sort} ${dir}</if> -->
-		<!-- <if test="sort == null"> -->ORDER BY t.ID DESC<!-- </if> -->	
-		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>		
+		<!-- <if test="sort == null"> --><!-- </if> -->	
+		<if test="start != null"> <![CDATA[) t  ORDER BY t.craeted_at DESC limit ${start},${limit}]]></if>		
 	</select>
 	
 	<!--获取[课时表]列表总数 -->
@@ -43,6 +45,10 @@
 		<if test="name != null">
 			name = #{name},
 		</if>
+		<if test="pic_uuid != null">
+			pic_uuid = #{pic_uuid},
+		</if>
+		
 		<if test="amount != null">
 			amount = #{amount},
 		</if>
@@ -56,12 +62,41 @@
 		<if test="end != null">
 			e_date = #{end},
 		</if>
+		<if test="target != null">
+			target = #{target},
+			targetname = #{person_name},
+			status = #{status},
+		</if>
 		updated_at = now()
-		where id = #{id,jdbcType=INTEGER}
+		where 1=1  
+		<if test="id != null">
+		and id = #{id,jdbcType=INTEGER}
+		</if>
+		<if test="target != null">
+		and uuid = #{uuid,jdbcType=INTEGER}
+		</if>
 	</update>
 	
 	<select id="loadMore" parameterMap="paraMap" resultType="hashmap">
-		 select * from sjlr_package where id >(select id from sjlr_package where uuid = #{uuid}) limit 10 
+		 select id	,
+				type	,
+				status	,
+				uuid,
+				name	,
+				amount	,
+				serial_id,
+				address	,
+                concat(date_format(s_date,'%Y'),'年',date_format(s_date,'%m'),'月',date_format(s_date,'%d'),'日') as s_date,
+                concat(date_format(e_date,'%Y'),'年',date_format(e_date,'%m'),'月',date_format(e_date,'%d'),'日') as e_date
+				
+                from sjlr_package
+            where 1 =1 
+             and del_flag = 0
+            and  status = 0
+            <if test="uuid != null">
+            	 and id >(select id from sjlr_package where uuid = #{uuid})
+            </if>
+             limit 10 
 	</select>
 	
 	<!--根据ID查询[课时表]的数据 -->
@@ -74,7 +109,9 @@
 	<!--向[课时表]中插入数据 -->
 	<insert id="insert" parameterMap="paraMap">
 			insert into sjlr_package(
+				pic_uuid,
 				uuid    ,
+				serial_id,
 				type	,
 				status	,
 				name	,
@@ -82,8 +119,13 @@
 				address	,
 				s_date	,
 				e_date	,
-				updated_at	
-				) values ( #{uuid} , #{type} , #{status}, #{name},#{amount},#{address},now(),now(),now())
+				updated_at	,
+				craeted_at
+				) values (
+				#{pic_uuid},
+				 #{uuid} ,#{serial_id}, #{type} , #{status}, #{name},#{amount},#{address},
+				#{start},#{end},
+				now(),now())
 			<selectKey resultType="int" order="AFTER" keyProperty="id"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
 	</insert>
 	
@@ -124,16 +166,45 @@
 		where id=#{id}		
 	</update>
 	
+	
+	<!--根据ID查询[课时表]的数据 -->
+	<select id="selectOneCheck" parameterMap="paraMap" resultType="hashmap">
+		select 
+				target	,
+				targetname	
+				from sjlr_package a 
+where 1=1
+		<if test="uuid != null">
+			and uuid = #{uuid}
+		</if> 
+ 
+	</select>
+	
 	<!--根据ID查询[课时表]的数据 -->
 	<select id="selectOne" parameterMap="paraMap" resultType="hashmap">
-		select id	,
-type	,
-status	,
-name	,
-amount	,
-address	,
-date_format(s_date,'%Y-%m-%d'	) as s_date,
-date_format(e_date,'%Y-%m-%d'	) as	e_date from sjlr_package a where a.id=#{id}
+		select a.id	,
+				a.type	,
+				a.status	,
+				a.name	,
+				a.amount	,
+				a.address	,
+				case when a.target is not null then 'close' else 'open' end as target_status,
+				case when a.type = 0 then '个人' when a.type =1 then '银行' when a.type =2 then '企业' when a.type =3 then '债务转让' end as kind,
+                f.filename_ori,
+                a.pic_uuid,
+				date_format(a.s_date,'%Y-%m-%d'	) as s_date,
+				date_format(a.e_date,'%Y-%m-%d'	) as	e_date ,
+				concat(date_format(a.s_date,'%Y'),'年',date_format(a.s_date,'%m'),'月',date_format(a.s_date,'%d'),'日') as s_f_date,
+                concat(date_format(a.e_date,'%Y'),'年',date_format(a.e_date,'%m'),'月',date_format(a.e_date,'%d'),'日') as e_f_date
+from sjlr_package a left join sys_file f on a.pic_uuid = f.uuid 
+where 1=1 
+<if test="id != null">
+			and a.id=#{id}
+		</if>
+		<if test="uuid != null">
+			and a.uuid = #{uuid}
+		</if> 
+ 
 	</select>
 	
 	<select id="getRoleActions" parameterMap="paraMap" resultType="hashmap">

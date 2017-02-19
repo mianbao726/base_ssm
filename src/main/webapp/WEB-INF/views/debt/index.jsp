@@ -55,11 +55,11 @@
 						<thead>
 							<tr>
 								<th>债务包名称</th>
-								<th>债务金额</th>
+								<th>债务金额(万元)</th>
 								<th>债务地址</th>
 								<th style="width: 200px;">债权周期</th>
 								<th style="width: 100px;">状态</th>
-								<th style="width: 100px;">任务领取人</th>
+								<th style="width: 200px;">任务领取人</th>
 								<th style="width: 130px;">操作</th>
 							</tr>
 						</thead>
@@ -141,6 +141,17 @@
 					    },
 					    "orderable": false,
 					    "targets": 4
+					},
+					{
+					    "render": function(data, type, row){
+					    	if (row.status == '1') {
+					    		return '<span class="badge badge-success">'+row.realname+'(tel:'+row.username+')</span>'; 
+							}else{
+								return '<span class="badge badge-info">悬赏中</span>';
+							}                     	 
+					    },
+					    "orderable": false,
+					    "targets": 5
 					},
 // 					{
 // 					    "render": function(data, type, row){

@@ -38,6 +38,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 						if (user_permissions.containsKey(request.getServletPath().substring(1))) {// can
 							return true;
 						} else {// can't
+
 							log.info("*** can't request ---" + request.getServletPath());
 							return false;
 						}

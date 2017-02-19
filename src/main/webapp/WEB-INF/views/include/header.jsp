@@ -24,9 +24,15 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootbox.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/sjlr/ajaxfileupload.js"></script>
 <!-- TODO TOBE REWRITE -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/sunny.js"></script>
+<script type='text/javascript' charset="utf-8" src="${pageContext.request.contextPath}/assets/sjlr/date.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/plugin-menu.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sjlr/datepicker.css">
+
+<script src="${pageContext.request.contextPath}/assets/sjlr/bootstrap-datepicker.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/sjlr/bootstrap-datepicker.zh-CN.js"></script>
 
 <!-- TODO DATATABLES TOBE REWRITE -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.sunny.js"></script>

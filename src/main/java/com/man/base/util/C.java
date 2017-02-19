@@ -11,7 +11,7 @@ public class C {
 	public static final String DEFAULT_ROLE_ID = "16";
 
 	// 开发标志 0=>开发中 1=>产品
-	public static final String DEV = "0";
+	public static final String DEV = "1";
 
 	// 图片类型
 	public static final String[] IMAGE_TYPE = { ".png", ".jpg" };
@@ -25,10 +25,16 @@ public class C {
 	// 除外请求
 	public static final String[] SPECIAL_REQUEST = { //
 			"/login.html", // 登陆页面
+			"/home.html", // 登陆页面
+			"/assets/viewjs/login/login_wap.js",
+			"/assets/sjlr/style_vip.css",
+			"/assets/sjlr/a_03.png",
 			"/user/checkUniqueUsername.do", // 验证唯一用户名
 			"/user/checkUniqueEmail.do", // 验证唯一邮箱
 			"/role/getAllRole.do", //
 			"/user/login.do", //
+			"/login.do",
+			"/logout.html",
 			"/main.html", //
 			"/dashboard.html", //
 			"/role/index.html", //

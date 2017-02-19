@@ -1,5 +1,6 @@
 package com.man.wb.course.service.impl;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +31,43 @@ public class DebtServiceImpl extends PageServiceDao implements IDebtService {
 	@Resource
 	private IModuleService moduleService;
 	
+	public Map uploadFile(Map param){
+		param.put("rid", baseDao.insert("sys_file.insert_file", param)) ;
+		return param;
+	}
+	
 	public Map loadMore(Map param){
 		Map ret = new HashMap();
+		if(null == param.get("uuid") || "".equals(param.get("uuid").toString()))
+			param.remove("uuid");
 		ret.put("data", baseDao.selectList("sjlr_debt.loadMore", param));
 		return ret;
 	}
+	public Map target(Map param){
+		Map ret = null;
+		param.put("target", param.get("CURRENT_USER_ID"));
+		String person = param.get("CURRENT_USER_NAME").toString();
+		String person_name =person.substring(0, 1) + "***"+person.substring(person.length()-1); 
+		param.put("person_name", person_name);
+		param.put("status", "1");
+		int count = baseDao.update("sjlr_debt.updateByPrimaryKey", param);
+		if(1== count){
+			ret = new QMap(200);
+		}else{
+			ret = new QMap(202);
+			Map one = baseDao.selectOne("sjlr_debt.selectOneCheck", param);
+			
+			if(param.get("CURRENT_USER_ID").toString().equals(one.get("target").toString())){
+				one.put("same", "y");
+			}else{
+				one.put("same", "n");	
+			}
+			one.remove("target");
+			ret.put("tarinfo", one);
+		}
+		return ret;
+	}
+	
 	
 	public Map login(Map param, HttpServletRequest request) {
 		Map ret = null;
@@ -122,13 +155,14 @@ public class DebtServiceImpl extends PageServiceDao implements IDebtService {
 	}
 
 	public Map insert(Map param) {
-		
 //		List<String> roles = (ArrayList<String>)param.get("role");
 		param.put("type", "0");
 		param.put("status", "0");
 		param.put("uuid", UUID.randomUUID().toString());
+		Calendar c= Calendar.getInstance();
+		param.put("serial_id", "SYGR"+c.YEAR+c.MONTH+c.DAY_OF_MONTH+c.getTimeInMillis());
 		int id = baseDao.insert("sjlr_debt.insert", param);
 		return null;
 	}
-
+	
 }

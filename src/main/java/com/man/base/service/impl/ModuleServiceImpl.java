@@ -172,6 +172,9 @@ public class ModuleServiceImpl extends PageServiceDao implements IModuleService{
 	    session.setAttribute("userMenusMap", userMenusMap);
 		return user_menu_list;
 	}
+	/**
+	 * 
+	 */
 	public List<Map<String,Object>> loadMenuData(List<Map<String,Object>> list){
         Collections.sort(list, new Comparator<Map<String,Object>>(){
 			@Override
