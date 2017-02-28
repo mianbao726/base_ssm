@@ -162,6 +162,18 @@ public class ModuleServiceImpl extends PageServiceDao implements IModuleService{
 		      role_map.put(role.get("role_id").toString(), user_role_menu);
 		    }
 		}
+		
+		StringBuilder sb = new StringBuilder(role_list.get(0).get("role_id").toString());
+		boolean f_flag = true;
+		for(Map rm : role_list){
+			if(f_flag){
+				f_flag = false;
+				continue;
+			}
+			sb.append(rm.get("role_id")+",");
+		}
+		session.setAttribute("role_info", sb.toString());
+		
 		session.setAttribute("userRoleMenus", role_map);
 
 	    for (Map<String,Object> menu : user_menu_list) {

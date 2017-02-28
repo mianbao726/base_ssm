@@ -21,7 +21,7 @@
 								<i class="ace-icon fa fa-leaf green"></i> <span class="red">赏金</span> <span class="white"
 									id="id-text2">猎人</span>
 							</h1>
-							<h4 class="blue" id="id-company-text">&copy; zhuwj726@gmail.com&nbsp;&nbsp;:&nbsp;)</h4>
+<!-- 							<h4 class="blue" id="id-company-text">&copy; zhuwj726@gmail.com&nbsp;&nbsp;:&nbsp;)</h4> -->
 						</div>
 
 						<div class="space-6"></div>
@@ -179,22 +179,22 @@
 											<fieldset>
 												<label class="block clearfix col-sm-13 form-group"> <span
 													class="block input-icon input-icon-right"> <input type="text"
-														class="form-control" name="email" placeholder="邮箱地址"
+														class="form-control" name="realname" placeholder="姓名"
 														data-bv-notempty="true"
-														data-bv-notempty-message="请填写邮箱地址" 
-														data-bv-emailaddress="true"
-														data-bv-emailaddress-message="请输入正确邮箱" /> <i class="ace-icon fa fa-envelope"></i>
+														data-bv-notempty-message="请填写姓名" 
+														pattern="^([a-zA-Z0-9\u4e00-\u9fa5]{1,10})$"
+                										data-bv-regexp-message="请填写正确姓名（10个汉字以内）"
+														 /> <i class="ace-icon fa fa-user"></i>
 												</span>
 												</label> <label class="block clearfix col-sm-13 form-group"> <span
 													class="block input-icon input-icon-right"> <input type="text"
-														class="form-control" placeholder="用户名" name="username"
+														class="form-control" placeholder="联系电话" name="name"
 														data-bv-notempty="true"
-														data-bv-notempty-message="用户名不能为空" 
-														
-														pattern="^[\w_]{5,20}$"
-                										data-bv-regexp-message="只能输入5-20位字母数字下划线"
+														data-bv-notempty-message="联系电话不能为空" 
+														pattern="^([0-9]{1,11})$"
+                										data-bv-regexp-message="只能输入13位数字"
 														/>
-														<i class="ace-icon fa fa-user"></i>
+														<i class="ace-icon fa fa-phone"></i>
 												</span>
 												</label> <label class="block clearfix col-sm-13 form-group"> <span
 													class="block input-icon input-icon-right"> <input type="password"
@@ -204,7 +204,7 @@
 														data-bv-notempty-message="请填写密码" 
 														
 														data-bv-different="true"
-														data-bv-different-field="username" 
+														data-bv-different-field="name" 
 														data-bv-different-message="密码不能和账号一致"
 														
 														pattern="^[\w_]{6,30}$"
@@ -216,7 +216,66 @@
 														class="form-control" placeholder="确认密码" name="confirmPassword" data-bv-notempty="true"
 														data-bv-notempty-message="请填写密码" data-bv-identical="true"
 														data-bv-identical-field="password" data-bv-identical-message="两次密码不一致" />
-														<i class="ace-icon fa fa-retweet"></i>
+														<i class="ace-icon fa fa-lock"></i>
+												</span>
+												</label>
+												
+												
+
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"> <input type="text"
+														class="form-control" name="address" placeholder="住址"
+														data-bv-notempty="true"
+														data-bv-notempty-message="请填写住址" 
+														pattern="^([0-9a-zA-Z\u4e00-\u9fa5]{1,50})$"
+                										data-bv-regexp-message="请填写50位以内字符"
+														 /> <i class="ace-icon fa fa-home"></i>
+												</span>
+												</label>
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"> <input type="text"
+														class="form-control" name="idcard" placeholder="身份证"
+														data-bv-notempty="true"
+														data-bv-notempty-message="请填写身份证" 
+														
+														pattern="^([0-9Xx]{1,21})$"
+                										data-bv-regexp-message="请填写正确身份证号"
+														 /> <i class="ace-icon fa fa-key"></i>
+												</span>
+												</label>
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"><!--  <input type="text"
+														class="form-control" name="email" placeholder="性别"
+														data-bv-notempty="true"
+														data-bv-notempty-message="请填写性别" 
+														 /> -->
+														 <!-- <select name = "sex">
+														 	<option value = "0">男</option>
+														 	<option value = "1">女</option>
+														 </select> -->
+														 <input type="radio" name="sex" value="male" checked>男 &nbsp;&nbsp;&nbsp;&nbsp;
+														 <input type="radio" name="sex" value="male" >女
+														  <i class="ace-icon fa fa-heart"></i>
+												</span>
+												</label>
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right"> <input type="text"
+														class="form-control" name="age" placeholder="年龄"
+														data-bv-notempty="true"
+														pattern="^[\d]{2,2}$"
+                										data-bv-regexp-message="只能输入2位数字"
+														data-bv-notempty-message="请填写年龄" 
+														 /> <i class="ace-icon fa fa-flash"></i>
+												</span>
+												</label>
+												<label class="block clearfix col-sm-13 form-group"> <span
+													class="block input-icon input-icon-right">
+													<textarea class="form-control" id="form-field-8" placeholder="个人简介"
+															name = "Introduction"
+														></textarea>
+														<!-- 	data-bv-notempty="true" -->
+														<!-- 	data-bv-notempty-message="请填写年龄"  -->
+ 													<i class="ace-icon fa fa-dashboard"></i>
 												</span>
 												</label>
 

@@ -18,10 +18,10 @@
 					<div class="login-container">
 						<div class="center">
 							<h1>
-								<i class="ace-icon fa fa-leaf green"></i> <span class="red">SUNNY</span> <span class="white"
-									id="id-text2">Application</span>
+								<i class="ace-icon fa fa-leaf green"></i> <span class="red">后台管理系统</span> <span class="white"
+									id="id-text2"></span>
 							</h1>
-							<h4 class="blue" id="id-company-text">&copy; zhuwj726@gmail.com&nbsp;&nbsp;:&nbsp;)</h4>
+<!-- 							<h4 class="blue" id="id-company-text">&copy; zhuwj726@gmail.com&nbsp;&nbsp;:&nbsp;)</h4> -->
 						</div>
 
 						<div class="space-6"></div>
@@ -90,18 +90,18 @@
 											</fieldset>
 										</form>
 
-										<div class="social-or-login center">
+										<!-- <div class="social-or-login center">
 											<span class="bigger-110">或者使用以下方式登陆</span>
-										</div>
+										</div> -->
 
 										<div class="space-6"></div>
 
-										<div class="social-login center">
+										<!-- <div class="social-login center">
 											<a class="btn btn-primary"> <i class="ace-icon fa fa-facebook other-icon"></i>
 											</a> <a class="btn btn-info"> <i class="ace-icon fa fa-twitter other-icon"></i>
 											</a> <a class="btn btn-danger"> <i class="ace-icon fa fa-google-plus other-icon"></i>
 											</a>
-										</div>
+										</div> -->
 									</div>
 									<!-- /.widget-main -->
 
@@ -113,7 +113,7 @@
 										</div>
 
 										<div>
-											<a href="#" id = "new_account" data-target="#signup-box" class="user-signup-link"> 注册新账号 <i
+											<a href="#" id = "new_account" data-target="#signup-box" class="user-signup-link" style ="display : none"> 注册新账号 <i
 												class="ace-icon fa fa-arrow-right"></i>
 											</a>
 										</div>

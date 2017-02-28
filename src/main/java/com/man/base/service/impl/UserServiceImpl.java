@@ -31,6 +31,12 @@ public class UserServiceImpl extends PageServiceDao implements IUserService {
 	public Map login(Map param, HttpServletRequest request) {
 		Map ret = null;
 		Map userinfo = this.baseDao.selectOne("base_user.login", param);
+		if(param.containsKey("c")){
+			if("0".equals(userinfo.get("status").toString())){
+				ret = new QMap(202, "用户审核中，请稍后再试！");
+				return ret;
+			}
+		}
 		if (null != userinfo && userinfo.get("password").equals(MD5Util.MD5(param.get("password")+""))) {
 			ret = new QMap(200);
 			userinfo.remove("password");

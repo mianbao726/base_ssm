@@ -6,8 +6,8 @@
 <jsp:include page="../include/head.jsp" flush="true">
 <jsp:param name="itemId" value="<%=itemId%>" />
 <jsp:param name="parentId" value="<%=parentId%>" />
-<jsp:param name="title" value="债务包管理" />
-<jsp:param name="link1" value="债务包管理" />
+<jsp:param name="title" value="个人债务包管理" />
+<jsp:param name="link1" value="个人债务包管理" />
 <jsp:param name="link2" value="" /> 
 </jsp:include>
 <div class="main-content">

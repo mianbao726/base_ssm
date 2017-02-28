@@ -32,13 +32,17 @@ public class BaseInterceptor implements HandlerInterceptor {
 				} else {
 					Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("userMenusMap");
 					if (null == user_permissions) {//
-						((HttpServletResponse) response).sendRedirect("/" + C.PROJECT_NAME + "/login.html");
+						((HttpServletResponse) response).sendRedirect("/" + C.PROJECT_NAME + "/home.html");
 						return true;
 					}else{
+						String role_info = (String) request.getSession().getAttribute("role_info");
+						if(role_info.contains("1")){//super user can do everything ,of course
+							return true;
+						}
 						if (user_permissions.containsKey(request.getServletPath().substring(1))) {// can
 							return true;
 						} else {// can't
-
+							//
 							log.info("*** can't request ---" + request.getServletPath());
 							return false;
 						}

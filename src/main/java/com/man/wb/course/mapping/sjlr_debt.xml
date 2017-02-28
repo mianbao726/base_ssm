@@ -9,6 +9,7 @@
 			select t.id	,
 					t.type	,
 					t.status	,
+					t.area,
 					t.name	,
 					t.amount	,
 					t.address	,
@@ -18,6 +19,10 @@
 					date_format(t.s_date,'%Y-%m-%d') as s_date	,
 					date_format(t.e_date,'%Y-%m-%d') as e_date	 FROM sjlr_package t left join sys_user u  on t.target = u.id
               where t.del_flag = 0
+              
+              <if test="type != null">
+			and type =#{type}
+		</if>
 		<if test="filter != null">
 			and ${filter}
 		</if>
@@ -31,6 +36,9 @@
 			select count(1) FROM sjlr_package t
 		WHERE
 		t.del_flag = 0
+		 <if test="type != null">
+			and type =#{type}
+		</if>
 		<if test="filter != null">
 			and ${filter}
 		</if>
@@ -39,11 +47,17 @@
 	<update id="updateByPrimaryKey" parameterType="hashmap">
 		update sjlr_package
 		set
+		<if test="detial != null">
+			detial = #{detial,jdbcType=INTEGER},
+		</if>
 		<if test="del_flag != null">
 			del_flag = #{del_flag,jdbcType=INTEGER},
 		</if>
 		<if test="name != null">
 			name = #{name},
+		</if>
+		<if test="area != null">
+			area = #{area},
 		</if>
 		<if test="pic_uuid != null">
 			pic_uuid = #{pic_uuid},
@@ -89,13 +103,13 @@
                 concat(date_format(s_date,'%Y'),'年',date_format(s_date,'%m'),'月',date_format(s_date,'%d'),'日') as s_date,
                 concat(date_format(e_date,'%Y'),'年',date_format(e_date,'%m'),'月',date_format(e_date,'%d'),'日') as e_date
 				
-                from sjlr_package
+                from sjlr_package 
             where 1 =1 
-             and del_flag = 0
-            and  status = 0
+             and del_flag = 0 and  status = 0
             <if test="uuid != null">
-            	 and id >(select id from sjlr_package where uuid = #{uuid})
+            	 and (select id from sjlr_package where uuid = #{uuid}) > id
             </if>
+             order by id desc
              limit 10 
 	</select>
 	
@@ -109,8 +123,10 @@
 	<!--向[课时表]中插入数据 -->
 	<insert id="insert" parameterMap="paraMap">
 			insert into sjlr_package(
+			detial,
 				pic_uuid,
 				uuid    ,
+				area,
 				serial_id,
 				type	,
 				status	,
@@ -122,8 +138,10 @@
 				updated_at	,
 				craeted_at
 				) values (
+				#{detial},
 				#{pic_uuid},
-				 #{uuid} ,#{serial_id}, #{type} , #{status}, #{name},#{amount},#{address},
+				 #{uuid} ,
+				 #{area},#{serial_id}, #{type} , #{status}, #{name},#{amount},#{address},
 				#{start},#{end},
 				now(),now())
 			<selectKey resultType="int" order="AFTER" keyProperty="id"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
@@ -185,7 +203,9 @@ where 1=1
 		select a.id	,
 				a.type	,
 				a.status	,
+				a.detial,
 				a.name	,
+				a.area,
 				a.amount	,
 				a.address	,
 				case when a.target is not null then 'close' else 'open' end as target_status,

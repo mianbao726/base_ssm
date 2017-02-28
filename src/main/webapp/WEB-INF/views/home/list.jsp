@@ -3,7 +3,7 @@
 	String path = request.getContextPath(); 
 %>
 <!DOCTYPE html>
-<!-- saved from url=(0040)https://m.anrunjinrong.com/loanAction.do -->
+<!-- saved from url=(0040)https://m.sjlr.com/loanAction.do -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,10 +16,19 @@
 <meta content="telephone=no" name="format-detection">
 <title>沈阳赏金猎人</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/sjlr/newstyle.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/xnyc/style.css" />
 <script type="text/javascript">
 	function refresh(){
 		window.location.href="loanAction.do";
 	}
+	var query001 = "";
+	var query002 = "";
+	var query003 = "";
+	
+	function select_query(tar){
+		alert(tar);
+	}
+	
 	function loadMore(){
 		var id=$("#lastId").val();
 		var type=$("#type").val();//serial
@@ -47,8 +56,14 @@
 			div+="<i class=\"mark2\">行</i>";
 			}
 			if(item.type==2){
-			div+="<i class=\"mark3\" style=\"margin-right:10px;\">担</i>";
-			div+="<i class=\"mark3\" style=\"margin-right:10px;\">担</i>";
+				div+="<i class=\"mark3\">银</i>";
+				div+="<i class=\"mark3\">行</i>";
+			}
+			if(item.type==3){
+				div+="<i class=\"mark4\">债</i>";
+				div+="<i class=\"mark4\">权</i>";
+				div+="<i class=\"mark4\">转</i>";
+				div+="<i class=\"mark4\">让</i>";
 			}
 			
 			//div+=data[i].title;
@@ -273,7 +288,16 @@ $("#topdown").hide();//表示display:none;
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/assets/sjlr/jquery.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/assets/viewjs/sunny.js"></script>
+		<script src="${pageContext.request.contextPath}/assets/xnyc/script.js"></script>
 
+	
+	<!-- <ul class="tabar">
+		<li><a href="javascript:;loanPage(&#39;aplan&#39;);">A计划</a></li>
+		<li><a href="javascript:;loanPage(&#39;special&#39;);">特惠推荐</a></li>
+		<li style="width: 34%;"><a
+			href="javascript:;loanPage(&#39;common&#39;);" class="mark">直投项目</a></li>
+	</ul> -->
+	<div class="filter" >
 	<div class="header">
 		<h1 class="fl_l">
 			<a href="javascript:;toGoHome();"><img src="${pageContext.request.contextPath}/assets/sjlr/logo.png" width="119" height="44"></a>
@@ -285,13 +309,52 @@ $("#topdown").hide();//表示display:none;
 	</div>
 
 	</div>
-	<!-- <ul class="tabar">
-		<li><a href="javascript:;loanPage(&#39;aplan&#39;);">A计划</a></li>
-		<li><a href="javascript:;loanPage(&#39;special&#39;);">特惠推荐</a></li>
-		<li style="width: 34%;"><a
-			href="javascript:;loanPage(&#39;common&#39;);" class="mark">直投项目</a></li>
-	</ul> -->
-	<div class="listbox">
+	<ul>
+		<li>
+			<a href="javascript:void(0);" class="filter_btn" id = "query001">发布日期</a>
+			<div class="filter_pop2">
+				<ol>
+					<li><a href="#" id = "query001_1" onclick = "select_query('query001_1')">不限</a></li>
+					<li><a href="#" id = "query001_2" onclick = "select_query('query001_2')">一个月以内</a></li>
+					<li><a href="#" id = "query001_3" onclick = "select_query('query001_3')">一到三个月</a></li>
+					<li><a href="#" id = "query001_4" onclick = "select_query('query001_4')">三到六个月</a></li>
+					<li><a href="#" id = "query001_5" onclick = "select_query('query001_5')" class="active">六个月到一年</a></li>
+					<li><a href="#" id = "query001_6" onclick = "select_query('query001_6')">一年以上</a></li>
+				</ol>
+				<div class="pop2_bg"></div>
+			</div>
+		</li>
+		<li>
+			<a href="javascript:void(0);" class="filter_btn" id = "query002">债务金额</a>
+			<div class="filter_pop2">
+				<ol>
+					<li><a href="#" id = "query002_1" onclick = "select_query('query002_1')">不限</a></li>
+					<li><a href="#" id = "query002_2" onclick = "select_query('query002_2')">3万以下</a></li>
+					<li><a href="#" id = "query002_3" onclick = "select_query('query002_3')">3-5万</a></li>
+					<li><a href="#" id = "query002_4" onclick = "select_query('query002_4')">5-7万</a></li>
+					<li><a href="#" id = "query002_5" onclick = "select_query('query002_5')" class="active">7-10万</a></li>
+					<li><a href="#" id = "query002_6" onclick = "select_query('query002_6')">10万以上</a></li>
+				</ol>
+				<div class="pop2_bg"></div>
+			</div>
+		</li>
+		<li>
+			<a href="javascript:void(0);" class="filter_btn" id = "query003">地区</a>
+			<div class="filter_pop2">
+				<ol>
+					<li><a href="#" id = "query003_1" onclick = "select_query('query003_1')">沈河区</a></li>
+					<li><a href="#" id = "query003_2" onclick = "select_query('query003_2')">皇姑区</a></li>
+					<li><a href="#" id = "query003_3" onclick = "select_query('query003_3')">和平区</a></li>
+					<li><a href="#" id = "query003_4" onclick = "select_query('query003_4')">铁西区</a></li>
+					<li><a href="#" id = "query003_5" onclick = "select_query('query003_5')">大东区</a></li>
+					<li><a href="#" id = "query003_6" onclick = "select_query('query003_6')" class="active">其他地区</a></li>
+				</ol>
+				<div class="pop2_bg"></div>
+			</div>
+		</li>
+	</ul>
+</div> 
+	<div class="listbox" style = "margin-top : 110px">
 
 
 
@@ -314,9 +377,9 @@ $("#topdown").hide();//表示display:none;
 <!-- 		<ul> -->
 <!-- 			<li><a href="javascript:;goPageOne();">首页</a>&nbsp;|&nbsp;</li> -->
 <!-- 			<li><a -->
-<!-- 				href="https://m.anrunjinrong.com/jsp/arjrjsp/aboutus/about_us.jsp">关于我们</a>&nbsp;|&nbsp;</li> -->
+<!-- 				href="https://m.sjlr.com/jsp/arjrjsp/aboutus/about_us.jsp">关于我们</a>&nbsp;|&nbsp;</li> -->
 <!-- 			<li><a -->
-<!-- 				href="https://m.anrunjinrong.com/jsp/arjrjsp/help/help.jsp">帮助中心</a></li> -->
+<!-- 				href="https://m.sjlr.com/jsp/arjrjsp/help/help.jsp">帮助中心</a></li> -->
 <!-- 		</ul> -->
 		<span>©2017 赏金猎人 sjlr.com</span>
 	</div>

@@ -56,13 +56,10 @@ public class UserController extends BaseController {
 
 	@RequestMapping("/register.do")
 	public @ResponseBody String register(HttpServletRequest request, Model model) throws Exception {
-		Map ret = null;
-		if(1==userService.register(super.getParams(request))){
-			ret = new QMap(200);
-		}else{
-			ret = new QMap(202,"注册失败");
-		}
-		return JSONObject.toJSONString(ret);
+		Map paramsMap = super.getParams(request);
+		userService.insert(paramsMap);
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
 	}
 
 	@RequestMapping("/getUserMenu.do")

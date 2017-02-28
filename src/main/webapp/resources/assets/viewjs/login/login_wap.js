@@ -50,6 +50,9 @@ jQuery(function($) {
 					return false;
 				}
 				var params = $("#register_form").serializeObject();
+				var chk_value =[]; 
+				chk_value.push('16');
+				params['role'] = chk_value;
 				$.sunny.ajax({
 					url : "user/register.do",
 					type : "post",
@@ -57,7 +60,8 @@ jQuery(function($) {
 					async : false,
 					success : function(data) {
 						if(data.status_code == 200){
-							$("#go_login").click();
+//							$("#go_login").click();
+							alert("注册成功！ 请等待审核");
 						}
 					}
 				});
@@ -70,6 +74,7 @@ jQuery(function($) {
 			return false;
 		}
 		var params = $("#login_form").serializeObject();
+		params['c']='c';
 		$.sunny.ajax({
 			url : "login.do",
 			type : "post",
@@ -103,23 +108,26 @@ jQuery(function($) {
 			.bootstrapValidator(
 					{
 						fields : {
-							email : {
+							name : {
 								validators : {
 									callback : {
-										message : '邮箱地址已经被注册',
+										message : '电话号已经被注册',
 										callback : function(value, validator) {
 											var email = validator
-													.getFieldElements('email')
+													.getFieldElements('name')
 													.val();
-											console.log("email  :  " + email);
+//											console.log("email  :  " + email);
 											if (email == "") {
-												console.log("email  :  null ");
+//												console.log("email  :  null ");
 												return true;
-											} else if (new RegExp(
-													"[a-z0-9A-Z]{1,}[@][a-z0-9A-Z]{1,}[.][0-9a-zA-Z]{1,}")
-													.test(email)) {
+											} else if (
+													true
+//													new RegExp(
+//													"[a-z0-9A-Z]{1,}[@][a-z0-9A-Z]{1,}[.][0-9a-zA-Z]{1,}")
+//													.test(email)
+													) {
 												console.log("email  matched ");
-												return checkEmail(email);
+												return checkUsername(email);
 											} else {
 												console
 														.log("email  : not matched ");
@@ -129,27 +137,27 @@ jQuery(function($) {
 									}
 								}
 							},
-							username : {
-								validators : {
-									callback : {
-										message : '用户名已经被注册',
-										callback : function(value, validator) {
-											var username = validator
-													.getFieldElements(
-															'username').val();
-											if (username == "") {
-												return true;
-											} else if (new RegExp(
-													"[a-z0-9A-Z]{5,}")
-													.test(username)) {
-												return checkUsername(username);
-											} else {
-												return true;
-											}
-										}
-									}
-								}
-							}
+//							username : {
+//								validators : {
+//									callback : {
+//										message : '用户名已经被注册',
+//										callback : function(value, validator) {
+//											var username = validator
+//													.getFieldElements(
+//															'username').val();
+//											if (username == "") {
+//												return true;
+//											} else if (new RegExp(
+//													"[a-z0-9A-Z]{5,}")
+//													.test(username)) {
+//												return checkUsername(username);
+//											} else {
+//												return true;
+//											}
+//										}
+//									}
+//								}
+//							}
 						}
 					});
 

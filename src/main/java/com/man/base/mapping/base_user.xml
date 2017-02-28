@@ -104,6 +104,7 @@
 		*
 		from sys_user
 		where username = #{username} 
+		
 	</select>
 	<select id="login_wap" parameterMap="paraMap" resultType="hashmap">
 		select
@@ -115,7 +116,7 @@
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from sys_user
 		where id = #{id,jdbcType=INTEGER}
-	</delete>
+	</delete>	
 	<insert id="insert" parameterMap="paraMap">
 		insert into sys_user (
 		username,

@@ -4,14 +4,13 @@
 	String uuid = request.getParameter("uuid");
 %>
 <!DOCTYPE html>
-<!-- saved from url=(0049)https://m.anrunjinrong.com/accountAction!myVip.do -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
   
-<link rel="apple-touch-icon" href="https://m.anrunjinrong.com/images/arjr/icon120.png">
-<meta name="apple-mobile-web-app-title" content="安润金融触屏">  
-<meta name="keywords" content="安润金融,安润金融官网,互联网金融,P2P网贷,投资理财,P2P理财,互联网理财,网络贷款,小额贷款,资金安全,anrunjinrong.com">
-<meta name="description" content="安润金融触屏版 m.anrunjinrong.com - 国内最规范的互联网金融P2P网贷平台之一_为投资理财用户提供安全、诚信、透明的互联网金融务。银行级风险控制水平,大型机构资金担保,第三方资金托管,保障资金安全。">
+<!-- <link rel="apple-touch-icon" href="https:///images/arjr/icon120.png"> -->
+<meta name="apple-mobile-web-app-title" content="赏金猎人触屏">  
+<meta name="keywords" content="赏金猎人,赏金猎人官网,互联网金融,P2P网贷,投资理财,P2P理财,互联网理财,网络贷款,小额贷款,资金安全">
+<meta name="description" content="赏金猎人触屏版 m. - 国内最规范的互联网金融P2P网贷平台之一_为投资理财用户提供安全、诚信、透明的互联网金融务。银行级风险控制水平,大型机构资金担保,第三方资金托管,保障资金安全。">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <meta name="baidu-site-verification" content="U0KIAkdGPs">
     
@@ -19,7 +18,7 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
-    <title>安润金融</title>
+    <title>赏金猎人</title>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/sjlr/style_vip.css">
     <style>
         .footer{
@@ -237,7 +236,7 @@ $("#topdown").hide();//表示display:none;
         <div class="bg"></div>
         <div class="explain">
             <h3 class="explain_title">专属VIP出借项目</h3>
-            <p class="explain_con">专属VIP出借项目是安润金融针对黄金VIP会员及以上等级会员推出的专享特权，会每天不定时推送，购买专属理财项目能够获得额外的加息奖励，让您收益快人一步。</p>
+            <p class="explain_con">专属VIP出借项目是赏金猎人针对黄金VIP会员及以上等级会员推出的专享特权，会每天不定时推送，购买专属理财项目能够获得额外的加息奖励，让您收益快人一步。</p>
             <button class="explain_btn">我知道了</button><button class="explain_btn">我知道了</button>
         </div>
     </div>
@@ -255,10 +254,10 @@ $("#topdown").hide();//表示display:none;
 <div class="footer">
 	<ul>
 		<li><a href="javascript:;goPageOne();">首页</a>&nbsp;|&nbsp;</li>
-		<li><a href="https://m.anrunjinrong.com/jsp/arjrjsp/aboutus/about_us.jsp">关于我们</a>&nbsp;|&nbsp;</li>
-		<li><a href="https://m.anrunjinrong.com/jsp/arjrjsp/help/help.jsp">帮助中心</a></li>
+		<!-- <li><a href="https://m..com/jsp/arjrjsp/aboutus/about_us.jsp">关于我们</a>&nbsp;|&nbsp;</li>
+		<li><a href="https://m..com/jsp/arjrjsp/help/help.jsp">帮助中心</a></li> -->
 	</ul>
-	<span>©2014 安润金融 anrunjinrong.com</span>
+	<span>©2014 赏金猎人 arjr.com</span>
 </div>
 
 <script src="${pageContext.request.contextPath}/assets/sjlr/jquery.min(1).js"></script>
@@ -297,16 +296,16 @@ $("#topdown").hide();//表示display:none;
         var title = ['贡献值','单笔出借','新手专享项目','专属VIP出借项目','出借红包','升级礼包','沙龙活动','专属理财顾问','VIP客服热线','生日礼包','节日感恩礼','周年感恩礼'];
         var explain = ['贡献值为会员在安润平台年化累计出借金额的总和。',
                         '单笔出借是指会员在安润平台的最高单笔出借金额。',
-                        '安润金融新手专享项目是安润金融的一大特色产品，为了让新用户对投资快速上路，该项目为新手专享项目，只有未进行过投资的新用户才可以投资（仅限一次），预期年化收益率可达14%，出借周期短。',
-                        '专属VIP出借项目是安润金融针对黄金VIP会员及以上等级会员推出的专享特权，会每天不定时推送，购买专属理财项目能够获得额外的加息奖励，让您收益快人一步。',
-                        '出借红包，也叫红包，是安润金融奖励给用户的电子虚拟现金的一种，黄金VIP会员及以上等级会员可以定期获得；当获得用户单笔出借额度满足领取红包条件时，系统将自动按照领取条件匹配符合条件的红包。',
-                        '安润金融针对升级至黄金VIP会员及以上等级的会员特赠送升级感恩回馈礼包！ 内含大量丰富好礼等您来领取！奖品多多，升级就有。',
+                        '赏金猎人新手专享项目是赏金猎人的一大特色产品，为了让新用户对投资快速上路，该项目为新手专享项目，只有未进行过投资的新用户才可以投资（仅限一次），预期年化收益率可达14%，出借周期短。',
+                        '专属VIP出借项目是赏金猎人针对黄金VIP会员及以上等级会员推出的专享特权，会每天不定时推送，购买专属理财项目能够获得额外的加息奖励，让您收益快人一步。',
+                        '出借红包，也叫红包，是赏金猎人奖励给用户的电子虚拟现金的一种，黄金VIP会员及以上等级会员可以定期获得；当获得用户单笔出借额度满足领取红包条件时，系统将自动按照领取条件匹配符合条件的红包。',
+                        '赏金猎人针对升级至黄金VIP会员及以上等级的会员特赠送升级感恩回馈礼包！ 内含大量丰富好礼等您来领取！奖品多多，升级就有。',
                         '沙龙活动是安润进行针对黄金VIP会员及以上等级会员推出的沙龙交流活动。',
-                        '专属理财顾问是安润金融针对白金VIP会员及以上等级会员及指定高端用户推出尊享的专属服务通道， 在使用网站的过程中碰到各种问题，第一时间为您处理和解决。让您拥有一对一尊贵服务。',
-                        'VIP客服热线是白金VIP会员及以上等级会员用注册手机拨打安润金融全国统一客服热线，系统将自动识别VIP会员身份，匹配VIP专属的客服坐席，尽享尊贵体验。',
-                        '生日礼包是安润金融针对白金VIP会员及以上等级会员生日的感恩回馈。凡是用户生日当月，安润金融会送出一个生日礼包。',
-                        '安润金融针对白金VIP会员及以上等级会员特推出节日回馈大礼包。',
-                        '安润金融针对钻石VIP会员特推出周年感恩大礼包。'];
+                        '专属理财顾问是赏金猎人针对白金VIP会员及以上等级会员及指定高端用户推出尊享的专属服务通道， 在使用网站的过程中碰到各种问题，第一时间为您处理和解决。让您拥有一对一尊贵服务。',
+                        'VIP客服热线是白金VIP会员及以上等级会员用注册手机拨打赏金猎人全国统一客服热线，系统将自动识别VIP会员身份，匹配VIP专属的客服坐席，尽享尊贵体验。',
+                        '生日礼包是赏金猎人针对白金VIP会员及以上等级会员生日的感恩回馈。凡是用户生日当月，赏金猎人会送出一个生日礼包。',
+                        '赏金猎人针对白金VIP会员及以上等级会员特推出节日回馈大礼包。',
+                        '赏金猎人针对钻石VIP会员特推出周年感恩大礼包。'];
         $('.grade_content span.name').each(function(i){
             var index = i;
             $(this).click(function(){

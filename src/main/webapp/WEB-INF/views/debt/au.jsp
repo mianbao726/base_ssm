@@ -7,8 +7,8 @@ String id = request.getParameter("id");%>
 <jsp:include page="../include/head.jsp" flush="true">
 <jsp:param name="itemId" value="<%=itemId%>" />
 <jsp:param name="parentId" value="<%=parentId%>" />
-<jsp:param name="title" value="债务包管理" />
-<jsp:param name="link1" value="债务包管理" />
+<jsp:param name="title" value="个人债务包管理" />
+<jsp:param name="link1" value="个人债务包管理" />
 <jsp:param name="link2" value="" /> 
 </jsp:include>
 
@@ -40,6 +40,31 @@ String id = request.getParameter("id");%>
 											<label class="col-sm-3 control-label no-padding-right" for="form-field-3">债务包地址</label>
 											<div class="col-sm-8">
 												<input type="text" id="form-field-3" name="address" class="col-xs-10 col-sm-12"  >
+											</div>
+										</div>
+										<div class="form-group" style="margin-top: 16px;">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-113">债务详情</label>
+											<div class="col-sm-8">
+												<input type="text" id="form-field-113" name="detial" class="col-xs-10 col-sm-12"  >
+											</div>
+										</div>
+										<div class="form-group" style="margin-top: 16px;">
+											<label class="col-sm-3 control-label no-padding-right" for="form-field-3">所属地区</label>
+											<div class="col-sm-8">
+<!-- 												0沈河 1和平 2皇姑 3铁西 4大东 5东陵 6于洪 7沈北新区 8浑南新区 9苏家屯区 10其他地区 -->
+												<select id = "form-field-11" name = "area" >
+													<option value = "0">沈河</option>
+													<option value = "1">和平</option>
+													<option value = "2">皇姑</option>
+													<option value = "3">铁西</option>
+													<option value = "4">大东</option>
+													<option value = "5">东陵</option>
+													<option value = "6">于洪</option>
+													<option value = "7">沈北新区</option>
+													<option value = "8">浑南新区</option>
+													<option value = "9">苏家屯区</option>
+													<option value = "10">其他地区</option>
+												</select>
 											</div>
 										</div>
 										<div class="form-group" style="margin-top: 16px;">
@@ -149,6 +174,7 @@ if(id != 'null'){
  				$("#form-field-1").val(data.name);
  				$("#form-field-2").val(data.amount);
  				$("#form-field-3").val(data.address);
+ 				$("#form-field-113").val(data.detial);
  				var registration_datea = data.s_date.substr(0, 4);
  				var registration_dateb = data.s_date.substr(5, 2);
  				var registration_datec = data.s_date.substr(8, 2);
@@ -157,6 +183,7 @@ if(id != 'null'){
  				var registration_datec1 = data.e_date.substr(8, 2);
  				$("#form-field-4").val(registration_datea + "年" + registration_dateb+ "月" + registration_datec + "日");
  				$("#form-field-5").val(registration_datea1 + "年" + registration_dateb1+ "月" + registration_datec1 + "日");
+ 				$("#form-field-11").val(data.area);
  				
  				if(data.filename_ori==""||data.filename_ori==null||data.filename_ori==undefined){
  					$("#myBlogImage").show();
@@ -213,10 +240,10 @@ $("#save").click(function() {
 	if(registration_datea > registration_datea1){
 		$("#date_hint_compare").show();
 		return;
-	}else if (registration_dateb > registration_dateb1){
+	}else if ( registration_datea == registration_datea1 &&registration_dateb > registration_dateb1){
 		$("#date_hint_compare").show();
 		return;
-	}else if (registration_datec > registration_datec1){
+	}else if (registration_datea == registration_datea1 &&registration_dateb == registration_dateb1 && registration_datec > registration_datec1){
 		$("#date_hint_compare").show();
 		return;
 	}
@@ -231,12 +258,17 @@ $("#save").click(function() {
 	params['name'] = $("#form-field-1").val();
 	params['amount'] = $("#form-field-2").val();
 	params['address'] = $("#form-field-3").val();
+	params['detial'] = $("#form-field-113").val();
+	
 
 	params['pic_uuid'] = $("#pic_uuid").val();
 	
 	params['start'] = registration_datea + "-" + registration_dateb+ "-" + registration_datec + " " + "00:00:00";
 	
 	params['end'] = registration_datea1 + "-" + registration_dateb1+ "-" + registration_datec1 + " " + "00:00:00";
+	
+	params['area'] = $("#form-field-11").val();
+	
 	$.sunny.ajax({
 			contentType : 'application/json; charset=utf-8',
 			url : url,
@@ -315,6 +347,17 @@ jQuery(function($) {
 								}
 							},
 							address : {
+								validators : {
+									notEmpty : {
+										message : '地址不能为空'
+									},
+									regexp : {
+										regexp : /^([0-9a-zA-Z\u4e00-\u9fa5]{1,50})$/,
+										message : '请填写50位以内字符'
+									}
+								}
+							},
+							detial : {
 								validators : {
 									notEmpty : {
 										message : '地址不能为空'

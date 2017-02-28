@@ -44,14 +44,51 @@ public class DebtController extends BaseController {
 	private IModuleService moduleService;
 	
 	@RequestMapping("/index_1.html")
-	public String index(HttpServletRequest request, Model model) throws Exception {
+	public String index1(HttpServletRequest request, Model model) throws Exception {
 		return "debt/index";
+	}
+	@RequestMapping("/index_2.html")
+	public String index2(HttpServletRequest request, Model model) throws Exception {
+		return "debt/index2";
+	}
+	@RequestMapping("/index_3.html")
+	public String index3(HttpServletRequest request, Model model) throws Exception {
+		return "debt/index3";
+	}
+	@RequestMapping("/index_4.html")
+	public String index4(HttpServletRequest request, Model model) throws Exception {
+		return "debt/index4";
 	}
 	
 	@RequestMapping(value = "/index.do", method = RequestMethod.POST)
 	public @ResponseBody String index(HttpServletRequest request, HttpServletResponse response) {
 		Map page = (Map) JSONObject.parse(request.getParameter("params").toString());
 		request.getParameterMap();
+		page.put("type", "0");
+		Map ret = this.debtService.index(page);
+		return JSONObject.toJSONString(ret);
+	}
+	@RequestMapping(value = "/index2.do", method = RequestMethod.POST)
+	public @ResponseBody String index2(HttpServletRequest request, HttpServletResponse response) {
+		Map page = (Map) JSONObject.parse(request.getParameter("params").toString());
+		request.getParameterMap();
+		page.put("type", "1");
+		Map ret = this.debtService.index(page);
+		return JSONObject.toJSONString(ret);
+	}
+	@RequestMapping(value = "/index3.do", method = RequestMethod.POST)
+	public @ResponseBody String index3(HttpServletRequest request, HttpServletResponse response) {
+		Map page = (Map) JSONObject.parse(request.getParameter("params").toString());
+		request.getParameterMap();
+		page.put("type", "2");
+		Map ret = this.debtService.index(page);
+		return JSONObject.toJSONString(ret);
+	}
+	@RequestMapping(value = "/index4.do", method = RequestMethod.POST)
+	public @ResponseBody String index4(HttpServletRequest request, HttpServletResponse response) {
+		Map page = (Map) JSONObject.parse(request.getParameter("params").toString());
+		request.getParameterMap();
+		page.put("type", "3");
 		Map ret = this.debtService.index(page);
 		return JSONObject.toJSONString(ret);
 	}
@@ -73,10 +110,47 @@ public class DebtController extends BaseController {
 	public String au(HttpServletRequest request, Model model) {
 		return "debt/au";
 	}
+	@RequestMapping("/au2.html")
+	public String au2(HttpServletRequest request, Model model) {
+		return "debt/au2";
+	}
+	@RequestMapping("/au3.html")
+	public String au3(HttpServletRequest request, Model model) {
+		return "debt/au3";
+	}
+	@RequestMapping("/au4.html")
+	public String au4(HttpServletRequest request, Model model) {
+		return "debt/au4";
+	}
 	
 	@RequestMapping("/add.do")
 	public @ResponseBody String add(HttpServletRequest request) throws Exception {
 		Map paramsMap = super.getParams(request);
+		paramsMap.put("type", "0");
+		debtService.insert(paramsMap);
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
+	@RequestMapping("/add2.do")
+	public @ResponseBody String add2(HttpServletRequest request) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("type", "1");
+		debtService.insert(paramsMap);
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
+	@RequestMapping("/add3.do")
+	public @ResponseBody String add3(HttpServletRequest request) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("type", "2");
+		debtService.insert(paramsMap);
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
+	@RequestMapping("/add4.do")
+	public @ResponseBody String add4(HttpServletRequest request) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("type", "3");
 		debtService.insert(paramsMap);
 		paramsMap.put("status_code", "200");
 		return JSONObject.toJSONString(paramsMap);
@@ -84,7 +158,9 @@ public class DebtController extends BaseController {
 	
 	@RequestMapping(value = "/selectOne.do", method = RequestMethod.POST)
 	public @ResponseBody String getSearchUserProfiles(@RequestBody Map search, HttpServletRequest request, HttpServletResponse response) {
+		Map paramsMap = super.getParams(request);
 		Map userInfo = debtService.selectOne(search);
+		userInfo.put("hi", paramsMap.get("CURRENT_USER_NAME"));
 		return JSONObject.toJSONString(userInfo);
 	}
 	

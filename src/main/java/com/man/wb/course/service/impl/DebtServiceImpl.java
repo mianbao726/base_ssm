@@ -156,7 +156,7 @@ public class DebtServiceImpl extends PageServiceDao implements IDebtService {
 
 	public Map insert(Map param) {
 //		List<String> roles = (ArrayList<String>)param.get("role");
-		param.put("type", "0");
+		
 		param.put("status", "0");
 		param.put("uuid", UUID.randomUUID().toString());
 		Calendar c= Calendar.getInstance();

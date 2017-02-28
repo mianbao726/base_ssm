@@ -7,10 +7,10 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
   
-<link rel="apple-touch-icon" href="https://m.anrunjinrong.com/images/arjr/icon120.png">
+<link rel="apple-touch-icon" href="https://m.sjlr.com/images/arjr/icon120.png">
 <meta name="apple-mobile-web-app-title" content="赏金猎人触屏">  
-<meta name="keywords" content="赏金猎人,赏金猎人官网,互联网金融,P2P网贷,投资理财,P2P理财,互联网理财,网络贷款,小额贷款,资金安全,anrunjinrong.com">
-<meta name="description" content="赏金猎人触屏版 m.anrunjinrong.com - 国内最规范的互联网金融P2P网贷平台之一_为投资理财用户提供安全、诚信、透明的互联网金融务。银行级风险控制水平,大型机构资金担保,第三方资金托管,保障资金安全。">
+<meta name="keywords" content="赏金猎人,赏金猎人官网,互联网金融,P2P网贷,投资理财,P2P理财,互联网理财,网络贷款,小额贷款,资金安全">
+<meta name="description" content="赏金猎人触屏版 m.sjlr.com - 国内最规范的互联网金融P2P网贷平台之一_为投资理财用户提供安全、诚信、透明的互联网金融务。银行级风险控制水平,大型机构资金担保,第三方资金托管,保障资金安全。">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <meta name="baidu-site-verification" content="U0KIAkdGPs">
 
@@ -31,9 +31,9 @@ var uuid = '<%=uuid %>';
 		window.location.href="investAction!investPage.do?id="+id;
 	}
 	function recharge(){
-    		//window.location.href="rechargeAction.do";
-    		window.location.href="rechargeAction.do?rapidRecharge=true";
-    	}
+   		//window.location.href="rechargeAction.do";
+   		window.location.href="rechargeAction.do?rapidRecharge=true";
+   	}
   function refresh(){
 		document.form.target="_parent";
 		document.form.action="investAction.do";
@@ -217,7 +217,7 @@ $("#topdown").hide();//表示display:none;
 	
 	<!--未登录-->
 	<div class="loging fl_r">
-		<a href="javascript:;myAccount();" class="fl_l">hi,m***o</a>
+		<a href="javascript:;myAccount();" class="fl_l" id = "hi">hi,m***o</a>
 		<a id="out" href="javascript:;out();">退出</a>
 	</div>
 	
@@ -239,10 +239,10 @@ $("#topdown").hide();//表示display:none;
 		
 		<ul class="tabs1 ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
 <%-- 			<li class="first ui-state-default ui-corner-top ui-tabs-active ui-state-active ui-state-focus" role="tab" tabindex="0" aria-controls="tabox1" aria-labelledby="ui-id-1" aria-selected="true" aria-expanded="true"><a href="http://localhost:8080/base/home/detial.html?uuid=<%=uuid %>#tabox1" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">悬赏详情</a></li> --%>
-<%-- 			<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabox2" aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false"><a href="https://m.anrunjinrong.com/loanAction!aplandetail.do?id=<%=uuid %>#tabox2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">项目介绍</a></li> --%>
+<%-- 			<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabox2" aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false"><a href="https://m.sjlr.com/loanAction!aplandetail.do?id=<%=uuid %>#tabox2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">项目介绍</a></li> --%>
 <%-- 			<li class="last ui-state-default ui-corner-top" style="width:34%;" role="tab" tabindex="-1" aria-controls="tabox3" aria-labelledby="ui-id-3" aria-selected="false" aria-expanded="false"><a href="https://localhost:8080?id=<%=uuid %>#tabox3" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">常见问题</a></li> --%>
 				<li class="first ui-state-default ui-corner-top ui-tabs-active ui-state-active ui-state-focus" role="tab" tabindex="0" aria-controls="tabox1" aria-labelledby="ui-id-1" aria-selected="true" aria-expanded="true"><a href="http://localhost:8080/base/home/detial.html?uuid=<%=uuid %>#tabox1" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">悬赏详情</a></li>
-				<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabox2" aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false"><a href="https://m.anrunjinrong.com/loanAction!aplandetail.do?id=<%=uuid %>#tabox2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">项目介绍</a></li>
+				<li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabox2" aria-labelledby="ui-id-2" aria-selected="false" aria-expanded="false"><a href="https://m.sjlr.com/loanAction!aplandetail.do?id=<%=uuid %>#tabox2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">项目介绍</a></li>
 				<li class="last ui-state-default ui-corner-top" style="width:34%;" role="tab" tabindex="-1" aria-controls="tabox3" aria-labelledby="ui-id-3" aria-selected="false" aria-expanded="false"><a href="https://localhost:8080?id=<%=uuid %>#tabox3" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">常见问题</a></li>
 		</ul>
 	</div>
@@ -286,6 +286,14 @@ $("#topdown").hide();//表示display:none;
 <!-- 							<span class="red">6+6.0 <font>%</font></span> -->
 							<font>债务周期</font>
 							<span id = "context005">2017年02月16日~2017年02月16日<font></font></span>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top" style="width:35%;" colspan ="3">
+<!-- 							<font>预期年化收益</font> -->
+<!-- 							<span class="red">6+6.0 <font>%</font></span> -->
+							<font>债务详情</font>
+							<span id = "context006">2017年02月16日~2017年02月16日<font></font></span>
 						</td>
 					</tr>
 				</tbody>
@@ -364,7 +372,7 @@ $("#topdown").hide();//表示display:none;
         <div class="explain">
             <h3 class="explain_title">抢标提示</h3>
             <p class="explain_con">wow！我觉得没时间解释了，这个标是我的了！</p>
-            <button class="explain_btn" onclick="show_commit()">马上抢标</button>
+            <button class="explain_btn" onclick="show_commit()">确认接单</button>
             <hr/>
             <button class="explain_btn" onclick="javascript:$('#commit').hide();"><font color = "black">我再想想</font></button>
         </div>
@@ -409,8 +417,8 @@ $("#topdown").hide();//表示display:none;
 <div class="footer">
 <!-- 	<ul> -->
 <!-- 		<li><a href="javascript:;goPageOne();">首页</a>&nbsp;|&nbsp;</li> -->
-<!-- 		<li><a href="https://m.anrunjinrong.com/jsp/arjrjsp/aboutus/about_us.jsp">关于我们</a>&nbsp;|&nbsp;</li> -->
-<!-- 		<li><a href="https://m.anrunjinrong.com/jsp/arjrjsp/help/help.jsp">帮助中心</a></li> -->
+<!-- 		<li><a href="https://m.sjlr.com/jsp/arjrjsp/aboutus/about_us.jsp">关于我们</a>&nbsp;|&nbsp;</li> -->
+<!-- 		<li><a href="https://m.sjlr.com/jsp/arjrjsp/help/help.jsp">帮助中心</a></li> -->
 <!-- 	</ul> -->
 	<span>©2017 赏金猎人 sjlr.com</span>
 </div>
@@ -498,11 +506,15 @@ if(uuid != 'null'){
 			async:false,
 			data : JSON.stringify(params),
 			success : function(data) {
+				
+				 $("#hi").html("hi! "+data.hi);
 				$("#context001").html(data.kind);
 				$("#context002").html(data.name);
 				$("#context003").html("￥" + data.amount + "万元");
 				$("#context004").html(data.address);
 				$("#context005").html(data.s_f_date+"~"+data.e_f_date);
+				$("#context006").html(data.detial);
+				
 				console.log(data);
 				if(data.target_status == 'close'){
 					$("#get_the_target").val("此标已有主了！");
