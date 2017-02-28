@@ -38,8 +38,63 @@ public class DebtServiceImpl extends PageServiceDao implements IDebtService {
 	
 	public Map loadMore(Map param){
 		Map ret = new HashMap();
+		
+		//build query 
+		StringBuilder sb = new StringBuilder();
+		if(null != param.get("query001") && !("".equals(param.get("query001")))){
+			String query = param.get("query001").toString();
+			if(query.equals("query001_2")){
+				param.put("query001_2", "not null");
+				sb.append(" and TO_DAYS(now()) - TO_DAYS(craeted_at) >= 30 ");
+			}else if(query.equals("query001_3")){
+				sb.append(" and TO_DAYS(now()) - TO_DAYS(craeted_at) <= 90 ");
+			}else if(query.equals("query001_4")){
+				sb.append(" and TO_DAYS(now()) - TO_DAYS(craeted_at) <= 120 ");
+			}else if(query.equals("query001_5")){
+				sb.append(" and TO_DAYS(now()) - TO_DAYS(craeted_at) <= 365 ");
+			}else if(query.equals("query001_6")){
+				sb.append(" and TO_DAYS(now()) - TO_DAYS(craeted_at) > 365 ");
+			}
+			
+		}
+		if(null != param.get("query002") && !("".equals(param.get("query002")))){
+			String query = param.get("query002").toString();
+			if(query.equals("query001_2")){
+				sb.append(" and amount <= 3 ");
+			}else if(query.equals("query001_3")){
+				sb.append(" and amount >= 3 and amount <= 5 ");
+			}else if(query.equals("query001_4")){
+				sb.append(" and amount >= 5 and amount <= 7 ");
+			}else if(query.equals("query001_5")){
+				sb.append(" and amount => 7 and amount <= 10 ");
+			}else if(query.equals("query001_6")){
+				sb.append(" and amount >= 10 ");
+			}
+			
+		}
+		if(null != param.get("query003") && !("".equals(param.get("query003")))){
+			String query = param.get("query003").toString();
+			if(query.equals("query001_2")){
+				sb.append(" and area = 0 ");
+			}else if(query.equals("query001_3")){
+				sb.append(" and area = 2 ");
+			}else if(query.equals("query001_4")){
+				sb.append(" and area = 1 ");
+			}else if(query.equals("query001_5")){
+				sb.append(" and area = 3 ");
+			}else if(query.equals("query001_6")){
+				sb.append(" and area = 4 ");
+			}else if(query.equals("query001_7")){
+				sb.append(" and area not in ( 0,2,1,3,4 ) ");
+			}
+			
+		}
+		param.put("querys", sb.toString());
+		
+		
 		if(null == param.get("uuid") || "".equals(param.get("uuid").toString()))
 			param.remove("uuid");
+		System.out.println(param);
 		ret.put("data", baseDao.selectList("sjlr_debt.loadMore", param));
 		return ret;
 	}

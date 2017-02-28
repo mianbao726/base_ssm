@@ -99,6 +99,7 @@ public class HomeController extends BaseController {
 	public @ResponseBody String loadMore(@RequestBody Map search, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map ret = null;
 		Map params = super.getParams(request);
+		
 		//temp start
 		if("-1".equals(params.get("CURRENT_USER_NAME").toString())){
 			throw new Exception("not login");
@@ -106,6 +107,7 @@ public class HomeController extends BaseController {
 		//temp end
 		
 		params.putAll(search);
+		System.out.println(params);
 		ret = new QMap(200);
 		ret.put("hi", params.get("CURRENT_USER_NAME"));
 		ret.putAll(this.debtService.loadMore(params));

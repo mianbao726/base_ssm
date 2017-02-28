@@ -25,12 +25,58 @@
 	var query002 = "";
 	var query003 = "";
 	
-	function select_query(tar){
-		alert(tar);
+	function select_query(tar,type){
+		if(type == 1){
+			$("a.query001").removeClass("active");
+			if(tar == 'query001_1'){
+				query001 = "";
+				$("#query001").html("发布日期");
+			}else{
+				query001 = tar;
+				var tar_query = "#"+tar;
+				$(tar_query).addClass("active");
+				$("#query001").html($(tar_query).html());
+			}
+		}else if (type == 2){
+			$("a.query002").removeClass("active");
+			if(tar == 'query002_1'){
+				query002 = "";
+				$("#query002").html("债务金额");
+			}else{
+				query002 = tar;
+				var tar_query2 = "#"+tar;
+				$(tar_query2).addClass("active");
+				$("#query002").html($(tar_query2).html());
+			}
+		}else if (type == 3){
+			$("a.query003").removeClass("active");
+			if(tar == 'query003_1'){
+				query003 = "";
+				$("#query003").html("地区");
+			}else{
+				query003 = tar;
+				var tar_query3 = "#"+tar;
+				$(tar_query3).addClass("active");
+				$("#query003").html($(tar_query3).html());
+			}
+		}
+		touch_query_flag = 1;
+		$(".list.list_2.list_3").remove();
+		loadMore();
+		
+		
 	}
+	var touch_query_flag = 0; //0 不需要清空  1 需要清空
 	
 	function loadMore(){
-		var id=$("#lastId").val();
+		var id="";
+		if(1==touch_query_flag){
+			touch_query_flag = 0 ;
+			$("#lastId").val("");
+			 id=null;
+		}else{
+			 id=$("#lastId").val();
+		}
 		var type=$("#type").val();//serial
 		document.getElementById('loadmore').style.display = "none";
 		document.getElementById('loadmoremsg').style.display = "";
@@ -39,7 +85,7 @@
 	      type: 'post',
 	      dataType : "json",
 	      url: '../home/loadMore.do' ,
-	      data : JSON.stringify({'uuid':id,'type':type} ),
+	      data : JSON.stringify({'uuid':id,'type':type,'query001':query001,'query002':query002,'query003':query003} ),
 	      success: function(data){
 	    	  $("#hi").html("hi! "+data.hi);
 			for(var i=0;i<data.data.length;i++){
@@ -314,12 +360,12 @@ $("#topdown").hide();//表示display:none;
 			<a href="javascript:void(0);" class="filter_btn" id = "query001">发布日期</a>
 			<div class="filter_pop2">
 				<ol>
-					<li><a href="#" id = "query001_1" onclick = "select_query('query001_1')">不限</a></li>
-					<li><a href="#" id = "query001_2" onclick = "select_query('query001_2')">一个月以内</a></li>
-					<li><a href="#" id = "query001_3" onclick = "select_query('query001_3')">一到三个月</a></li>
-					<li><a href="#" id = "query001_4" onclick = "select_query('query001_4')">三到六个月</a></li>
-					<li><a href="#" id = "query001_5" onclick = "select_query('query001_5')" class="active">六个月到一年</a></li>
-					<li><a href="#" id = "query001_6" onclick = "select_query('query001_6')">一年以上</a></li>
+					<li><a href="#" id = "query001_1" onclick = "select_query('query001_1','1')" class = "query001">不限</a></li>
+					<li><a href="#" id = "query001_2" onclick = "select_query('query001_2','1')" class = "query001">三十天内</a></li>
+					<li><a href="#" id = "query001_3" onclick = "select_query('query001_3','1')" class = "query001">九十天内</a></li>
+					<li><a href="#" id = "query001_4" onclick = "select_query('query001_4','1')" class = "query001">一百二十天内</a></li>
+					<li><a href="#" id = "query001_5" onclick = "select_query('query001_5','1')" class = "query001">一年以内</a></li>
+					<li><a href="#" id = "query001_6" onclick = "select_query('query001_6','1')" class = "query001">一年以上</a></li>
 				</ol>
 				<div class="pop2_bg"></div>
 			</div>
@@ -328,12 +374,13 @@ $("#topdown").hide();//表示display:none;
 			<a href="javascript:void(0);" class="filter_btn" id = "query002">债务金额</a>
 			<div class="filter_pop2">
 				<ol>
-					<li><a href="#" id = "query002_1" onclick = "select_query('query002_1')">不限</a></li>
-					<li><a href="#" id = "query002_2" onclick = "select_query('query002_2')">3万以下</a></li>
-					<li><a href="#" id = "query002_3" onclick = "select_query('query002_3')">3-5万</a></li>
-					<li><a href="#" id = "query002_4" onclick = "select_query('query002_4')">5-7万</a></li>
-					<li><a href="#" id = "query002_5" onclick = "select_query('query002_5')" class="active">7-10万</a></li>
-					<li><a href="#" id = "query002_6" onclick = "select_query('query002_6')">10万以上</a></li>
+					<li><a href="#" id = "query002_1" onclick = "select_query('query002_1','2')" class = "query002">不限</a></li>
+					<li><a href="#" id = "query002_2" onclick = "select_query('query002_2','2')" class = "query002">3万以下</a></li>
+					<li><a href="#" id = "query002_3" onclick = "select_query('query002_3','2')" class = "query002">3-5万</a></li>
+					<li><a href="#" id = "query002_4" onclick = "select_query('query002_4','2')" class = "query002">5-7万</a></li>
+					<li><a href="#" id = "query002_5" onclick = "select_query('query002_5','2')" class = "query002">7-10万</a></li>
+					<!-- <li><a href="#" id = "query002_5" onclick = "select_query('query002_5')" class="active">7-10万</a></li> -->
+					<li><a href="#" id = "query002_6" onclick = "select_query('query002_6','2')" class = "query002">10万以上</a></li>
 				</ol>
 				<div class="pop2_bg"></div>
 			</div>
@@ -342,12 +389,13 @@ $("#topdown").hide();//表示display:none;
 			<a href="javascript:void(0);" class="filter_btn" id = "query003">地区</a>
 			<div class="filter_pop2">
 				<ol>
-					<li><a href="#" id = "query003_1" onclick = "select_query('query003_1')">沈河区</a></li>
-					<li><a href="#" id = "query003_2" onclick = "select_query('query003_2')">皇姑区</a></li>
-					<li><a href="#" id = "query003_3" onclick = "select_query('query003_3')">和平区</a></li>
-					<li><a href="#" id = "query003_4" onclick = "select_query('query003_4')">铁西区</a></li>
-					<li><a href="#" id = "query003_5" onclick = "select_query('query003_5')">大东区</a></li>
-					<li><a href="#" id = "query003_6" onclick = "select_query('query003_6')" class="active">其他地区</a></li>
+					<li><a href="#" id = "query003_1" onclick = "select_query('query003_1','3')" class = "query003">全部地区</a></li>
+					<li><a href="#" id = "query003_2" onclick = "select_query('query003_2','3')" class = "query003">沈河区</a></li>
+					<li><a href="#" id = "query003_3" onclick = "select_query('query003_3','3')" class = "query003">皇姑区</a></li>
+					<li><a href="#" id = "query003_4" onclick = "select_query('query003_4','3')" class = "query003">和平区</a></li>
+					<li><a href="#" id = "query003_5" onclick = "select_query('query003_5','3')" class = "query003">铁西区</a></li>
+					<li><a href="#" id = "query003_6" onclick = "select_query('query003_6','3')" class = "query003">大东区</a></li>
+					<li><a href="#" id = "query003_7" onclick = "select_query('query003_7','3')" class = "query003">其他地区</a></li>
 				</ol>
 				<div class="pop2_bg"></div>
 			</div>
