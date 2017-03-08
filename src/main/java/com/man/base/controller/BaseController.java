@@ -17,6 +17,11 @@ import com.man.base.util.C;
 import com.man.base.util.QMap;
 import com.man.base.util.TimestampTool;
 
+/**
+ * It's about to fly
+ * @author zhuwj
+ *
+ */
 @Controller
 @SuppressWarnings({ "rawtypes" })
 public class BaseController {
