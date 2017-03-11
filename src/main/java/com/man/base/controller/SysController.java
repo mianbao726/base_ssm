@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.man.base.service.IUserService;
 import com.man.base.util.C;
-
+/**
+ * 
+ * @author zhuwj
+ *
+ */
 @SuppressWarnings("rawtypes")
 @Controller
 public class SysController extends BaseController {
