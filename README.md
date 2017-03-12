@@ -4,16 +4,8 @@
 主页        http://localhost:8080/base/user/index.html
 
 TODO LIST
-
-*.ztree权限、样式
-
-*.读取权限
-
-*.datatables
-
-1)json2
- 
-*.个人主页 
+1.生成模板代码 ***
+2.左侧菜单默认打开*
 
 
 # base_ssm
