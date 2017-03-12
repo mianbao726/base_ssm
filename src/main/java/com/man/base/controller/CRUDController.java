@@ -24,43 +24,13 @@ import com.man.base.util.QMap;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Controller
-public class OutsideController extends BaseController {
+@RequestMapping("/user")
+public class CRUDController extends BaseController {
 	@Resource
 	private IUserService userService;
 	
 	@Resource
 	private IModuleService moduleService;
-	
-	@RequestMapping("/home.html")
-	public String index(HttpServletRequest request, Model model) throws Exception {
-		return "home/login";
-	}
-	
-	@RequestMapping("/login.do")
-	public @ResponseBody String login(HttpServletRequest request, Model model) throws Exception {
-		Map param = super.getParams(request);
-		param.put("wap", "y");
-		Map ret = userService.login(param, request);
-		return JSONObject.toJSONString(ret);
-	}
-	
-	@RequestMapping("/logout.html")
-	public String logout(HttpServletRequest request, Model model) throws Exception {
-		request.getSession().invalidate();
-		Map responseMap = new QMap(200);
-		return "home/login";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	@RequestMapping("/checkUniqueEmail.do")
 	public @ResponseBody String checkUniqueEmail(HttpServletRequest request, Model model) throws Exception {
@@ -86,13 +56,10 @@ public class OutsideController extends BaseController {
 
 	@RequestMapping("/register.do")
 	public @ResponseBody String register(HttpServletRequest request, Model model) throws Exception {
-		Map ret = null;
-		if(1==userService.register(super.getParams(request))){
-			ret = new QMap(200);
-		}else{
-			ret = new QMap(202,"注册失败");
-		}
-		return JSONObject.toJSONString(ret);
+		Map paramsMap = super.getParams(request);
+		userService.insert(paramsMap);
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
 	}
 
 	@RequestMapping("/getUserMenu.do")
@@ -118,11 +85,29 @@ public class OutsideController extends BaseController {
 		return JSONObject.toJSONString(responseMap);
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/getUserInfo.do")
 	public @ResponseBody String getUserInfo(HttpServletRequest request, Model model) throws Exception {
 		Map ret = new QMap(200);
 		ret.put("username", ((Map<String, Object>) request.getSession().getAttribute("userInfo")).get("username"));
 		return JSONObject.toJSONString(ret);
+	}
+
+	@RequestMapping("/login.do")
+	public @ResponseBody String login(HttpServletRequest request, Model model) throws Exception {
+		Map ret = userService.login(super.getParams(request), request);
+		return JSONObject.toJSONString(ret);
+	}
+
+	@RequestMapping("/index.html")
+	public String index(HttpServletRequest request, Model model) throws Exception {
+		return "user/index";
 	}
 
 	@RequestMapping("/au.html")
