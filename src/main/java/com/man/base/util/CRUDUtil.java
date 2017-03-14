@@ -92,7 +92,7 @@ public class CRUDUtil {
 	public static void w(ReadEntity context,ClassBuilder cb)
 			throws IOException {
 		KeyPoints k = new KeyPoints(cb);
-		o(context, k);
+		w(o(context, k));
 	}
 	/**
 	 * 写入文件信息
