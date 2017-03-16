@@ -45,6 +45,7 @@ public class C {
 			"/role/getRoleInfo.do", //
 			"/role/getWebModuleTree.do", //
 			"/role/updateRole.do",//
+			"/login1.html",//
 	};
 	// 当前时间-KEY
 	public static final String PARAM_DATE = "PARAM_DATE";

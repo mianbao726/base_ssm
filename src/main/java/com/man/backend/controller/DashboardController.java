@@ -48,11 +48,4 @@ public class DashboardController extends BaseController {
 		return "dashboard/index";
 	}
 
-	/**
-	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
-	 */
-	 @RequestMapping("/dashboard.html")
-	public String getnewone(HttpServletRequest request, Model model)throws Exception{
-		return "dashboard/index";
-	}
 }
