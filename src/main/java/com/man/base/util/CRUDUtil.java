@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class CRUDUtil {
 	static String src = "/home/zhuwj/git/base_ssm/src/main/java/com/man/base/template/defaultversion/controller/methodController";
 
 	public static void a(ReadEntity context, ClassBuilder cb)
-			throws IOException {
+			throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		 KeyPoints k = new KeyPoints(cb);
 		 for (String s : o(context, k).getLines()) {
 			 System.out.println(s);
@@ -131,9 +132,14 @@ public class CRUDUtil {
 	 * @param context
 	 * @param cb
 	 * @throws IOException
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
 	 */
 	public static void w(ReadEntity context, ClassBuilder cb)
-			throws IOException {
+			throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		KeyPoints k = new KeyPoints(cb);
 		w(o(context, k));
 	}

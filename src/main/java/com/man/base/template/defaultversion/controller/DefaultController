@@ -24,9 +24,10 @@
  */
 package xx_package_name
 
-import java.io.IOException;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.man.base.controller.BaseController;
@@ -36,9 +37,5 @@ import com.man.base.controller.BaseController;
  */
 @Controller
 @RequestMapping("xx_requestMapping_name")
-// 中文
 public class xx_class_name extends BaseController {
-	public static void main(String[] args) throws IOException {
-		System.out.println("hello word");
-	}
 }

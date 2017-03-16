@@ -2,7 +2,7 @@
 	/**
 	 * xx_author
 	 */
-	public xx_return xx_method_name(xx_param){
-		System.out.println("hello word");
+	 @RequestMapping("/xx_request.xx_tail")
+	public xx_return xx_method(HttpServletRequest request, Model model)throws Exception{
+		return "xx_pack/xx_page";
 	}
-	
