@@ -1,7 +1,31 @@
+/*
+ * Copyright (c) 2017, 2017, WHATGOOGLE and/or its affiliates. All rights reserved.
+ * WHATGOOGLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
 package xx_package_name
 
 import java.io.IOException;
-
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,9 +38,7 @@ import com.man.base.controller.BaseController;
 @RequestMapping("xx_requestMapping_name")
 // 中文
 public class xx_class_name extends BaseController {
-//context start
 	public static void main(String[] args) throws IOException {
 		System.out.println("hello word");
 	}
-//context end
 }

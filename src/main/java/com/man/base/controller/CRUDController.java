@@ -30,16 +30,16 @@ public class CRUDController extends BaseController {
 		String src_method = "/home/zhuwj/git/base_ssm/src/main/java/com/man/base/template/defaultversion/controller/methodController";
 		
 		
-//		s02(src,tar);
+		s02(src_method,tar);
 		
 	}
 	
 	static void s02(String src, String tar) throws IOException {
 		// 写入 新文件
 		ReadEntity ret = CRUDUtil.r(src);
-		ClassBuilder cb= new Method("ret" , "List" , "");
+		ClassBuilder cb= new Method("ret" , "void" , "");
 		ret.setTargetFile(tar);
-		CRUDUtil.a(ret,cb,false);
+		CRUDUtil.a(ret,cb);
 		System.out.println(" well done !! ");
 	}
 	
