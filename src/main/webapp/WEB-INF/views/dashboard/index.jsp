@@ -47,18 +47,26 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>wj zhu</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
 
             <br />
-
+            
+            
+            
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
+                <h3>sweet project</h3>
+                <ul class="nav side-menu" id = "sweet_menu">
+                </ul>
+              </div>
+              
+              <div class="menu_section">
                 <h3>General</h3>
-                <ul class="nav side-menu">
+                <ul class="nav side-menu" >
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="index.html">Dashboard</a></li>
@@ -660,12 +668,12 @@
                         <div class="block">
                           <div class="block_content">
                             <h2 class="title">
-                                              <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                              <a>Who Needs Sundance When Youâve Got&nbsp;Crowdfunding?</a>
                                           </h2>
                             <div class="byline">
                               <span>13 hours ago</span> by <a>Jane Smith</a>
                             </div>
-                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, theyâd pay to Fast-forward andâ¦ <a>Read&nbsp;More</a>
                             </p>
                           </div>
                         </div>
@@ -674,12 +682,12 @@
                         <div class="block">
                           <div class="block_content">
                             <h2 class="title">
-                                              <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                              <a>Who Needs Sundance When Youâve Got&nbsp;Crowdfunding?</a>
                                           </h2>
                             <div class="byline">
                               <span>13 hours ago</span> by <a>Jane Smith</a>
                             </div>
-                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, theyâd pay to Fast-forward andâ¦ <a>Read&nbsp;More</a>
                             </p>
                           </div>
                         </div>
@@ -688,12 +696,12 @@
                         <div class="block">
                           <div class="block_content">
                             <h2 class="title">
-                                              <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                              <a>Who Needs Sundance When Youâve Got&nbsp;Crowdfunding?</a>
                                           </h2>
                             <div class="byline">
                               <span>13 hours ago</span> by <a>Jane Smith</a>
                             </div>
-                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, theyâd pay to Fast-forward andâ¦ <a>Read&nbsp;More</a>
                             </p>
                           </div>
                         </div>
@@ -702,12 +710,12 @@
                         <div class="block">
                           <div class="block_content">
                             <h2 class="title">
-                                              <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                              <a>Who Needs Sundance When Youâve Got&nbsp;Crowdfunding?</a>
                                           </h2>
                             <div class="byline">
                               <span>13 hours ago</span> by <a>Jane Smith</a>
                             </div>
-                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                            <p class="excerpt">Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, theyâd pay to Fast-forward andâ¦ <a>Read&nbsp;More</a>
                             </p>
                           </div>
                         </div>
@@ -981,6 +989,9 @@
 
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery/dist/jquery.min.js"></script>
+    
+    <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
+    
     <!-- Bootstrap -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -1019,6 +1030,44 @@
 
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
-	
+	<script>
+            var data=[
+                      {id:1,pId:0,cId:1,name:"A"},
+                      {id:11,pId:1,cId:4,name:"A1"},
+                      {id:12,pId:1,cId:2,name:"A2"},
+                      {id:13,pId:1,cId:3,name:"A3"},
+                      {id:22,pId:2,cId:2,name:"B2"},    
+                      {id:31,pId:3,cId:1,name:"C1"},
+                      {id:32,pId:3,cId:2,name:"C2"},
+                      {id:33,pId:3,cId:3,name:"C3"},
+                      {id:2,pId:0,cId:2,name:"B"},
+                      {id:21,pId:2,cId:1,name:"B1"},  
+                      {id:36,pId:31,cId:3,name:"C13"},
+                      {id:37,pId:36,cId:1,name:"C131"},
+                      {id:23,pId:2,cId:3,name:"B3"},
+                      {id:3,pId:0,cId:3,name:"C"},
+                      {id:34,pId:1,cId:1,name:"C116666"},
+                      {id:35,pId:31,cId:2,name:"C12"},  
+                      {id:38,pId:37,cId:1,name:"C1311"}   
+                  ];
+            $.xx.left(data);
+            var params = {};
+  			params['type'] = '1';
+  			params['action_level'] = '1';
+//         			$.xx.ajax({
+//          			CONTENTTYPE : 'APPLICATION/JSON; CHARSET=UTF-8',
+//          			URL: "USER/GETUSERMENU.DO",
+//          			TYPE : "POST",
+//          			DATATYPE : "JSON",
+//          			ASYNC:FALSE,
+//          			DATA : JSON.STRINGIFY(PARAMS),
+//          			SUCCESS : FUNCTION(DATA) {
+//          				$.XX.C(DATA);
+//          				 $.XX.LEFT(DATA);
+//          			}
+//          		});
+                 
+                 
+            </script>
   </body>
 </html>

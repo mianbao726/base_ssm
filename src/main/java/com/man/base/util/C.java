@@ -11,7 +11,7 @@ public class C {
 	public static final String DEFAULT_ROLE_ID = "16";
 
 	// 开发标志 0=>开发中 1=>产品
-	public static final String DEV = "1";
+	public static final String DEV = "0";
 
 	// 图片类型
 	public static final String[] IMAGE_TYPE = { ".png", ".jpg" };

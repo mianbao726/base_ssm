@@ -201,8 +201,7 @@
 			                <value>-1</value> 
 			            </systemProperty> 
 			        </systemProperties> 
-					<reload>automatic</reload>  
-             		<scanIntervalSeconds>1</scanIntervalSeconds> 
+					 
 				</configuration>
 			</plugin>
 
