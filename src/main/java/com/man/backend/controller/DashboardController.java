@@ -36,7 +36,6 @@ import com.man.base.controller.BaseController;
  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
  */
 @Controller
-@RequestMapping("/dashboard")
 public class DashboardController extends BaseController {
 
 

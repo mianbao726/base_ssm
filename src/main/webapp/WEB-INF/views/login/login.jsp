@@ -31,17 +31,17 @@
     	var user_name = $("#user_name").val();
 		var password = $("#password").val();
 		var params = {};
-		params['user_name'] = user_name;
+		params['username'] = user_name;
 		params['password'] = password;
+		$.xx.c(params);
 		$.xx.ajax({
 			  url: "user/login.do",
 			  type:"post",
 			  dataType:"json",
 			  params:params,
 			  success:function(data){
-				  alert(data.status_code);
-// 					window.location.href = 'main.jsp';	
-<%-- 					window.location.href = "<%=path%>/base/main.do"; --%>
+// 				  alert(data.status_code);
+					window.location.href = "<%=path%>/dashboard.html";
 			  }
 		});
     }
@@ -67,10 +67,10 @@
             <form>
               <h1>Login Form</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" value = "xx"/>
+                <input type="text" class="form-control" placeholder="Username" required="" value = "xx" id = "user_name"/>
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" value = "111111"/>
+                <input type="password" class="form-control" placeholder="Password" required="" value = "111111" id = "password"/>
               </div>
               <div>
                 <a class="btn btn-default " href="javascript:login();" id ="btn_login">Log in</a>

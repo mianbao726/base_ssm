@@ -31,16 +31,16 @@ public class SysController extends BaseController {
 		return "redirect:" + ((Map) request.getSession().getAttribute("userInfo")).get("main_page").toString();
 	}
 
-	/**
-	 * 系统默认主页
-	 * 
-	 * @param request
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("/dashboard.html")
-	public String dashboard(HttpServletRequest request) throws Exception {
-		return "dashboard/dashboard";
-	}
+//	/**
+//	 * 系统默认主页
+//	 * 
+//	 * @param request
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	@RequestMapping("/dashboard.html")
+//	public String dashboard(HttpServletRequest request) throws Exception {
+//		return "dashboard/dashboard";
+//	}
 
 }
