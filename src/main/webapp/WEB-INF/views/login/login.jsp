@@ -31,27 +31,28 @@
     	var user_name = $("#user_name").val();
 		var password = $("#password").val();
 		var params = {};
-		params['user_name'] = b.encode(user_name);
-		params['password'] = b.encode(password);
-		$.zkbr.ajax({
-			  url: "base/login.do",
+		params['user_name'] = user_name;
+		params['password'] = password;
+		$.xx.ajax({
+			  url: "user/login.do",
 			  type:"post",
 			  dataType:"json",
 			  params:params,
 			  success:function(data){
+				  alert(data.status_code);
 // 					window.location.href = 'main.jsp';	
-					window.location.href = "<%=path%>/base/main.do";
+<%-- 					window.location.href = "<%=path%>/base/main.do"; --%>
 			  }
 		});
     }
-    $.xx.ajax({
-		contentType : 'application/json; charset=utf-8',
-		url : "role/getAllRole.do",
-		type : "post",
-		dataType : "json",
-		success : function(data) {
-		}
-	});
+//     $.xx.ajax({
+// 		CONTENTTYPE : 'APPLICATION/JSON; CHARSET=UTF-8',
+// 		URL : "ROLE/GETALLROLE.DO",
+// 		TYPE : "POST",
+// 		DATATYPE : "JSON",
+// 		SUCCESS : FUNCTION(DATA) {
+// 		}
+// 	});
     </script>
   </head>
 
