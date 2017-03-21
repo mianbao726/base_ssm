@@ -84,6 +84,60 @@ public class UserController extends BaseController {
 		Map ret = null;
 		return JSONObject.toJSONString(responseMap);
 	}
+	
+	
+	@RequestMapping("/menu.do")
+	public @ResponseBody String menu(HttpServletRequest request, Model model) throws Exception {
+
+		Map<String, Object> map = super.getParams(request);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		// 判断登陆设备类型，1---web,2---android,3---ios
+//		 {id:1,pId:0,cId:1,name:"A"},
+		
+//		 {id:1,pId:0,cId:1,name:"A"},
+//         {id:11,pId:1,cId:4,name:"A1"},
+//         {id:12,pId:1,cId:2,name:"A2"},
+//         {id:13,pId:1,cId:3,name:"A3"},
+//         {id:22,pId:2,cId:2,name:"B2"},    
+//         {id:31,pId:3,cId:1,name:"C1"},
+//         {id:32,pId:3,cId:2,name:"C2"},
+//         {id:33,pId:3,cId:3,name:"C3"},
+//         {id:2,pId:0,cId:2,name:"B"},
+//         {id:21,pId:2,cId:1,name:"B1"},  
+//         {id:36,pId:31,cId:3,name:"C13"},
+//         {id:37,pId:36,cId:1,name:"C131"},
+//         {id:23,pId:2,cId:3,name:"B3"},
+//         {id:3,pId:0,cId:3,name:"C"},
+//         {id:34,pId:1,cId:1,name:"C116666"},
+//         {id:35,pId:31,cId:2,name:"C12"},  
+//         {id:38,pId:37,cId:1,name:"C1311"} 
+		Map<String, Object> m1 = new HashMap<>();
+		Map<String, Object> m2 = new HashMap<>();
+		Map<String, Object> m3 = new HashMap<>();
+		m1.put("id", 1);
+		m1.put("pId", 0);
+		m1.put("cId", 1);
+		m1.put("name", "A");
+		
+		m2.put("id", 11);
+		m2.put("pId", 1);
+		m2.put("cId", 1);
+		m2.put("url", "CRUD/index.html");
+		m2.put("name", "代码生成_"+request.getContextPath()+"/CRUD/index.html");
+		
+		m3.put("id", 12);
+		m3.put("pId", 1);
+		m3.put("cId", 2);
+		m2.put("url", "CRUD/index.html");
+		m3.put("name", "A2_"+request.getContextPath()+"/CRUD/index.html");
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		list.add(m1);
+		list.add(m3);
+		list.add(m2);
+		responseMap.put("list", list);
+		Map ret = null;
+		return JSONObject.toJSONString(responseMap);
+	}
 
 	/**
 	 * 

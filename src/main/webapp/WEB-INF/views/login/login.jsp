@@ -40,19 +40,10 @@
 			  dataType:"json",
 			  params:params,
 			  success:function(data){
-// 				  alert(data.status_code);
 					window.location.href = "<%=path%>/dashboard.html";
 			  }
 		});
     }
-//     $.xx.ajax({
-// 		CONTENTTYPE : 'APPLICATION/JSON; CHARSET=UTF-8',
-// 		URL : "ROLE/GETALLROLE.DO",
-// 		TYPE : "POST",
-// 		DATATYPE : "JSON",
-// 		SUCCESS : FUNCTION(DATA) {
-// 		}
-// 	});
     </script>
   </head>
 

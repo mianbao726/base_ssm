@@ -41,9 +41,11 @@ var BASE = "/"+APP;
 	};
 	
 	xx.leftmenu = function (arr){//左侧菜单
+		$.xx.c("===============");
+		$.xx.c(arr);
+		$.xx.c("===============");
   	  var ht = '';
         for(var i=0;i<arr.length;i++){
-//      	  $.xx.c("gggg  : " + arr[i][0]);
       	  if(('A' == arr[i][0])){
       	  ht+='<li '
       	     +'class="active"' //selected parent menu
@@ -56,12 +58,15 @@ var BASE = "/"+APP;
            	     +'>';  
       	  }
       	  for(var j = 1 ; j<arr[i].length ; j++){
-      		  console.log("11  :  "+arr[i][j]);
-      		  if((arr[i][j] == 'C116666')){
+      		  console.log("12  :  "+arr[i][j]);
+      		  var temp_arr = (arr[i][j]+"").split("_");
+      		  
+      		  console.log("12  :  "+arr[i][j]);
+      		  if((arr[i][j] == 'A2')){
       			  console.log("true");
-      			  ht+= '<li class="current-page"><a href="login.html">'+arr[i][j]+'</a></li>';
+      			  ht+= '<li class="current-page"><a href="'+temp_arr[1]+'">'+temp_arr[0]+'</a></li>';
       		  }else{
-          		  ht+= '<li><a href="login.html">'+arr[i][j]+'</a></li>';  
+          		  ht+= '<li><a href="'+temp_arr[1]+'">'+temp_arr[0]+'</a></li>';  
       		  }
       	  }
       	  ht+= '</ul></li>';

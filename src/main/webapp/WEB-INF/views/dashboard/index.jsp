@@ -1,3 +1,7 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+	String path = request.getContextPath();
+%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -989,9 +993,6 @@
 
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery/dist/jquery.min.js"></script>
-    
-    <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
-    
     <!-- Bootstrap -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
@@ -1027,47 +1028,26 @@
     <!-- bootstrap-daterangepicker -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/moment/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/default/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-    <!-- Custom Theme Scripts -->
-    <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
+   
+    <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
-            var data=[
-                      {id:1,pId:0,cId:1,name:"A"},
-                      {id:11,pId:1,cId:4,name:"A1"},
-                      {id:12,pId:1,cId:2,name:"A2"},
-                      {id:13,pId:1,cId:3,name:"A3"},
-                      {id:22,pId:2,cId:2,name:"B2"},    
-                      {id:31,pId:3,cId:1,name:"C1"},
-                      {id:32,pId:3,cId:2,name:"C2"},
-                      {id:33,pId:3,cId:3,name:"C3"},
-                      {id:2,pId:0,cId:2,name:"B"},
-                      {id:21,pId:2,cId:1,name:"B1"},  
-                      {id:36,pId:31,cId:3,name:"C13"},
-                      {id:37,pId:36,cId:1,name:"C131"},
-                      {id:23,pId:2,cId:3,name:"B3"},
-                      {id:3,pId:0,cId:3,name:"C"},
-                      {id:34,pId:1,cId:1,name:"C116666"},
-                      {id:35,pId:31,cId:2,name:"C12"},  
-                      {id:38,pId:37,cId:1,name:"C1311"}   
-                  ];
-            $.xx.left(data);
-            var params = {};
-  			params['type'] = '1';
-  			params['action_level'] = '1';
-//         			$.xx.ajax({
-//          			CONTENTTYPE : 'APPLICATION/JSON; CHARSET=UTF-8',
-//          			URL: "USER/GETUSERMENU.DO",
-//          			TYPE : "POST",
-//          			DATATYPE : "JSON",
-//          			ASYNC:FALSE,
-//          			DATA : JSON.STRINGIFY(PARAMS),
-//          			SUCCESS : FUNCTION(DATA) {
-//          				$.XX.C(DATA);
-//          				 $.XX.LEFT(DATA);
-//          			}
-//          		});
-                 
-                 
-            </script>
+		$(function(){
+			var params = {};
+				$.xx.ajax({
+			      contenttype : 'application/json; charset=utf-8',
+			      async: false,
+				  url: '<%=path%>/user/menu.do',
+				  type:"post",
+				  dataType:"json",
+				  params:params,
+				  success:function(data){
+					  $.xx.c(data.list);
+					 $.xx.left(data.list);
+				  }
+			});
+		});
+     </script>
+      <!-- Custom Theme Scripts -->
+    <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
   </body>
 </html>
