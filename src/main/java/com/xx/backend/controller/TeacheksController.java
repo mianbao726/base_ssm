@@ -22,7 +22,7 @@
  *
  *
  */
-package xx_package_name
+package com.xx.backend.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,9 +33,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.xx.base.controller.BaseController;
 
 /**
- * xx_author
+ * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
  */
 @Controller
-@RequestMapping("xx_requestMapping_name")
-public class xx_class_name extends BaseController {
+@RequestMapping("/Teacheks")
+public class TeacheksController extends BaseController {
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
+	 */
+	 @RequestMapping("/dashboard.html")
+	public String getnewone(HttpServletRequest request, Model model)throws Exception{
+		return "dashboard/index";
+	}
 }

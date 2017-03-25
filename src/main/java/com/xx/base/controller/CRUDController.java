@@ -30,6 +30,9 @@ public class CRUDController extends BaseController {
 	
 	private static final String COM = "com";
 	
+	private static final String XX = "xx";
+	private static final String CONTROLLER = "controller";
+	
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
 	 */
@@ -49,32 +52,59 @@ public class CRUDController extends BaseController {
 	public @ResponseBody String gen001(HttpServletRequest request, Model model)throws Exception{
 		Map paramsMap = super.getParams(request);
 		paramsMap.put("status_code", "200");
-		genNewClass("");
+		genNewClass(paramsMap.get("target").toString());
 		return JSONObject.toJSONString(paramsMap);
 	}
-	 public String genNewClass(String info){
-		 String[] infos = info.split(".");
+	 public String genNewClass(String info) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException{//xx.backend.sss
+		 String[] infos = info.split("\\.");
+		 File directory = new File("");//设定为当前文件夹
+		 StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
+		 sb.append(File.separator);
+		 sb.append(SOURCE_PACKAGE_01);
+		 sb.append(File.separator);
+		 sb.append(SOURCE_PACKAGE_02);
+		 sb.append(File.separator);
+		 sb.append(SOURCE_PACKAGE_03);
+		 sb.append(File.separator);
+		 sb.append(COM);
+		 sb.append(File.separator);
+//		 sb.append(XX);
+//		 sb.append(File.separator);
+		 sb.append(infos[0]);
+		 sb.append(File.separator);
+		 sb.append(infos[1]);
+		 sb.append(File.separator);
+		 sb.append(CONTROLLER);
+		 sb.append(File.separator);
+		 sb.append(infos[2]+"Controller.java");
+		 
 		 File f = new File(this.getClass().getResource("").getPath());
 		 
+		 System.out.println(sb);//获取绝对路径 
 		 
-		 System.out.println(CRUDController.class.getClassLoader().getResource("/").getPath());
-		 System.out.println(f); 
+		 String src = "/home/zhuwj/git/base_ssm/src/main/java/com/xx/base/template/defaultversion/controller/DefaultController";
 		 
-		 File directory = new File("");//设定为当前文件夹 
-		     try {
-				System.out.println(directory.getCanonicalPath());
-				System.out.println(directory.getAbsolutePath());//获取绝对路径 
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}//获取标准的路径 
+		 String tar = sb.toString();
+		 
+		//写入 新文件
+		ReadEntity ret = CRUDUtil.r(src);
+		ClassBuilder cb = new Claxx("com."+infos[0]+"."+infos[1]+".controller", null, infos[2], infos[2]+"Controller");
+		ret.setTargetFile(tar);
+		CRUDUtil.w(ret , cb);
+		System.out.println(" well done !! ");
+		
+		//追加 新方法
+		String src_method = "/home/zhuwj/git/base_ssm/src/main/java/com/xx/base/template/defaultversion/controller/methodController";
+		
+		
+		s02(src_method,tar);
 		 
 		 return "";
 	 }
 	 
 	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		String src = "/home/zhuwj/git/base_ssm/src/main/java/com/man/base/template/defaultversion/controller/DefaultController";
-		String tar = "/home/zhuwj/git/base_ssm/src/main/java/com/man/backend/controller"+File.separator+"Dashboard1Controller.java";
+		String src = "/home/zhuwj/git/base_ssm/src/main/java/com/xx/base/template/defaultversion/controller/DefaultController";
+		String tar = "/home/zhuwj/git/base_ssm/src/main/java/com/man/backend/controller"+File.separator+"Dashboard111Controller.java";
 		//写入 新文件
 		ReadEntity ret = CRUDUtil.r(src);
 		ClassBuilder cb = new Claxx("com.xx.backend.controller", null, "dashboard", "DashboardController");
@@ -87,7 +117,7 @@ public class CRUDController extends BaseController {
 		String src_method = "/home/zhuwj/git/base_ssm/src/main/java/com/man/base/template/defaultversion/controller/methodController";
 		
 		
-		s02(src_method,tar);
+//		s02(src_method,tar);
 		
 	}
 	

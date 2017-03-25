@@ -118,7 +118,7 @@ var BASE = "/"+APP;
 				// if(opts.disableAll){
 				// xx_hide();
 				// }
-				alert('error occored !');
+//				alert('error occored !');
 //				window.location.href = '/' + project_name + '/login.html';
 				
 			};

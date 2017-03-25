@@ -57,5 +57,7 @@
 		<!-- 配置自定义的拦截器 -->
 		<bean class="com.xx.base.interceptors.BaseInterceptor"></bean>
 	</mvc:interceptors>
+	
+	<bean id="exceptionResolver" class="com.xx.base.handler.ExceptionHandler"/>  
 
 </beans> 
