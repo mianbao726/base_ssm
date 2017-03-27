@@ -36,8 +36,8 @@ import com.xx.base.controller.BaseController;
  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
  */
 @Controller
-@RequestMapping("/Teacheks")
-public class TeacheksController extends BaseController {
+@RequestMapping("/TEst")
+public class TEstController extends BaseController {
 
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
