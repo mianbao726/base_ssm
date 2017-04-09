@@ -56,9 +56,22 @@ public class CRUDController extends BaseController {
 		Map paramsMap = super.getParams(request);
 		paramsMap.put("status_code", "200");
 		genNewClass(paramsMap.get("target").toString());
+		appendMethod(paramsMap.get("target").toString());
 		return JSONObject.toJSONString(paramsMap);
 	}
 
+	/**
+	 * 生成新类型
+	 * 
+	 * @param info
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IOException
+	 */
 	public String genNewClass(String info) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
 		String[] infos = info.split("\\.");
 		String src = getTemplate(0);
@@ -69,19 +82,34 @@ public class CRUDController extends BaseController {
 		ret.setTargetFile(tar);
 		CRUDUtil.w(ret, cb);
 		System.out.println(" well done !! ");
-
-		// 追加 新方法
-		String src_method = "/home/zhuwj/git/base_ssm/src/main/java/com/xx/base/template/defaultversion/controller/methodController";
-
-		s02(src_method, tar);
-
 		return "";
 	}
 
 	/**
-	 * 获取制定的模板
+	 * 生成新方法
+	 * 
+	 * @param info
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IOException
+	 */
+	public String appendMethod(String info) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
+		String[] infos = info.split("\\.");
+		String src = getTemplate(1);
+		String tar = getTemplate(0, infos).toString();
+		s02(src, tar);
+		return "";
+	}
+
+	/**
+	 * 获取定制的模板
+	 * 
 	 * @param c
-	 *      0 => controller
+	 *            0 => controller 1 => controller method
 	 * @return
 	 */
 	static String getTemplate(int c) {
@@ -89,38 +117,53 @@ public class CRUDController extends BaseController {
 		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
 		switch (c) {
 		case 0:// controller
-			sb.append(File.separator);
-			sb.append(SOURCE_PACKAGE_01);
-			sb.append(File.separator);
-			sb.append(SOURCE_PACKAGE_02);
-			sb.append(File.separator);
-			sb.append(SOURCE_PACKAGE_03);
-			sb.append(File.separator);
-			sb.append(COM);
-			sb.append(File.separator);
-			sb.append("xx");
-			sb.append(File.separator);
-			sb.append("base");
-			sb.append(File.separator);
-			sb.append("template");
-			sb.append(File.separator);
-			sb.append("defaultversion");
-			sb.append(File.separator);
-			sb.append("controller");
-			sb.append(File.separator);
-			sb.append("DefaultController");
+			sb = appendWS(sb, SOURCE_PACKAGE_01);
+			sb = appendWS(sb, SOURCE_PACKAGE_02);
+			sb = appendWS(sb, SOURCE_PACKAGE_03);
+			sb = appendWS(sb, COM);
+			sb = appendWS(sb, "xx");
+			sb = appendWS(sb, "base");
+			sb = appendWS(sb, "template");
+			sb = appendWS(sb, "defaultversion");
+			sb = appendWS(sb, "controller");
+			sb = appendWS(sb, "DefaultController");
 			break;
-
+		case 1://method
+			sb = appendWS(sb, SOURCE_PACKAGE_01);
+			sb = appendWS(sb, SOURCE_PACKAGE_02);
+			sb = appendWS(sb, SOURCE_PACKAGE_03);
+			sb = appendWS(sb, COM);
+			sb = appendWS(sb, "xx");
+			sb = appendWS(sb, "base");
+			sb = appendWS(sb, "template");
+			sb = appendWS(sb, "defaultversion");
+			sb = appendWS(sb, "controller");
+			sb = appendWS(sb, "methodController");
+			break;
 		default:
 			break;
 		}
 		return sb.toString();
 	}
 
+	public static StringBuilder appendSeparator(StringBuilder sb){
+		sb.append(File.separator);
+		return sb;
+	}
+	public static StringBuilder appendWS(StringBuilder sb,String context){
+		sb = appendSeparator(sb);
+		sb.append(context);
+		return sb;
+		
+	}
+	
 	/**
 	 * 生成目标文件路径
-	 * @param c 类型
-	 * @param infos  用户前段填写的参数
+	 * 
+	 * @param c
+	 *            类型
+	 * @param infos
+	 *            用户前段填写的参数
 	 * @return
 	 */
 	static String getTemplate(int c, String[] infos) {
