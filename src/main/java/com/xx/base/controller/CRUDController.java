@@ -78,6 +78,12 @@ public class CRUDController extends BaseController {
 		return "";
 	}
 
+	/**
+	 * 获取制定的模板
+	 * @param c
+	 *      0 => controller
+	 * @return
+	 */
 	static String getTemplate(int c) {
 		File directory = new File("");// 设定为当前文件夹
 		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
@@ -111,6 +117,12 @@ public class CRUDController extends BaseController {
 		return sb.toString();
 	}
 
+	/**
+	 * 生成目标文件路径
+	 * @param c 类型
+	 * @param infos  用户前段填写的参数
+	 * @return
+	 */
 	static String getTemplate(int c, String[] infos) {
 		File directory = new File("");// 设定为当前文件夹
 		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
