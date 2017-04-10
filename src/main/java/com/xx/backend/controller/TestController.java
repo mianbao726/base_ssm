@@ -36,14 +36,22 @@ import com.xx.base.controller.BaseController;
  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
  */
 @Controller
-@RequestMapping("/Test")
+@RequestMapping("/test")
 public class TestController extends BaseController {
 
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
 	 */
-	 @RequestMapping("/dashboard.html")
-	public String getnewone(HttpServletRequest request, Model model)throws Exception{
-		return "dashboard/index";
+	 @RequestMapping("/add.html")
+	public String add(HttpServletRequest request, Model model)throws Exception{
+		return "test/add";
+	}
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
+	 */
+	 @RequestMapping("/update.html")
+	public String update(HttpServletRequest request, Model model)throws Exception{
+		return "test/update";
 	}
 }

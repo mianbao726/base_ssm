@@ -43,20 +43,34 @@ public class CRUDController extends BaseController {
 	}
 
 	/**
-	 * 生成新类
+	 * 生成新类 </br>
+	 * 1.类名首字母大写表示新生城 ，小写表示追加</br>
 	 * 
 	 * @param request
 	 * @param model
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("static-access")
 	@RequestMapping("/gen001.html")
-	public @ResponseBody
-	String gen001(HttpServletRequest request, Model model) throws Exception {
+	public @ResponseBody String gen001(HttpServletRequest request, Model model) throws Exception {
 		Map paramsMap = super.getParams(request);
 		paramsMap.put("status_code", "200");
-		genNewClass(paramsMap.get("target").toString());
-		appendMethod(paramsMap.get("target").toString());
+		String target = paramsMap.get("target").toString();
+		
+		if(this.containsAZ(target.split("\\.")[2].substring(0, 1)))//如果类名首字母大写，重新生成新类
+			genNewClass(target.substring(0, target.contains("(")?target.indexOf("("):target.length()));
+		
+		/**
+		 * 约定如果有()表示需要生成方法
+		 */
+		if (target.contains("(") && target.contains(")")) {
+			String[] functions = target.substring(target.indexOf("(") + 1, target.indexOf(")")).split(",");
+			for (String func : functions) {
+				appendMethod(target.substring(0, target.indexOf("(")), func);
+			}
+		} 
+
 		return JSONObject.toJSONString(paramsMap);
 	}
 
@@ -72,13 +86,17 @@ public class CRUDController extends BaseController {
 	 * @throws SecurityException
 	 * @throws IOException
 	 */
-	public String genNewClass(String info) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
+	public String genNewClass(String info) throws IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
 		String[] infos = info.split("\\.");
+		if(!containsAZ(infos[2].substring(0, 1)))
+			return "";
 		String src = getTemplate(0);
 		String tar = getTemplate(0, infos).toString();
 		// 写入 新文件
 		ReadEntity ret = CRUDUtil.r(src);
-		ClassBuilder cb = new Claxx("com." + infos[0] + "." + infos[1] + ".controller", null, infos[2], infos[2] + "Controller");
+		ClassBuilder cb = new Claxx("com." + infos[0] + "." + infos[1] + ".controller", null, lowerCaseFirstCharacter(infos[2]),
+				upperCaseFirstCharacter(infos[2]) + "Controller");
 		ret.setTargetFile(tar);
 		CRUDUtil.w(ret, cb);
 		System.out.println(" well done !! ");
@@ -97,11 +115,9 @@ public class CRUDController extends BaseController {
 	 * @throws SecurityException
 	 * @throws IOException
 	 */
-	public String appendMethod(String info) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
-		String[] infos = info.split("\\.");
-		String src = getTemplate(1);
-		String tar = getTemplate(0, infos).toString();
-		s02(src, tar);
+	public String appendMethod(String info, String functionName) throws IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
+		s02(info, functionName);
 		return "";
 	}
 
@@ -121,19 +137,19 @@ public class CRUDController extends BaseController {
 			sb = appendWS(sb, SOURCE_PACKAGE_02);
 			sb = appendWS(sb, SOURCE_PACKAGE_03);
 			sb = appendWS(sb, COM);
-			sb = appendWS(sb, "xx");
+			sb = appendWS(sb, XX);
 			sb = appendWS(sb, "base");
 			sb = appendWS(sb, "template");
 			sb = appendWS(sb, "defaultversion");
 			sb = appendWS(sb, "controller");
 			sb = appendWS(sb, "DefaultController");
 			break;
-		case 1://method
+		case 1:// method
 			sb = appendWS(sb, SOURCE_PACKAGE_01);
 			sb = appendWS(sb, SOURCE_PACKAGE_02);
 			sb = appendWS(sb, SOURCE_PACKAGE_03);
 			sb = appendWS(sb, COM);
-			sb = appendWS(sb, "xx");
+			sb = appendWS(sb, XX);
 			sb = appendWS(sb, "base");
 			sb = appendWS(sb, "template");
 			sb = appendWS(sb, "defaultversion");
@@ -146,17 +162,49 @@ public class CRUDController extends BaseController {
 		return sb.toString();
 	}
 
-	public static StringBuilder appendSeparator(StringBuilder sb){
+	/**
+	 * 添加一个分隔符号
+	 * 
+	 * @param sb
+	 * @return
+	 */
+	public static StringBuilder appendSeparator(StringBuilder sb) {
 		sb.append(File.separator);
 		return sb;
 	}
-	public static StringBuilder appendWS(StringBuilder sb,String context){
+
+	/**
+	 * 拼接字符串
+	 * 
+	 * @param sb
+	 * @param context
+	 * @return
+	 */
+	public static StringBuilder appendWS(StringBuilder sb, String context) {
 		sb = appendSeparator(sb);
 		sb.append(context);
 		return sb;
-		
+
+	}
+
+	/**
+	 * 首字母大写
+	 * 
+	 * @return
+	 */
+	public static String upperCaseFirstCharacter(String str) {
+		return str.substring(0, 1).toUpperCase() + str.substring(1);
 	}
 	
+	/**
+	 * 首字母小写
+	 * 
+	 * @return
+	 */
+	public static String lowerCaseFirstCharacter(String str) {
+		return str.substring(0, 1).toLowerCase() + str.substring(1);
+	}
+
 	/**
 	 * 生成目标文件路径
 	 * 
@@ -186,7 +234,7 @@ public class CRUDController extends BaseController {
 			sb.append(File.separator);
 			sb.append(CONTROLLER);
 			sb.append(File.separator);
-			sb.append(infos[2] + "Controller.java");
+			sb.append(upperCaseFirstCharacter(infos[2]) + "Controller.java");
 			break;
 
 		default:
@@ -195,27 +243,30 @@ public class CRUDController extends BaseController {
 		return sb.toString();
 	}
 
-	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		String src = "/home/zhuwj/git/base_ssm/src/main/java/com/xx/base/template/defaultversion/controller/DefaultController";
-		String tar = "/home/zhuwj/git/base_ssm/src/main/java/com/man/backend/controller" + File.separator + "Dashboard111Controller.java";
-		// 写入 新文件
-		ReadEntity ret = CRUDUtil.r(src);
-		ClassBuilder cb = new Claxx("com.xx.backend.controller", null, "dashboard", "DashboardController");
-		ret.setTargetFile(tar);
-		CRUDUtil.w(ret, cb);
-		System.out.println(" well done !! ");
-
-		// 追加 新方法
-		String src_method = "/home/zhuwj/git/base_ssm/src/main/java/com/man/base/template/defaultversion/controller/methodController";
-
-		// s02(src_method,tar);
-
+	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException {
+		
+		String target = "asdfsadf";
+		System.out.println(target.substring(0, target.contains("(")?target.indexOf("("):target.length()));
+	}
+	
+	/**
+	 * 是否包含大写字母
+	 * @param str
+	 * @return
+	 */
+	public static boolean containsAZ(String str){
+		return str.replaceAll("[A-Z]", "?").contains("?");
 	}
 
-	static void s02(String src, String tar) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	static void s02(String info, String functionName) throws IOException, IllegalAccessException,
+			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		// 写入 新文件
+		String[] infos = info.split("\\.");
+		String src = getTemplate(1);
+		String tar = getTemplate(0, infos).toString();
 		ReadEntity ret = CRUDUtil.r(src);
-		ClassBuilder cb = new XX_Method("getnewone", "String", "", "dashboard", "dashboard", "index");
+		ClassBuilder cb = new XX_Method(functionName, "String", "", functionName, lowerCaseFirstCharacter(infos[2]), functionName);
 		ret.setTargetFile(tar);
 		CRUDUtil.a(ret, cb);
 		System.out.println(" well done !! ");
