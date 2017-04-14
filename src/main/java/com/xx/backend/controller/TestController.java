@@ -54,4 +54,12 @@ public class TestController extends BaseController {
 	public String update(HttpServletRequest request, Model model)throws Exception{
 		return "test/update";
 	}
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
+	 */
+	 @RequestMapping("/del.html")
+	public String del(HttpServletRequest request, Model model)throws Exception{
+		return "test/del";
+	}
 }
