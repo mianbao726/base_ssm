@@ -37,7 +37,7 @@ public class BaseController {
 	}
 
 	/**
-	 * 以流的形式向前台输出测试
+	 * 以流的形式向前台输出
 	 * 
 	 * @param str
 	 */
