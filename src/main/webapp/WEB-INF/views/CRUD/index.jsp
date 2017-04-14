@@ -353,7 +353,7 @@
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">类名 <span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="col0001" required="required" class="form-control col-md-7 col-xs-12" value = "xx.backend.Test" placeholder = "eg:公司名.包名.业务名">
+                          <input type="text" id="col0001" required="required" class="form-control col-md-7 col-xs-12" value = "xx.backend.test" placeholder = "eg:公司名.包名.业务名">
                         </div>
                       </div>
                       <!-- <div class="form-group">
