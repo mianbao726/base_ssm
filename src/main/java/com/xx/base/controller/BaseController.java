@@ -38,7 +38,7 @@ public class BaseController {
 
 	/**
 	 * 以流的形式向前台输出
-	 * 
+	 *
 	 * @param str
 	 */
 	public void responseTxt(String str) {
@@ -55,7 +55,7 @@ public class BaseController {
 
 	/**
 	 * 显示全部参数
-	 * 
+	 *
 	 * @param request
 	 */
 	protected void showParams(HttpServletRequest request) {
@@ -69,10 +69,10 @@ public class BaseController {
 
 	/**
 	 * 返回全部参数
-	 * 
+	 *
 	 * @param request
 	 */
-	
+
 	protected Map<String, Object> getParams(HttpServletRequest request) {
 //		System.out.println("--param start ...");
 //		QMap.showMap(request.getParameterMap());

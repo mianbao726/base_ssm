@@ -44,6 +44,14 @@
 			  }
 		});
     }
+    
+    document.onkeydown = function(e){
+	    var event = e || window.event;  
+	    var code = event.keyCode || event.which || event.charCode;
+	    if (code == 13) {
+	        login();
+	    }
+	};
     </script>
   </head>
 

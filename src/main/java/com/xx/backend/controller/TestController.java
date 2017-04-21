@@ -42,6 +42,14 @@ public class TestController extends BaseController {
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
 	 */
+	 @RequestMapping("/index.html")
+	public String index(HttpServletRequest request, Model model)throws Exception{
+		return "test/index";
+	}
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
+	 */
 	 @RequestMapping("/add.html")
 	public String add(HttpServletRequest request, Model model)throws Exception{
 		return "test/add";
@@ -50,16 +58,32 @@ public class TestController extends BaseController {
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
 	 */
-	 @RequestMapping("/update.html")
-	public String update(HttpServletRequest request, Model model)throws Exception{
-		return "test/update";
+	 @RequestMapping("/save.html")
+	public String save(HttpServletRequest request, Model model)throws Exception{
+		return "test/save";
 	}
 
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
 	 */
-	 @RequestMapping("/del.html")
-	public String del(HttpServletRequest request, Model model)throws Exception{
-		return "test/del";
+	 @RequestMapping("/delete.html")
+	public String delete(HttpServletRequest request, Model model)throws Exception{
+		return "test/delete";
+	}
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
+	 */
+	 @RequestMapping("/edit.html")
+	public String edit(HttpServletRequest request, Model model)throws Exception{
+		return "test/edit";
+	}
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)
+	 */
+	 @RequestMapping("/update.html")
+	public String update(HttpServletRequest request, Model model)throws Exception{
+		return "test/update";
 	}
 }

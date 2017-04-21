@@ -15,6 +15,142 @@ import java.util.List;
 
 public class CRUDUtil {
 
+	private static final String SOURCE_PACKAGE_01 = "src";
+	private static final String SOURCE_PACKAGE_02 = "main";
+	private static final String SOURCE_PACKAGE_03 = "java";
+
+	private static final String COM = "com";
+
+	private static final String XX = "xx";
+	private static final String CONTROLLER = "controller";
+
+	/**
+	 * 先添加系统分割符再添加字符串
+	 * 
+	 * WSF => with Separator first
+	 * 
+	 * @param sb
+	 * @param context
+	 * @return
+	 */
+	public static StringBuilder appendWSF(StringBuilder sb, String context) {
+		sb = appendSeparator(sb);
+		sb.append(context);
+		return sb;
+
+	}
+
+	/**
+	 * 添加一个分隔符号
+	 * 
+	 * @param sb
+	 * @return
+	 */
+	public static StringBuilder appendSeparator(StringBuilder sb) {
+		sb.append(File.separator);
+		return sb;
+	}
+
+	/**
+	 * 获取定制的模板 模板规则 至少四位数字： 1.千位及以上是大模板编号 ，个十百位是模板下的子模板代号
+	 * 2.cotroller为000，controll的方法000+1 3.千位大模板枚举 1.默认springmvc模板
+	 * 
+	 * @param c
+	 *            000 => controller 000+1 => controller method
+	 * @return
+	 */
+	public static String getTemplate(int c) {
+		File directory = new File("");// 设定为当前文件夹
+		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
+		switch (c) {
+		case 1000:// controller
+			sb = appendWSF(sb, SOURCE_PACKAGE_01);
+			sb = appendWSF(sb, SOURCE_PACKAGE_02);
+			sb = appendWSF(sb, SOURCE_PACKAGE_03);
+			sb = appendWSF(sb, COM);
+			sb = appendWSF(sb, XX);
+			sb = appendWSF(sb, "base");
+			sb = appendWSF(sb, "template");
+			sb = appendWSF(sb, "defaultversion");
+			sb = appendWSF(sb, "controller");
+			sb = appendWSF(sb, "DefaultController");
+			break;
+		case 1001:// method
+			sb = appendWSF(sb, SOURCE_PACKAGE_01);
+			sb = appendWSF(sb, SOURCE_PACKAGE_02);
+			sb = appendWSF(sb, SOURCE_PACKAGE_03);
+			sb = appendWSF(sb, COM);
+			sb = appendWSF(sb, XX);
+			sb = appendWSF(sb, "base");
+			sb = appendWSF(sb, "template");
+			sb = appendWSF(sb, "defaultversion");
+			sb = appendWSF(sb, "controller");
+			sb = appendWSF(sb, "methodController");
+			break;
+		default:
+			break;
+		}
+		return sb.toString();
+	}
+
+	/**
+	 * 生成目标文件路径
+	 * 
+	 * 0默认springmvc模板
+	 * 
+	 * @param c
+	 *            类型
+	 * @param infos
+	 *            用户前段填写的参数
+	 * @return
+	 */
+	public static String getTemplate(int c, String[] infos) {
+		File directory = new File("");// 设定为当前文件夹
+		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
+		switch (c) {
+		case 1000:// controller
+			sb = appendWSF(sb, SOURCE_PACKAGE_01);
+			sb = appendWSF(sb, SOURCE_PACKAGE_02);
+			sb = appendWSF(sb, SOURCE_PACKAGE_03);
+			sb = appendWSF(sb, COM);
+			sb = appendWSF(sb, infos[0]);
+			sb = appendWSF(sb, infos[1]);
+			sb = appendWSF(sb, CONTROLLER);
+			File folder = new File(sb.toString());
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + "Controller.java");
+			break;
+
+		default:
+			break;
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * 首字母大写
+	 * 
+	 * @return
+	 */
+	public static String upperCaseFirstCharacter(String str) {
+		return str.substring(0, 1).toUpperCase() + str.substring(1);
+	}
+	
+	
+
+	
+	/**
+	 * 首字母小写
+	 * 
+	 * @return
+	 */
+	public static String lowerCaseFirstCharacter(String str) {
+		return str.substring(0, 1).toLowerCase() + str.substring(1);
+	}
+
+
 	/**
 	 * 整理文件
 	 * 
@@ -23,8 +159,7 @@ public class CRUDUtil {
 	 * @param context
 	 * @throws IOException
 	 */
-	public static ReadEntity o(ReadEntity context, KeyPoints points)
-			throws IOException {
+	public static XXEntity o(XXEntity context, KeyPoints points) throws IOException {
 		List<String> readlines = context.getLines();
 		List<String> lines = new ArrayList<String>();
 		for (String line : readlines) {
@@ -39,13 +174,12 @@ public class CRUDUtil {
 
 	static String src = "/home/zhuwj/git/base_ssm/src/main/java/com/man/base/template/defaultversion/controller/methodController";
 
-	public static void a(ReadEntity context, ClassBuilder cb)
-			throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		 KeyPoints k = new KeyPoints(cb);
-		 for (String s : o(context, k).getLines()) {
-			 System.out.println(s);
-			 a(s+System.getProperty("line.separator"), context.getTargetFile());
-		 }
+	public static void a(XXEntity context, ClassBuilder cb) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		KeyPoints k = new KeyPoints(cb);
+		for (String s : o(context, k).getLines()) {
+			System.out.println(s);
+			a(s + System.getProperty("line.separator"), context.getTargetFile());
+		}
 	}
 
 	/**
@@ -75,8 +209,8 @@ public class CRUDUtil {
 				raf.writeByte(temp);
 			}
 			raf.seek(target);
-//			raf.writeBytes("\r\n");
-//			raf.seek(target+"\r\n".getBytes().length);
+			// raf.writeBytes("\r\n");
+			// raf.seek(target+"\r\n".getBytes().length);
 			raf.write(b);
 			raf.close();
 		} catch (Exception e) {
@@ -132,14 +266,14 @@ public class CRUDUtil {
 	 * @param context
 	 * @param cb
 	 * @throws IOException
-	 * @throws SecurityException 
-	 * @throws NoSuchMethodException 
-	 * @throws InvocationTargetException 
-	 * @throws IllegalArgumentException 
-	 * @throws IllegalAccessException 
+	 * @throws SecurityException
+	 * @throws NoSuchMethodException
+	 * @throws InvocationTargetException
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
 	 */
-	public static void w(ReadEntity context, ClassBuilder cb)
-			throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public static void pw(XXEntity context) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		ClassBuilder cb = context.getCb();
 		KeyPoints k = new KeyPoints(cb);
 		w(o(context, k));
 	}
@@ -151,7 +285,7 @@ public class CRUDUtil {
 	 * @return
 	 * @throws IOException
 	 */
-	public static void w(ReadEntity context) throws IOException {
+	private static void w(XXEntity context) throws IOException {
 		File file = new File(context.getTargetFile());
 		if (!file.exists()) {
 			file.createNewFile();
@@ -187,11 +321,13 @@ public class CRUDUtil {
 	 * @return
 	 * @throws IOException
 	 */
-	public static ReadEntity r(String fileName) throws IOException {
+	public static XXEntity r(int templateNo) throws IOException {
+		
+		String fileName = CRUDUtil.getTemplate(templateNo);
+		
 		List<String> lines = new ArrayList<String>();
-		ReadEntity ret = new ReadEntity();
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-				new FileInputStream(fileName), "UTF-8"));
+		XXEntity ret = new XXEntity();
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), "UTF-8"));
 		String line = null;
 		StringBuilder sb = new StringBuilder();
 		while ((line = br.readLine()) != null) {
@@ -205,4 +341,20 @@ public class CRUDUtil {
 		return ret;
 	}
 
+	/**
+	 * 读取文件信息并设置目标文件路径
+	 * 
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 */
+	public static XXEntity rs(int templateNo,String[] infos) throws IOException {
+		
+		XXEntity ret = r(templateNo);//读取模板文件
+		String tar = CRUDUtil.getTemplate(templateNo, infos).toString();
+		ret.setTargetFile(tar);//设置目标文件路径
+		ret.setCb(Claxx.getClaxx(templateNo,infos));// 类信息（包名、import、requestmapping 等）
+		return ret;
+	}
+	
 }

@@ -1,8 +1,8 @@
 package com.xx.base.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xx.base.util.CRUDUtil;
 import com.xx.base.util.ClassBuilder;
 import com.xx.base.util.Claxx;
-import com.xx.base.util.ReadEntity;
+import com.xx.base.util.XXEntity;
 import com.xx.base.util.XX_Method;
 
 @Controller
@@ -24,15 +24,10 @@ import com.xx.base.util.XX_Method;
 // 中文
 public class CRUDController extends BaseController {
 
-	private static final String SOURCE_PACKAGE_01 = "src";
-	private static final String SOURCE_PACKAGE_02 = "main";
-	private static final String SOURCE_PACKAGE_03 = "java";
-
-	private static final String COM = "com";
-
-	private static final String XX = "xx";
-	private static final String CONTROLLER = "controller";
-
+	
+	//MVC中的C controller 模板
+	private static final int templateNo = 1000;
+	
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj@726@gmail.com)
@@ -57,25 +52,19 @@ public class CRUDController extends BaseController {
 		Map paramsMap = super.getParams(request);
 		paramsMap.put("status_code", "200");
 		String target = paramsMap.get("target").toString();
-		
-		if(this.containsAZ(target.split("\\.")[2].substring(0, 1)))//如果类名首字母大写，重新生成新类
-			genNewClass(target.substring(0, target.contains("(")?target.indexOf("("):target.length()));
-		
-		/**
-		 * 约定如果有()表示需要生成方法
-		 */
-		if (target.contains("(") && target.contains(")")) {
-			String[] functions = target.substring(target.indexOf("(") + 1, target.indexOf(")")).split(",");
-			for (String func : functions) {
-				appendMethod(target.substring(0, target.indexOf("(")), func);
-			}
-		} 
-
+		//生成新类，检查是否需要生成
+		genNewClass(target);
+		//追加里面的方法
+		appendMethods(target);
 		return JSONObject.toJSONString(paramsMap);
 	}
 
 	/**
 	 * 生成新类型
+	 * 
+	 * projectname.modulename.controllernaem(methods)
+	 * 
+	 * controllernaem首字母大写才会生成类文件
 	 * 
 	 * @param info
 	 * @return
@@ -88,19 +77,48 @@ public class CRUDController extends BaseController {
 	 */
 	public String genNewClass(String info) throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
+		//截取类名前的部分字符串  xx.backend.sss(methodA,metohodB) => xx.backend.sss
+		info = info.substring(0, info.contains("(")?info.indexOf("("):info.length());
 		String[] infos = info.split("\\.");
-		if(!containsAZ(infos[2].substring(0, 1)))
+		if(!containsA2Z(infos[2].substring(0, 1)))//大写字母生成新类，小写字不生成新类
 			return "";
-		String src = getTemplate(0);
-		String tar = getTemplate(0, infos).toString();
-		// 写入 新文件
-		ReadEntity ret = CRUDUtil.r(src);
-		ClassBuilder cb = new Claxx("com." + infos[0] + "." + infos[1] + ".controller", null, lowerCaseFirstCharacter(infos[2]),
-				upperCaseFirstCharacter(infos[2]) + "Controller");
-		ret.setTargetFile(tar);
-		CRUDUtil.w(ret, cb);
+		
+		//读取模板文件 并 设置目标文件信息
+		XXEntity ret = CRUDUtil.rs(templateNo,infos);
+		//按照设置写入文件
+		CRUDUtil.pw(ret);
 		System.out.println(" well done !! ");
 		return "";
+	}
+	
+	/**
+	 * append methods
+	 * 
+	 * 特殊参数
+	 * NEW => 添加一套表标准的CRUD方法，（NEW = index,add,save,delete,edit,update）
+	 * 
+	 * @param target
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IOException
+	 */
+	public String appendMethods(String target) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException{
+		if (target.contains("(") && target.contains(")")) {//约定如果有()表示需要生成方法
+			String methods = target.substring(target.indexOf("(") + 1, target.indexOf(")"));
+			if("NEW".equals(methods)){//默认增删改查
+				methods="index,add,save,delete,edit,update";
+			}
+			String[] functions = methods.split(",");
+			for (String func : functions) {
+				appendMethod(target.substring(0, target.indexOf("(")), func);
+			}
+		}
+		return "";
+		
 	}
 
 	/**
@@ -121,133 +139,15 @@ public class CRUDController extends BaseController {
 		return "";
 	}
 
-	/**
-	 * 获取定制的模板
-	 * 
-	 * @param c
-	 *            0 => controller 1 => controller method
-	 * @return
-	 */
-	static String getTemplate(int c) {
-		File directory = new File("");// 设定为当前文件夹
-		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
-		switch (c) {
-		case 0:// controller
-			sb = appendWS(sb, SOURCE_PACKAGE_01);
-			sb = appendWS(sb, SOURCE_PACKAGE_02);
-			sb = appendWS(sb, SOURCE_PACKAGE_03);
-			sb = appendWS(sb, COM);
-			sb = appendWS(sb, XX);
-			sb = appendWS(sb, "base");
-			sb = appendWS(sb, "template");
-			sb = appendWS(sb, "defaultversion");
-			sb = appendWS(sb, "controller");
-			sb = appendWS(sb, "DefaultController");
-			break;
-		case 1:// method
-			sb = appendWS(sb, SOURCE_PACKAGE_01);
-			sb = appendWS(sb, SOURCE_PACKAGE_02);
-			sb = appendWS(sb, SOURCE_PACKAGE_03);
-			sb = appendWS(sb, COM);
-			sb = appendWS(sb, XX);
-			sb = appendWS(sb, "base");
-			sb = appendWS(sb, "template");
-			sb = appendWS(sb, "defaultversion");
-			sb = appendWS(sb, "controller");
-			sb = appendWS(sb, "methodController");
-			break;
-		default:
-			break;
-		}
-		return sb.toString();
-	}
 
-	/**
-	 * 添加一个分隔符号
-	 * 
-	 * @param sb
-	 * @return
-	 */
-	public static StringBuilder appendSeparator(StringBuilder sb) {
-		sb.append(File.separator);
-		return sb;
-	}
-
-	/**
-	 * 拼接字符串
-	 * 
-	 * @param sb
-	 * @param context
-	 * @return
-	 */
-	public static StringBuilder appendWS(StringBuilder sb, String context) {
-		sb = appendSeparator(sb);
-		sb.append(context);
-		return sb;
-
-	}
-
-	/**
-	 * 首字母大写
-	 * 
-	 * @return
-	 */
-	public static String upperCaseFirstCharacter(String str) {
-		return str.substring(0, 1).toUpperCase() + str.substring(1);
-	}
 	
-	/**
-	 * 首字母小写
-	 * 
-	 * @return
-	 */
-	public static String lowerCaseFirstCharacter(String str) {
-		return str.substring(0, 1).toLowerCase() + str.substring(1);
-	}
-
-	/**
-	 * 生成目标文件路径
-	 * 
-	 * @param c
-	 *            类型
-	 * @param infos
-	 *            用户前段填写的参数
-	 * @return
-	 */
-	static String getTemplate(int c, String[] infos) {
-		File directory = new File("");// 设定为当前文件夹
-		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
-		switch (c) {
-		case 0:// controller
-			sb.append(File.separator);
-			sb.append(SOURCE_PACKAGE_01);
-			sb.append(File.separator);
-			sb.append(SOURCE_PACKAGE_02);
-			sb.append(File.separator);
-			sb.append(SOURCE_PACKAGE_03);
-			sb.append(File.separator);
-			sb.append(COM);
-			sb.append(File.separator);
-			sb.append(infos[0]);
-			sb.append(File.separator);
-			sb.append(infos[1]);
-			sb.append(File.separator);
-			sb.append(CONTROLLER);
-			sb.append(File.separator);
-			sb.append(upperCaseFirstCharacter(infos[2]) + "Controller.java");
-			break;
-
-		default:
-			break;
-		}
-		return sb.toString();
-	}
+	
 
 	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException {
 		
-		String target = "asdfsadf";
-		System.out.println(target.substring(0, target.contains("(")?target.indexOf("("):target.length()));
+//		String target = "asdfsadf";
+//		System.out.println(target.substring(0, target.contains("(")?target.indexOf("("):target.length()));
 	}
 	
 	/**
@@ -255,7 +155,7 @@ public class CRUDController extends BaseController {
 	 * @param str
 	 * @return
 	 */
-	public static boolean containsAZ(String str){
+	public static boolean containsA2Z(String str){
 		return str.replaceAll("[A-Z]", "?").contains("?");
 	}
 
@@ -263,10 +163,10 @@ public class CRUDController extends BaseController {
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		// 写入 新文件
 		String[] infos = info.split("\\.");
-		String src = getTemplate(1);
-		String tar = getTemplate(0, infos).toString();
-		ReadEntity ret = CRUDUtil.r(src);
-		ClassBuilder cb = new XX_Method(functionName, "String", "", functionName, lowerCaseFirstCharacter(infos[2]), functionName);
+//		String src = CRUDUtil.getTemplate(templateNo+1);
+		String tar = CRUDUtil.getTemplate(templateNo, infos).toString();
+		XXEntity ret = CRUDUtil.r(templateNo+1);
+		ClassBuilder cb = new XX_Method(functionName, "String", "", functionName, CRUDUtil.lowerCaseFirstCharacter(infos[2]), functionName);
 		ret.setTargetFile(tar);
 		CRUDUtil.a(ret, cb);
 		System.out.println(" well done !! ");

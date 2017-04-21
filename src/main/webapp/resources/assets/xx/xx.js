@@ -11,6 +11,17 @@ var BASE = "/"+APP;
    	  return Object.prototype.toString.call(o)=='[object Array]';
 	};
 	
+	xx.bindIdClick = function (target){
+		var targetID="#"+target;
+		document.onkeydown = function(e){
+		    var event = e || window.event;  
+		    var code = event.keyCode || event.which || event.charCode;
+		    if (code == 13) {
+		    	$(targetID).click();
+		    }
+		};
+	}
+	
 	xx.tree = function (tree){//构建树
 		var newTree = [];
         var tmp = [];
