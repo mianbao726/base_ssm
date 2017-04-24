@@ -52,11 +52,22 @@ public class CRUDController extends BaseController {
 		Map paramsMap = super.getParams(request);
 		paramsMap.put("status_code", "200");
 		String target = paramsMap.get("target").toString();
+		
+		genSet(target);
 		//生成新类，检查是否需要生成
-		genNewClass(target);
+		
 		//追加里面的方法
 		appendMethods(target);
 		return JSONObject.toJSONString(paramsMap);
+	}
+	
+	public String  genSet(String target) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException{
+		genNewWGFile(target,templateNo + 0);//controller
+		genNewWGFile(target,templateNo + 2);//service
+//		genNewWGFile(target,1);//serviceImpl
+//		genNewWGFile(target,1);//xml
+		
+		return "";
 	}
 
 	/**
@@ -75,7 +86,40 @@ public class CRUDController extends BaseController {
 	 * @throws SecurityException
 	 * @throws IOException
 	 */
-	public String genNewClass(String info) throws IllegalAccessException, IllegalArgumentException,
+	public String genNewWGFile(String info , int type) throws IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
+		//截取类名前的部分字符串  xx.backend.sss(methodA,metohodB) => xx.backend.sss
+		info = info.substring(0, info.contains("(")?info.indexOf("("):info.length());
+		String[] infos = info.split("\\.");
+		if(!containsA2Z(infos[2].substring(0, 1)))//大写字母生成新类，小写字不生成新类
+			return "";
+		
+		//读取模板文件 并 设置目标文件信息
+		XXEntity ret = CRUDUtil.rs(type,infos);
+		//按照设置写入文件
+		CRUDUtil.pw(ret);
+		System.out.println(" well done !! ");
+		return "";
+	}
+	
+	
+	/**
+	 * 生成新类型
+	 * 
+	 * projectname.modulename.controllernaem(methods)
+	 * 
+	 * controllernaem首字母大写才会生成类文件
+	 * 
+	 * @param info
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IOException
+	 */
+	public String genNewWGFile(String info) throws IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
 		//截取类名前的部分字符串  xx.backend.sss(methodA,metohodB) => xx.backend.sss
 		info = info.substring(0, info.contains("(")?info.indexOf("("):info.length());

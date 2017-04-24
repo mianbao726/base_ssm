@@ -23,6 +23,8 @@ public class CRUDUtil {
 
 	private static final String XX = "xx";
 	private static final String CONTROLLER = "controller";
+	private static final String SERVICE = "service";
+	private static final String SERVICE_FILENAME = "Service.java";
 
 	/**
 	 * 先添加系统分割符再添加字符串
@@ -87,6 +89,18 @@ public class CRUDUtil {
 			sb = appendWSF(sb, "controller");
 			sb = appendWSF(sb, "methodController");
 			break;
+		case 1002:// service
+			sb = appendWSF(sb, SOURCE_PACKAGE_01);
+			sb = appendWSF(sb, SOURCE_PACKAGE_02);
+			sb = appendWSF(sb, SOURCE_PACKAGE_03);
+			sb = appendWSF(sb, COM);
+			sb = appendWSF(sb, XX);
+			sb = appendWSF(sb, "base");
+			sb = appendWSF(sb, "template");
+			sb = appendWSF(sb, "defaultversion");
+			sb = appendWSF(sb, "service");
+			sb = appendWSF(sb, "DefaultService");
+			break;
 		default:
 			break;
 		}
@@ -106,6 +120,7 @@ public class CRUDUtil {
 	 */
 	public static String getTemplate(int c, String[] infos) {
 		File directory = new File("");// 设定为当前文件夹
+		File folder ;
 		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
 		switch (c) {
 		case 1000:// controller
@@ -116,13 +131,40 @@ public class CRUDUtil {
 			sb = appendWSF(sb, infos[0]);
 			sb = appendWSF(sb, infos[1]);
 			sb = appendWSF(sb, CONTROLLER);
-			File folder = new File(sb.toString());
+			folder = new File(sb.toString());
 			if (!folder.exists()) {
 				folder.mkdirs();
 			}
 			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + "Controller.java");
 			break;
-
+		case 1001:// service
+			sb = appendWSF(sb, SOURCE_PACKAGE_01);
+			sb = appendWSF(sb, SOURCE_PACKAGE_02);
+			sb = appendWSF(sb, SOURCE_PACKAGE_03);
+			sb = appendWSF(sb, COM);
+			sb = appendWSF(sb, infos[0]);
+			sb = appendWSF(sb, infos[1]);
+			sb = appendWSF(sb, SERVICE);
+			folder = new File(sb.toString());
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + SERVICE_FILENAME);
+			break;
+		case 1002:// service
+			sb = appendWSF(sb, SOURCE_PACKAGE_01);
+			sb = appendWSF(sb, SOURCE_PACKAGE_02);
+			sb = appendWSF(sb, SOURCE_PACKAGE_03);
+			sb = appendWSF(sb, COM);
+			sb = appendWSF(sb, infos[0]);
+			sb = appendWSF(sb, infos[1]);
+			sb = appendWSF(sb, SERVICE);
+			folder = new File(sb.toString());
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + SERVICE_FILENAME);
+			break;
 		default:
 			break;
 		}

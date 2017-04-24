@@ -1,0 +1,41 @@
+/*
+ * Copyright (c) 2017, 2017, WHATGOOGLE and/or its affiliates. All rights reserved.
+ * WHATGOOGLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+ package xx_package_name
+
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.xx.base.util.IBaseService;
+
+/**
+ * xx_author
+ */
+public interface xx_class_name extends IBaseService{
+	
+
+}
