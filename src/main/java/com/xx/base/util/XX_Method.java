@@ -16,7 +16,7 @@ public class XX_Method implements ClassBuilder {
 	private String pack_name;
 	private String page_name;
 
-	public XX_Method(String method_name, String return_name, String param_name,
+	private XX_Method(String method_name, String return_name, String param_name,
 			String request_name, String tail_name, String pack_name,
 			String page_name) {
 		super();
@@ -34,6 +34,25 @@ public class XX_Method implements ClassBuilder {
 		this(method_name, return_name, param_name, request_name, "html",
 				pack_name, page_name);
 	}
+	
+	public static XX_Method getInstance(int templateNo//
+			,String method_name,//method_name
+			String return_name, //return_name
+			String param_name, //param_name
+			String request_name, //request_name
+			String pack_name, //pack_name
+			String page_name//page_name
+			){
+		switch (templateNo) {
+		case 1001:// controller
+			return new XX_Method(method_name, return_name, param_name, request_name, "html",
+					pack_name, page_name);
+		default:
+			break;
+		}
+	 return null;
+	}
+	
 
 	public String getTail_name() {
 		return tail_name;

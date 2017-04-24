@@ -161,14 +161,10 @@ public class CRUDController extends BaseController {
 
 	static void s02(String info, String functionName) throws IOException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		// 写入 新文件
 		String[] infos = info.split("\\.");
-//		String src = CRUDUtil.getTemplate(templateNo+1);
-		String tar = CRUDUtil.getTemplate(templateNo, infos).toString();
-		XXEntity ret = CRUDUtil.r(templateNo+1);
-		ClassBuilder cb = new XX_Method(functionName, "String", "", functionName, CRUDUtil.lowerCaseFirstCharacter(infos[2]), functionName);
-		ret.setTargetFile(tar);
-		CRUDUtil.a(ret, cb);
+		// 写入 新文件
+		XXEntity ret = CRUDUtil.rs(templateNo,infos,functionName);
+		CRUDUtil.a(ret);
 		System.out.println(" well done !! ");
 	}
 

@@ -174,7 +174,18 @@ public class CRUDUtil {
 
 	static String src = "/home/zhuwj/git/base_ssm/src/main/java/com/man/base/template/defaultversion/controller/methodController";
 
-	public static void a(XXEntity context, ClassBuilder cb) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	/**
+	 * 
+	 * @param context
+	 * @throws IOException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 */
+	public static void a(XXEntity context) throws IOException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		ClassBuilder cb = context.getCb();
 		KeyPoints k = new KeyPoints(cb);
 		for (String s : o(context, k).getLines()) {
 			System.out.println(s);
@@ -354,6 +365,32 @@ public class CRUDUtil {
 		String tar = CRUDUtil.getTemplate(templateNo, infos).toString();
 		ret.setTargetFile(tar);//设置目标文件路径
 		ret.setCb(Claxx.getClaxx(templateNo,infos));// 类信息（包名、import、requestmapping 等）
+		return ret;
+	}
+	
+	/**
+	 * 读取文件信息并设置目标文件路径
+	 * 
+	 * 方法
+	 * 
+	 * @param fileName
+	 * @return
+	 * @throws IOException
+	 */
+	public static XXEntity rs(int templateNo,String[] infos,String functionName) throws IOException {
+		
+		XXEntity ret = r(templateNo+1);//读取模板文件
+		String tar = CRUDUtil.getTemplate(templateNo, infos).toString();
+		ret.setTargetFile(tar);//设置目标文件路径
+		ClassBuilder cb = XX_Method.getInstance(templateNo+1,
+				functionName,//method_name
+				"String", //return_name
+				"", //param_name
+				functionName, //request_name
+				CRUDUtil.lowerCaseFirstCharacter(infos[2]), //pack_name
+				functionName//page_name
+				);
+		ret.setCb(cb);// 类信息（包名、import、requestmapping 等）
 		return ret;
 	}
 	
