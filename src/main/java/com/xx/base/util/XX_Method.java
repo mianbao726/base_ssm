@@ -47,6 +47,10 @@ public class XX_Method implements ClassBuilder {
 		case 1001:// controller
 			return new XX_Method(method_name, return_name, param_name, request_name, "html",
 					pack_name, page_name);
+			
+		case 1005:// service
+			return new XX_Method(method_name, return_name, param_name, request_name, "html",
+					pack_name, page_name);
 		default:
 			break;
 		}

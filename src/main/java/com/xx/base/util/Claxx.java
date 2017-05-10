@@ -22,10 +22,16 @@ public class Claxx implements ClassBuilder{
 	public static Claxx getClaxx(int templateNo,String[] infos){
 		switch (templateNo) {
 		case 1000:// controller
-			return new Claxx("com." + infos[0] + "." + infos[1] + ".controller",//package_name
+			return new Claxx(CRUDUtil.COM+"." + infos[0] + "." + infos[1] + "."+CRUDUtil.CONTROLLER,//package_name
 					null,//import_name
 					CRUDUtil.lowerCaseFirstCharacter(infos[2]),//requestMapping_name
 					CRUDUtil.upperCaseFirstCharacter(infos[2]) + "Controller"//class_name
+					);
+		case 1002:// service
+			return new Claxx(CRUDUtil.COM+"." + infos[0] + "." + infos[1] + "."+CRUDUtil.SERVICE,//package_name
+					null,//import_name
+					null,//requestMapping_name
+					CRUDUtil.upperCaseFirstCharacter(infos[2]) + "Service"//class_name
 					);
 		default:
 			break;

@@ -19,12 +19,14 @@ public class CRUDUtil {
 	private static final String SOURCE_PACKAGE_02 = "main";
 	private static final String SOURCE_PACKAGE_03 = "java";
 
-	private static final String COM = "com";
+	public static final String COM = "com";
 
-	private static final String XX = "xx";
-	private static final String CONTROLLER = "controller";
-	private static final String SERVICE = "service";
-	private static final String SERVICE_FILENAME = "Service.java";
+	public static final String XX = "xx";
+	public static final String CONTROLLER = "controller";
+	public static final String SERVICE = "service";
+	public static final String SERVICE_IMPL = "impl";
+	public static final String SERVICE_FILENAME = "Service.java";
+	public static final String SERVICE_FILENAME_IMPL = "ServiceImpl.java";
 
 	/**
 	 * 先添加系统分割符再添加字符串
@@ -62,44 +64,36 @@ public class CRUDUtil {
 	 * @return
 	 */
 	public static String getTemplate(int c) {
+		
+		System.out.println(c);
 		File directory = new File("");// 设定为当前文件夹
 		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
+		
+		sb = appendWSF(sb, SOURCE_PACKAGE_01);
+		sb = appendWSF(sb, SOURCE_PACKAGE_02);
+		sb = appendWSF(sb, SOURCE_PACKAGE_03);
+		sb = appendWSF(sb, COM);
+		sb = appendWSF(sb, XX);
+		sb = appendWSF(sb, "base");
+		sb = appendWSF(sb, "template");
+		sb = appendWSF(sb, "defaultversion");
+		
 		switch (c) {
 		case 1000:// controller
-			sb = appendWSF(sb, SOURCE_PACKAGE_01);
-			sb = appendWSF(sb, SOURCE_PACKAGE_02);
-			sb = appendWSF(sb, SOURCE_PACKAGE_03);
-			sb = appendWSF(sb, COM);
-			sb = appendWSF(sb, XX);
-			sb = appendWSF(sb, "base");
-			sb = appendWSF(sb, "template");
-			sb = appendWSF(sb, "defaultversion");
 			sb = appendWSF(sb, "controller");
 			sb = appendWSF(sb, "DefaultController");
 			break;
-		case 1001:// method
-			sb = appendWSF(sb, SOURCE_PACKAGE_01);
-			sb = appendWSF(sb, SOURCE_PACKAGE_02);
-			sb = appendWSF(sb, SOURCE_PACKAGE_03);
-			sb = appendWSF(sb, COM);
-			sb = appendWSF(sb, XX);
-			sb = appendWSF(sb, "base");
-			sb = appendWSF(sb, "template");
-			sb = appendWSF(sb, "defaultversion");
+		case 1001://controller method
 			sb = appendWSF(sb, "controller");
 			sb = appendWSF(sb, "methodController");
 			break;
 		case 1002:// service
-			sb = appendWSF(sb, SOURCE_PACKAGE_01);
-			sb = appendWSF(sb, SOURCE_PACKAGE_02);
-			sb = appendWSF(sb, SOURCE_PACKAGE_03);
-			sb = appendWSF(sb, COM);
-			sb = appendWSF(sb, XX);
-			sb = appendWSF(sb, "base");
-			sb = appendWSF(sb, "template");
-			sb = appendWSF(sb, "defaultversion");
 			sb = appendWSF(sb, "service");
 			sb = appendWSF(sb, "DefaultService");
+			break;
+		case 1005:// service method
+			sb = appendWSF(sb, "service");
+			sb = appendWSF(sb, "methodService");
 			break;
 		default:
 			break;
@@ -119,17 +113,18 @@ public class CRUDUtil {
 	 * @return
 	 */
 	public static String getTemplate(int c, String[] infos) {
+		System.out.println(c);
 		File directory = new File("");// 设定为当前文件夹
 		File folder ;
 		StringBuilder sb = new StringBuilder(directory.getAbsolutePath());
+		sb = appendWSF(sb, SOURCE_PACKAGE_01);
+		sb = appendWSF(sb, SOURCE_PACKAGE_02);
+		sb = appendWSF(sb, SOURCE_PACKAGE_03);
+		sb = appendWSF(sb, COM);
+		sb = appendWSF(sb, infos[0]);
+		sb = appendWSF(sb, infos[1]);
 		switch (c) {
 		case 1000:// controller
-			sb = appendWSF(sb, SOURCE_PACKAGE_01);
-			sb = appendWSF(sb, SOURCE_PACKAGE_02);
-			sb = appendWSF(sb, SOURCE_PACKAGE_03);
-			sb = appendWSF(sb, COM);
-			sb = appendWSF(sb, infos[0]);
-			sb = appendWSF(sb, infos[1]);
 			sb = appendWSF(sb, CONTROLLER);
 			folder = new File(sb.toString());
 			if (!folder.exists()) {
@@ -138,12 +133,6 @@ public class CRUDUtil {
 			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + "Controller.java");
 			break;
 		case 1001:// service
-			sb = appendWSF(sb, SOURCE_PACKAGE_01);
-			sb = appendWSF(sb, SOURCE_PACKAGE_02);
-			sb = appendWSF(sb, SOURCE_PACKAGE_03);
-			sb = appendWSF(sb, COM);
-			sb = appendWSF(sb, infos[0]);
-			sb = appendWSF(sb, infos[1]);
 			sb = appendWSF(sb, SERVICE);
 			folder = new File(sb.toString());
 			if (!folder.exists()) {
@@ -152,12 +141,6 @@ public class CRUDUtil {
 			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + SERVICE_FILENAME);
 			break;
 		case 1002:// service
-			sb = appendWSF(sb, SOURCE_PACKAGE_01);
-			sb = appendWSF(sb, SOURCE_PACKAGE_02);
-			sb = appendWSF(sb, SOURCE_PACKAGE_03);
-			sb = appendWSF(sb, COM);
-			sb = appendWSF(sb, infos[0]);
-			sb = appendWSF(sb, infos[1]);
 			sb = appendWSF(sb, SERVICE);
 			folder = new File(sb.toString());
 			if (!folder.exists()) {
@@ -419,12 +402,12 @@ public class CRUDUtil {
 	 * @return
 	 * @throws IOException
 	 */
-	public static XXEntity rs(int templateNo,String[] infos,String functionName) throws IOException {
-		
-		XXEntity ret = r(templateNo+1);//读取模板文件
+	public static XXEntity rs(int templateNo,int swift,String[] infos,String functionName) throws IOException {
+		System.out.println(templateNo + "  " +swift);
+		XXEntity ret = r(templateNo+swift);//读取模板文件
 		String tar = CRUDUtil.getTemplate(templateNo, infos).toString();
 		ret.setTargetFile(tar);//设置目标文件路径
-		ClassBuilder cb = XX_Method.getInstance(templateNo+1,
+		ClassBuilder cb = XX_Method.getInstance(templateNo+swift,
 				functionName,//method_name
 				"String", //return_name
 				"", //param_name

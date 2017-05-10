@@ -53,20 +53,26 @@ public class CRUDController extends BaseController {
 		paramsMap.put("status_code", "200");
 		String target = paramsMap.get("target").toString();
 		
-		genSet(target);
 		//生成新类，检查是否需要生成
+		genSet(target);
 		
-		//追加里面的方法
-		appendMethods(target);
+		
 		return JSONObject.toJSONString(paramsMap);
 	}
 	
 	public String  genSet(String target) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException{
-		genNewWGFile(target,templateNo + 0);//controller
-		genNewWGFile(target,templateNo + 2);//service
-//		genNewWGFile(target,1);//serviceImpl
-//		genNewWGFile(target,1);//xml
-		
+		genWGFileAndAppendMethods(target,templateNo,0);//controller
+		genWGFileAndAppendMethods(target,templateNo,2);//service
+		genWGFileAndAppendMethods(target,templateNo,3);//serviceImpl
+//		genWGFileAndAppendMethods(target,templateNo,4);//xml
+		return "";
+	}
+	
+	
+	public String genWGFileAndAppendMethods(String target,int templateNo,int swift)  throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException{
+		genNewWGFile(target,templateNo + swift);//controller
+		//追加里面的方法
+		appendMethods(target,templateNo + swift,swift+1);
 		return "";
 	}
 
@@ -150,7 +156,7 @@ public class CRUDController extends BaseController {
 	 * @throws SecurityException
 	 * @throws IOException
 	 */
-	public String appendMethods(String target) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException{
+	public String appendMethods(String target,int templateNo,int swift) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException{
 		if (target.contains("(") && target.contains(")")) {//约定如果有()表示需要生成方法
 			String methods = target.substring(target.indexOf("(") + 1, target.indexOf(")"));
 			if("NEW".equals(methods)){//默认增删改查
@@ -158,7 +164,7 @@ public class CRUDController extends BaseController {
 			}
 			String[] functions = methods.split(",");
 			for (String func : functions) {
-				appendMethod(target.substring(0, target.indexOf("(")), func);
+				appendMethod(target.substring(0, target.indexOf("(")), func,templateNo,swift);
 			}
 		}
 		return "";
@@ -177,9 +183,9 @@ public class CRUDController extends BaseController {
 	 * @throws SecurityException
 	 * @throws IOException
 	 */
-	public String appendMethod(String info, String functionName) throws IllegalAccessException,
+	public String appendMethod(String info, String functionName,int templateNo,int swift) throws IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException {// xx.backend.sss
-		s02(info, functionName);
+		s02(info, functionName,templateNo,swift);
 		return "";
 	}
 
@@ -187,12 +193,9 @@ public class CRUDController extends BaseController {
 	
 	
 
-	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
-			InvocationTargetException, NoSuchMethodException, SecurityException {
-		
-//		String target = "asdfsadf";
-//		System.out.println(target.substring(0, target.contains("(")?target.indexOf("("):target.length()));
-	}
+//	public static void main(String[] args) throws IOException, IllegalAccessException, IllegalArgumentException,
+//			InvocationTargetException, NoSuchMethodException, SecurityException {
+//	}
 	
 	/**
 	 * 是否包含大写字母
@@ -203,11 +206,11 @@ public class CRUDController extends BaseController {
 		return str.replaceAll("[A-Z]", "?").contains("?");
 	}
 
-	static void s02(String info, String functionName) throws IOException, IllegalAccessException,
+	static void s02(String info, String functionName,int templateNo,int swift) throws IOException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		String[] infos = info.split("\\.");
 		// 写入 新文件
-		XXEntity ret = CRUDUtil.rs(templateNo,infos,functionName);
+		XXEntity ret = CRUDUtil.rs(templateNo,swift,infos,functionName);
 		CRUDUtil.a(ret);
 		System.out.println(" well done !! ");
 	}

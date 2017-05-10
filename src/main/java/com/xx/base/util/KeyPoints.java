@@ -21,7 +21,7 @@ public class KeyPoints {
 	}
 
 	{
-		points.add(new Point("xx_author", "@author generate by www.whatgoogle.com (ps : some question? contact zhuwj@726@gmail.com)"));
+		points.add(new Point("xx_author", "@author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)"));
 	}
 
 	
