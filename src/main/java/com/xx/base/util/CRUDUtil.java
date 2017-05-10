@@ -91,9 +91,20 @@ public class CRUDUtil {
 			sb = appendWSF(sb, "service");
 			sb = appendWSF(sb, "DefaultService");
 			break;
+			
+		case 1003:// service imple
+			sb = appendWSF(sb, "service");
+			sb = appendWSF(sb, "impl");
+			sb = appendWSF(sb, "DefaultServiceImpl");
+			break;
 		case 1005:// service method
 			sb = appendWSF(sb, "service");
 			sb = appendWSF(sb, "methodService");
+			break;
+		case 1007:// service impl method
+			sb = appendWSF(sb, "service");
+			sb = appendWSF(sb, "impl");
+			sb = appendWSF(sb, "methodServiceImpl");
 			break;
 		default:
 			break;
@@ -147,6 +158,16 @@ public class CRUDUtil {
 				folder.mkdirs();
 			}
 			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + SERVICE_FILENAME);
+			break;
+			
+		case 1003:// service impl
+			sb = appendWSF(sb, SERVICE);
+			sb = appendWSF(sb, SERVICE_IMPL);
+			folder = new File(sb.toString());
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + SERVICE_FILENAME_IMPL);
 			break;
 		default:
 			break;

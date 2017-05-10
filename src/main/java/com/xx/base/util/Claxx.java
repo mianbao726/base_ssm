@@ -9,14 +9,20 @@ public class Claxx implements ClassBuilder{
 	private List import_name;
 	private String requestMapping_name;
 	private String class_name;
+	private String all_implements;
+	private String implements_imports;
+	
 	
 	private Claxx(String package_name, List import_name,
-			String requestMapping_name, String class_name) {
+			String requestMapping_name, String class_name,
+			String all_implements,String implements_imports) {
 		super();
 		this.package_name = package_name;
 		this.import_name = import_name;
 		this.requestMapping_name = requestMapping_name;
 		this.class_name = class_name;
+		this.all_implements = all_implements;
+		this.implements_imports = implements_imports;
 	}
 	
 	public static Claxx getClaxx(int templateNo,String[] infos){
@@ -26,12 +32,24 @@ public class Claxx implements ClassBuilder{
 					null,//import_name
 					CRUDUtil.lowerCaseFirstCharacter(infos[2]),//requestMapping_name
 					CRUDUtil.upperCaseFirstCharacter(infos[2]) + "Controller"//class_name
+					,""
+					,""
 					);
 		case 1002:// service
 			return new Claxx(CRUDUtil.COM+"." + infos[0] + "." + infos[1] + "."+CRUDUtil.SERVICE,//package_name
 					null,//import_name
 					null,//requestMapping_name
 					CRUDUtil.upperCaseFirstCharacter(infos[2]) + "Service"//class_name
+					,""
+					,""
+					);
+		case 1003:// service impl
+			return new Claxx(CRUDUtil.COM+"." + infos[0] + "." + infos[1] + "."+CRUDUtil.SERVICE+"."+CRUDUtil.SERVICE_IMPL ,//package_name
+					null,//import_name
+					null,//requestMapping_name
+					CRUDUtil.upperCaseFirstCharacter(infos[2]) + "ServiceImpl"//class_name
+					,CRUDUtil.upperCaseFirstCharacter(infos[2]) + "Service"//implements
+					,CRUDUtil.COM+"." + infos[0] + "." + infos[1] + "."+CRUDUtil.SERVICE+"."+CRUDUtil.upperCaseFirstCharacter(infos[2]) + "Service"
 					);
 		default:
 			break;
@@ -40,6 +58,22 @@ public class Claxx implements ClassBuilder{
 	}
 	
 	
+	public String getImplements_imports() {
+		return implements_imports;
+	}
+
+	public void setImplements_imports(String implements_imports) {
+		this.implements_imports = implements_imports;
+	}
+
+	public String getAll_implements() {
+		return all_implements;
+	}
+
+	public void setAll_implements(String all_implements) {
+		this.all_implements = all_implements;
+	}
+
 	public String getPackage_name() {
 		return package_name;
 	}

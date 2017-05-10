@@ -34,6 +34,8 @@ public class KeyPoints {
 			points.add(new Point("xx_import_name", ""));
 			points.add(new Point("xx_requestMapping_name", "/"+c.getRequestMapping_name()));
 			points.add(new Point("xx_class_name", c.getClass_name()));
+			points.add(new Point("xx_class_impl_name", c.getAll_implements()));
+			points.add(new Point("xx_implements_import", c.getImplements_imports()));
 		}else if (cb instanceof XX_Method){
 			XX_Method c = (XX_Method)cb;
 			

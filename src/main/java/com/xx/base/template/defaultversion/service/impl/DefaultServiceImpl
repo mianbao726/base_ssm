@@ -48,6 +48,7 @@ import com.xx.base.service.IModuleService;
 import com.xx.base.util.QMap;
 import com.xx.base.util.TimestampTool;
 
+import xx_implements_import;
 /**
  * xx_author
  */
@@ -59,4 +60,33 @@ public class xx_class_name extends PageServiceDao implements xx_class_impl_name{
 	private BaseDao baseDao;
 	private static Logger log = Logger.getLogger(xx_class_name.class);
 
+	@Override
+	public int add(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int del(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Map<String, Object> selectOne(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> queryPageForMap(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

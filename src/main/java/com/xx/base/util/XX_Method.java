@@ -15,6 +15,7 @@ public class XX_Method implements ClassBuilder {
 	private String tail_name;
 	private String pack_name;
 	private String page_name;
+	
 
 	private XX_Method(String method_name, String return_name, String param_name,
 			String request_name, String tail_name, String pack_name,
@@ -49,6 +50,9 @@ public class XX_Method implements ClassBuilder {
 					pack_name, page_name);
 			
 		case 1005:// service
+			return new XX_Method(method_name, return_name, param_name, request_name, "html",
+					pack_name, page_name);
+		case 1007:// service
 			return new XX_Method(method_name, return_name, param_name, request_name, "html",
 					pack_name, page_name);
 		default:
