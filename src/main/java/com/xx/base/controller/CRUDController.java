@@ -2,6 +2,8 @@ package com.xx.base.controller;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xx.base.util.CRUDUtil;
 import com.xx.base.util.ClassBuilder;
 import com.xx.base.util.Claxx;
+import com.xx.base.util.QMap;
 import com.xx.base.util.XXEntity;
 import com.xx.base.util.XX_Method;
 
@@ -27,6 +30,27 @@ public class CRUDController extends BaseController {
 	
 	//MVC中的C controller 模板
 	private static final int templateNo = 1000;
+	
+	
+	
+	@RequestMapping("/getdata.html")
+	public @ResponseBody
+	String getdata(HttpServletRequest request, Model model) throws Exception {
+		Map ret = null;
+		ret = new QMap("200");
+		List<Map<String,Object>> data = new ArrayList<Map<String,Object>>();
+		int count = 123;
+		for(int i = 0 ; i < count ;i++){
+			Map<String,Object> m1 = new HashMap<String,Object>(); 
+			m1.put("street", "jaj"+i);
+			data.add(m1);
+		}
+		ret.put("data", data);
+		ret.put("recordsTotal", Integer.valueOf(count));
+		ret.put("recordsFiltered", Integer.valueOf(count));
+		return JSONObject.toJSONString(ret);
+	}
+	
 	
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact

@@ -370,6 +370,53 @@
                 </div>
               </div>
             </div>
+            
+            
+            
+            
+            
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>CRUD genernate <small>different form elements</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                  	<table id="datatable-xx" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th>First name</th>
+                          <th>Last name</th>
+                          <th>Position</th>
+                          <th>Office</th>
+                          <th>Age</th>
+                          <th>Start date</th>
+                          <th>Salary</th>
+                          <th>Extn.</th>
+                          <th>E-mail</th>
+                        </tr>
+                      </thead>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           <br />
 
@@ -424,6 +471,26 @@
     <!-- bootstrap-daterangepicker -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/moment/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/default/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    
+    
+    <!-- Datatables -->
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/vfs_fonts.js"></script>
+    
+    
    
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
@@ -457,8 +524,92 @@
 			});
 			});
 		});
+		
+		
      </script>
       <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
+    
+    <script>
+    	$('#datatable-xx').DataTable({
+    		"language" : {
+    			"info" : "&nbsp;",
+    			"oPaginate" : {
+//     				"sFirst" : "首页",
+    				"sPrevious" : " &laquo; ",
+    				"sNext" : " &raquo;",
+//     				"sLast" : " 尾页 "
+    			},
+    			"infoEmpty" : "没有符合条件的记录!",
+    			"lengthMenu" : "显示 _MENU_ 条",
+    			"sZeroRecords" : "没有找到匹配的记录",
+    			"sInfoEmpty" : ""
+    		},
+//     		"pagingType" : "full_numbers",//用于指定分页器风格 "full_numbers"" or ""two_button""， default ""two_button""
+//     		"bAutoWidth" : false, //是否主动策画表格各列宽度
+    		"ajax" : {
+    			"url" :  '<%=path%>/CRUD/getdata.html',
+    			"type" : "POST",
+    			"dataType" : "json"
+    		},
+    		"processing" : true,
+//     		"serverSide" : true,
+//     		"bLengthChange" : false,
+//     		"bSort" : false, // 排序功能
+//     		"searching" : false,
+//     		"dom" : '<"top">t<"bottom"lip><"clear">',
+//     		"order" : [],
+    		"columns" : [ 
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    		 ],
+//     		 "preDrawCallback" : function(settings) {
+//     					one = 1;
+//     				},
+    				
+//                      "columnDefs": [
+//                      		{
+//     							"render" : function(data, type, row) {
+
+//     								return one++;
+//     							},
+//     							"orderable" : false,
+//     							"targets" : 0
+//     						},
+//     						{
+//     							"render" : function(data, type, row) {
+
+//     								return row.grade+"%";
+//     							},
+//     							"orderable" : false,
+//     							"targets" : 7
+//     						},
+//     						{
+//     							"render" : function(data, type, row) {
+
+//     								return row.grade_final+"%";
+//     							},
+//     							"orderable" : false,
+//     							"targets" : 9
+//     						},
+//     		    {"render": function(data, type, row){    
+//     		    	return      ' <button class="btn btn-xs btn-warning  tooltip-info " data-rel="tooltip" data-placement="bottom" title="" onclick="read(\''
+//     							+ row.id
+//     							+ '\')"><i class=" ace-icon fa fa-eye bigger-120"></i>查看</button>'
+    		    	
+//     		    },
+//                  "orderable": false,
+//                  "targets": 11
+//              	}, 
+//             	]
+    	});
+    </script>
   </body>
 </html>
