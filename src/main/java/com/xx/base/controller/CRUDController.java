@@ -64,7 +64,7 @@ public class CRUDController extends BaseController {
 		genWGFileAndAppendMethods(target,templateNo,0);//controller
 		genWGFileAndAppendMethods(target,templateNo,2);//service
 		genWGFileAndAppendMethods(target,templateNo,3);//serviceImpl
-//		genWGFileAndAppendMethods(target,templateNo,4);//xml
+		genWGFileAndAppendMethods(target,templateNo,4);//xml
 		return "";
 	}
 	

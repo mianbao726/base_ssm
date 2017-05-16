@@ -24,9 +24,11 @@ public class CRUDUtil {
 	public static final String XX = "xx";
 	public static final String CONTROLLER = "controller";
 	public static final String SERVICE = "service";
+	public static final String MAPPING = "mapping";// xml mapping 
 	public static final String SERVICE_IMPL = "impl";
 	public static final String SERVICE_FILENAME = "Service.java";
 	public static final String SERVICE_FILENAME_IMPL = "ServiceImpl.java";
+	public static final String XML_FILENAME = ".xml";
 
 	/**
 	 * 先添加系统分割符再添加字符串
@@ -97,6 +99,15 @@ public class CRUDUtil {
 			sb = appendWSF(sb, "impl");
 			sb = appendWSF(sb, "DefaultServiceImpl");
 			break;
+		case 1004:// xml
+			sb = appendWSF(sb, "xml");
+			sb = appendWSF(sb, "xml");
+			break;
+		case 1009:// xml
+			sb = appendWSF(sb, "xml");
+			sb = appendWSF(sb, "sqlelement");
+			break;
+			
 		case 1005:// service method
 			sb = appendWSF(sb, "service");
 			sb = appendWSF(sb, "methodService");
@@ -168,6 +179,14 @@ public class CRUDUtil {
 				folder.mkdirs();
 			}
 			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + SERVICE_FILENAME_IMPL);
+			break;
+		case 1004:// xml
+			sb = appendWSF(sb, MAPPING);
+			folder = new File(sb.toString());
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			sb = appendWSF(sb, upperCaseFirstCharacter(infos[2]) + XML_FILENAME);
 			break;
 		default:
 			break;
