@@ -42,7 +42,7 @@ public class CRUDController extends BaseController {
 		int count = 123;
 		for(int i = 0 ; i < count ;i++){
 			Map<String,Object> m1 = new HashMap<String,Object>(); 
-			m1.put("street", "jaj"+i);
+			m1.put("street", "xx_"+i);
 			data.add(m1);
 		}
 		ret.put("data", data);
