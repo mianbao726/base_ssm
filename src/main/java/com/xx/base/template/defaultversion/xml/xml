@@ -3,12 +3,4 @@
 <mapper namespace="xx_namespace"> 
 	
 	 <parameterMap type="java.util.HashMap" id="paraMap" />
-    
-    <!--
-     <select id="insert" parameterMap="paraMap" >
-	   	 insert into sys_action_data(data_id,action_id) values(#{data_id},#{action_id})
-	   	 
-	</select>
-	-->
-
 </mapper>

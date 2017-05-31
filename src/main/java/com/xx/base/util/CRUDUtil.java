@@ -275,7 +275,11 @@ public class CRUDUtil {
 				System.out.println("跳过字节数无效");
 				return;
 			}
-			target = raf.length() - 2;
+			if(fileName.endsWith("xml")){ // 设置在那里开始插入
+				target = raf.length() - 10;
+			}else{
+				target = raf.length() - 2;
+			}
 			byte[] b = str.getBytes();
 			raf.setLength(raf.length() + b.length);
 			for (long i = raf.length() - 1; i > b.length + target - 1; i--) {

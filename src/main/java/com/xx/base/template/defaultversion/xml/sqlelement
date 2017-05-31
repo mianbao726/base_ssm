@@ -1,1 +1,4 @@
---- sql ---	
+
+	<xx_type id="xx_id" parameterMap="paraMap" xx_resultType >
+		xx_sql
+	</xx_type>
