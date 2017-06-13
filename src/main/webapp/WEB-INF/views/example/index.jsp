@@ -332,55 +332,51 @@
           </div>
           <!-- /top tiles -->
 
-			<div class="row">
+            <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>CRUD genernate <small>different form elements</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up" title="收放"></i></a>
+                      </li>
+                      <li><a class="collapse-link-xx"><i class="fa fa-file" title="新增"></i></a>
                       </li>
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                         <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
+                          <li><a href="#">高级搜索</a>
                           </li>
-                          <li><a href="#">Settings 2</a>
+                          <li><a href="#">近期项目</a>
                           </li>
                         </ul>
                       </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      <li><a class="close-link_xx"><i class="fa fa-refresh"></i></a>
                       </li>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                    <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">类名 <span class="required">*</span>
-                        </label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="text" id="col0001" required="required" class="form-control col-md-7 col-xs-12" value = "xx.backend.Test(add,update,del)" placeholder = "eg:公司名.包名.业务名">
-                        </div>
-                      </div>
-                      <div class="ln_solid"></div>
-                      <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                          <button class="btn btn-primary" type="button">Cancel</button>
-						  <button class="btn btn-primary" type="reset">Reset</button>
-                          <button type="button" id ="gen_code" class="btn btn-success">Submit</button>
-                        </div>
-                      </div>
-
-                    </form>
+                  	<table id="datatable-xx" class="table table-striped dt-responsive nowrap projects" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th>First name</th>
+                          <th>Last name</th>
+                          <th>Position</th>
+                          <th>Office</th>
+                          <th>Age</th>
+                          <th>Start date</th>
+                          <th>Salary</th>
+                          <th>Extn.</th>
+                          <th>操作</th>
+                        </tr>
+                      </thead>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
-            
-            
+
           <br />
 
         </div>
@@ -493,5 +489,102 @@
       <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
     
+    <script>
+    var table = $('#datatable-xx').DataTable({
+    		"language" : {
+    			"info" : "&nbsp;",
+    			"oPaginate" : {
+    				"sPrevious" : " &laquo; ",
+    				"sNext" : " &raquo;",
+    			},
+    			"infoEmpty" : "没有符合条件的记录!",
+    			"lengthMenu" : "显示 _MENU_ 条",
+    			"sZeroRecords" : "没有找到匹配的记录",
+    			"sInfoEmpty" : "",
+   				"sSearch" : "快速检索：",
+    		},
+    		dom: "Bfrtip",
+    		buttons: [
+						{
+						    text: '新增',
+						    action: function ( e, dt, node, config ) {
+						        this.disable(); // disable button
+						    },
+						    className: " btn-primary"
+						},
+						{
+						  extend: "copy",
+						  text: '复制到剪贴板',
+				            key: {
+				                key: 'c',
+				                altKey: true
+				            },
+						  className: " btn-info"
+						},
+						{
+						  extend: "csv",
+						  text: '导出',
+						  className: " btn-warning"
+						},
+// 						{
+// 						  extend: "excel",
+// 						  className: "btn-sm"
+// 						},
+// 						{
+// 						  extend: "pdfHtml5",
+// 						  className: "btn-sm"
+// 						},
+						{
+						  extend: "print",
+						  text: '打印',
+						  className: " btn-success"
+						},
+					  ],
+//     		"pagingType" : "full_numbers",//用于指定分页器风格 "full_numbers"" or ""two_button""， default ""two_button""
+//     		"bAutoWidth" : false, //是否主动策画表格各列宽度
+    		"ajax" : {
+    			"url" :  '<%=path%>/example/getdata.html',
+    			"type" : "POST",
+    			"dataType" : "json"
+    		},
+    		
+    		"processing" : true,
+//     		"serverSide" : true,
+//     		"bLengthChange" : false,
+//     		"bSort" : false, // 排序功能
+//     		"searching" : false,
+//     		"dom" : '<"top">t<"bottom"lip><"clear">',
+//     		"order" : [],
+    		"columns" : [ 
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    			{"mData" : "street"},
+    		 ],
+//     		 "preDrawCallback" : function(settings) {
+//     					one = 1;
+//     				},
+    				
+            "columnDefs": [
+    		    {"render": function(data, type, row){    
+//     		    	return      ' <button class="btn btn-xs btn-warning  tooltip-info " data-rel="tooltip" data-placement="bottom" title="" onclick="read(\''
+//     							+ row.id
+//     							+ '\')"><i class=" ace-icon fa fa-eye bigger-120"></i>查看</button>'
+					return '<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i>详情</a>'+
+					'<a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>编辑</a>'+
+					'<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>删除</a>';
+    		    },
+                 "orderable": false,
+                 "targets": 8
+             	}, 
+            	]
+    	});
+    table.buttons( '.csv' ).disable();
+    </script>
   </body>
 </html>

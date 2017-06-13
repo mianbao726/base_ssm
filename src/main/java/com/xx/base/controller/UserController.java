@@ -129,7 +129,7 @@ public class UserController extends BaseController {
 		m3.put("pId", 1);
 		m3.put("cId", 2);
 		m2.put("url", "CRUD/index.html");
-		m3.put("name", "A2_"+request.getContextPath()+"/CRUD/index.html");
+		m3.put("name", "例子_"+request.getContextPath()+"/example/index.html");
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		list.add(m1);
 		list.add(m3);
