@@ -7,6 +7,11 @@ var BASE = "/"+APP;
 		console.log(obj);
 	};
 	
+	xx.location = function(obj){//console.log
+		xx.c(obj);
+		window.location.href = obj;
+	};
+	
 	xx.isArray = function(){ //判断array
    	  return Object.prototype.toString.call(o)=='[object Array]';
 	};

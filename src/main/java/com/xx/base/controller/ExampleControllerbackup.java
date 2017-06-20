@@ -25,7 +25,7 @@ import com.xx.base.util.XX_Method;
 @Controller
 @RequestMapping("/example")
 // 中文
-public class ExampleController extends BaseController {
+public class ExampleControllerbackup extends BaseController {
 
 	/**
 	 * 

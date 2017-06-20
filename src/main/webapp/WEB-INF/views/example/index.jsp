@@ -508,6 +508,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
+						    	$.xx.location(BASE+"/example1/au.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"

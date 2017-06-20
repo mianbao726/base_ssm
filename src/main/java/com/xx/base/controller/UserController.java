@@ -93,7 +93,6 @@ public class UserController extends BaseController {
 		Map<String, Object> responseMap = new HashMap<String, Object>();
 		// 判断登陆设备类型，1---web,2---android,3---ios
 //		 {id:1,pId:0,cId:1,name:"A"},
-		
 //		 {id:1,pId:0,cId:1,name:"A"},
 //         {id:11,pId:1,cId:4,name:"A1"},
 //         {id:12,pId:1,cId:2,name:"A2"},
@@ -114,6 +113,8 @@ public class UserController extends BaseController {
 		Map<String, Object> m1 = new HashMap<>();
 		Map<String, Object> m2 = new HashMap<>();
 		Map<String, Object> m3 = new HashMap<>();
+		Map<String, Object> m20 = new HashMap<>();
+		
 		m1.put("id", 1);
 		m1.put("pId", 0);
 		m1.put("cId", 1);
@@ -125,15 +126,24 @@ public class UserController extends BaseController {
 		m2.put("url", "CRUD/index.html");
 		m2.put("name", "代码生成_"+request.getContextPath()+"/CRUD/index.html");
 		
-		m3.put("id", 12);
-		m3.put("pId", 1);
-		m3.put("cId", 2);
+		m3.put("id", 21);
+		m3.put("pId", 20);
+		m3.put("cId", 1);
 		m2.put("url", "CRUD/index.html");
 		m3.put("name", "例子_"+request.getContextPath()+"/example/index.html");
+		
+		
+		m20.put("id", 20);
+		m20.put("pId", 0);
+		m20.put("cId", 2);
+		m20.put("name", "示例");
+		
+		
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		list.add(m1);
 		list.add(m3);
 		list.add(m2);
+		list.add(m20);
 		responseMap.put("list", list);
 		Map ret = null;
 		return JSONObject.toJSONString(responseMap);
