@@ -514,6 +514,22 @@
 						    className: " btn-primary"
 						},
 						{
+						    text: '新增',
+						    action: function ( e, dt, node, config ) {
+						    	$.xx.location(BASE+"/example1/au1.html");
+						        this.disable(); // disable button
+						    },
+						    className: " btn-primary"
+						},
+						{
+						    text: '新增',
+						    action: function ( e, dt, node, config ) {
+						    	$.xx.location(BASE+"/example1/au2.html");
+						        this.disable(); // disable button
+						    },
+						    className: " btn-primary"
+						},
+						{
 						  extend: "copy",
 						  text: '复制到剪贴板',
 				            key: {
