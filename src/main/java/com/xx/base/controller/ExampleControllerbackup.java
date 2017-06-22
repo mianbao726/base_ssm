@@ -18,9 +18,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.xx.base.util.CRUDUtil;
 import com.xx.base.util.ClassBuilder;
 import com.xx.base.util.Claxx;
-import com.xx.base.util.QMap;
 import com.xx.base.util.XXEntity;
 import com.xx.base.util.XX_Method;
+import com.xx.base.util.map.QMap;
 
 @Controller
 @RequestMapping("/example")
@@ -43,7 +43,7 @@ public class ExampleControllerbackup extends BaseController {
 		int count = 200;//99999 => 20s  9999
 		for(int i = 0 ; i < count ;i++){
 			Map<String,Object> m1 = new HashMap<String,Object>(); 
-			m1.put("street", "xx_"+i);
+			m1.put("street", "总问_"+i);
 			data.add(m1);
 		}
 		ret.put("data", data);

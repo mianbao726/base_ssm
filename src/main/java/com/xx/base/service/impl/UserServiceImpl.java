@@ -17,7 +17,7 @@ import com.xx.base.service.IRoleService;
 import com.xx.base.service.IUserService;
 import com.xx.base.util.C;
 import com.xx.base.util.MD5Util;
-import com.xx.base.util.QMap;
+import com.xx.base.util.map.QMap;
 
 @Service("userService")
 @SuppressWarnings({ "unchecked", "rawtypes" })

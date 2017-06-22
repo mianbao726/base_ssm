@@ -8,10 +8,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Component;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-
+@Component
 public class PageServiceDao {
 	
 	@Resource
@@ -31,7 +33,7 @@ public class PageServiceDao {
 		data = (data == null) ? new ArrayList() : data;
 		map.put("data", data);
 	    int Total = 0;
-	    Object TotalObj = this.baseDao.selectOne(command + "Count", paramsMap); 
+	    Object TotalObj = this.baseDao.selectOne(command + "_count", paramsMap); 
 	    if (TotalObj != null){
 	    	Total = ((Integer)TotalObj).intValue();
 	    }

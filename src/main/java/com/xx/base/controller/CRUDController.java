@@ -18,9 +18,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.xx.base.util.CRUDUtil;
 import com.xx.base.util.ClassBuilder;
 import com.xx.base.util.Claxx;
-import com.xx.base.util.QMap;
 import com.xx.base.util.XXEntity;
 import com.xx.base.util.XX_Method;
+import com.xx.base.util.map.QMap;
 
 @Controller
 @RequestMapping("/CRUD")
@@ -163,7 +163,7 @@ public class CRUDController extends BaseController {
 		if (target.contains("(") && target.contains(")")) {//约定如果有()表示需要生成方法
 			String methods = target.substring(target.indexOf("(") + 1, target.indexOf(")"));
 			if("NEW".equals(methods)){//默认增删改查
-				methods="index,add,save,delete,edit,update";
+				methods="index,list,create,delete,update";
 			}
 			String[] functions = methods.split(",");
 			for (String func : functions) {

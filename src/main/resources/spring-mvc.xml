@@ -13,6 +13,25 @@
 	<context:component-scan base-package="com.xx.base" />
 	<context:component-scan base-package="com.xx.backend" />
 	<context:component-scan base-package="com.xx.wb" />
+	<!-- 中文乱码问题 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"> 
+       <property name="messageConverters"> 
+          <list> 
+             <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/> 
+             <bean class="org.springframework.http.converter.StringHttpMessageConverter"> 
+                <property name="supportedMediaTypes"> 
+                   <list> 
+                     <value>text/html; charset=utf-8</value> 
+                   </list> 
+                </property> 
+             </bean> 
+             <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/> 
+             <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/> 
+             <bean class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter"/> 
+             <bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/> 
+          </list> 
+       </property> 
+    </bean>
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">

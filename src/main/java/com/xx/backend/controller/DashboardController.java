@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xx.base.controller.BaseController;
-import com.xx.base.util.QMap;
+import com.xx.base.util.map.QMap;
 
 /**
  * @author generate by www.whatgoogle.com (ps : some question? contact

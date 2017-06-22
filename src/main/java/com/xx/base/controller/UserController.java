@@ -20,7 +20,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xx.base.service.IModuleService;
 import com.xx.base.service.IUserService;
 import com.xx.base.util.MD5Util;
-import com.xx.base.util.QMap;
+import com.xx.base.util.map.QMap;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Controller
@@ -114,6 +114,8 @@ public class UserController extends BaseController {
 		Map<String, Object> m2 = new HashMap<>();
 		Map<String, Object> m3 = new HashMap<>();
 		Map<String, Object> m20 = new HashMap<>();
+		Map<String, Object> m30 = new HashMap<>();
+		Map<String, Object> m31 = new HashMap<>();
 		
 		m1.put("id", 1);
 		m1.put("pId", 0);
@@ -138,12 +140,25 @@ public class UserController extends BaseController {
 		m20.put("cId", 2);
 		m20.put("name", "示例");
 		
+		m31.put("id", 31);
+		m31.put("pId", 30);
+		m31.put("cId", 1);
+		m31.put("name", "员工管理_"+request.getContextPath()+"/employee/index.html");
+		
+		
+		m30.put("id", 30);
+		m30.put("pId", 0);
+		m30.put("cId", 3);
+		m30.put("name", "内部管理");
+		
 		
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		list.add(m1);
 		list.add(m3);
 		list.add(m2);
 		list.add(m20);
+		list.add(m30);
+		list.add(m31);
 		responseMap.put("list", list);
 		Map ret = null;
 		return JSONObject.toJSONString(responseMap);

@@ -18,7 +18,7 @@ import com.xx.base.service.IModuleService;
 import com.xx.base.service.IRoleService;
 import com.xx.base.util.C;
 import com.xx.base.util.MD5Util;
-import com.xx.base.util.QMap;
+import com.xx.base.util.map.QMap;
 import com.xx.wb.course.service.IDebtService;
 
 @Service("debtService")

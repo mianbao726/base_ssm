@@ -21,7 +21,9 @@ public class C {
 	public static final String[] RESOURCE_EXCEPT = Util.concat(IMAGE_TYPE, RESOURCE_TYPE);
 	// 资源文件过滤表达式
 	public static final String RESOURCE_PATTERN = "^/([0-9a-zA-Z]){1,}/([0-9A-Za-z/.-]){0,}(" + Util.buildStr(RESOURCE_EXCEPT, "|") + ")$";
-
+	//请求类型
+	public static final String POST = "POST";
+	
 	// 除外请求
 	public static final String[] SPECIAL_REQUEST = { //
 			"/login.html", // 登陆页面

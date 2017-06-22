@@ -13,6 +13,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class CRUDUtil {
 
 	private static final String SOURCE_PACKAGE_01 = "src";
@@ -45,7 +47,7 @@ public class CRUDUtil {
 		return sb;
 
 	}
-
+	
 	/**
 	 * 添加一个分隔符号
 	 * 

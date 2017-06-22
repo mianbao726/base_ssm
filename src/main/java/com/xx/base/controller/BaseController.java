@@ -14,8 +14,8 @@ import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xx.base.util.C;
-import com.xx.base.util.QMap;
 import com.xx.base.util.TimestampTool;
+import com.xx.base.util.map.QMap;
 
 /**
  * It's about to fly

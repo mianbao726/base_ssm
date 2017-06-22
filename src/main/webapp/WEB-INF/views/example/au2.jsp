@@ -264,7 +264,9 @@
                   <div class="x_content">
                     <br />
                     <form  id="demo-form" data-parsley-validate class="form-horizontal form-label-left">
-
+ 						<p>For alternative validation library <code>parsleyJS</code> check out in the <a href="form.html">form page</a>
+                        </p>
+                        <span class="section">Personal Info</span>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">input<span class="required">*</span>
                         </label>
@@ -272,15 +274,27 @@
                           <input type="text" id="first-name" class="form-control col-md-7 col-xs-12"
 		                          required="required" data-parsley-required-message="请填写信息" 
 		                          data-parsley-maxlength="6" data-parsley-maxlength-message="验证码为6位"
+		                          pattern="\d+"
+		                          data-parsley-pattern-message="reg"
 		                          >
                         </div>
                       </div>
-                      
                        <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="email">input<span class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                          <input type="email" class="form-control" name="email" data-parsley-trigger="change" required="" >
+                          <input type="email" class="form-control has-feedback-left" name="email" data-parsley-trigger="change" required="" >
+                       	  <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                        </div>
+                      </div>
+                      
+                       <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">input<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" class="form-control has-feedback-left" id="inputSuccess2" placeholder="First Name"
+                          required="required" data-parsley-required-message="请填写信息" 
+		                          data-parsley-maxlength="6" data-parsley-maxlength-message="验证码为6位">
                        	  <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                         </div>
                       </div>

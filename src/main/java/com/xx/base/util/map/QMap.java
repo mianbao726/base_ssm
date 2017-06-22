@@ -1,8 +1,10 @@
-package com.xx.base.util;
+package com.xx.base.util.map;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import com.xx.base.util.C;
 
 /**
  * quick MAP :)
@@ -11,6 +13,17 @@ import java.util.Map;
  *
  */
 public class QMap extends HashMap<Object, Object> {
+	
+	public boolean status;
+	
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
 	/**
 	 * 

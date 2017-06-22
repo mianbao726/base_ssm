@@ -21,8 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.xx.base.dao.BaseDao;
 import com.xx.base.dao.PageServiceDao;
 import com.xx.base.service.IModuleService;
-import com.xx.base.util.QMap;
 import com.xx.base.util.TimestampTool;
+import com.xx.base.util.map.QMap;
 @Transactional
 @Service
 public class ModuleServiceImpl extends PageServiceDao implements IModuleService{

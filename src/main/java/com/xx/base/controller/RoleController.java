@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.xx.base.service.IModuleService;
 import com.xx.base.service.IRoleService;
-import com.xx.base.util.QMap;
+import com.xx.base.util.map.QMap;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 @Controller
