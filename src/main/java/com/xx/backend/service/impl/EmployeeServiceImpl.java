@@ -101,6 +101,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return null;
 	}
 
+	
+	public QMap getInfo(Map map){
+		QMap ret = new QMap(200);
+		ret.put("data", baseDao.selectOne("xx_namespace.getInfo", map));
+		return ret;
+	}
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
@@ -132,7 +138,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
 	 */
-	public String delete() {
+	public QMap delete(Map map) {
+		baseDao.delete("xx_namespace.delete", map);
 		return null;
 	}
 
@@ -148,8 +155,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
 	 */
-	public String edit() {
-		return null;
+	public QMap updateInfo(Map map) {
+		QMap ret = new QMap(200);
+		baseDao.delete("xx_namespace.update", map);
+		return ret;
 	}
 
 }

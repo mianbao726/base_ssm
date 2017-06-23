@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
+	String id = request.getParameter("id");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -287,10 +288,10 @@
 									<span class="section">Personal Info</span>
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12"
-											for="first-name">名字<span class="required">*</span>
+											for="first_name">名字<span class="required">*</span>
 										</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<input type="text" id="first-name"
+											<input type="text" id="first_name"
 												class="form-control  has-feedback-left col-md-7 col-xs-12"
 												data-parsley-trigger="change" required
 												data-parsley-required-message="请填写名字"
@@ -306,7 +307,8 @@
 										</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<input type="text" class="form-control has-feedback-left"
-												name="email" data-parsley-trigger="change" required
+												id="last_name"
+												name="last_name" data-parsley-trigger="change" required
 												data-parsley-required-message="请填写姓氏"
 												pattern="/^[\u4e00-\u9fa5]{1,20}$/"
 												data-parsley-pattern-message="请填写1-20汉字">
@@ -321,6 +323,7 @@
 										</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<input type="email" class="form-control has-feedback-left"
+												id="email"
 												name="email" placeholder="请填写邮箱(ps:30个字符之内)"
 												data-parsley-trigger="change" required
 												data-parsley-required-message="请填写邮箱"
@@ -332,15 +335,15 @@
 
 									<div class="form-group">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12"
-											for="heard">职务<span class="required">*</span>
+											for="position">职务<span class="required">*</span>
 										</label>
 										<div class="col-md-3 col-sm-6 col-xs-6">
-											<select id="heard" class="form-control" required
+											<select id="position" class="form-control" required
 												data-parsley-required-message="请选择职务">
 												<option value="">Choose option</option>
 												<option value="employee">employee</option>
 												<option value="leader">leader</option>
-												<option value="">boss</option>
+												<option value="boss">boss</option>
 											</select>
 										</div>
 									</div>
@@ -352,6 +355,7 @@
 										</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<input type="text" class="form-control has-feedback-left"
+												id="office"
 												name="email" data-parsley-trigger="change" required
 												placeholder="请填写办公地址(ps:30个字符之内)"
 												data-parsley-required-message="请填写办公地址" maxlength="30"
@@ -367,6 +371,7 @@
 										</label>
 										<div class="col-md-2 col-sm-6 col-xs-12">
 											<input type="text" class="form-control has-feedback-left"
+												id="age"
 												name="email" data-parsley-trigger="change" required
 												data-parsley-required-message="请填写年龄"
 												data-parsley-type="integer"
@@ -384,6 +389,7 @@
 										</label>
 										<div class="col-md-3 col-sm-6 col-xs-12">
 											<input type="text" class="form-control has-feedback-left"
+												id="start_date"
 												id="single_cal4" placeholder="First Name"
 												aria-describedby="inputSuccess2Status4"> <span
 												class="fa fa-calendar-o form-control-feedback left"
@@ -398,6 +404,7 @@
 										</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<input type="number" class="form-control has-feedback-left"
+												id="salary"
 												name="email" data-parsley-trigger="change" required=""
 												data-parsley-type="number">
 											<span class="fa fa-user form-control-feedback left"
@@ -411,6 +418,7 @@
 										</label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<input type="text" class="form-control has-feedback-left"
+												id="extn"
 												name="email" data-parsley-trigger="change" required="">
 											<span class="fa fa-user form-control-feedback left"
 												aria-hidden="true"></span>
@@ -504,6 +512,7 @@
      
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
+	var id = '<%=id %>';
 		$(function(){
 			var params = {};
 				$.xx.ajax({
@@ -533,22 +542,50 @@
 			init_TagsInput11();
 			$("#save").click(function(){
 				var params = {};
-				params['first-name']=$("#first-name").val();
+				params['first_name']=$("#first_name").val();
+				if(id != 'null'){
+					params['id']=id;
+				}
 				$.xx.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
-				  url: '<%=path%>/employee/create.html',
+				    url: id != 'null' ? '<%=path%>/employee/update.ht' : '<%=path%>/employee/create.htm',
 					type : "post",
 					dataType : "json",
 					params : params,
 					success : function(data) {
-						alert(123);
+						$.xx.location(BASE+"/employee/index.html");
 					}
 			});
 			});
 			$("#back").click(function(){
 				$.xx.location(BASE+"/employee/index.html");
 			});
+			
+			if(id != 'null'){
+				var params = {};
+				params['id']=id;
+				$.xx.ajax({
+			      contenttype : 'application/json; charset=utf-8',
+			      async: false,
+				  url: '<%=path%>/employee/update.htm',
+					type : "post",
+					dataType : "json",
+					params : params,
+					success : function(data) {
+// 						$.xx.location(BASE+"/employee/index.html");
+						$("#first_name").val(data.data.first_name);
+						$("#last_name").val(data.data.last_name);
+						$("#email").val(data.data.email);
+						$("#position").val(data.data.position);
+						$("#office").val(data.data.office);
+						$("#age").val(data.data.age);
+						$("#start_date").val(data.data.start_date);
+						$("#salary").val(data.data.salary);
+						$("#extn").val(data.data.extn);
+					}
+			});
+			}
 		});
 		$('#single_cal4').daterangepicker(
 				{

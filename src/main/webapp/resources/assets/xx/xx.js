@@ -7,6 +7,12 @@ var BASE = "/"+APP;
 		console.log(obj);
 	};
 	
+	xx.conform = function(info,fun){
+		$("#xxConform").click(fun);
+		$("#ppss").html(info);
+		$("#xxModal").modal('show');
+	};
+	
 	xx.location = function(obj){//console.log
 		xx.c(obj);
 		window.location.href = obj;

@@ -24,7 +24,7 @@ public class QMap extends HashMap<Object, Object> {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
+	
 	/**
 	 * 
 	 */

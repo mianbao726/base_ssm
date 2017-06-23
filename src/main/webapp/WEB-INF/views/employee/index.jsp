@@ -376,7 +376,31 @@
                 </div>
               </div>
             </div>
+<!-- modals -->
+                  <!-- Large modal -->
+                  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id = "xxModal">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
 
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel">操作提示</h4>
+                        </div>
+                        <div class="modal-body">
+                          <h4>请注意</h4>
+                          <p>点击确认按钮后执行以下操作</p>
+                          <p id = "ppss">Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                          <p>Are you sure ?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                          <button type="button" class="btn btn-primary" id ="xxConform">&nbsp;&nbsp;确认&nbsp;&nbsp;</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
           <br />
 
         </div>
@@ -392,6 +416,8 @@
         <!-- /footer content -->
       </div>
     </div>
+    
+    
 
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery/dist/jquery.min.js"></script>
@@ -568,8 +594,8 @@
 //     							+ row.id
 //     							+ '\')"><i class=" ace-icon fa fa-eye bigger-120"></i>查看</button>'
 					return '<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i>详情</a>'+
-					'<a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>编辑</a>'+
-					'<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>删除</a>';
+					'<a href="#" class="btn btn-info btn-xs"  onclick = "update(\''+row.id+'\')"><i class="fa fa-pencil"></i>编辑</a>'+
+					'<a href="#" class="btn btn-danger btn-xs" onclick = "del(\''+row.id+'\')"><i class="fa fa-trash-o"></i>删除</a>';
     		    },
                  "orderable": false,
                  "targets": 8
@@ -577,6 +603,29 @@
             	]
     	});
     table.buttons( '.csv' ).disable();
+    function del(id){
+    	$.xx.conform("1.删除指定员工数据<br/>2.删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据",function(){
+    		var params = {};
+        	params['id'] = id;
+    		$.xx.ajax({
+  		      contenttype : 'application/json; charset=utf-8',
+  		      async: false,
+  			  url: '<%=path%>/employee/delete.html',
+  			  type:"post",
+  			  dataType:"json",
+  			  params:params,
+  			  success:function(data){
+  				  table.ajax.reload();
+//  	 			  table.ajax.reloadData({'filter':filter});	
+  				$("#xxModal").modal('hide');
+  			  }
+  			});
+    	});
+    }
+    
+    function update(id){
+    	$.xx.location(BASE+"/employee/create.html?id="+id);
+    }
     </script>
   </body>
 </html>

@@ -63,7 +63,7 @@ public interface EmployeeService extends IBaseService {
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
 	 */
-	public String delete();
+	public QMap delete(Map map);
 
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
@@ -75,6 +75,9 @@ public interface EmployeeService extends IBaseService {
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
 	 */
-	public String edit();
-
+	
+	//TODO
+	public QMap updateInfo(Map map);
+	
+	public QMap getInfo(Map map);
 }

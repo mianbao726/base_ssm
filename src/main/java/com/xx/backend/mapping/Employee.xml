@@ -27,7 +27,8 @@
 	</select>
 	
 	<insert id="insert" parameterMap="paraMap">
-			insert into ex_employee(`first_name`,
+			insert into ex_employee(`id`,
+									`first_name`,
 								    `last_name`,
 								    `email`,
 								    `position`,
@@ -35,8 +36,10 @@
 								    `age`,
 								    `start_date`,
 								    `salary`,
-								    `extn`) values
-								     (#{first-name,jdbcType=VARCHAR},
+								    `extn`,
+								    `create_at`) values
+								     (uuid(),
+								     #{first-name,jdbcType=VARCHAR},
 <!-- 								     #{last_name,jdbcType=VARCHAR}, -->
 <!-- 								    #{email,jdbcType=VARCHAR}, -->
 <!-- 								    #{position,jdbcType=VARCHAR}, -->
@@ -49,13 +52,63 @@
 										'email@163.com',
 										'employee',
 										'japen',
-										'2017-07-26',
 										'24',
+										NOW(),
 										'9832',
-										'019'
+										'019',
+										CURRENT_TIMESTAMP(3)
 								     )
 			<selectKey resultType="int" order="AFTER" keyProperty="id"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
 	</insert>
+	
+	<update id="update" parameterType="hashmap">
+		update ex_employee
+		set
+		<if test="first_name != null">
+			first_name = #{first_name},
+		</if>
+		<if test="last_name != null">
+			last_name = #{last_name},
+		</if>
+		<if test="email != null">
+			email = #{email},
+		</if>
+		<if test="position != null">
+			position = #{position},
+		</if>
+		<if test="office != null">
+			office = #{office},
+		</if>
+		
+		<if test="age != null">
+			age = #{age},
+		</if>
+		<if test="start_date != null">
+			start_date = #{start_date},
+		</if>
+		<if test="salary != null">
+			salary = #{salary},
+		</if>
+		
+		<if test="extn != null">
+			extn = #{extn},
+		</if>
+		updated_at = now(3)
+		where 1=1  
+		<if test="id != null">
+		and id = #{id}
+		</if>
+	</update>
+	
+	<select id="getInfo" parameterMap="paraMap" resultType="hashmap">
+		 select *
+                from ex_employee 
+            where id = #{id}
+	</select>
+	
+    <delete id="delete" parameterMap="paraMap" >
+		delete from ex_employee where id = #{id}
+	</delete>
 	<!-- <xx_type id="xx_id" parameterMap="paraMap" xx_resultType > -->
 	<!-- xx_sql -->
 	<!-- </xx_type> -->
