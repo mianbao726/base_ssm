@@ -593,7 +593,7 @@
 //     		    	return      ' <button class="btn btn-xs btn-warning  tooltip-info " data-rel="tooltip" data-placement="bottom" title="" onclick="read(\''
 //     							+ row.id
 //     							+ '\')"><i class=" ace-icon fa fa-eye bigger-120"></i>查看</button>'
-					return '<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i>详情</a>'+
+					return '<a href="#" class="btn btn-primary btn-xs" onclick = "pic(\''+row.id+'\')"><i class="fa fa-folder"></i>图库</a>'+
 					'<a href="#" class="btn btn-info btn-xs"  onclick = "update(\''+row.id+'\')"><i class="fa fa-pencil"></i>编辑</a>'+
 					'<a href="#" class="btn btn-danger btn-xs" onclick = "del(\''+row.id+'\')"><i class="fa fa-trash-o"></i>删除</a>';
     		    },
@@ -625,6 +625,10 @@
     
     function update(id){
     	$.xx.location(BASE+"/employee/create.html?id="+id);
+    }
+
+    function pic(id){
+    	$.xx.location(BASE+"/employee/upload.html?id="+id);
     }
     </script>
   </body>

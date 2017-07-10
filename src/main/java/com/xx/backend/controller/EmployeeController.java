@@ -92,6 +92,12 @@ public class EmployeeController extends BaseController {
 		return JSONObject.toJSONString(paramsMap);
 	}
 	
+	@RequestMapping("/upload.html")
+	public String pic(HttpServletRequest request,RedirectAttributes attr, Model model) throws Exception {
+		Map paramsMap = super.getParams(request);
+		return "employee/upload";
+	}
+	
 	@RequestMapping("/update.ht")
 	public @ResponseBody
 	String update(HttpServletRequest request) throws Exception {
