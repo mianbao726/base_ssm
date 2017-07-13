@@ -20,42 +20,10 @@
     <link href="${pageContext.request.contextPath}/assets/default/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="${pageContext.request.contextPath}/assets/default/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-	
-    <!-- bootstrap-progressbar -->
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- JQVMap -->
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-    <!-- bootstrap-daterangepicker -->
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    
-    
-    <!-- Datatables -->
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Bootstrap Colorpicker -->
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
-        <!-- Switchery -->
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
-	<!-- Ion.RangeSlider -->
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/normalize-css/normalize.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="${pageContext.request.contextPath}/assets/default/build/css/custom.min.css" rel="stylesheet">
-    <!-- bootstrap-daterangepicker -->
-    <link href="${pageContext.request.contextPath}/assets/default/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    
-    
      <!-- Dropzone.js -->
     <link href="${pageContext.request.contextPath}/assets/default/vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
-    
+    <!-- Custom Theme Style -->
+    <link href="${pageContext.request.contextPath}/assets/default/build/css/custom.min.css" rel="stylesheet">
   </head>
 
   <body class="nav-md">
@@ -213,56 +181,67 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-			<div class="right_col" role="main">
-				<!-- top tiles -->
-				<div class="row tile_count">
-					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-						<span class="count_top"><i class="fa fa-user"></i> Total
-							Users</span>
-						<div class="count">2500</div>
-						<span class="count_bottom"><i class="green">4% </i> From
-							last Week</span>
-					</div>
-					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-						<span class="count_top"><i class="fa fa-clock-o"></i>
-							Average Time</span>
-						<div class="count">123.50</div>
-						<span class="count_bottom"><i class="green"><i
-								class="fa fa-sort-asc"></i>3% </i> From last Week</span>
-					</div>
-					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-						<span class="count_top"><i class="fa fa-user"></i> Total
-							Males</span>
-						<div class="count green">2,500</div>
-						<span class="count_bottom"><i class="green"><i
-								class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-					</div>
-					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-						<span class="count_top"><i class="fa fa-user"></i> Total
-							Females</span>
-						<div class="count">4,567</div>
-						<span class="count_bottom"><i class="red"><i
-								class="fa fa-sort-desc"></i>12% </i> From last Week</span>
-					</div>
-					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-						<span class="count_top"><i class="fa fa-user"></i> Total
-							Collections</span>
-						<div class="count">2,315</div>
-						<span class="count_bottom"><i class="green"><i
-								class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-					</div>
-					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-						<span class="count_top"><i class="fa fa-user"></i> Total
-							Connections</span>
-						<div class="count">7,325</div>
-						<span class="count_bottom"><i class="green"><i
-								class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-					</div>
-				</div>
-				<br />
-			</div>
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Form Upload </h3>
+              </div>
 
-			<!-- /page content -->
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Dropzone multiple file uploader</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    
+                    <div id="file" class="dropzone">
+<!--                     	<p onclick = "dropz.processQueue();">Drag multiple files to the box below for multi upload or click to select files. This is for demonstration purposes only, the files are not uploaded to any server.</p> -->
+                    </div>
+                    <input type="button" onclick="dropz.processQueue();" value ="上传附件"/>
+<!--                     <form action="form_upload.html" class="dropzone"></form> -->
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
 
         <!-- footer content -->
         <footer>
@@ -283,129 +262,44 @@
     <script src="${pageContext.request.contextPath}/assets/default/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/nprogress/nprogress.js"></script>
-	<!-- validator -->
-<%--     <script src="${pageContext.request.contextPath}/assets/default/vendors/validator/validator.js"></script>   --%>
-	<script src="${pageContext.request.contextPath}/assets/default/vendors/parsleyjs/dist/parsley.min.js"></script>
 	
-	<!-- DateJS -->
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/DateJS/build/date.js"></script>
-	<!-- bootstrap-daterangepicker -->
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/moment/min/moment.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-    
+    <!-- Dropzone.js -->
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/dropzone/dist/min/dropzone.min.js"></script>
      
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
-	<script>
-	var id = '<%=id %>';
-		$(function(){
-			var params = {};
-				$.xx.ajax({
-			      contenttype : 'application/json; charset=utf-8',
-			      async: false,
-				  url: '<%=path%>/user/menu.do',
-					type : "post",
-					dataType : "json",
-					params : params,
-					success : function(data) {
-						$.xx.c(data.list);
-						$.xx.left(data.list);
-					}
-			});
-		});
-
-		//tags input
-		function init_TagsInput11() {
-			if (typeof $.fn.tagsInput !== 'undefined') {
-				$('#tags_1').tagsInput({
-					width : 'auto'
-				});
-			}
-		};
-
-		$(document).ready(function() {
-			init_TagsInput11();
-			$("#save").click(function(){
-				var params = {};
-				params['first_name']=$("#first_name").val();
-				if(id != 'null'){
-					params['id']=id;
-				}
-				$.xx.ajax({
-			      contenttype : 'application/json; charset=utf-8',
-			      async: false,
-				    url: id != 'null' ? '<%=path%>/employee/update.ht' : '<%=path%>/employee/create.htm',
-					type : "post",
-					dataType : "json",
-					params : params,
-					success : function(data) {
-						$.xx.location(BASE+"/employee/index.html");
-					}
-			});
-			});
-			$("#back").click(function(){
-				$.xx.location(BASE+"/employee/index.html");
-			});
-			
-			if(id != 'null'){
-				var params = {};
-				params['id']=id;
-				$.xx.ajax({
-			      contenttype : 'application/json; charset=utf-8',
-			      async: false,
-				  url: '<%=path%>/employee/update.htm',
-					type : "post",
-					dataType : "json",
-					params : params,
-					success : function(data) {
-// 						$.xx.location(BASE+"/employee/index.html");
-						$("#first_name").val(data.data.first_name);
-						$("#last_name").val(data.data.last_name);
-						$("#email").val(data.data.email);
-						$("#position").val(data.data.position);
-						$("#office").val(data.data.office);
-						$("#age").val(data.data.age);
-						$("#start_date").val(data.data.start_date);
-						$("#salary").val(data.data.salary);
-						$("#extn").val(data.data.extn);
-					}
-			});
-			}
-		});
-		$('#single_cal4').daterangepicker(
-				{
-					locale : {
-						applyLabel : '确定',
-						cancelLabel : '取消',
-						fromLabel : '起始时间',
-						toLabel : '结束时间',
-						customRangeLabel : '自定义',
-						daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
-						monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月',
-								'七月', '八月', '九月', '十月', '十一月', '十二月' ],
-						firstDay : 1
-					},
-					singleDatePicker : true,
-					singleClasses : "picker_4",
-					format : 'YYYY-MM-DD'
-				}, function(start, end, label) {
-					console.log(start.toISOString(), end.toISOString(), label);
-				});
-
-		$(function() {
-			$('#demo-form').parsley().on('field:validated', function() {
-				var ok = $('.parsley-error').length === 0;
-				$('.bs-callout-info').toggleClass('hidden', !ok);
-				$('.bs-callout-warning').toggleClass('hidden', ok);
-			}).on('form:submit', function() {
-				return false; // Don't submit form for this demo
-			});
-		});
-	</script>
       <!-- Custom Theme Scripts -->
-<%--     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script> --%>
+    <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
     
     <script>
-    
+    Dropzone.autoDiscover = false;  
+    var dropz = new Dropzone("#file", {  
+    	url: BASE+"/employee/form_upload.json",
+        addRemoveLinks: true,  
+        autoProcessQueue:false,  
+        parallelUploads:8,  
+        maxFiles: 8,//最大可上传的文件个数  
+        maxFilesize: 2,  
+        /* acceptedFiles: ".bmp,.jpg,.jpeg,.gif,.png", */  
+        init: function() {  
+            this.on("removedfile", function(file) {  
+                console.log("File " + file.name + "removed");  
+            });  
+        },  
+        success:function(file,data){  
+              
+              
+        },  
+        dictMaxFilesExceeded:"文件数量过多",  
+        dictDefaultMessage:"拖动文件到该区域或点击上传文件",  
+        dictCancelUpload:"取消",  
+        dictCancelUploadConfirmation:"取消上传操作",  
+        dictRemoveFile:"删除",  
+        dictFileTooBig:"可添加的最大文件大小为{{maxFilesize}}Mb，当前文件大小为{{filesize}}Mb ",  
+    });  
+     
+   dropz.on("removedfile",function(file){  
+          
+   })  
     </script>
   </body>
 </html>
