@@ -14,10 +14,17 @@ public class LoginController extends BaseController {
 		return "login/login";
 	}
 	
-//	@RequestMapping("/login1.html")
-//	public String login1(HttpServletRequest request, Model model) throws Exception {
-//		return "dashboard/index";
-//	}
+	/**
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/")
+	public String login1(HttpServletRequest request, Model model) throws Exception {
+		return "login/login";
+	}
 	
 	
 }
