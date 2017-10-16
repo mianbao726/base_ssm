@@ -1,0 +1,6 @@
+1.jsp页面
+2.xml sql
+3.xml namespace
+4.jsp css js 封装成head
+5.Controller 的 service 注入
+5.service     @Resource private PageServiceDao pageServiceDao;
