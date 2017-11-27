@@ -12,6 +12,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.xx.base.util.C;
+import com.xx.base.util.PropertyUtil;
 import com.xx.base.util.Util;
 
 @SuppressWarnings("unchecked")
@@ -21,22 +22,27 @@ public class BaseInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		if (Util.exceptReq(request.getRequestURI())) {// request
-			if (Arrays.asList(C.SPECIAL_REQUEST).contains(request.getServletPath())) {// except_request
-				log.info("except request ---" + request.getServletPath());
-				return true;
-			} else {
-				log.info("normal request ---" + request.getServletPath());
-				if (C.dev()) {
+
+		log.info("欢迎访问  我是  :  " + request.getRequestURI());
+		if (Boolean.valueOf(PropertyUtil.getProperty("interceptor"))) {// 总开关
+																		// 配置在switch.properties
+			if (Util.exceptReq(request.getRequestURI())) {// request
+				log.info("是请求  非资源文件  :  " + request.getRequestURI());
+				if (Arrays.asList(C.SPECIAL_REQUEST).contains(request.getServletPath())) {// except_request
+																							// 随意访问
+					log.info("except request ---" + request.getServletPath());
 					return true;
 				} else {
+					log.info("normal request ---" + request.getServletPath());
 					Map<String, Object> user_permissions = (Map<String, Object>) request.getSession().getAttribute("userMenusMap");
 					if (null == user_permissions) {//
-						((HttpServletResponse) response).sendRedirect("/" + C.PROJECT_NAME + "/login.html");
+						((HttpServletResponse) response).sendRedirect("/" + C.PROJECT_NAME+"123");
 						return true;
-					}else{
+					} else {
 						String role_info = (String) request.getSession().getAttribute("role_info");
-						if(role_info.contains("1")){//super user can do everything ,of course
+						if (role_info.contains("1")) {// super user can do
+														// everything ,of
+														// course
 							return true;
 						}
 						if (user_permissions.containsKey(request.getServletPath().substring(1))) {// can
@@ -48,10 +54,13 @@ public class BaseInterceptor implements HandlerInterceptor {
 						}
 					}
 				}
+			} else {// resource files
+				return true;
 			}
-		} else {// resource files
+		} else {
 			return true;
 		}
+
 	}
 
 	@Override

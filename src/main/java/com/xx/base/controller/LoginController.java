@@ -24,6 +24,7 @@ public class LoginController extends BaseController {
 	@RequestMapping("/")
 	public String login1(HttpServletRequest request, Model model) throws Exception {
 		return "login/login";
+//		return "exception/page_500";
 	}
 	
 	

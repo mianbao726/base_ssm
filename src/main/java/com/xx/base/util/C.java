@@ -26,6 +26,7 @@ public class C {
 	
 	// 除外请求
 	public static final String[] SPECIAL_REQUEST = { //
+			"/", // 默认页面
 			"/login.html", // 登陆页面
 			"/home.html", // 登陆页面
 			"/assets/viewjs/login/login_wap.js",
@@ -38,7 +39,7 @@ public class C {
 			"/login.do",
 			"/logout.html",
 			"/main.html", //
-			"/dashboard.html", //
+//			"/dashboard.html", //
 			"/role/index.html", //
 			"/user/getUserInfo.do", //
 			"/user/getUserMenu.do", //

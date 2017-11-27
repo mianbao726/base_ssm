@@ -162,7 +162,7 @@ public class CRUDController extends BaseController {
 	public String appendMethods(String target,int templateNo,int swift) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException{
 		if (target.contains("(") && target.contains(")")) {//约定如果有()表示需要生成方法
 			String methods = target.substring(target.indexOf("(") + 1, target.indexOf(")"));
-			if("NEW".equals(methods)){//默认增删改查
+			if("CRUD".equals(methods)){//默认增删改查
 				methods="index,list,create,delete,update";
 			}
 			String[] functions = methods.split(",");
