@@ -59,6 +59,7 @@ public class ExampleControllerbackup extends BaseController {
 	 */
 	@RequestMapping("/index.html")
 	public String ret1(HttpServletRequest request, Model model) throws Exception {
+		System.out.println(123);
 		return "example/index";
 	}
 }
