@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="baseFrame_Cridit"> 
+	
+	 <parameterMap type="java.util.HashMap" id="paraMap" />
+
+	<!--获取[职员]列表 -->
+	<select id="cridit_page" parameterMap="paraMap" resultType="hashmap">
+		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
+		select
+		code,
+		DATE_FORMAT(touch_date, '%Y-%m-%d %H:%i:%s') as touch_date,
+		name,
+		inherent_credit,
+		temporary_credit,
+		total_credit,
+		remaining_credit,
+		remaining_credit_percentage,
+		count
+		from wj_bank
+		<if test="filter != null">
+			<where>${filter}</where>
+		</if>
+		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
+		<if test="sort == null">ORDER BY ID </if>
+		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>
+	</select>
+
+	<!--获取[职员]列表总数 -->
+	<select id="cridit_page_count" parameterMap="paraMap" resultType="int">
+		select count(1) from wj_bank a
+		<if test="filter != null">
+			<where>${filter}</where>
+		</if>
+	</select>
+	
+	<!--获取[职员]列表 -->
+	<select id="cridit_page_detail" parameterMap="paraMap" resultType="hashmap">
+		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
+		select
+		DATE_FORMAT(cr_date, '%Y-%m-%d %H:%i:%s') as cr_date,amount,cardno
+		from wj_record
+		<include refid="cridit_page_detail_where"/>
+		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
+		<if test="sort == null">ORDER BY cr_date</if>
+		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>
+	</select>
+
+	<!--获取[职员]列表总数 -->
+	<select id="cridit_page_detail_count" parameterMap="paraMap" resultType="int">
+		select count(1) from wj_record
+		<include refid="cridit_page_detail_where"/>
+	</select>
+	
+	<sql id="cridit_page_detail_where">
+		where 1=1
+		<if test="target != null">
+			and bank = #{target}
+		</if>
+	</sql>
+	
+	<insert id="cridit_insert" parameterMap="paraMap">
+		insert into wj_record (
+		cr_date,
+		amount,
+		type,
+		remark,
+		safty_cost_fee,
+		cardno,
+		bank)
+		values (
+		now(),
+		#{amount},
+		#{type},
+		#{remark},
+		#{safty_cost_fee},
+		#{cardno},
+		#{bank}
+		)
+		<selectKey resultType="int" order="AFTER" keyProperty="ID"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
+	</insert>
+	
+	<update id="pay" parameterType="hashmap">
+		update wj_credit
+		set
+			remaining_credit = remaining_credit - #{amount},
+			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
+		where 1=1  
+		and no = #{cardno}
+	</update>
+	
+	<update id="pay_bank" parameterType="hashmap">
+		update wj_bank
+		set
+			remaining_credit = remaining_credit - #{amount},
+			touch_date = now(),
+			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
+		where 1=1  
+		and code = (select distinct(type) from wj_credit where no=#{cardno})
+	</update>
+	
+	<select id="getCredit_List" parameterMap="paraMap" resultType="hashmap">
+		SELECT * FROM wj_credit where type = #{bank} ORDER BY temporary_credit desc
+	</select>
+	<update id="creditOtherCard" parameterType="hashmap">
+		update wj_credit
+		set
+			remaining_credit = case when remaining_credit >= #{remaining_credit_main} then #{remaining_credit_main} else remaining_credit end,
+			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
+		where 1=1  
+		and no = #{no}
+	</update>
+</mapper>

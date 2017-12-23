@@ -2,27 +2,27 @@ var APP = "base";
 var BASE = "/"+APP;
 (function($) {
 	var project_name = "base";
-	var xx = {};
-	xx.c = function(obj){//console.log
+	var wj = {};
+	wj.c = function(obj){//console.log
 		console.log(obj);
 	};
 	
-	xx.conform = function(info,fun){
-		$("#xxConform").click(fun);
+	wj.conform = function(info,fun){
+		$("#wjConform").click(fun);
 		$("#ppss").html(info);
-		$("#xxModal").modal('show');
+		$("#wjModal").modal('show');
 	};
 	
-	xx.location = function(obj){//console.log
-		xx.c(obj);
+	wj.location = function(obj){//console.log
+		wj.c(obj);
 		window.location.href = obj;
 	};
 	
-	xx.isArray = function(){ //判断array
+	wj.isArray = function(){ //判断array
    	  return Object.prototype.toString.call(o)=='[object Array]';
 	};
 	
-	xx.bindIdClick = function (target){
+	wj.bindIdClick = function (target){
 		var targetID="#"+target;
 		document.onkeydown = function(e){
 		    var event = e || window.event;  
@@ -33,7 +33,7 @@ var BASE = "/"+APP;
 		};
 	}
 	
-	xx.tree = function (tree){//构建树
+	wj.tree = function (tree){//构建树
 		var newTree = [];
         var tmp = [];
         var item = [];
@@ -62,10 +62,10 @@ var BASE = "/"+APP;
         return newTree;
 	};
 	
-	xx.leftmenu = function (arr){//左侧菜单
-		$.xx.c("===============");
-		$.xx.c(arr);
-		$.xx.c("===============");
+	wj.leftmenu = function (arr){//左侧菜单
+		$.wj.c("===============");
+		$.wj.c(arr);
+		$.wj.c("===============");
   	  var ht = '';
         for(var i=0;i<arr.length;i++){
       	  if(('A' == arr[i][0])){
@@ -96,11 +96,11 @@ var BASE = "/"+APP;
         $("#sweet_menu").append(ht);  
 	};
 	
-	xx.left = function(data){
-		$.xx.leftmenu($.xx.tree(data));
+	wj.left = function(data){
+		$.wj.leftmenu($.wj.tree(data));
 	};
 	
-	xx.ajax = function(opts){
+	wj.ajax = function(opts){
 		
 		if (opts.disableAll) {
 			if (opts.disableMsg) {
@@ -113,19 +113,18 @@ var BASE = "/"+APP;
 		}
 		
 		try {
-			var xx_opts = {};
-			xx_opts.url = opts.url;
-			xx_opts.type = (opts.type == undefined) ? 'post' : opts.type;
-			xx_opts.dataType = "json";
-			//TODO ?
-			xx_opts.data = {
-				"params" : xx.json.encode(opts.params)
+			var wj_opts = {};
+			wj_opts.url = opts.url;
+			wj_opts.type = (opts.type == undefined) ? 'post' : opts.type;
+			wj_opts.dataType = "json";
+			wj_opts.data = {
+				"params" : wj.json.encode(opts.params)
 			};
 			// xx_opts.data = {"params" : opts.params};
 			// ops.data={'params': xx.json.encode(params)},
-			xx_opts.async = (opts.async == undefined) ? true : opts.async;
+			wj_opts.async = (opts.async == undefined) ? true : opts.async;
 
-			xx_opts.success = function(rsp) {
+			wj_opts.success = function(rsp) {
 				// if(opts.disableAll){
 				// xx_hide();
 				// }
@@ -136,7 +135,7 @@ var BASE = "/"+APP;
 				opts.success(rsp);
 			};
 
-			xx_opts.error = function(rsp) {
+			wj_opts.error = function(rsp) {
 				// if(opts.disableAll){
 				// xx_hide();
 				// }
@@ -144,14 +143,19 @@ var BASE = "/"+APP;
 //				window.location.href = '/' + project_name + '/login.html';
 				
 			};
-			$.ajax(xx_opts);
+			$.ajax(wj_opts);
 		} catch (e) {
 			window.location.href = '/' + project_name + '/sys/500.html';
 			return null;
 		}
 	};
 	
-	xx.json = new (function() {
+	wj.p = function(data){
+		alert(333);
+		return {"params" : wj.json.encode(data)};
+	};
+	
+	wj.json = new (function() {
 		var useHasOwn = !!{}.hasOwnProperty;
 
 		// crashes Safari in some instances
@@ -210,7 +214,7 @@ var BASE = "/"+APP;
 					if (b) {
 						a.push(',');
 					}
-					a.push(v === null ? "null" : $.xx.json.encode(v));
+					a.push(v === null ? "null" : $.wj.json.encode(v));
 					b = true;
 				}
 			}
@@ -230,7 +234,7 @@ var BASE = "/"+APP;
 			} else if ($.isArray(o)) {
 				return encodeArray(o);
 			} else if (isDate(o)) {
-				return $.xx.json.encodeDate(o);
+				return $.wj.json.encodeDate(o);
 			} else if (typeof o == "string") {
 				return encodeString(o);
 			} else if (typeof o == "number") {
@@ -267,7 +271,7 @@ var BASE = "/"+APP;
 		};
 	})();
 	$.extend({
-		"xx" : xx
+		"wj" : wj
 	});
 
 })(jQuery)

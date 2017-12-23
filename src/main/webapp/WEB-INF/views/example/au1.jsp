@@ -1050,7 +1050,7 @@
 	<script>
 		$(function(){
 			var params = {};
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				  url: '<%=path%>/user/menu.do',
@@ -1058,8 +1058,8 @@
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-					  $.xx.c(data.list);
-					 $.xx.left(data.list);
+					  $.wj.c(data.list);
+					 $.wj.left(data.list);
 				  }
 			});
 		});

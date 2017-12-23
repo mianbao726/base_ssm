@@ -454,7 +454,7 @@
 	<script>
 		$(function(){
 			var params = {};
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				  url: '<%=path%>/user/menu.do',
@@ -462,14 +462,14 @@
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-					  $.xx.c(data.list);
-					 $.xx.left(data.list);
+					  $.wj.c(data.list);
+					 $.wj.left(data.list);
 				  }
 			});
 			$("#gen_code").click(function(){
 				var params = {};
 				params['target'] = $("#col0001").val(); 
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				  url: '<%=path%>/CRUD/gen001.html',
@@ -477,7 +477,7 @@
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-					 $.xx.c(data);
+					 $.wj.c(data);
 				  }
 			});
 			});
@@ -507,7 +507,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
-						    	$.xx.location(BASE+"/example1/au.html");
+						    	$.wj.location(BASE+"/example1/au.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"
@@ -515,7 +515,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
-						    	$.xx.location(BASE+"/example1/au1.html");
+						    	$.wj.location(BASE+"/example1/au1.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"
@@ -523,7 +523,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
-						    	$.xx.location(BASE+"/example1/au2.html");
+						    	$.wj.location(BASE+"/example1/au2.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"
@@ -572,14 +572,14 @@
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
 //     		"order" : [],
     		"columns" : [ 
-   				{"mData" : "no"},
+    			{"mData" : "no"},
     			{"mData" : "type"},
     			{"mData" : "inherent_credit"},
     			{"mData" : "temporary_credit"},
     			{"mData" : "total_credit"},
     			{"mData" : "remaining_credit"},
     			{"mData" : "remaining_credit_percentage"},
-    			{"mData" : "no"},
+    			{"mData" : "street"},
     		 ],
 //     		 "preDrawCallback" : function(settings) {
 //     					one = 1;
@@ -595,18 +595,8 @@
 					'<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>删除</a>';
     		    },
                  "orderable": false,
-                 "targets": 7
+                 "targets": 8
              	}, 
-             	 {"render": function(data, type, row){    
-             		 var dis_name = "";
-             		 if("jh"==row.type){
-             			dis_name = "交行";
-             		 }
- 					return dis_name;
-     		    },
-                  "orderable": false,
-                  "targets": 1
-              	},
             	]
     	});
     table.buttons( '.csv' ).disable();

@@ -37,6 +37,11 @@
     <link href="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     
+    <!-- Bootstrap Colorpicker -->
+    <link href="${pageContext.request.contextPath}/assets/default/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/default/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+        <!-- Switchery -->
+    <link href="${pageContext.request.contextPath}/assets/default/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/assets/default/build/css/custom.min.css" rel="stylesheet">
@@ -77,105 +82,6 @@
                 </ul>
               </div>
               
-              <div class="menu_section">
-                <h3>General</h3>
-                <ul class="nav side-menu" >
-                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="index.html">Dashboard</a></li>
-                      <li><a href="index2.html">Dashboard2</a></li>
-                      <li><a href="index3.html">Dashboard3</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="form.html">General Form</a></li>
-                      <li><a href="form_advanced.html">Advanced Components</a></li>
-                      <li><a href="form_validation.html">Form Validation</a></li>
-                      <li><a href="form_wizards.html">Form Wizard</a></li>
-                      <li><a href="form_upload.html">Form Upload</a></li>
-                      <li><a href="form_buttons.html">Form Buttons</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="general_elements.html">General Elements</a></li>
-                      <li><a href="media_gallery.html">Media Gallery</a></li>
-                      <li><a href="typography.html">Typography</a></li>
-                      <li><a href="icons.html">Icons</a></li>
-                      <li><a href="glyphicons.html">Glyphicons</a></li>
-                      <li><a href="widgets.html">Widgets</a></li>
-                      <li><a href="invoice.html">Invoice</a></li>
-                      <li><a href="inbox.html">Inbox</a></li>
-                      <li><a href="calendar.html">Calendar</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="tables.html">Tables</a></li>
-                      <li><a href="tables_dynamic.html">Table Dynamic</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="chartjs.html">Chart JS</a></li>
-                      <li><a href="chartjs2.html">Chart JS2</a></li>
-                      <li><a href="morisjs.html">Moris JS</a></li>
-                      <li><a href="echarts.html">ECharts</a></li>
-                      <li><a href="other_charts.html">Other Charts</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-                      <li><a href="fixed_footer.html">Fixed Footer</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              <div class="menu_section">
-                <h3>Live On</h3>
-                <ul class="nav side-menu">
-                  <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="e_commerce.html">E-commerce</a></li>
-                      <li><a href="projects.html">Projects</a></li>
-                      <li><a href="project_detail.html">Project Detail</a></li>
-                      <li><a href="contacts.html">Contacts</a></li>
-                      <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="page_403.html">403 Error</a></li>
-                      <li><a href="page_404.html">404 Error</a></li>
-                      <li><a href="page_500.html">500 Error</a></li>
-                      <li><a href="plain_page.html">Plain Page</a></li>
-                      <li><a href="login.html">Login Page</a></li>
-                      <li><a href="pricing_tables.html">Pricing Tables</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li><a href="#level1_1">Level One</a>
-                        <li><a>Level One<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="level2.html">Level Two</a>
-                            </li>
-                            <li><a href="#level2_1">Level Two</a>
-                            </li>
-                            <li><a href="#level2_2">Level Two</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="#level1_2">Level One</a>
-                        </li>
-                    </ul>
-                  </li>                  
-                  <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
-                </ul>
-              </div>
-
             </div>
             <!-- /sidebar menu -->
 
@@ -336,88 +242,106 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>CRUD genernate <small>different form elements</small></h2>
+                    <h2>Form Design <small>different form elements</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up" title="收放"></i></a>
-                      </li>
-                      <li><a class="collapse-link-xx"><i class="fa fa-file" title="新增"></i></a>
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
                         <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">高级搜索</a>
+                          <li><a href="#">Settings 1</a>
                           </li>
-                          <li><a href="#">近期项目</a>
+                          <li><a href="#">Settings 2</a>
                           </li>
                         </ul>
                       </li>
-                      <li><a class="close-link_xx"><i class="fa fa-refresh"></i></a>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
                     </ul>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                  	<table id="datatable-xx" class="table table-striped dt-responsive nowrap projects" cellspacing="0" width="100%">
-                      <thead>
-                        <tr>
-                          <th>First name</th>
-                          <th>Last name</th>
-                          <th>Position</th>
-                          <th>Office</th>
-                          <th>Age</th>
-                          <th>Start date</th>
-                          <th>Salary</th>
-                          <th>Extn.</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                    </table>
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">银行</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                          <select class="form-control" id = "bank">
+                            <option value ="JTYH">交通银行</option>
+                            <option value ="ZSYH">招商银行</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">卡号</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                          <select class="form-control" id = "cardno">
+                            <option value ="5201690317587529">交行7529（家乐福）</option>
+                            <option value ="6222530319933730">交行3730（航空卡）</option>
+                            <option value ="6225758224851922">招商1922（迅雷）</option>
+                            <option value ="5236497912127035">招商7035（环球卡）</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="amount" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="remark" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">类型</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <div class="">
+                            <label>
+                              <input id ="type" type="checkbox" class="js-switch" checked /> Checked 消费  
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="ln_solid"></div>
+                      <div class="form-group">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                          <button class="btn btn-primary" type="button">Cancel</button>
+						  <button class="btn btn-primary" type="reset">Reset</button>
+                          <button type="button" class="btn btn-success" id ="pay">Submit</button>
+                        </div>
+                      </div>
+                      
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
-<!-- modals -->
-                  <!-- Large modal -->
-                  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id = "wjModal">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                          </button>
-                          <h4 class="modal-title" id="myModalLabel">操作提示</h4>
-                        </div>
-                        <div class="modal-body">
-                          <h4>请注意</h4>
-                          <p>点击确认按钮后执行以下操作</p>
-                          <p id = "ppss">Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                          <p>Are you sure ?</p>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-                          <button type="button" class="btn btn-primary" id ="wjConform">&nbsp;&nbsp;确认&nbsp;&nbsp;</button>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-          <br />
-
         </div>
+        
+        
+        
         <!-- /page content -->
 
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+           contact <a href="http://www.whatgoogle.com">whatgoogle</a>
           </div>
           <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
       </div>
     </div>
-    
-    
 
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery/dist/jquery.min.js"></script>
@@ -457,28 +381,20 @@
     <script src="${pageContext.request.contextPath}/assets/default/vendors/moment/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/default/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
     
+       <!-- jQuery Tags Input -->
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
     
-    <!-- Datatables -->
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/jszip/dist/jszip.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/pdfmake.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <!-- jquery.inputmask -->
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+    <!-- Bootstrap Colorpicker -->
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
     
-    
+    <!-- Switchery -->
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/switchery/dist/switchery.min.js"></script>
    
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
+	
 		$(function(){
 			var params = {};
 				$.wj.ajax({
@@ -493,143 +409,50 @@
 					 $.wj.left(data.list);
 				  }
 			});
-			$("#gen_code").click(function(){
+		});
+		
+		  //tags input
+		function init_TagsInput11() {
+			if(typeof $.fn.tagsInput !== 'undefined'){
+				$('#tags_1').tagsInput({
+				  width: 'auto'
+				});
+			}
+		  };
+		  
+		  
+		  
+		  $("#pay").click(function(){
 				var params = {};
-				params['target'] = $("#col0001").val(); 
+				params['bank'] = $("#bank").val(); 
+				params['cardno'] = $("#cardno").val(); 
+				params['amount'] = $("#amount").val(); 
+				params['type'] = document.querySelector('#type').checked; 
+				params['remark'] = $("#remark").val(); 
+				console.log(params);
 				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
-				  url: '<%=path%>/CRUD/gen001.html',
+				  url: '<%=path%>/credit/pay.do',
 				  type:"post",
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-					 $.wj.c(data);
+					  $.wj.location(BASE+"/credit/index.html");
 				  }
 			});
 			});
-		});
 		
+		$(document).ready(function() {
+			init_TagsInput11();
+		});
 		
      </script>
       <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
     
     <script>
-    var table = $('#datatable-xx').DataTable({
-    		"language" : {
-    			"info" : "&nbsp;",
-    			"oPaginate" : {
-    				"sPrevious" : " &laquo; ",
-    				"sNext" : " &raquo;",
-    			},
-    			"infoEmpty" : "没有符合条件的记录!",
-    			"lengthMenu" : "显示 _MENU_ 条",
-    			"sZeroRecords" : "没有找到匹配的记录",
-    			"sInfoEmpty" : "",
-   				"sSearch" : "快速检索：",
-    		},
-    		dom: "Bfrtip",
-    		buttons: [
-						{
-						    text: '新增',
-						    action: function ( e, dt, node, config ) {
-						    	$.wj.location(BASE+"/employee/create.html");
-						        this.disable(); // disable button
-						    },
-						    className: " btn-primary"
-						},
-						{
-						  extend: "copy",
-						  text: '复制到剪贴板',
-				            key: {
-				                key: 'c',
-				                altKey: true
-				            },
-						  className: " btn-info"
-						},
-						{
-						  extend: "csv",
-						  text: '导出',
-						  className: " btn-warning"
-						},
-						{
-						  extend: "print",
-						  text: '打印',
-						  className: " btn-success"
-						},
-					  ],
-//     		"pagingType" : "full_numbers",//用于指定分页器风格 "full_numbers"" or ""two_button""， default ""two_button""
-//     		"bAutoWidth" : false, //是否主动策画表格各列宽度
-    		"ajax" : {
-    			"url" :  '<%=path%>/employee/list.html',
-    			"type" : "POST",
-    			"dataType" : "json"
-    		},
-    		
-    		"processing" : true,
-//     		"serverSide" : true,
-//     		"bLengthChange" : false,
-//     		"bSort" : false, // 排序功能
-//     		"searching" : false,
-//     		"dom" : '<"top">t<"bottom"lip><"clear">',
-//     		"order" : [],
-    		"columns" : [ 
-    			{"mData" : "first_name"},
-    			{"mData" : "last_name"},
-    			{"mData" : "position"},
-    			{"mData" : "office"},
-    			{"mData" : "age"},
-    			{"mData" : "start_date"},
-    			{"mData" : "salary"},
-    			{"mData" : "extn"},
-    		 ],
-//     		 "preDrawCallback" : function(settings) {
-//     					one = 1;
-//     				},
-    				
-            "columnDefs": [
-    		    {"render": function(data, type, row){    
-//     		    	return      ' <button class="btn btn-xs btn-warning  tooltip-info " data-rel="tooltip" data-placement="bottom" title="" onclick="read(\''
-//     							+ row.id
-//     							+ '\')"><i class=" ace-icon fa fa-eye bigger-120"></i>查看</button>'
-					return '<a href="#" class="btn btn-primary btn-xs" onclick = "pic(\''+row.id+'\')"><i class="fa fa-folder"></i>图库</a>'+
-					'<a href="#" class="btn btn-info btn-xs"  onclick = "update(\''+row.id+'\')"><i class="fa fa-pencil"></i>编辑</a>'+
-					'<a href="#" class="btn btn-danger btn-xs" onclick = "del(\''+row.id+'\')"><i class="fa fa-trash-o"></i>删除</a>';
-    		    },
-                 "orderable": false,
-                 "targets": 8
-             	}, 
-            	]
-    	});
-    table.buttons( '.csv' ).disable();
-    function del(id){
-    	$.wj.conform("1.删除指定员工数据<br/>2.删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据",function(){
-    		var params = {};
-        	params['id'] = id;
-    		$.wj.ajax({
-  		      contenttype : 'application/json; charset=utf-8',
-  		      async: false,
-  			  url: '<%=path%>/employee/delete.html',
-  			  type:"post",
-  			  dataType:"json",
-  			  params:params,
-  			  success:function(data){
-  				  table.ajax.reload();
-//  	 			  table.ajax.reloadData({'filter':filter});	
-  				$("#wjModal").modal('hide');
-  			  }
-  			});
-    	});
-    }
     
-    function update(id){
-    	$.wj.location(BASE+"/employee/create.html?id="+id);
-    }
-
-    function pic(id){
-    	$.wj.location(BASE+"/employee/upload.html?id="+id);
-    }
     </script>
   </body>
 </html>

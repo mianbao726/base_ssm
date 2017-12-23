@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
+	String id = request.getParameter("id");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -282,7 +283,7 @@
                     <li>
                       <div class="text-center">
                         <a>
-                          <strong>See All Alerts</strong>
+                          name<strong>See All Alerts</strong>
                           <i class="fa fa-angle-right"></i>
                         </a>
                       </div>
@@ -360,15 +361,9 @@
                   	<table id="datatable-xx" class="table table-striped dt-responsive nowrap projects" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-                          <th>First name</th>
-                          <th>Last name</th>
-                          <th>Position</th>
-                          <th>Office</th>
-                          <th>Age</th>
-                          <th>Start date</th>
-                          <th>Salary</th>
-                          <th>Extn.</th>
-                          <th></th>
+                          <th>消费时间</th>
+                          <th>金额</th>
+                          <th>卡号</th>
                         </tr>
                       </thead>
                     </table>
@@ -376,31 +371,7 @@
                 </div>
               </div>
             </div>
-<!-- modals -->
-                  <!-- Large modal -->
-                  <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id = "wjModal">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
 
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                          </button>
-                          <h4 class="modal-title" id="myModalLabel">操作提示</h4>
-                        </div>
-                        <div class="modal-body">
-                          <h4>请注意</h4>
-                          <p>点击确认按钮后执行以下操作</p>
-                          <p id = "ppss">Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                          <p>Are you sure ?</p>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
-                          <button type="button" class="btn btn-primary" id ="wjConform">&nbsp;&nbsp;确认&nbsp;&nbsp;</button>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
           <br />
 
         </div>
@@ -416,8 +387,6 @@
         <!-- /footer content -->
       </div>
     </div>
-    
-    
 
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery/dist/jquery.min.js"></script>
@@ -479,6 +448,8 @@
    
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
+				
+	var id = '<%=id %>';
 		$(function(){
 			var params = {};
 				$.wj.ajax({
@@ -516,6 +487,10 @@
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
     
     <script>
+    var filter = {};
+	filter['target'] = id; 
+	console.log(filter);
+
     var table = $('#datatable-xx').DataTable({
     		"language" : {
     			"info" : "&nbsp;",
@@ -532,9 +507,9 @@
     		dom: "Bfrtip",
     		buttons: [
 						{
-						    text: '新增',
+						    text: '返回',
 						    action: function ( e, dt, node, config ) {
-						    	$.wj.location(BASE+"/employee/create.html");
+						    	$.wj.location(BASE+"/credit/index.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"
@@ -562,74 +537,39 @@
 //     		"pagingType" : "full_numbers",//用于指定分页器风格 "full_numbers"" or ""two_button""， default ""two_button""
 //     		"bAutoWidth" : false, //是否主动策画表格各列宽度
     		"ajax" : {
-    			"url" :  '<%=path%>/employee/list.html',
+    			"url" :  '<%=path%>/credit/getdetialdata.html',
     			"type" : "POST",
-    			"dataType" : "json"
+    			"dataType" : "json",
+    			"data":$.wj.p(filter)
     		},
     		
     		"processing" : true,
 //     		"serverSide" : true,
 //     		"bLengthChange" : false,
-//     		"bSort" : false, // 排序功能
+    		"bSort" : true, // 排序功能
 //     		"searching" : false,
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
-//     		"order" : [],
+    		"order": [[0, 'desc']],
     		"columns" : [ 
-    			{"mData" : "first_name"},
-    			{"mData" : "last_name"},
-    			{"mData" : "position"},
-    			{"mData" : "office"},
-    			{"mData" : "age"},
-    			{"mData" : "start_date"},
-    			{"mData" : "salary"},
-    			{"mData" : "extn"},
+   				{"mData" : "cr_date"},
+    			{"mData" : "amount"},
+    			{"mData" : "cardno"},
     		 ],
-//     		 "preDrawCallback" : function(settings) {
-//     					one = 1;
-//     				},
-    				
             "columnDefs": [
-    		    {"render": function(data, type, row){    
-//     		    	return      ' <button class="btn btn-xs btn-warning  tooltip-info " data-rel="tooltip" data-placement="bottom" title="" onclick="read(\''
-//     							+ row.id
-//     							+ '\')"><i class=" ace-icon fa fa-eye bigger-120"></i>查看</button>'
-					return '<a href="#" class="btn btn-primary btn-xs" onclick = "pic(\''+row.id+'\')"><i class="fa fa-folder"></i>图库</a>'+
-					'<a href="#" class="btn btn-info btn-xs"  onclick = "update(\''+row.id+'\')"><i class="fa fa-pencil"></i>编辑</a>'+
-					'<a href="#" class="btn btn-danger btn-xs" onclick = "del(\''+row.id+'\')"><i class="fa fa-trash-o"></i>删除</a>';
-    		    },
-                 "orderable": false,
-                 "targets": 8
-             	}, 
             	]
     	});
-    table.buttons( '.csv' ).disable();
-    function del(id){
-    	$.wj.conform("1.删除指定员工数据<br/>2.删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据删除指定员工数据",function(){
-    		var params = {};
-        	params['id'] = id;
-    		$.wj.ajax({
-  		      contenttype : 'application/json; charset=utf-8',
-  		      async: false,
-  			  url: '<%=path%>/employee/delete.html',
-  			  type:"post",
-  			  dataType:"json",
-  			  params:params,
-  			  success:function(data){
-  				  table.ajax.reload();
-//  	 			  table.ajax.reloadData({'filter':filter});	
-  				$("#wjModal").modal('hide');
-  			  }
-  			});
-    	});
-    }
     
-    function update(id){
-    	$.wj.location(BASE+"/employee/create.html?id="+id);
-    }
+    function detial(id){
+    	$.wj.location(BASE+"/credit/detial.html?id="+id);
+	};
+	table.draw();
+    table.buttons( '.csv' ).disable();
+    
+<%--     var id = '<%=id %>'; --%>
+// 	alert(id+"22");
+	
 
-    function pic(id){
-    	$.wj.location(BASE+"/employee/upload.html?id="+id);
-    }
+// 	table.ajax.reloadData({'filter':filter});
     </script>
   </body>
 </html>

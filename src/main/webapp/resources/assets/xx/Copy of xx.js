@@ -43,7 +43,7 @@ var BASE = "/"+APP;
 	xx.leftmenu = function (arr){//左侧菜单
   	  var ht = '';
         for(var i=0;i<arr.length;i++){
-//      	  $.xx.c("gggg  : " + arr[i][0]);
+//      	  $.wj.c("gggg  : " + arr[i][0]);
       	  if(('A' == arr[i][0])){
       	  ht+='<li '
       	     +'class="active"' //selected parent menu
@@ -70,7 +70,7 @@ var BASE = "/"+APP;
 	};
 	
 	xx.left = function(data){
-		$.xx.leftmenu($.xx.tree(data));
+		$.wj.leftmenu($.wj.tree(data));
 	};
 	
 	xx.ajax = function(opts){

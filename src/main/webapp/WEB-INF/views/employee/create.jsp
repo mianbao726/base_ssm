@@ -515,7 +515,7 @@
 	var id = '<%=id %>';
 		$(function(){
 			var params = {};
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				  url: '<%=path%>/user/menu.do',
@@ -523,8 +523,8 @@
 					dataType : "json",
 					params : params,
 					success : function(data) {
-						$.xx.c(data.list);
-						$.xx.left(data.list);
+						$.wj.c(data.list);
+						$.wj.left(data.list);
 					}
 			});
 		});
@@ -546,7 +546,7 @@
 				if(id != 'null'){
 					params['id']=id;
 				}
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				    url: id != 'null' ? '<%=path%>/employee/update.ht' : '<%=path%>/employee/create.htm',
@@ -554,18 +554,18 @@
 					dataType : "json",
 					params : params,
 					success : function(data) {
-						$.xx.location(BASE+"/employee/index.html");
+						$.wj.location(BASE+"/employee/index.html");
 					}
 			});
 			});
 			$("#back").click(function(){
-				$.xx.location(BASE+"/employee/index.html");
+				$.wj.location(BASE+"/employee/index.html");
 			});
 			
 			if(id != 'null'){
 				var params = {};
 				params['id']=id;
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				  url: '<%=path%>/employee/update.htm',
@@ -573,7 +573,7 @@
 					dataType : "json",
 					params : params,
 					success : function(data) {
-// 						$.xx.location(BASE+"/employee/index.html");
+// 						$.wj.location(BASE+"/employee/index.html");
 						$("#first_name").val(data.data.first_name);
 						$("#last_name").val(data.data.last_name);
 						$("#email").val(data.data.email);

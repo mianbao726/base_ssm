@@ -24,6 +24,7 @@
  */
  package com.xx.backend.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,6 +47,7 @@ import com.xx.base.dao.BaseDao;
 import com.xx.base.dao.PageServiceDao;
 import com.xx.base.service.IModuleService;
 import com.xx.base.util.map.QMap;
+import com.xx.base.util.FeeCost;
 import com.xx.base.util.TimestampTool;
 
 import com.xx.backend.service.CriditService;
@@ -65,7 +67,9 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService{
 	@Override
 	public int add(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return 0;
+		map.put("safty_cost_fee", FeeCost.fee(map.get("amount").toString()));
+		int ret = baseDao.insert("baseFrame_Cridit.cridit_insert", map);
+		return ret;
 	}
 
 	@Override
@@ -102,7 +106,35 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService{
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
 	 */
-	public String pay(){
+	public Map<String, Object>  detail(Map<String, Object> map){
+		return pageServiceDao.index("baseFrame_Cridit.cridit_page_detail", map);
+	}
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	 */
+	public String pay(Map<String, Object> map){
+		// 更新信用卡信息
+		baseDao.update("baseFrame_Cridit.pay",map);
+		// 更新银行信息
+		baseDao.update("baseFrame_Cridit.pay_bank",map);
+		//XXX 注释中应该有参数信息
+		List clist = baseDao.selectList("baseFrame_Cridit.getCredit_List",map);
+		if(1 != clist.size()){
+			Map<String, Object> mainCredit = (HashMap<String, Object>)clist.get(0);
+//			baseDao.update("baseFrame_Cridit.pay",mainCredit);
+			if(map.get("cardno").equals(mainCredit.get("no"))){//消费卡是主卡
+				for(int index =1;index<clist.size();index++){
+					Map<String, Object> credit = (HashMap<String, Object>)clist.get(index);
+					credit.put("amount", map.get("amount"));
+					credit.put("remaining_credit_main", mainCredit.get("remaining_credit"));
+					baseDao.update("baseFrame_Cridit.creditOtherCard",credit);
+				}
+			}else{//消费卡不是主卡
+				
+			}
+		}
+		add(map);
 		return null;
 	}
 }

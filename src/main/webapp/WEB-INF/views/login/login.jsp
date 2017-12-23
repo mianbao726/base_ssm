@@ -33,8 +33,8 @@
 		var params = {};
 		params['username'] = user_name;
 		params['password'] = password;
-		$.xx.c(params);
-		$.xx.ajax({
+		$.wj.c(params);
+		$.wj.ajax({
 			  url: "user/login.do",
 			  type:"post",
 			  dataType:"json",

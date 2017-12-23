@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.ejb.CreateException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -47,7 +48,7 @@ import com.xx.base.util.map.QMap;
  *         zhuwj726@gmail.com)
  */
 @Controller
-@RequestMapping("/cridit")
+@RequestMapping("/credit")
 public class CriditController extends BaseController {
 
 	// XXX
@@ -60,7 +61,7 @@ public class CriditController extends BaseController {
 	 */
 	@RequestMapping("/index.html")
 	public String index(HttpServletRequest request, Model model) throws Exception {
-		return "cridit/index";
+		return "credit/index";
 	}
 
 	/**
@@ -77,19 +78,63 @@ public class CriditController extends BaseController {
 		ret = new QMap("200");
 //		List<Map<String, Object>> data = criditService.index(null);
 		Map<String,Object> data = criditService.index(new HashMap());
-		int count = 200;// 99999 => 20s 9999
 		ret.put("data", data.get("data"));
-		ret.put("recordsTotal", Integer.valueOf(count));
-		ret.put("recordsFiltered", Integer.valueOf(count));
+		ret.put("recordsTotal", Integer.valueOf(((List)data.get("data")).size()));
+		ret.put("recordsFiltered", Integer.valueOf(((List)data.get("data")).size()));
 		return JSONObject.toJSONString(ret);
 	}
-
+	
+	/**
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/getdetialdata.html")
+	public @ResponseBody
+	String getdetialdata(HttpServletRequest request, Model model) throws Exception {
+		Map ret = null;
+		ret = new QMap("200");
+		Map page = super.getParams(request);
+		Map<String,Object> data = criditService.detail(page);
+		ret.put("data", data.get("data"));
+		ret.put("recordsTotal", Integer.valueOf(((List)data.get("data")).size()));
+		ret.put("recordsFiltered", Integer.valueOf(((List)data.get("data")).size()));
+		return JSONObject.toJSONString(ret);
+	}
+	
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
 	 */
-	@RequestMapping("/pay.html")
-	public String pay(HttpServletRequest request, Model model) throws Exception {
-		return "cridit/pay";
+	@RequestMapping("/pay.do")
+	public @ResponseBody
+	 String pay(HttpServletRequest request, Model model) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("status_code", "200");
+		String bank = paramsMap.get("bank").toString();
+		String cardno = paramsMap.get("cardno").toString();
+		String amount = paramsMap.get("amount").toString();
+		String type = paramsMap.get("type").toString();
+		criditService.pay(paramsMap);
+		return JSONObject.toJSONString(paramsMap);
 	}
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/au.html")
+	public String au(HttpServletRequest request, Model model) throws Exception {
+		return "credit/au";
+	}
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/detial.html")
+	public String detial(HttpServletRequest request, Model model) throws Exception {
+		return "credit/detial";
+	}
+	
 }

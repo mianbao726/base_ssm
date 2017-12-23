@@ -455,7 +455,7 @@
 	<script>
 		$(function(){
 			var params = {};
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				  url: '<%=path%>/user/menu.do',
@@ -463,14 +463,14 @@
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-					  $.xx.c(data.list);
-					 $.xx.left(data.list);
+					  $.wj.c(data.list);
+					 $.wj.left(data.list);
 				  }
 			});
 			$("#gen_code").click(function(){
 				var params = {};
 				params['target'] = $("#col0001").val(); 
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				  url: '<%=path%>/CRUD/gen001.html',
@@ -478,7 +478,7 @@
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-					 $.xx.c(data);
+					 $.wj.c(data);
 				  }
 			});
 			});
@@ -508,7 +508,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
-						    	$.xx.location(BASE+"/example1/au.html");
+						    	$.wj.location(BASE+"/example1/au.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"
@@ -516,7 +516,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
-						    	$.xx.location(BASE+"/example1/au1.html");
+						    	$.wj.location(BASE+"/example1/au1.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"
@@ -524,7 +524,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
-						    	$.xx.location(BASE+"/example1/au2.html");
+						    	$.wj.location(BASE+"/example1/au2.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"

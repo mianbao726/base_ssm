@@ -360,13 +360,13 @@
                   	<table id="datatable-xx" class="table table-striped dt-responsive nowrap projects" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-                          <th>卡号</th>
                           <th>银行</th>
                           <th>固定额度</th>
                           <th>临时额度</th>
                           <th>总额度</th>
                           <th>剩余额度</th>
                           <th>剩余百分比</th>
+                          <th>最后操作时间</th>
                           <th>操作</th>
                         </tr>
                       </thead>
@@ -454,7 +454,7 @@
 	<script>
 		$(function(){
 			var params = {};
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				  url: '<%=path%>/user/menu.do',
@@ -462,14 +462,14 @@
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-					  $.xx.c(data.list);
-					 $.xx.left(data.list);
+					  $.wj.c(data.list);
+					 $.wj.left(data.list);
 				  }
 			});
 			$("#gen_code").click(function(){
 				var params = {};
 				params['target'] = $("#col0001").val(); 
-				$.xx.ajax({
+				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,
 				  url: '<%=path%>/CRUD/gen001.html',
@@ -477,7 +477,7 @@
 				  dataType:"json",
 				  params:params,
 				  success:function(data){
-					 $.xx.c(data);
+					 $.wj.c(data);
 				  }
 			});
 			});
@@ -507,7 +507,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
-						    	$.xx.location(BASE+"/example1/au.html");
+						    	$.wj.location(BASE+"/credit/au.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"
@@ -515,7 +515,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
-						    	$.xx.location(BASE+"/example1/au1.html");
+						    	$.wj.location(BASE+"/example1/au1.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"
@@ -523,7 +523,7 @@
 						{
 						    text: '新增',
 						    action: function ( e, dt, node, config ) {
-						    	$.xx.location(BASE+"/example1/au2.html");
+						    	$.wj.location(BASE+"/example1/au2.html");
 						        this.disable(); // disable button
 						    },
 						    className: " btn-primary"
@@ -559,7 +559,7 @@
 //     		"pagingType" : "full_numbers",//用于指定分页器风格 "full_numbers"" or ""two_button""， default ""two_button""
 //     		"bAutoWidth" : false, //是否主动策画表格各列宽度
     		"ajax" : {
-    			"url" :  '<%=path%>/cridit/getdata.html',
+    			"url" :  '<%=path%>/credit/getdata.html',
     			"type" : "POST",
     			"dataType" : "json"
     		},
@@ -570,16 +570,16 @@
 //     		"bSort" : false, // 排序功能
 //     		"searching" : false,
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
-//     		"order" : [],
+    		"order": [[6, 'desc']],
     		"columns" : [ 
-    			{"mData" : "no"},
-    			{"mData" : "type"},
+   				{"mData" : "name"},
     			{"mData" : "inherent_credit"},
     			{"mData" : "temporary_credit"},
     			{"mData" : "total_credit"},
     			{"mData" : "remaining_credit"},
     			{"mData" : "remaining_credit_percentage"},
-    			{"mData" : "street"},
+    			{"mData" : "touch_date"},
+    			{"mData" : "touch_date"},
     		 ],
 //     		 "preDrawCallback" : function(settings) {
 //     					one = 1;
@@ -587,18 +587,38 @@
     				
             "columnDefs": [
     		    {"render": function(data, type, row){    
-//     		    	return      ' <button class="btn btn-xs btn-warning  tooltip-info " data-rel="tooltip" data-placement="bottom" title="" onclick="read(\''
-//     							+ row.id
-//     							+ '\')"><i class=" ace-icon fa fa-eye bigger-120"></i>查看</button>'
-					return '<a href="#" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i>详情</a>'+
+					return '<a href="#" class="btn btn-primary btn-xs" onclick ="detial(\''+row.code+'\')"><i class="fa fa-folder"></i>明细</a>'+
 					'<a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>编辑</a>'+
 					'<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>删除</a>';
     		    },
                  "orderable": false,
-                 "targets": 8
+                 "targets": 7
              	}, 
+             	 {"render": function(data, type, row){    
+ 					return row.name+"("+row.count+")";
+     		    },
+                  "orderable": false,
+                  "targets": 0
+              	},
+	           	 {"render": function(data, type, row){    
+	           		 console.log(row.total_credit+ "("+row.temporary_credit+")");
+	           		 if (0==row.temporary_credit){
+	           			return row.total_credit;
+	           		 }
+					 else{
+						 return row.total_credit;
+	           		 }
+	  		    },
+	               "orderable": false,
+	               "targets": 1
+	           	},
             	]
     	});
+    
+    function detial(id){
+    	$.wj.location(BASE+"/credit/detial.html?id="+id);
+	};
+    
     table.buttons( '.csv' ).disable();
     </script>
   </body>
