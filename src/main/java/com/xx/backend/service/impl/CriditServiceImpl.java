@@ -67,7 +67,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService{
 	@Override
 	public int add(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		map.put("safty_cost_fee", FeeCost.fee(map.get("amount").toString()));
+		map.put("safty_cost_fee", "true".equals(map.get("type").toString())?FeeCost.fee(map.get("amount").toString()):"0");
 		int ret = baseDao.insert("baseFrame_Cridit.cridit_insert", map);
 		return ret;
 	}
