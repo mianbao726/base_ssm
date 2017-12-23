@@ -151,7 +151,6 @@ var BASE = "/"+APP;
 	};
 	
 	wj.p = function(data){
-		alert(333);
 		return {"params" : wj.json.encode(data)};
 	};
 	

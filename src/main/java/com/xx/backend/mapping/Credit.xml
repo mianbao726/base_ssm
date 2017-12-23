@@ -110,4 +110,8 @@
 		where 1=1  
 		and no = #{no}
 	</update>
+	<select id="getCreditInfos" parameterMap="paraMap" resultType="hashmap">
+		SELECT t.*,b.name,b.short_name FROM wj_credit t ,wj_bank b where t.type = b.code ORDER BY type desc
+	</select>
+	
 </mapper>

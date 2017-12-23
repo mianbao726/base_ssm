@@ -104,6 +104,22 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService{
 	}
 
 	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public Map<String, List> getCreditInfos(Map<String, Object> map){
+		List<Map<String,Object>> l = baseDao.selectList("baseFrame_Cridit.getCreditInfos", map);
+		Map<String,List> ret = new HashMap<String,List>();
+		for(Map<String,Object> m : l){
+			String key = m.get("type").toString()+"_"+m.get("name").toString()+"_"+m.get("short_name").toString();
+			List clist = ret.containsKey(key)?ret.get(key):new ArrayList<>();
+			clist.add(m.get("no")+"_"+m.get("card_name"));
+			ret.put(key, clist);
+		}
+		return ret;
+	}
+	
+	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
 	 */
 	public Map<String, Object>  detail(Map<String, Object> map){

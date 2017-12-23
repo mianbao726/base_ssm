@@ -120,6 +120,19 @@ public class CriditController extends BaseController {
 		criditService.pay(paramsMap);
 		return JSONObject.toJSONString(paramsMap);
 	}
+	
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/getCreditInfos.do")
+	public @ResponseBody
+	 String getCreditInfos(HttpServletRequest request, Model model) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("creditCardInfo", criditService.getCreditInfos(paramsMap));
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
