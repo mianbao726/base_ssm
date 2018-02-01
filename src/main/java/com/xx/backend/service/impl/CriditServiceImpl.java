@@ -100,8 +100,11 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService{
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
 	 */
 	public Map<String, Object>  index(Map<String, Object> map){
-		return pageServiceDao.index("baseFrame_Cridit.cridit_page", map);
+		Map<String, Object> ret = pageServiceDao.index("baseFrame_Cridit.cridit_page", map); 
+		return ret;
 	}
+	
+	
 
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact

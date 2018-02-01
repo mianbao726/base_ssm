@@ -305,7 +305,7 @@
                             <label>
                               <input id ="type" type="checkbox" class="js-switch" checked />  
                             </label>
-                            <lable id = "consumption_type">消费</lable>
+                            <lable id = "consumption_type">pay</lable>
                           </div>
                         </div>
                       </div>
@@ -412,9 +412,9 @@
 		
 		$("#type").change(function(){
 			if(document.querySelector('#type').checked){
-				$("#consumption_type").html("消费");
+				$("#consumption_type").html("pay");
 			}else{
-				$("#consumption_type").html("日常消费");
+				$("#consumption_type").html("消费");
 			}
 		});
 		

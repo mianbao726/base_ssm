@@ -16,6 +16,7 @@
 		total_credit,
 		remaining_credit,
 		remaining_credit_percentage,
+		month_bill_date,
 		count
 		from wj_bank
 		<if test="filter != null">
@@ -113,5 +114,12 @@
 	<select id="getCreditInfos" parameterMap="paraMap" resultType="hashmap">
 		SELECT t.*,b.name,b.short_name FROM wj_credit t ,wj_bank b where t.type = b.code ORDER BY type desc
 	</select>
+	
+	<select id="getAllCreditInfos" parameterMap="paraMap" resultType="hashmap">
+		SELECT t.* FROM wj_bank t where code like '%YH'
+	</select>
+	<update id="upate_credit_bill_date" parameterType="hashmap">
+		update wb.wj_bank set bill_date = DATE_FORMAT(#{bill_date}, '%Y-%m-%d %H:%i:%s') where id =#{id}
+	</update>
 	
 </mapper>

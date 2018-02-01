@@ -360,13 +360,13 @@
                   	<table id="datatable-xx" class="table table-striped dt-responsive nowrap projects" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-                          <th>银行</th>
-                          <th>固定额度</th>
+                          <th>bank</th>
+                          <th>quota</th>
+                          <th>bill_date</th>
                           <th>临时额度</th>
-                          <th>总额度</th>
                           <th>剩余额度</th>
-                          <th>剩余百分比</th>
-                          <th>最后操作时间</th>
+                          <th>剩余%</th>
+                          <th>touched</th>
                           <th>操作</th>
                         </tr>
                       </thead>
@@ -505,28 +505,28 @@
     		dom: "Bfrtip",
     		buttons: [
 						{
-						    text: '新增',
+						    text: 'spend',
 						    action: function ( e, dt, node, config ) {
 						    	$.wj.location(BASE+"/credit/au.html");
 						        this.disable(); // disable button
 						    },
-						    className: " btn-primary"
+						    className: " btn-info"
 						},
 						{
-						    text: '新增',
+						    text: 'repay',
 						    action: function ( e, dt, node, config ) {
 						    	$.wj.location(BASE+"/example1/au1.html");
 						        this.disable(); // disable button
 						    },
-						    className: " btn-primary"
+						    className: " btn-success"
 						},
 						{
-						    text: '新增',
+						    text: 'water',
 						    action: function ( e, dt, node, config ) {
 						    	$.wj.location(BASE+"/example1/au2.html");
 						        this.disable(); // disable button
 						    },
-						    className: " btn-primary"
+						    className: " btn-danger"
 						},
 						{
 						  extend: "copy",
@@ -573,9 +573,9 @@
     		"order": [[6, 'desc']],
     		"columns" : [ 
    				{"mData" : "name"},
-    			{"mData" : "inherent_credit"},
-    			{"mData" : "temporary_credit"},
     			{"mData" : "total_credit"},
+    			{"mData" : "month_bill_date"},
+    			{"mData" : "temporary_credit"},
     			{"mData" : "remaining_credit"},
     			{"mData" : "remaining_credit_percentage"},
     			{"mData" : "touch_date"},
@@ -587,9 +587,26 @@
     				
             "columnDefs": [
     		    {"render": function(data, type, row){    
-					return '<a href="#" class="btn btn-primary btn-xs" onclick ="detial(\''+row.code+'\')"><i class="fa fa-folder"></i>明细</a>'+
-					'<a href="#" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>编辑</a>'+
-					'<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>删除</a>';
+    		    	return '<div class="btn-group">'+
+		                    '<button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">pay<span class="caret"></span>'+
+		                    '</button>'+
+		                    '<ul role="menu" class="dropdown-menu">'+
+		                      '<li><a href="#">spend</a>'+
+		                      '</li>'+
+		                      '<li><a href="#">repay</a>'+
+		                      '</li>'+
+		                      '<li><a href="#">check</a>'+
+		                      '</li>'+
+		                      '<li class="divider"></li>'+
+		                      '<li><a href="#">water</a>'+
+		                      '</li>'+
+		                    '</ul>'+
+		                    '</div>&nbsp;'+
+				    '<div class="btn-group">'+'<a href="#" class="btn btn-primary btn-xs" onclick ="detial(\''+row.code+'\')"><i class="fa fa-align-left"></i>&nbsp;detial</a>'+'</div>'+
+//                 	'&nbsp;<div class="btn-group">'+'<a href="#" class="btn btn-info btn-xs"><i class="fa fa-rmb"></i>&nbsp;add</a>'+'</div>&nbsp;'+
+// 					'<div class="btn-group">'+'<a href="#" class="btn btn-success btn-xs"><i class="fa fa-repeat"></i>&nbsp;repay</a>'+'</div>&nbsp;'+
+// 					'<div class="btn-group">'+'<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-money"></i>&nbsp;pay</a>'+'</div>&nbsp;'+
+					'';
     		    },
                  "orderable": false,
                  "targets": 7
