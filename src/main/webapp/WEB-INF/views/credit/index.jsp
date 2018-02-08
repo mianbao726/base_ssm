@@ -37,6 +37,9 @@
     <link href="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/assets/default/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     
+    
+    <!-- Switchery -->
+    <link href="${pageContext.request.contextPath}/assets/default/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 
     <!-- Custom Theme Style -->
     <link href="${pageContext.request.contextPath}/assets/default/build/css/custom.min.css" rel="stylesheet">
@@ -330,6 +333,89 @@
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
           </div>
+          
+          
+           <div class="x_content">
+
+                  <!-- modals -->
+                  <!-- Small modal -->
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
+
+                  <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel2">pay</h4>
+                        </div>
+                        <div class="modal-body">
+                          
+                          <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">银行</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                          <select class="form-control" id = "bank">
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">卡号</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                          <select class="form-control" id = "cardno">
+<!--                             <option value ="5201690317587529">交行7529（家乐福）</option> -->
+<!--                             <option value ="6222530319933730">交行3730（航空卡）</option> -->
+<!--                             <option value ="6225758224851922">招商1922（迅雷）</option> -->
+<!--                             <option value ="5236497912127035">招商7035（环球卡）</option> -->
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="amount" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="remark" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">类型</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <div class="">
+                            <label>
+                              <input id ="type" type="checkbox" class="js-switch" checked />  
+                            </label>
+                            <lable id = "consumption_type">pay</lable>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id = "pay">Save changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /modals -->
+                </div>
+          
           <!-- /top tiles -->
 
             <div class="row">
@@ -363,11 +449,11 @@
                           <th>bank</th>
                           <th>quota</th>
                           <th>bill_date</th>
-                          <th>临时额度</th>
-                          <th>剩余额度</th>
-                          <th>剩余%</th>
+                          <th>temp</th>
+                          <th>remaining quota</th>
+                          <th>remaining%</th>
                           <th>touched</th>
-                          <th>操作</th>
+                          <th>operation</th>
                         </tr>
                       </thead>
                     </table>
@@ -449,6 +535,12 @@
     <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/vfs_fonts.js"></script>
     
     
+    
+    
+      <!-- Switchery -->
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/switchery/dist/switchery.min.js"></script>
+   
+   
    
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
@@ -484,6 +576,83 @@
 		});
 		
 		
+		//加载下拉框
+		  var creditData ;
+		  var select_flag = 0;
+		  var first_init_flag =0;
+		$.wj.ajax({
+				      contenttype : 'application/json; charset=utf-8',
+				      async: false,
+					  url: '<%=path%>/credit/getCreditInfos.do',
+					  type:"post",
+					  dataType:"json",
+					  success:function(data){
+						  creditData = data;
+						  setOptions(data,"");
+// 						  $.each(data.creditCardInfo, function(key, val){   
+// 								var keys = key.split("_");
+// 								$("#bank").append("<option value='"+keys[0]+"'>"+keys[1]+"</option>");
+// 								$.each(val,function(){
+// 									var cardi = this.split("_");
+// // 									if("" != mapkey && cardi[0] == mapkey)
+// 										$("#cardno").append("<option value='"+cardi[0]+"' rel = '"+keys[0]+"'>"+keys[2]+cardi[0].substring(12)+"("+cardi[1]+")"+"</option>");
+// 								});
+// 							  }); 
+					  }
+				});
+		function setOptions(data,selected_key){
+			$("#cardno").empty();
+			 $.each(data.creditCardInfo, function(key, val){   
+				var keys = key.split("_");
+				if(0 == first_init_flag)
+					$("#bank").append("<option value='"+keys[0]+"'>"+keys[1]+"</option>");
+				$.each(val,function(){
+					var cardi = this.split("_");
+					if(0==select_flag || keys[0] == selected_key)
+						$("#cardno").append("<option value='"+cardi[0]+"' rel = '"+keys[0]+"'>"+keys[2]+cardi[0].substring(12)+"("+cardi[1]+")"+"</option>");
+				});
+			  }); 
+			 first_init_flag =1;
+		}
+		
+		$("#cardno").change(function(){
+			$("#bank ").val($("#cardno").find("option:selected").attr("rel"));
+		});
+		
+		$("#bank").change(function(){
+			select_flag = 1;
+			setOptions(creditData,$("#bank").find("option:selected").val());
+		});
+		
+		$("#type").change(function(){
+			if(document.querySelector('#type').checked){
+				$("#consumption_type").html("pay");
+			}else{
+				$("#consumption_type").html("消费");
+			}
+		});
+		
+		 $("#pay").click(function(){
+				var params = {};
+				params['bank'] = $("#bank").val(); 
+				params['cardno'] = $("#cardno").val(); 
+				params['amount'] = $("#amount").val(); 
+				params['type'] = document.querySelector('#type').checked; 
+				params['remark'] = $("#remark").val(); 
+				console.log(params);
+				$.wj.ajax({
+			      contenttype : 'application/json; charset=utf-8',
+			      async: false,
+				  url: '<%=path%>/credit/pay.do',
+				  type:"post",
+				  dataType:"json",
+				  params:params,
+				  success:function(data){
+					  $.wj.location(BASE+"/credit/index.html");
+				  }
+			    });
+			});
+		 
      </script>
       <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
