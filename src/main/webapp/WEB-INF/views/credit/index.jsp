@@ -760,7 +760,7 @@
 		                    '<button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">pay<span class="caret"></span>'+
 		                    '</button>'+
 		                    '<ul role="menu" class="dropdown-menu">'+
-		                      '<li><a href="#">spend</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">spend</a>'+
 		                      '</li>'+
 		                      '<li><a href="#">repay</a>'+
 		                      '</li>'+
