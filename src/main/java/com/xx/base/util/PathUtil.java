@@ -2,6 +2,11 @@ package com.xx.base.util;
 
 import java.io.File;
 
+/**
+ * 路径工具类
+ * @author xx
+ *
+ */
 public class PathUtil {
 	
 	/**
