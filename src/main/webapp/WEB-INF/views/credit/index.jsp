@@ -576,6 +576,9 @@
 		});
 		
 		
+		//银行卡信息
+		var bankData;
+		
 		//加载下拉框
 		  var creditData ;
 		  var select_flag = 0;
@@ -760,7 +763,7 @@
 		                    '<button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">pay<span class="caret"></span>'+
 		                    '</button>'+
 		                    '<ul role="menu" class="dropdown-menu">'+
-		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">spend</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm" onclick="setDefaultBankInfo(\''+row.code+'\')">spend</a>'+
 		                      '</li>'+
 		                      '<li><a href="#">repay</a>'+
 		                      '</li>'+
@@ -803,6 +806,11 @@
     
     function detial(id){
     	$.wj.location(BASE+"/credit/detial.html?id="+id);
+	};
+	
+	function setDefaultBankInfo(bankType){
+		$("#bank").val(bankType);
+		$("#bank").change();
 	};
     
     table.buttons( '.csv' ).disable();
