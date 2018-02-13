@@ -364,6 +364,7 @@
                           <th>消费时间</th>
                           <th>金额</th>
                           <th>卡号</th>
+                          <th>备注</th>
                         </tr>
                       </thead>
                     </table>
@@ -554,6 +555,8 @@
    				{"mData" : "cr_date"},
     			{"mData" : "amount"},
     			{"mData" : "cardno"},
+    			{"mData" : "remark"},
+    			
     		 ],
             "columnDefs": [
             	]

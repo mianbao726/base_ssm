@@ -16,6 +16,8 @@
 		total_credit,
 		remaining_credit,
 		remaining_credit_percentage,
+		bill_amount,
+		pre_bill_amount,
 		month_bill_date,
 		count
 		from wj_bank
@@ -39,7 +41,7 @@
 	<select id="cridit_page_detail" parameterMap="paraMap" resultType="hashmap">
 		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
 		select
-		DATE_FORMAT(cr_date, '%Y-%m-%d %H:%i:%s') as cr_date,amount,cardno
+		DATE_FORMAT(cr_date, '%Y-%m-%d %H:%i:%s') as cr_date,amount,cardno,remark
 		from wj_record
 		<include refid="cridit_page_detail_where"/>
 		<if test="sort != null">ORDER BY ${sort} ${dir}</if>

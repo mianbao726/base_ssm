@@ -447,11 +447,10 @@
                       <thead>
                         <tr>
                           <th>bank</th>
-                          <th>quota</th>
-                          <th>bill_date</th>
-                          <th>temp</th>
                           <th>remaining quota</th>
-                          <th>remaining%</th>
+                          <th>bill_date</th>
+                          <th>quota</th>
+                          <th>temp</th>
                           <th>touched</th>
                           <th>operation</th>
                         </tr>
@@ -742,14 +741,13 @@
 //     		"bSort" : false, // 排序功能
 //     		"searching" : false,
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
-    		"order": [[6, 'desc']],
+    		"order": [[5, 'desc']],
     		"columns" : [ 
    				{"mData" : "name"},
-    			{"mData" : "total_credit"},
-    			{"mData" : "month_bill_date"},
-    			{"mData" : "temporary_credit"},
     			{"mData" : "remaining_credit"},
-    			{"mData" : "remaining_credit_percentage"},
+    			{"mData" : "month_bill_date"},
+    			{"mData" : "total_credit"},
+    			{"mData" : "temporary_credit"},
     			{"mData" : "touch_date"},
     			{"mData" : "touch_date"},
     		 ],
@@ -781,14 +779,14 @@
 					'';
     		    },
                  "orderable": false,
-                 "targets": 7
+                 "targets": 6
              	}, 
-             	 {"render": function(data, type, row){    
- 					return row.name+"("+row.count+")";
-     		    },
-                  "orderable": false,
-                  "targets": 0
-              	},
+//              	 {"render": function(data, type, row){    
+//  					return ;
+//      		    },
+//                   "orderable": false,
+//                   "targets": 0
+//               	},
 	           	 {"render": function(data, type, row){    
 	           		 console.log(row.total_credit+ "("+row.temporary_credit+")");
 	           		 if (0==row.temporary_credit){
@@ -799,8 +797,23 @@
 	           		 }
 	  		    },
 	               "orderable": false,
-	               "targets": 1
+	               "targets": 3
 	           	},
+	           	
+	            {"render": function(data, type, row){
+// 	           		return row.remaining_credit+" ("+row.remaining_credit_percentage+"%)";
+					return "<img src='${pageContext.request.contextPath}/assets/default/production/bank/"+row.code+".jpg' height='30' width='30' class='profile_img'>"+row.name+"("+row.count+")";
+	  		    },
+	               "orderable": false,
+	               "targets": 0
+	           	},
+	            {"render": function(data, type, row){
+	           		return row.bill_amount+" ("+row.pre_bill_amount+")";
+	  		    },
+	               "orderable": false,
+	               "targets": 2
+	           	},
+	           	
             	]
     	});
     
