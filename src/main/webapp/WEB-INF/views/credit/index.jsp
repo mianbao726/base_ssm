@@ -448,7 +448,7 @@
                         <tr>
                           <th>bank</th>
                           <th>remaining quota</th>
-                          <th>bill_date</th>
+                          <th>bill_amount</th>
                           <th>quota</th>
                           <th>temp</th>
                           <th>touched</th>
