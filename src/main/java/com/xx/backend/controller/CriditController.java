@@ -44,10 +44,8 @@ import com.xx.base.controller.BaseController;
 import com.xx.base.util.map.QMap;
 
 /**
- * spend 花销  
- * repay 还款
- * check 检查
- * water 线下流水 
+ * spend 花销 repay 还款 check 检查 water 线下流水
+ * 
  * @author generate by www.whatgoogle.com (ps : some question? contact
  *         zhuwj726@gmail.com)
  */
@@ -80,14 +78,14 @@ public class CriditController extends BaseController {
 	String getdata(HttpServletRequest request, Model model) throws Exception {
 		Map ret = null;
 		ret = new QMap("200");
-//		List<Map<String, Object>> data = criditService.index(null);
-		Map<String,Object> data = criditService.index(new HashMap());
+		// List<Map<String, Object>> data = criditService.index(null);
+		Map<String, Object> data = criditService.index(new HashMap());
 		ret.put("data", data.get("data"));
-		ret.put("recordsTotal", Integer.valueOf(((List)data.get("data")).size()));
-		ret.put("recordsFiltered", Integer.valueOf(((List)data.get("data")).size()));
+		ret.put("recordsTotal", Integer.valueOf(((List) data.get("data")).size()));
+		ret.put("recordsFiltered", Integer.valueOf(((List) data.get("data")).size()));
 		return JSONObject.toJSONString(ret);
 	}
-	
+
 	/**
 	 * 
 	 * @param request
@@ -101,20 +99,20 @@ public class CriditController extends BaseController {
 		Map ret = null;
 		ret = new QMap("200");
 		Map page = super.getParams(request);
-		Map<String,Object> data = criditService.detail(page);
+		Map<String, Object> data = criditService.detail(page);
 		ret.put("data", data.get("data"));
-		ret.put("recordsTotal", Integer.valueOf(((List)data.get("data")).size()));
-		ret.put("recordsFiltered", Integer.valueOf(((List)data.get("data")).size()));
+		ret.put("recordsTotal", Integer.valueOf(((List) data.get("data")).size()));
+		ret.put("recordsFiltered", Integer.valueOf(((List) data.get("data")).size()));
 		return JSONObject.toJSONString(ret);
 	}
-	
+
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
 	 */
 	@RequestMapping("/pay.do")
 	public @ResponseBody
-	 String pay(HttpServletRequest request, Model model) throws Exception {
+	String pay(HttpServletRequest request, Model model) throws Exception {
 		Map paramsMap = super.getParams(request);
 		paramsMap.put("status_code", "200");
 		String bank = paramsMap.get("bank").toString();
@@ -124,19 +122,20 @@ public class CriditController extends BaseController {
 		criditService.pay(paramsMap);
 		return JSONObject.toJSONString(paramsMap);
 	}
-	
+
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
 	 */
 	@RequestMapping("/getCreditInfos.do")
 	public @ResponseBody
-	 String getCreditInfos(HttpServletRequest request, Model model) throws Exception {
+	String getCreditInfos(HttpServletRequest request, Model model) throws Exception {
 		Map paramsMap = super.getParams(request);
 		paramsMap.put("creditCardInfo", criditService.getCreditInfos(paramsMap));
 		paramsMap.put("status_code", "200");
 		return JSONObject.toJSONString(paramsMap);
 	}
+
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
@@ -145,6 +144,7 @@ public class CriditController extends BaseController {
 	public String au(HttpServletRequest request, Model model) throws Exception {
 		return "credit/au";
 	}
+
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
@@ -153,6 +153,17 @@ public class CriditController extends BaseController {
 	public String detial(HttpServletRequest request, Model model) throws Exception {
 		return "credit/detial";
 	}
-	
-	
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/setBillInfo.do")
+	public @ResponseBody
+	String setBillInfo(HttpServletRequest request, Model model) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("setBillInfo", criditService.setBillInfo(paramsMap));
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
 }

@@ -62,4 +62,9 @@ public interface CriditService extends IBaseService {
 	 */
 	public Map<String, List> getCreditInfos(Map<String, Object> map);
 	
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	 */
+	public String setBillInfo(Map<String, Object> map);
 }

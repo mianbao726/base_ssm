@@ -334,7 +334,7 @@
             </div>
           </div>
           
-          
+          <!-- 输入消费金额的modal -->
            <div class="x_content">
 
                   <!-- modals -->
@@ -415,8 +415,55 @@
                   </div>
                   <!-- /modals -->
                 </div>
+          <!-- 输入金额的modal end -->
           
-          <!-- /top tiles -->
+          
+          <!-- 调整账单的modal -->
+           <div class="x_content">
+
+                  <!-- modals -->
+                  <!-- Small modal -->
+<!--                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button> -->
+
+                  <div class="modal fade bs-example-modal-sm-amount" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel2">bill info</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">账单金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="bill_amount" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">未出账单金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="pre_bill_amount" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id = "save_bill_info">Save changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /modals -->
+                </div>
+          <!-- 调整账单modal end -->
 
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
@@ -635,12 +682,12 @@
 		});
 		
 		 $("#pay").click(function(){
-				var params = {};
-				params['bank'] = $("#bank").val(); 
-				params['cardno'] = $("#cardno").val(); 
-				params['amount'] = $("#amount").val(); 
-				params['type'] = document.querySelector('#type').checked; 
-				params['remark'] = $("#remark").val(); 
+// 				var params = {};
+// 				params['bank'] = $("#bank").val(); 
+// 				params['cardno'] = $("#cardno").val(); 
+// 				params['amount'] = $("#amount").val(); 
+// 				params['type'] = document.querySelector('#type').checked; 
+// 				params['remark'] = $("#remark").val(); 
 				console.log(params);
 				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
@@ -770,6 +817,9 @@
 		                      '<li class="divider"></li>'+
 		                      '<li><a href="#">water</a>'+
 		                      '</li>'+
+		                      '<li class="divider"></li>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm-amount" onclick="setBillInfo(\''+row.code+'\',\''+row.bill_amount+'\',\''+row.pre_bill_amount+'\')">set.bill</a>'+
+		                      '</li>'+
 		                    '</ul>'+
 		                    '</div>&nbsp;'+
 				    '<div class="btn-group">'+'<a href="#" class="btn btn-primary btn-xs" onclick ="detial(\''+row.code+'\')"><i class="fa fa-align-left"></i>&nbsp;detial</a>'+'</div>'+
@@ -825,6 +875,39 @@
 		$("#bank").val(bankType);
 		$("#bank").change();
 	};
+	
+	function setBillInfo(bankType,bill_amount,pre_bill_amount){
+// 		$.wj.ajax({
+// 		      contenttype : 'application/json; charset=utf-8',
+// 		      async: false,
+<%-- 			  url: '<%=path%>/credit/pay.do', --%>
+// 			  type:"post",
+// 			  dataType:"json",
+// 			  params:params,
+// 			  success:function(data){
+// 				  $.wj.location(BASE+"/credit/index.html");
+// 			  }
+// 		    });
+		$("#bill_amount").val(bill_amount);
+		$("#pre_bill_amount").val(pre_bill_amount);
+	};
+	
+	$("#save_bill_info").click(function(){
+		var params = {};
+		params['bill_amount'] = $("#bank").val(); 
+		params['pre_bibill_amountll_amount'] = $("#pre_bibill_amountll_amount").val(); 
+		$.wj.ajax({
+	      contenttype : 'application/json; charset=utf-8',
+	      async: false,
+		  url: '<%=path%>/credit/setBillInfo.do',
+		  type:"post",
+		  dataType:"json",
+		  params:params,
+		  success:function(data){
+			  alert(data.status_code);
+		  },
+	    });
+	});
     
     table.buttons( '.csv' ).disable();
     </script>

@@ -92,6 +92,15 @@
 		and no = #{cardno}
 	</update>
 	
+	<update id="setBillInfo" parameterType="hashmap">
+		update wj_bank
+		set
+			remaining_credit = remaining_credit - #{amount},
+			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
+		where 1=1  
+		and no = #{cardno}
+	</update>
+	
 	<update id="pay_bank" parameterType="hashmap">
 		update wj_bank
 		set

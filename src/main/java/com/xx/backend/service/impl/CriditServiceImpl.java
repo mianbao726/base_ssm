@@ -156,4 +156,12 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService{
 		add(map);
 		return null;
 	}
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	 */
+	public String setBillInfo(Map<String, Object> map){
+		int count = baseDao.update("baseFrame_Cridit.setBillInfo",map);
+		return count ==1 ? "success" : "fail";
+	}
 }
