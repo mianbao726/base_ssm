@@ -876,26 +876,19 @@
 		$("#bank").change();
 	};
 	
+	var current_bank;
 	function setBillInfo(bankType,bill_amount,pre_bill_amount){
-// 		$.wj.ajax({
-// 		      contenttype : 'application/json; charset=utf-8',
-// 		      async: false,
-<%-- 			  url: '<%=path%>/credit/pay.do', --%>
-// 			  type:"post",
-// 			  dataType:"json",
-// 			  params:params,
-// 			  success:function(data){
-// 				  $.wj.location(BASE+"/credit/index.html");
-// 			  }
-// 		    });
+		current_bank = bankType ;
 		$("#bill_amount").val(bill_amount);
 		$("#pre_bill_amount").val(pre_bill_amount);
 	};
 	
 	$("#save_bill_info").click(function(){
 		var params = {};
-		params['bill_amount'] = $("#bank").val(); 
-		params['pre_bibill_amountll_amount'] = $("#pre_bibill_amountll_amount").val(); 
+		
+		params['current_bank'] = current_bank; 
+		params['bill_amount'] = $("#bill_amount").val(); 
+		params['pre_bill_amount'] = $("#pre_bill_amount").val(); 
 		$.wj.ajax({
 	      contenttype : 'application/json; charset=utf-8',
 	      async: false,
@@ -904,7 +897,7 @@
 		  dataType:"json",
 		  params:params,
 		  success:function(data){
-			  alert(data.status_code);
+			  $.wj.location(BASE+"/credit/index.html");
 		  },
 	    });
 	});

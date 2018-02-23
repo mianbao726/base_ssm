@@ -95,10 +95,10 @@
 	<update id="setBillInfo" parameterType="hashmap">
 		update wj_bank
 		set
-			remaining_credit = remaining_credit - #{amount},
-			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
+			bill_amount = #{bill_amount},
+			pre_bill_amount = #{pre_bill_amount}
 		where 1=1  
-		and no = #{cardno}
+		and code = #{current_bank}
 	</update>
 	
 	<update id="pay_bank" parameterType="hashmap">
