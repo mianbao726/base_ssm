@@ -879,16 +879,24 @@
 	var current_bank;
 	function setBillInfo(bankType,bill_amount,pre_bill_amount){
 		current_bank = bankType ;
-		$("#bill_amount").val(bill_amount);
-		$("#pre_bill_amount").val(pre_bill_amount);
+		if(0==bill_amount){
+			$("#bill_amount").attr("placeholder","0");
+		}else{
+			$("#bill_amount").val(bill_amount);
+		}
+		if(0==pre_bill_amount){
+			$("#pre_bill_amount").attr("placeholder","0");
+		}else{
+			$("#pre_bill_amount").val(pre_bill_amount);
+		}
 	};
 	
 	$("#save_bill_info").click(function(){
 		var params = {};
 		
 		params['current_bank'] = current_bank; 
-		params['bill_amount'] = $("#bill_amount").val(); 
-		params['pre_bill_amount'] = $("#pre_bill_amount").val(); 
+		params['bill_amount'] = ""==$("#bill_amount").val()?0:$("#bill_amount").val(); 
+		params['pre_bill_amount'] = ""==$("#pre_bill_amount").val()?0:$("#pre_bill_amount").val(); 
 		$.wj.ajax({
 	      contenttype : 'application/json; charset=utf-8',
 	      async: false,

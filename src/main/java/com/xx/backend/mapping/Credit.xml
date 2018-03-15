@@ -130,7 +130,10 @@
 		SELECT t.* FROM wj_bank t where code like '%YH'
 	</select>
 	<update id="upate_credit_bill_date" parameterType="hashmap">
-		update wb.wj_bank set bill_date = DATE_FORMAT(#{bill_date}, '%Y-%m-%d %H:%i:%s') where id =#{id}
+		update wb.wj_bank set 
+			bill_date = DATE_FORMAT(#{bill_date}, '%Y-%m-%d %H:%i:%s'),
+			bill_repay_date = DATE_FORMAT(#{bill_repay_date}, '%Y-%m-%d %H:%i:%s')
+		 where id =#{id}
 	</update>
 	
 </mapper>

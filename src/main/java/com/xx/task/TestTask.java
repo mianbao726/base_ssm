@@ -27,6 +27,7 @@ public class TestTask {
         	//更新账单日
         	m.remove("bill_date");
         	m.put("bill_date", QuotaDateUtil.format(QuotaDateUtil.getMonthDate(m.get("month_bill_date").toString())));
+        	m.put("bill_repay_date", QuotaDateUtil.format(QuotaDateUtil.getRepayDate(m.get("bill_date").toString(),m.get("bill_repay_day_count").toString())));
         	baseDao.update("upate_credit_bill_date",m);
         }
         long end = System.currentTimeMillis();
