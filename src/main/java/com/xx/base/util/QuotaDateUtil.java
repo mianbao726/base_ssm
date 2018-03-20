@@ -34,11 +34,18 @@ public class QuotaDateUtil {
 	public static Calendar getRepayDate(String date,String dayCount){
 		Calendar c = Calendar.getInstance();
 		Date d = QuotaDateUtil.parse(date);
-		c.setTime(new Date());
+		c.setTime(d);
 		c.add(Calendar.DATE, Integer.valueOf(dayCount));
 		System.out.println(format(c,"yyyy-MM-dd"));
 		return c;
 	} 
+	
+	
+	public static void main(String[] args) {
+		getRepayDate("2018-01-01","15");
+	}
+	
+	
 	
 	public static String format(Calendar cd,String f){
 		SimpleDateFormat sdf = new SimpleDateFormat(f); 
@@ -66,7 +73,4 @@ public class QuotaDateUtil {
 		return QuotaDateUtil.parse(date,"yyyy-MM-dd");
 	}
 	
-	public static void main(String[] args) {
-		QuotaDateUtil.getMonthDate("3");
-	}
 }

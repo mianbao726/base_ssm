@@ -494,8 +494,8 @@
                       <thead>
                         <tr>
                           <th>bank</th>
-                          <th>remaining quota</th>
                           <th>bill_amount</th>
+                          <th>remaining quota</th>
                           <th>quota</th>
                           <th>temp</th>
                           <th>touched</th>
@@ -791,17 +791,16 @@
     		"order": [[5, 'desc']],
     		"columns" : [ 
    				{"mData" : "name"},
-    			{"mData" : "remaining_credit"},
     			{"mData" : "month_bill_date"},
+    			{"mData" : "remaining_credit"},
     			{"mData" : "total_credit"},
-    			{"mData" : "temporary_credit"},
+    			{"mData" : "bill_date"},
     			{"mData" : "touch_date"},
     			{"mData" : "touch_date"},
     		 ],
 //     		 "preDrawCallback" : function(settings) {
 //     					one = 1;
 //     				},
-    				
             "columnDefs": [
     		    {"render": function(data, type, row){    
     		    	return '<div class="btn-group">'+
@@ -831,24 +830,6 @@
                  "orderable": false,
                  "targets": 6
              	}, 
-//              	 {"render": function(data, type, row){    
-//  					return ;
-//      		    },
-//                   "orderable": false,
-//                   "targets": 0
-//               	},
-	           	 {"render": function(data, type, row){    
-	           		 console.log(row.total_credit+ "("+row.temporary_credit+")");
-	           		 if (0==row.temporary_credit){
-	           			return row.total_credit;
-	           		 }
-					 else{
-						 return row.total_credit;
-	           		 }
-	  		    },
-	               "orderable": false,
-	               "targets": 3
-	           	},
 	           	
 	            {"render": function(data, type, row){
 // 	           		return row.remaining_credit+" ("+row.remaining_credit_percentage+"%)";
@@ -858,10 +839,36 @@
 	               "targets": 0
 	           	},
 	            {"render": function(data, type, row){
-	           		return row.bill_amount+" ("+row.pre_bill_amount+")";
+	            	
+	           		return $.wj.formatMoney(row.bill_amount)+" ("+$.wj.formatMoney(row.pre_bill_amount)+")";
+	  		    },
+	               "orderable": false,
+	               "targets": 1
+	           	},
+ 				{"render": function(data, type, row){
+	            	
+	           		return $.wj.formatMoney(row.remaining_credit);
 	  		    },
 	               "orderable": false,
 	               "targets": 2
+	           	},
+	           	
+ 				{"render": function(data, type, row){
+	            	if(null == row.temporary_credit || "0" == row.temporary_credit){
+		           		return $.wj.formatMoney(row.total_credit);
+	            	}else{
+	            		return $.wj.formatMoney(row.total_credit)+" ("+$.wj.formatMoney(row.temporary_credit)+")";
+	            	}
+	  		    },
+	               "orderable": false,
+	               "targets": 3
+	           	},
+	           	
+	           	{"render": function(data, type, row){
+	            	return row.fee_free_day_count;
+	  		    },
+	               "orderable": false,
+	               "targets": 4
 	           	},
 	           	
             	]

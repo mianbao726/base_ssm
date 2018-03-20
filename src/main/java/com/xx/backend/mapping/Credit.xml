@@ -10,6 +10,8 @@
 		select
 		code,
 		DATE_FORMAT(touch_date, '%Y-%m-%d %H:%i:%s') as touch_date,
+		case when bill_date is null then DATE_FORMAT(now(), '%Y-%m-%d') else DATE_FORMAT(bill_date, '%Y-%m-%d') end as bill_date,
+		TIMESTAMPDIFF(DAY,now(),bill_date)+bill_repay_day_count as fee_free_day_count,
 		name,
 		inherent_credit,
 		temporary_credit,
@@ -127,7 +129,8 @@
 	</select>
 	
 	<select id="getAllCreditInfos" parameterMap="paraMap" resultType="hashmap">
-		SELECT t.* FROM wj_bank t where code like '%YH'
+		SELECT t.* FROM wj_bank t 
+<!-- 		where code like '%YH'  -->
 	</select>
 	<update id="upate_credit_bill_date" parameterType="hashmap">
 		update wb.wj_bank set 
