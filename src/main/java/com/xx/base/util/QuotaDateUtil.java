@@ -40,6 +40,21 @@ public class QuotaDateUtil {
 		return c;
 	} 
 	
+	/**
+	 * 计算还款日
+	 * @param date
+	 * @return
+	 */
+	public static Calendar getRepayFixedDate(String date,String dayCount,String isNextMonth){
+		Calendar c = Calendar.getInstance();
+		Date d = QuotaDateUtil.parse(date);
+		c.setTime(d);
+		c.set(Calendar.DATE, Integer.parseInt(dayCount));
+		c.add(Calendar.MONTH, Integer.parseInt(isNextMonth));
+		System.out.println(format(c,"yyyy-MM-dd"));
+		return c;
+	} 
+	
 	
 	public static void main(String[] args) {
 		getRepayDate("2018-01-01","15");
