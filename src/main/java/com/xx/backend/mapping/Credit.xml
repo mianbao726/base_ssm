@@ -11,7 +11,8 @@
 		code,
 		DATE_FORMAT(touch_date, '%Y-%m-%d %H:%i:%s') as touch_date,
 		case when bill_date is null then DATE_FORMAT(now(), '%Y-%m-%d') else DATE_FORMAT(bill_date, '%Y-%m-%d') end as bill_date,
-		TIMESTAMPDIFF(DAY,now(),bill_date)+bill_repay_day_count as fee_free_day_count,
+		TIMESTAMPDIFF(DAY,now(),bill_date)+ case when bill_repay_day_count is null then 0 else  bill_repay_day_count end as fee_free_day_count,
+		total_credit - bill_amount - pre_bill_amount - remaining_credit as problem_money, 
 		name,
 		inherent_credit,
 		temporary_credit,
@@ -98,6 +99,7 @@
 		update wj_bank
 		set
 			bill_amount = #{bill_amount},
+			remaining_credit = #{remaining_credit},
 			pre_bill_amount = #{pre_bill_amount}
 		where 1=1  
 		and code = #{current_bank}

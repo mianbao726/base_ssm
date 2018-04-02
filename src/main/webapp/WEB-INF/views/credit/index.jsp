@@ -450,6 +450,12 @@
                            <input type="text" id="pre_bill_amount" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">剩余额度</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="remaining_credit" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
                     </form>
                   </div>
                         </div>
@@ -788,6 +794,7 @@
 //     		"bSort" : false, // 排序功能
 //     		"searching" : false,
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
+			"paging": false,
     		"order": [[5, 'desc']],
     		"columns" : [ 
    				{"mData" : "name"},
@@ -817,7 +824,7 @@
 		                      '<li><a href="#">water</a>'+
 		                      '</li>'+
 		                      '<li class="divider"></li>'+
-		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm-amount" onclick="setBillInfo(\''+row.code+'\',\''+row.bill_amount+'\',\''+row.pre_bill_amount+'\')">set.bill</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm-amount" onclick="setBillInfo(\''+row.code+'\',\''+row.bill_amount+'\',\''+row.pre_bill_amount+'\',\''+row.remaining_credit+'\')">set.bill</a>'+
 		                      '</li>'+
 		                    '</ul>'+
 		                    '</div>&nbsp;'+
@@ -832,22 +839,28 @@
              	}, 
 	           	
 	            {"render": function(data, type, row){
+	            	var tail = "";
+	            	if(row.problem_money != '0'){
+	            		tail = "(<font color = 'red' >"+row.problem_money+"</font>)";
+	            	}
 // 	           		return row.remaining_credit+" ("+row.remaining_credit_percentage+"%)";
-					return "<img src='${pageContext.request.contextPath}/assets/default/production/bank/"+row.code+".jpg' height='30' width='30' class='profile_img'>"+row.name+"("+row.count+")";
+					return "<img src='${pageContext.request.contextPath}/assets/default/production/bank/"+row.code+".jpg' height='30' width='30' class='profile_img'>&nbsp;&nbsp;"+row.name
+					//+"("+row.count+")" //卡片数量
+					+ tail;
 	  		    },
 	               "orderable": false,
 	               "targets": 0
 	           	},
 	            {"render": function(data, type, row){
 	            	
-	           		return $.wj.formatMoney(row.bill_amount)+" ("+$.wj.formatMoney(row.pre_bill_amount)+")";
+	           		return $.wj.formatMoney(row.bill_amount)+" (<font color = '#5cb85c'>"+$.wj.formatMoney(row.pre_bill_amount)+"</font>)";
 	  		    },
 	               "orderable": false,
 	               "targets": 1
 	           	},
  				{"render": function(data, type, row){
 	            	
-	           		return $.wj.formatMoney(row.remaining_credit);
+	           		return $.wj.formatMoney(row.remaining_credit)+"(<font color = 'red'>"+$.wj.formatNumnber(row.remaining_credit/row.total_credit*100)+"%</font>)";
 	  		    },
 	               "orderable": false,
 	               "targets": 2
@@ -864,8 +877,23 @@
 	               "targets": 3
 	           	},
 	           	
+// 	           	{"render": function(data, type, row){
+// 	            	if(null == row.temporary_credit || "0" == row.temporary_credit){
+// 		           		return $.wj.formatMoney(row.total_credit);
+// 	            	}else{
+// 	            		return $.wj.formatMoney(row.total_credit)+" ("+$.wj.formatMoney(row.temporary_credit)+")";
+// 	            	}
+// 	  		    },
+// 	               "orderable": false,
+// 	               "targets": 4
+// 	           	},
+	           	
 	           	{"render": function(data, type, row){
-	            	return row.fee_free_day_count;
+	           		if("" == row.fee_free_day_count || null == row.fee_free_day_count){
+	           			return "0";
+	           		}else{
+		            	return row.fee_free_day_count;
+	           		}
 	  		    },
 	               "orderable": false,
 	               "targets": 4
@@ -884,7 +912,7 @@
 	};
 	
 	var current_bank;
-	function setBillInfo(bankType,bill_amount,pre_bill_amount){
+	function setBillInfo(bankType,bill_amount,pre_bill_amount,remaining_credit){
 		current_bank = bankType ;
 		if(0==bill_amount){
 			$("#bill_amount").attr("placeholder","0");
@@ -896,6 +924,12 @@
 		}else{
 			$("#pre_bill_amount").val(pre_bill_amount);
 		}
+		if(0==remaining_credit){
+			$("#remaining_credit").attr("placeholder","0");
+		}else{
+			$("#remaining_credit").val(remaining_credit);
+		}
+		
 	};
 	
 	$("#save_bill_info").click(function(){
@@ -904,6 +938,7 @@
 		params['current_bank'] = current_bank; 
 		params['bill_amount'] = ""==$("#bill_amount").val()?0:$("#bill_amount").val(); 
 		params['pre_bill_amount'] = ""==$("#pre_bill_amount").val()?0:$("#pre_bill_amount").val(); 
+		params['remaining_credit'] = ""==$("#remaining_credit").val()?0:$("#remaining_credit").val(); 
 		$.wj.ajax({
 	      contenttype : 'application/json; charset=utf-8',
 	      async: false,
