@@ -303,34 +303,34 @@
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
-              <div class="count">2500</div>
-              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+              <span class="count_top"><i class="fa fa-user"></i> 当前收支</span>
+              <div class="count red" id = "total_income_and_expenditure" style="font-size:20px"></div>
+              <span class="count_bottom"><i class="green" id = "total_both_bill_amount"><i class="fa fa-sort-asc"></i> </i>全部账单</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-clock-o"></i> Average Time</span>
-              <div class="count">123.50</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+              <span class="count_top"><i class="fa fa-user" onclick ="setSummaryInfo()" data-toggle="modal" data-target=".bs-example-modal-sm-summary"></i> 账单总金额</span>
+              <div class="count" id = "total_total_bill_amount" style="font-size:20px"></div>
+              <span class="count_bottom"><i class="green" id ="total_unposted_total_bill_amount"></i> 未出</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Males</span>
-              <div class="count green">2,500</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+              <span class="count_top"><i class="fa fa-clock-o"></i> 银行帐号金额</span>
+              <div class="count"  id = "total_bank_amount" style="font-size:20px"></div>
+              <span class="count_bottom"><i class="green" id ="total_cash"><i class="fa fa-sort-asc"></i> </i> 现金</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Females</span>
-              <div class="count">4,567</div>
-              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
+              <span class="count_top"><i class="fa fa-user"></i> 次日到帐</span>
+              <div class="count" id = "total_next_day_arrival" style="font-size:20px"></div>
+              <span class="count_bottom"><i class="green" id = "total_travel_expenses"><i class="fa fa-sort-asc"></i> </i> 差旅</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Collections</span>
-              <div class="count">2,315</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+              <span class="count_top"><i class="fa fa-user"></i> 外借金额</span>
+              <div class="count green" id ="total_debt" style="font-size:20px"></div>
+              <span class="count_bottom"><i class="green" id = "total_instalment_amount"><i class="fa fa-sort-asc"></i>34% </i> 分期金额</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
-              <div class="count">7,325</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+              <span class="count_top"><i class="fa fa-user"></i> 定期理财产品金额</span>
+              <div class="count" id = "total_financial_product_amount" style="font-size:20px"></div>
+              <span class="count_bottom"><i class="red" id ="total_financial_product_amount_income" ><i class="fa fa-sort-desc"></i></i> 利润</span>
             </div>
           </div>
           
@@ -456,12 +456,125 @@
                            <input type="text" id="remaining_credit" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
+                      <div class="count red" id="help_amount" style="font-size:20px">$0</div>
+                      <div rel="hidden_area" style ="display:none">
+                      	<input type="hidden" id="credit"/>
+                      </div>
                     </form>
                   </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                           <button type="button" class="btn btn-primary" id = "save_bill_info">Save changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /modals -->
+                </div>
+          <!-- 调整账单modal end -->
+          
+          
+          <!-- 汇总信息的modal -->
+           <div class="x_content">
+
+                  <!-- modals -->
+                  <!-- Small modal -->
+<!--                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button> -->
+
+                  <div class="modal fade bs-example-modal-sm-summary" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel2">summary info</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">次日到帐</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="next_day_arrival" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">招招盈&活期</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="bank_amount" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">出借金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="debt" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">定期金融理财产品</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="financial_product_amount" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">定期金融理财产品收益</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="financial_product_amount_income" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">现金</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="cash" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">待报销差旅费</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="travel_expenses" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">分期金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="instalment_amount" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">当前收支</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="income_and_expenditure" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">已出账单金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="total_bill_amount" readonly required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">为出账单金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="unposted_total_bill_amount" readonly required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id = "save_summary_info">Save changes</button>
                         </div>
 
                       </div>
@@ -503,7 +616,7 @@
                           <th>bill_amount</th>
                           <th>remaining quota</th>
                           <th>quota</th>
-                          <th>temp</th>
+                          <th>最长账单期</th>
                           <th>touched</th>
                           <th>operation</th>
                         </tr>
@@ -644,17 +757,41 @@
 					  success:function(data){
 						  creditData = data;
 						  setOptions(data,"");
-// 						  $.each(data.creditCardInfo, function(key, val){   
-// 								var keys = key.split("_");
-// 								$("#bank").append("<option value='"+keys[0]+"'>"+keys[1]+"</option>");
-// 								$.each(val,function(){
-// 									var cardi = this.split("_");
-// // 									if("" != mapkey && cardi[0] == mapkey)
-// 										$("#cardno").append("<option value='"+cardi[0]+"' rel = '"+keys[0]+"'>"+keys[2]+cardi[0].substring(12)+"("+cardi[1]+")"+"</option>");
-// 								});
-// 							  }); 
 					  }
 				});
+		
+		
+		//设置统计信息
+		function display_summaryInfo(){
+			$.wj.ajax({
+			      contenttype : 'application/json; charset=utf-8',
+				  url: '<%=path%>/credit/summaryInformation.do',
+				  type:"post",
+				  dataType:"json",
+				  success:function(data){
+					$("#total_total_bill_amount").html($.wj.formatMoney(data.setBillInfo[0].total_bill_amount));
+					$("#total_unposted_total_bill_amount").html($.wj.formatMoney(data.setBillInfo[0].unposted_total_bill_amount));
+					
+					$("#total_bank_amount").html($.wj.formatMoney(data.setBillInfo[0].bank_amount));
+					$("#total_cash").html($.wj.formatMoney(data.setBillInfo[0].cash));
+					
+					$("#total_financial_product_amount").html($.wj.formatMoney(data.setBillInfo[0].total_product_amount_income));
+					$("#total_financial_product_amount_income").html($.wj.formatMoney(data.setBillInfo[0].financial_product_amount_income));
+					
+					$("#total_debt").html($.wj.formatMoney(data.setBillInfo[0].debt));
+					$("#total_travel_expenses").html($.wj.formatMoney(data.setBillInfo[0].travel_expenses));
+					
+					$("#total_next_day_arrival").html($.wj.formatMoney(data.setBillInfo[0].next_day_arrival));
+					$("#total_instalment_amount").html($.wj.formatMoney(data.setBillInfo[0].instalment_amount));
+					
+					$("#total_income_and_expenditure").html($.wj.formatMoney(data.setBillInfo[0].income_and_expenditure));
+					
+					$("#total_both_bill_amount").html($.wj.formatMoney(data.setBillInfo[0].both_bill_amount));
+				  }
+			});
+		};
+		
+		display_summaryInfo();
 		function setOptions(data,selected_key){
 			$("#cardno").empty();
 			 $.each(data.creditCardInfo, function(key, val){   
@@ -707,6 +844,7 @@
 				  }
 			    });
 			});
+		 
 		 
      </script>
       <!-- Custom Theme Scripts -->
@@ -824,7 +962,7 @@
 		                      '<li><a href="#">water</a>'+
 		                      '</li>'+
 		                      '<li class="divider"></li>'+
-		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm-amount" onclick="setBillInfo(\''+row.code+'\',\''+row.bill_amount+'\',\''+row.pre_bill_amount+'\',\''+row.remaining_credit+'\')">set.bill</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm-amount" onclick="setBillInfo(\''+row.code+'\',\''+row.bill_amount+'\',\''+row.pre_bill_amount+'\',\''+row.remaining_credit+'\',\''+row.total_credit+'\')">set.bill</a>'+
 		                      '</li>'+
 		                    '</ul>'+
 		                    '</div>&nbsp;'+
@@ -912,7 +1050,12 @@
 	};
 	
 	var current_bank;
-	function setBillInfo(bankType,bill_amount,pre_bill_amount,remaining_credit){
+	function setBillInfo(bankType,bill_amount,pre_bill_amount,remaining_credit,credit){
+		//清空数据
+		$("#bill_amount").val("0");
+		$("#pre_bill_amount").val("0");
+		$("#remaining_credit").val("0");
+		
 		current_bank = bankType ;
 		if(0==bill_amount){
 			$("#bill_amount").attr("placeholder","0");
@@ -930,6 +1073,72 @@
 			$("#remaining_credit").val(remaining_credit);
 		}
 		
+		$("#credit").val(credit);
+		
+		//重新计算可疑金额
+		calAmount();
+		
+	};
+	
+	function setSummaryInfo(){
+		$.wj.ajax({
+		      contenttype : 'application/json; charset=utf-8',
+			  url: '<%=path%>/credit/summaryInformation.do',
+			  type:"post",
+			  dataType:"json",
+			  success:function(data){
+// 				  $("#total_amount").html(data.setBillInfo[0].next_day_arrival);
+				if(0==data.setBillInfo[0].next_day_arrival){
+				  $("#next_day_arrival").attr("placeholder","0");
+				}else{
+				  $("#next_day_arrival").val(data.setBillInfo[0].next_day_arrival);
+				}
+				if(0==data.setBillInfo[0].bank_amount){
+				  $("#bank_amount").attr("placeholder","0");
+				}else{
+					 $("#bank_amount").val(data.setBillInfo[0].bank_amount);
+				}
+				if(0==data.setBillInfo[0].debt){
+				  $("#debt").attr("placeholder","0");
+				}else{
+					 $("#debt").val(data.setBillInfo[0].debt);
+				}
+				if(0==data.setBillInfo[0].financial_product_amount){
+				  $("#financial_product_amount").attr("placeholder","0");
+				}else{
+					$("#financial_product_amount").val(data.setBillInfo[0].financial_product_amount);
+				}
+				if(0==data.setBillInfo[0].financial_product_amount_income){
+				  $("#financial_product_amount_income").attr("placeholder","0");
+				}else{
+					 $("#financial_product_amount_income").val(data.setBillInfo[0].financial_product_amount_income);
+				}
+				if(0==data.setBillInfo[0].cash){
+				  $("#cash").attr("placeholder","0");
+				}else{
+					 $("#cash").val(data.setBillInfo[0].cash);
+				}
+				if(0==data.setBillInfo[0].travel_expenses){
+				  $("#travel_expenses").attr("placeholder","0");
+				}else{
+					$("#travel_expenses").val(data.setBillInfo[0].travel_expenses);
+				}
+				if(0==data.setBillInfo[0].instalment_amount){
+				  $("#instalment_amount").attr("placeholder","0");
+				}else{
+					$("#instalment_amount").val(data.setBillInfo[0].instalment_amount);
+				}
+				if(0==data.setBillInfo[0].income_and_expenditure){
+				  $("#income_and_expenditure").attr("placeholder","0");
+				}else{
+					$("#income_and_expenditure").val(data.setBillInfo[0].income_and_expenditure);
+				}
+				
+				$("#total_bill_amount").val(data.setBillInfo[0].total_bill_amount);
+				$("#unposted_total_bill_amount").val(data.setBillInfo[0].unposted_total_bill_amount);
+			  }
+		});
+	
 	};
 	
 	$("#save_bill_info").click(function(){
@@ -951,6 +1160,48 @@
 		  },
 	    });
 	});
+	
+	$("#save_summary_info").click(function(){
+		var params = {};
+		params['next_day_arrival'] = ""==$("#next_day_arrival").val()?0:$("#next_day_arrival").val(); ; 
+		params['bank_amount'] = ""==$("#bank_amount").val()?0:$("#bank_amount").val(); 
+		params['debt'] = ""==$("#debt").val()?0:$("#debt").val(); 
+		params['financial_product_amount'] = ""==$("#financial_product_amount").val()?0:$("#financial_product_amount").val(); 
+		params['financial_product_amount_income'] = ""==$("#financial_product_amount_income").val()?0:$("#financial_product_amount_income").val(); 
+		params['cash'] = ""==$("#cash").val()?0:$("#cash").val(); 
+		params['travel_expenses'] = ""==$("#travel_expenses").val()?0:$("#travel_expenses").val(); 
+		params['instalment_amount'] = ""==$("#instalment_amount").val()?0:$("#instalment_amount").val(); 
+		params['income_and_expenditure'] = ""==$("#income_and_expenditure").val()?0:$("#income_and_expenditure").val(); 
+		$.wj.ajax({
+	      contenttype : 'application/json; charset=utf-8',
+	      async: false,
+		  url: '<%=path%>/credit/setSummaryInfo.do',
+		  type:"post",
+		  dataType:"json",
+		  params:params,
+		  success:function(data){
+			  $.wj.location(BASE+"/credit/index.html");
+		  },
+	    });
+	});
+	
+    //计算可疑金额 
+	function calAmount(){
+		var bill_amount = $("#bill_amount").val();
+		var pre_bill_amount = $("#pre_bill_amount").val();
+		var remaining_credit = $("#remaining_credit").val();
+		var credit = $("#credit").val();
+		$("#help_amount").html($.wj.formatMoney($.wj.sub($.wj.sub($.wj.sub(credit,remaining_credit) , pre_bill_amount) , bill_amount)));
+	}
+    $("#bill_amount").keyup(function(){
+    	calAmount();
+    });
+    $("#pre_bill_amount").keyup(function(){
+    	calAmount();
+    });
+    $("#remaining_credit").keyup(function(){
+    	calAmount();
+    });
     
     table.buttons( '.csv' ).disable();
     </script>

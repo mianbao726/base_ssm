@@ -115,9 +115,45 @@
 		and code = (select distinct(type) from wj_credit where no=#{cardno})
 	</update>
 	
+	<update id="setSummaryInfo" parameterType="hashmap">
+		update wj_financial_information
+		set
+			next_day_arrival =  #{next_day_arrival},
+			bank_amount = #{bank_amount},
+			
+			debt = #{debt},
+			financial_product_amount = #{financial_product_amount},
+			financial_product_amount_income = #{financial_product_amount_income},
+			cash = #{cash},
+			travel_expenses = #{travel_expenses},
+			instalment_amount = #{instalment_amount},
+			income_and_expenditure = #{income_and_expenditure}
+			
+		where 1=1  
+		
+	</update>
+	
 	<select id="getCredit_List" parameterMap="paraMap" resultType="hashmap">
 		SELECT * FROM wj_credit where type = #{bank} ORDER BY temporary_credit desc
 	</select>
+	
+	<select id="summaryInformation" parameterMap="paraMap" resultType="hashmap">
+		SELECT    next_day_arrival,
+				  bank_amount,
+				  debt ,
+				  financial_product_amount,
+				  financial_product_amount_income ,
+				  financial_product_amount + financial_product_amount_income  as  total_product_amount_income,
+				  cash ,
+				  travel_expenses ,
+				  instalment_amount ,
+				  income_and_expenditure ,
+				  total_bill_amount ,
+				  unposted_total_bill_amount ,
+				  total_bill_amount + unposted_total_bill_amount as both_bill_amount 
+		 FROM wj_financial_information
+	</select>
+	
 	<update id="creditOtherCard" parameterType="hashmap">
 		update wj_credit
 		set
@@ -139,6 +175,15 @@
 			bill_date = DATE_FORMAT(#{bill_date}, '%Y-%m-%d %H:%i:%s'),
 			bill_repay_date = DATE_FORMAT(#{bill_repay_date}, '%Y-%m-%d %H:%i:%s')
 		 where id =#{id}
+	</update>
+	
+
+	<update id="update_summary_info" parameterType="hashmap">
+		update wj_financial_information 
+		set total_bill_amount = (select sum(bill_amount) from wj_bank) ,
+			unposted_total_bill_amount = (select sum(pre_bill_amount) from wj_bank) ,
+	        income_and_expenditure= next_day_arrival+ bank_amount + debt +financial_product_amount + financial_product_amount_income + cash + travel_expenses - instalment_amount - total_bill_amount - unposted_total_bill_amount
+	    where id>=0
 	</update>
 	
 </mapper>

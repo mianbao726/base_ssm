@@ -166,4 +166,31 @@ public class CriditController extends BaseController {
 		paramsMap.put("status_code", "200");
 		return JSONObject.toJSONString(paramsMap);
 	}
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/summaryInformation.do")
+	public @ResponseBody
+	String summaryInformation(HttpServletRequest request, Model model) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("setBillInfo", criditService.summaryInformation(paramsMap));
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
+	
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/setSummaryInfo.do")
+	public @ResponseBody
+	String setSummaryInfo(HttpServletRequest request, Model model) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("setBillInfo", criditService.setSummaryInfo(paramsMap));
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
+	
 }
