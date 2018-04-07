@@ -183,7 +183,9 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public List setSummaryInfo(Map<String, Object> map) {
-		return baseDao.selectList("baseFrame_Cridit.setSummaryInfo", map);
+		List ret = baseDao.selectList("baseFrame_Cridit.setSummaryInfo", map);
+		upateSummaryInfo();
+		return ret;
 	}
 	
 	public void upateSummaryInfo(){

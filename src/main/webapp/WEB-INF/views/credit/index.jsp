@@ -552,7 +552,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">当前收支</label>
                         <div class="col-md-6 col-sm-9 col-xs-12">
-                           <input type="text" id="income_and_expenditure" required="required" class="form-control col-md-7 col-xs-12">
+                           <input type="text" id="income_and_expenditure" required="required" readonly class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       
@@ -588,7 +588,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>CRUD genernate <small>different form elements</small></h2>
+                    <h2>bill info<small>no paging</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up" title="收放"></i></a>
                       </li>
