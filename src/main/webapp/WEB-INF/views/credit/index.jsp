@@ -443,12 +443,14 @@
                         <div class="col-md-6 col-sm-9 col-xs-12">
                            <input type="text" id="bill_amount" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
+                        <button type="button" class="btn btn-default" id = "here001">clear & input</button>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">未出账单金额</label>
                         <div class="col-md-6 col-sm-9 col-xs-12">
                            <input type="text" id="pre_bill_amount" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
+                        <button type="button" class="btn btn-default" id = "here002">clear & input</button>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">剩余额度</label>
@@ -456,7 +458,8 @@
                            <input type="text" id="remaining_credit" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
-                      <div class="count red" id="help_amount" style="font-size:20px">$0</div>
+                      <div class="count red"style="font-size:20px">$</div>
+                      <div class="count red" id="help_amount" style="font-size:20px">0</div>
                       <div rel="hidden_area" style ="display:none">
                       	<input type="hidden" id="credit"/>
                       </div>
@@ -740,6 +743,19 @@
 			});
 		});
 		
+		$("#here001").click(function(){
+			$("#bill_amount").val("0");
+			calAmount();
+			$("#bill_amount").val($("#help_amount").html());
+			calAmount();
+		});
+		
+		$("#here002").click(function(){
+			$("#pre_bill_amount").val("0");
+			calAmount();
+			$("#pre_bill_amount").val($("#help_amount").html());
+			calAmount();
+		});
 		
 		//银行卡信息
 		var bankData;
@@ -952,7 +968,7 @@
 		                    '<button data-toggle="dropdown" class="btn btn-success dropdown-toggle btn-xs" type="button">pay<span class="caret"></span>'+
 		                    '</button>'+
 		                    '<ul role="menu" class="dropdown-menu">'+
-		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm" onclick="setDefaultBankInfo(\''+row.code+'\')">spend</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm-amount" onclick="setBillInfo(\''+row.code+'\',\''+row.bill_amount+'\',\''+row.pre_bill_amount+'\',\''+row.remaining_credit+'\',\''+row.total_credit+'\')">set.bill</a>'+
 		                      '</li>'+
 		                      '<li><a href="#">repay</a>'+
 		                      '</li>'+
@@ -962,7 +978,7 @@
 		                      '<li><a href="#">water</a>'+
 		                      '</li>'+
 		                      '<li class="divider"></li>'+
-		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm-amount" onclick="setBillInfo(\''+row.code+'\',\''+row.bill_amount+'\',\''+row.pre_bill_amount+'\',\''+row.remaining_credit+'\',\''+row.total_credit+'\')">set.bill</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm" onclick="setDefaultBankInfo(\''+row.code+'\')">spend</a>'+
 		                      '</li>'+
 		                    '</ul>'+
 		                    '</div>&nbsp;'+
@@ -1191,7 +1207,7 @@
 		var pre_bill_amount = $("#pre_bill_amount").val();
 		var remaining_credit = $("#remaining_credit").val();
 		var credit = $("#credit").val();
-		$("#help_amount").html($.wj.formatMoney($.wj.sub($.wj.sub($.wj.sub(credit,remaining_credit) , pre_bill_amount) , bill_amount)));
+		$("#help_amount").html($.wj.formatNumnber($.wj.sub($.wj.sub($.wj.sub(credit,remaining_credit) , pre_bill_amount) , bill_amount)));
 	}
     $("#bill_amount").keyup(function(){
     	calAmount();
