@@ -12,6 +12,7 @@ public class testAUTOlogin {
 		loginDemo.login("your account", "password");// 输入CSDN的用户名，和密码
 		
 		// https://www.cnblogs.com/cha1r/archive/2013/11/06/3410966.html
+		//https://blog.csdn.net/lu8000/article/details/10693091
 	}
 
 	/**
