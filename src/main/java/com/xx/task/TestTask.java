@@ -18,7 +18,7 @@ public class TestTask {
 	@Resource
 	private BaseDao baseDao;
 	
-	@Scheduled(cron = "0/30 * * * * ? ") // 间隔5秒执行
+//	@Scheduled(cron = "0/30 * * * * ? ") // 间隔5秒执行
     public void taskCycle() {
 		long start = System.currentTimeMillis();
         System.out.println("使用SpringMVC框架配置定时任务 : "+new Date());

@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Gentelella Alela! | login</title>
 
     <!-- Bootstrap -->
     <link href="${pageContext.request.contextPath}/assets/default/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -72,7 +72,7 @@
                 <input type="password" class="form-control" placeholder="Password" required="" value = "111111" id = "password"/>
               </div>
               <div>
-                <a class="btn btn-default " href="javascript:login();" id ="btn_login">Log in</a>
+                <a class="btn btn-default "  href="#" onclick="login()" id ="btn_login">Log in</a>
                 <a class="reset_pass" href="#">Lost your password?</a>
               </div>
 
