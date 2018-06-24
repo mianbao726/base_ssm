@@ -103,7 +103,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.30</version>
+			<version>8.0.8-dmr</version>
 		</dependency>
 		<!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
 		<dependency>
@@ -204,7 +204,7 @@
 					<contextPath>/base</contextPath>
 					<connectors>
 						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-							<port>80</port>
+							<port>9000</port>
 						</connector>
 					</connectors>
 					<!-- <scanIntervalSeconds>2</scanIntervalSeconds> -->
