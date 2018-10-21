@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xx.base.util.C;
 import com.xx.base.util.TimestampTool;
 import com.xx.base.util.map.QMap;
+import com.xx.base.util.rsa.way001.RSAUtil;
 
 /**
  * It's about to fly
@@ -66,13 +68,21 @@ public class BaseController {
 //			System.out.println(thisName + "-------" + thisValue);
 		}
 	}
+	
+	private Map<String,Object> privateDecrypt(Map<String,Object> paramsMap){
+		Map<String,Object> ret = new HashMap<String,Object>();
+		for(Entry<String, Object> entry : paramsMap.entrySet()){
+//	        System.out.println("键 key ："+entry.getKey()+" 值value ："+entry.getValue());
+	        ret.put(RSAUtil.privateDecrypt(entry.getKey()), RSAUtil.privateDecrypt(entry.getValue()+""));
+		}
+		return ret;
+	}
 
 	/**
 	 * 返回全部参数
 	 *
 	 * @param request
 	 */
-
 	protected Map<String, Object> getParams(HttpServletRequest request) {
 //		System.out.println("--param start ...");
 //		QMap.showMap(request.getParameterMap());
@@ -84,6 +94,8 @@ public class BaseController {
 		} else {
 			paramsMap = new HashMap<String, Object>();
 		}
+		paramsMap= privateDecrypt(paramsMap);//解密
+		
 		//默认删除标志
 		paramsMap.put(C.DEL_FLAG, C.PARAM_DATE_UD);
 		//系统时间

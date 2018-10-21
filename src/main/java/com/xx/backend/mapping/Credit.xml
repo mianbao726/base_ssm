@@ -44,11 +44,14 @@
 	<select id="cridit_page_detail" parameterMap="paraMap" resultType="hashmap">
 		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
 		select
-		DATE_FORMAT(cr_date, '%Y-%m-%d %H:%i:%s') as cr_date,amount,cardno,remark
+		id,
+		cancel,
+		DATE_FORMAT(cancel_at, '%Y-%m-%d %H:%i:%s') as cancel_at,
+		DATE_FORMAT(cr_date, '%Y-%m-%d %H:%i:%s') as cr_date,amount,cardno,remark,bank
 		from wj_record
 		<include refid="cridit_page_detail_where"/>
 		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
-		<if test="sort == null">ORDER BY cr_date</if>
+		<if test="sort == null">ORDER BY cancel, cr_date</if>
 		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>
 	</select>
 
@@ -75,7 +78,7 @@
 		cardno,
 		bank)
 		values (
-		now(),
+		#{now},
 		#{amount},
 		#{type},
 		#{remark},
@@ -93,6 +96,34 @@
 			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
 		where 1=1  
 		and no = #{cardno}
+	</update>
+	
+	
+	<update id="water_bank" parameterType="hashmap">
+		update wj_bank
+		set
+			remaining_credit = remaining_credit - #{amount},
+			pre_bill_amount = pre_bill_amount+#{amount},
+			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
+		where 1=1  
+		and code = #{bank}
+	</update>
+	<update id="water_bank_cancel" parameterType="hashmap">
+		update wj_bank
+		set
+			remaining_credit = remaining_credit + #{amount},
+			pre_bill_amount = pre_bill_amount-#{amount},
+			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
+		where 1=1  
+		and code = #{bank}
+	</update>
+	<update id="water_bank_cancel_record" parameterType="hashmap">
+		update wj_record
+		set
+			cancel = '1',
+			cancel_at = now()
+		where 1=1  
+		and id = #{id}
 	</update>
 	
 	<update id="setBillInfo" parameterType="hashmap">
@@ -135,6 +166,9 @@
 	
 	<select id="getCredit_List" parameterMap="paraMap" resultType="hashmap">
 		SELECT * FROM wj_credit where type = #{bank} ORDER BY temporary_credit desc
+	</select>
+	<select id="select_one_wj_record_by_id" parameterMap="paraMap" resultType="hashmap">
+		SELECT * FROM wj_record where id = #{id}
 	</select>
 	
 	<select id="summaryInformation" parameterMap="paraMap" resultType="hashmap">
@@ -186,4 +220,5 @@
 	    where id>=0
 	</update>
 	
+
 </mapper>

@@ -2,7 +2,11 @@ var APP = "base";
 var BASE = "/"+APP;
 (function($) {
 	var project_name = "base";
+    var PUBLIC_KEY = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoJEa1C/EdSQmaLHnGZ1Gs5LcLG+EqzCldm1+RM2/7dPMNWu9W6yZHllk1cUd+sA3uEYKkDTillIunxg5Fk/EBJiBIV2q3XYO57yKetY7KF4iemU0Lb4WVJcPH6BhNE66UpXdDSskQsIipRBl9DxXZnSS8albr/zRHSFI6gWgXyt9REfjEhIHzzwAFTtGapetSBsic6rPn+LUOym+ziDdtlWKnimOpNSY47lm5aGHdQUT8vflU+EvY3+wr4YDPf3J1nJZ4p5qaSdFx3pmm1AgyUU3H+EQ6vGdU3kn7nRlow0DtOGHPdMtJr2Xm5L3uD9iuJu007QlyAdPAlNVswOT+QIDAQAB';
+    var encrypt = new JSEncrypt();
+    encrypt.setPublicKey('-----BEGIN PUBLIC KEY-----' + PUBLIC_KEY + '-----END PUBLIC KEY-----');
 	var wj = {};
+	
 	wj.c = function(obj){//console.log
 		console.log(obj);
 	};
@@ -205,8 +209,14 @@ var BASE = "/"+APP;
 			wj_opts.url = opts.url;
 			wj_opts.type = (opts.type == undefined) ? 'post' : opts.type;
 			wj_opts.dataType = "json";
+			
+	         var sendData = new Object();
+	         // 将data数组赋给ajax对象
+	         for (var key in opts.params) {
+	             sendData[encrypt.encrypt(key)] = encrypt.encrypt(opts.params[key]);
+	         }
 			wj_opts.data = {
-				"params" : wj.json.encode(opts.params)
+				"params" : wj.json.encode(sendData)
 			};
 			// xx_opts.data = {"params" : opts.params};
 			// ops.data={'params': xx.json.encode(params)},
@@ -239,7 +249,12 @@ var BASE = "/"+APP;
 	};
 	
 	wj.p = function(data){
-		return {"params" : wj.json.encode(data)};
+		var sendData = new Object();
+        // 将data数组赋给ajax对象
+        for (var key in data) {
+            sendData[encrypt.encrypt(key)] = encrypt.encrypt(data[key]);
+        }
+		return {"params" : wj.json.encode(sendData)};
 	};
 	
 	wj.json = new (function() {

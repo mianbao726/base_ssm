@@ -14,6 +14,11 @@ public class LoginController extends BaseController {
 		return "login/login";
 	}
 	
+	@RequestMapping("/huifengtest.html")
+	public String test(HttpServletRequest request, Model model) throws Exception {
+		return "login/test";
+	}
+	
 	/**
 	 * 
 	 * @param request

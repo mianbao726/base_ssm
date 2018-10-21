@@ -42,6 +42,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xx.backend.service.CriditService;
 import com.xx.base.controller.BaseController;
 import com.xx.base.util.map.QMap;
+import com.xx.base.util.rsa.way001.*;
 
 /**
  * spend 花销 repay 还款 check 检查 water 线下流水
@@ -51,7 +52,7 @@ import com.xx.base.util.map.QMap;
  */
 @Controller
 @RequestMapping("/credit")
-public class CriditController extends BaseController {
+public class CreditController extends BaseController {
 
 	// XXX
 	@Resource
@@ -93,12 +94,14 @@ public class CriditController extends BaseController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/getdetialdata.html")
 	public @ResponseBody
 	String getdetialdata(HttpServletRequest request, Model model) throws Exception {
 		Map ret = null;
 		ret = new QMap("200");
 		Map page = super.getParams(request);
+		System.out.println(page);
 		Map<String, Object> data = criditService.detail(page);
 		ret.put("data", data.get("data"));
 		ret.put("recordsTotal", Integer.valueOf(((List) data.get("data")).size()));
@@ -193,4 +196,23 @@ public class CriditController extends BaseController {
 		return JSONObject.toJSONString(paramsMap);
 	}
 	
+
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	 */
+	 @RequestMapping("/water.do")
+	public @ResponseBody String water(HttpServletRequest request, Model model)throws Exception{
+		 Map<String, Object> paramsMap = super.getParams(request);
+			criditService.water(paramsMap);
+			return JSONObject.toJSONString(paramsMap);
+	}
+	 /**
+	  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	  */
+	 @RequestMapping("/cancel_this.do")
+	 public @ResponseBody String cancel_this(HttpServletRequest request, Model model)throws Exception{
+		 Map<String, Object> paramsMap = super.getParams(request);
+		 criditService.cancel_this(paramsMap);
+		 return JSONObject.toJSONString(paramsMap);
+	 }
 }

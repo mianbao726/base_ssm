@@ -24,33 +24,24 @@
  */
 package com.xx.backend.service.impl;
 
-import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.xx.backend.service.CriditService;
 import com.xx.base.dao.BaseDao;
 import com.xx.base.dao.PageServiceDao;
-import com.xx.base.service.IModuleService;
-import com.xx.base.util.map.QMap;
 import com.xx.base.util.FeeCost;
-import com.xx.base.util.TimestampTool;
-
-import com.xx.backend.service.CriditService;
 
 /**
  * @author generate by www.whatgoogle.com (ps : some question? contact
@@ -68,10 +59,23 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 
 	@Override
 	public int add(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		map.put("safty_cost_fee", "true".equals(map.get("type").toString()) ? FeeCost.fee(map.get("amount").toString()) : "0");
+		if("0".equals(map.get("type"))){
+			map.put("safty_cost_fee", FeeCost.fee(map.get("amount").toString()) );
+			map.put("type", "water");
+		}else{
+			map.put("safty_cost_fee", "0");
+			map.put("type", "pay");
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:ss:mm");
+		map.put("now",sdf.format(new Date()) );
 		int ret = baseDao.insert("baseFrame_Cridit.cridit_insert", map);
 		return ret;
+	}
+	public static void main(String[] args) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:ss:mm");
+		System.out.println(sdf.format(new Date()));
+		ZoneId defaultZone = ZoneId.systemDefault();
+		System.out.println(defaultZone); //此处打印为时区所在城市Asia/Shanghai
 	}
 
 	@Override
@@ -182,7 +186,9 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
 	 */
+	@SuppressWarnings("rawtypes")
 	public List setSummaryInfo(Map<String, Object> map) {
+		System.out.println(map);
 		List ret = baseDao.selectList("baseFrame_Cridit.setSummaryInfo", map);
 		upateSummaryInfo();
 		return ret;
@@ -190,5 +196,17 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	
 	public void upateSummaryInfo(){
 		baseDao.update("baseFrame_Cridit.update_summary_info");
+	}
+	
+	public String water(Map<String, Object> map) {
+		baseDao.update("baseFrame_Cridit.water_bank", map);
+		add(map);
+		return null;
+	}
+	public String cancel_this(Map<String, Object> map) {
+		Map<String, Object> p = baseDao.selectOne("baseFrame_Cridit.select_one_wj_record_by_id",map);
+		baseDao.update("baseFrame_Cridit.water_bank_cancel", p);
+		baseDao.update("baseFrame_Cridit.water_bank_cancel_record", map);
+		return null;
 	}
 }

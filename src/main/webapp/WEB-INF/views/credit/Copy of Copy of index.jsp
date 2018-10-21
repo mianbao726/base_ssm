@@ -796,7 +796,6 @@
    
    
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/default/vendors/jsencrypt/jsencrypt.min.js"></script>
 	<script>
 		$(function(){
 			var params = {};
@@ -939,12 +938,8 @@
 		
 		//water
 		$("#water_pay").click(function(){
-			var encrypt = new JSEncrypt();
-			var publicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCyycF3jnwso5g/rqx8NJTCU3SEbx7qP6qEQYCPP5c7EL1QPFnDDVh3jlZECic0jLFFi9dP1l+g9fQrh2NpYMsoe7wrojVhANqcHXe03c1b8GVdwXriGJ6CerCX/ftBF0yZmmQiaAH8JhbcUHHPQBqnH60NAffC9CHf8CyOEjCMuQIDAQAB';
-	         encrypt.setPublicKey(publicKey);
-	         encrypt.encrypt($("#water_bank").val());
 				var params = {};
-				params['bank'] = encrypt.encrypt($("#water_bank").val()); 
+				params['bank'] = $("#water_bank").val(); 
 				params['cardno'] = $("#water_cardno").val(); 
 				params['amount'] = $("#water_amount").val(); 
 				params['type'] = $("#type_w_p").prop("checked"); 

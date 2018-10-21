@@ -334,6 +334,131 @@
             </div>
           </div>
           
+          
+          
+          
+          <!-- 输入消费金额的modal -->
+           <div class="x_content">
+
+                  <!-- modals -->
+                  <!-- Small modal -->
+<!--                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button> -->
+
+                  <div class="modal fade bs-example-modal-water" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel2">water</h4>
+                        </div>
+                        <div class="modal-body">
+                          
+                          <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">银行</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                          <select class="form-control" id = "water_bank">
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">卡号</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                          <select class="form-control" id = "water_cardno">
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="water_amount" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="water_remark" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">类型</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                          <div class="">
+                            <label>
+                              <input id ="type_w_p" type="checkbox" class="js-switch" checked />  
+                            </label>
+                            <lable id = "consumption_type">pay2</lable>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id = "water_pay">Save changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /modals -->
+                </div>
+          <!-- 输入金额的modal end -->
+          <!-- 消费明细modal -->
+				<div class="x_content">
+					<div class="modal fade wj-modal-detial" tabindex="-1" role="dialog"
+						aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel2"><h2>
+														账单明细<small>detials</small>
+													</h2></h4>
+								</div>
+									<div class="x_content">
+										<div class="col-md-12 col-sm-12 col-xs-12">
+												<div class="x_content">
+													<table id ="detial_list" class="table table-striped dt-responsive nowrap projects" cellspacing="0" width="100%">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th>First Name</th>
+																<th>Last Name</th>
+																<th>Username</th>
+																<th>CZ</th>
+															</tr>
+														</thead>
+													</table>
+												</div>
+											</div>
+									</div>
+								
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Close</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- /modals -->
+				</div>
+				<!-- 消费明细modal end -->
           <!-- 输入消费金额的modal -->
            <div class="x_content">
 
@@ -397,7 +522,7 @@
                             <label>
                               <input id ="type" type="checkbox" class="js-switch" checked />  
                             </label>
-                            <lable id = "consumption_type">pay</lable>
+                            <lable id = "consumption_type_list">pay1</lable>
                           </div>
                         </div>
                       </div>
@@ -708,8 +833,7 @@
       <!-- Switchery -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/switchery/dist/switchery.min.js"></script>
    
-   
-   
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/jsencrypt/jsencrypt.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
 		$(function(){
@@ -810,14 +934,19 @@
 		display_summaryInfo();
 		function setOptions(data,selected_key){
 			$("#cardno").empty();
+			$("#water_cardno").empty();
 			 $.each(data.creditCardInfo, function(key, val){   
 				var keys = key.split("_");
-				if(0 == first_init_flag)
+				if(0 == first_init_flag){
 					$("#bank").append("<option value='"+keys[0]+"'>"+keys[1]+"</option>");
+				    $("#water_bank").append("<option value='"+keys[0]+"'>"+keys[1]+"</option>");
+				}
 				$.each(val,function(){
 					var cardi = this.split("_");
-					if(0==select_flag || keys[0] == selected_key)
+					if(0==select_flag || keys[0] == selected_key){
 						$("#cardno").append("<option value='"+cardi[0]+"' rel = '"+keys[0]+"'>"+keys[2]+cardi[0].substring(12)+"("+cardi[1]+")"+"</option>");
+						$("#water_cardno").append("<option value='"+cardi[0]+"' rel = '"+keys[0]+"'>"+keys[2]+cardi[0].substring(12)+"("+cardi[1]+")"+"</option>");
+					}
 				});
 			  }); 
 			 first_init_flag =1;
@@ -831,15 +960,43 @@
 			select_flag = 1;
 			setOptions(creditData,$("#bank").find("option:selected").val());
 		});
+		$("#water_bank").change(function(){
+			select_flag = 1;
+			setOptions(creditData,$("#water_bank").find("option:selected").val());
+		});
 		
-		$("#type").change(function(){
-			if(document.querySelector('#type').checked){
-				$("#consumption_type").html("pay");
+		
+		
+		$("#type_w_p").change(function(){
+			if($('#type_w_p').prop("checked")){
+				$("#consumption_type").html("water");
 			}else{
 				$("#consumption_type").html("消费");
 			}
 		});
 		
+		//water
+		$("#water_pay").click(function(){
+			var params = {};
+			params['bank'] = $("#water_bank").val(); 
+			params['cardno'] = $("#water_cardno").val(); 
+			params['amount'] = $("#water_amount").val(); 
+			params['type'] = $("#type_w_p").prop("checked")?"0":"1"; 
+			params['remark'] = $("#water_remark").val(); 
+			$.wj.c(params);
+// 			return;
+			$.wj.ajax({
+		      contenttype : 'application/json; charset=utf-8',
+		      async: false,
+			  url: '<%=path%>/credit/water.do',
+			  type:"post",
+			  dataType:"json",
+			  params:params,
+			  success:function(data){
+				  $.wj.location(BASE+"/credit/index.html");
+			  }
+		    });
+		});
 		 $("#pay").click(function(){
 // 				var params = {};
 // 				params['bank'] = $("#bank").val(); 
@@ -866,6 +1023,115 @@
       <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
     
+  
+    <script>
+    var filter = {};
+    filter['target'] = "XYYH"; 
+    function get_par(){
+    	return $.wj.p(filter);
+    }
+    var detial_list_table = $("#detial_list").DataTable({
+		"language" : {
+			"info" : "&nbsp;",
+			"oPaginate" : {
+				"sPrevious" : " &laquo; ",
+				"sNext" : " &raquo;",
+			},
+			"infoEmpty" : "没有符合条件的记录!",
+			"lengthMenu" : "显示 _MENU_ 条",
+			"sZeroRecords" : "没有找到匹配的记录",
+			"sInfoEmpty" : "",
+				"sSearch" : "快速检索：",
+		},
+		dom: "Bfrtip",
+		buttons: [
+					{
+					    text: 'repay',
+					    action: function ( e, dt, node, config ) {
+					    	$.wj.location(BASE+"/example1/au1.html");
+					        this.disable(); // disable button
+					    },
+					    className: " btn-success"
+					},
+					{
+					    text: 'water',
+					    action: function ( e, dt, node, config ) {
+					    	$.wj.location(BASE+"/example1/au2.html");
+					        this.disable(); // disable button
+					    },
+					    className: " btn-danger"
+					},
+				  ],
+		"ajax" : {
+			"url" :  '<%=path%>/credit/getdetialdata.html',
+			"type" : "POST",
+			"dataType" : "json",
+			"data":get_par(),
+		},
+		"processing" : true,
+		"paging": false,
+// 		"order": [[2, 'desc']],
+		"columns" : [ 
+		         	{"mData" : "cardno"},
+	    			{"mData" : "amount"},
+	   				{"mData" : "cr_date"},
+	    			{"mData" : "remark"},
+		 ],
+        "columnDefs": [
+				{"render": function(data, type, row){
+					var tail = "";
+					return "<img src='${pageContext.request.contextPath}/assets/default/production/bank/"+row.bank+".jpg' height='30' width='30' class='profile_img'>&nbsp;&nbsp;"+row.cardno;
+				  },
+				   "orderable": false,
+				   "targets": 0
+					},
+			    {"render": function(data, type, row){    
+			    	if(row.cancel=='0'){
+				    	return '<div class="btn-group">'+
+				    	'<a href="#" class="btn btn-danger btn-xs" onclick="cancel_this(\''+row.id+'\')"><i class="fa fa-align-left"></i>&nbsp;撤销</a>'+'</div>';
+			    	}else{
+			    		return '';
+			    	}
+			    },
+	             "orderable": false,
+	             "targets": 4
+	         	}, 
+			    {"render": function(data, type, row){
+// 			    	$.wj.c(row.cancel);
+			    	if(row.cancel=='0'){
+				    	return '<span class="label label-info">已入账</span>';
+			    	}else{
+				    	return '<span class="label label-danger">已撤销</span>';
+			    	}
+			    },
+	             "orderable": false,
+	             "targets": 3
+	         	}, 
+        	]
+	});
+    function cancel_this(id){
+		var params = {};
+		params['id'] = id; 
+		$.wj.c();
+    	$.wj.ajax({
+		      contenttype : 'application/json; charset=utf-8',
+			  url: '<%=path%>/credit/cancel_this.do',
+			  type:"post",
+			  dataType:"json",
+			  params:params,
+			  success:function(data){
+				  $('#detial_list').DataTable().ajax.reload();
+				  $('#datatable-xx').DataTable().ajax.reload();
+			  }
+		});
+    };
+    function setDetial_list_bank(code){
+    	filter['target'] = code; 
+    	detial_list_table.settings()[0].ajax.data=$.wj.p(filter);
+    	 $('#detial_list').DataTable().ajax.reload();
+    }
+    
+    </script>
     <script>
     var table = $('#datatable-xx').DataTable({
     		"language" : {
@@ -972,17 +1238,18 @@
 		                      '</li>'+
 		                      '<li><a href="#">repay</a>'+
 		                      '</li>'+
-		                      '<li><a href="#">check</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".wj-modal-detial" >check</a>'+
 		                      '</li>'+
 		                      '<li class="divider"></li>'+
-		                      '<li><a href="#">water</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-water" onclick="setDefaultBankInfo_water(\''+row.code+'\')">water</a>'+
 		                      '</li>'+
 		                      '<li class="divider"></li>'+
 		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm" onclick="setDefaultBankInfo(\''+row.code+'\')">spend</a>'+
 		                      '</li>'+
 		                    '</ul>'+
 		                    '</div>&nbsp;'+
-				    '<div class="btn-group">'+'<a href="#" class="btn btn-primary btn-xs" onclick ="detial(\''+row.code+'\')"><i class="fa fa-align-left"></i>&nbsp;detial</a>'+'</div>'+
+				    '<div class="btn-group">'+'<a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".wj-modal-detial"  onclick="setDetial_list_bank(\''+row.code+'\')"><i class="fa fa-align-left"></i>&nbsp;detial</a>'+'</div>'+
+// 				    '<div class="btn-group">'+'<a href="#" class="btn btn-primary btn-xs" onclick ="detial(\''+row.code+'\')"><i class="fa fa-align-left"></i>&nbsp;detial</a>'+'</div>'+
 //                 	'&nbsp;<div class="btn-group">'+'<a href="#" class="btn btn-info btn-xs"><i class="fa fa-rmb"></i>&nbsp;add</a>'+'</div>&nbsp;'+
 // 					'<div class="btn-group">'+'<a href="#" class="btn btn-success btn-xs"><i class="fa fa-repeat"></i>&nbsp;repay</a>'+'</div>&nbsp;'+
 // 					'<div class="btn-group">'+'<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-money"></i>&nbsp;pay</a>'+'</div>&nbsp;'+
@@ -1064,6 +1331,12 @@
 		$("#bank").val(bankType);
 		$("#bank").change();
 	};
+	
+	function setDefaultBankInfo_water(bankType){
+		$("#water_bank").val(bankType);
+		$("#water_bank").change();
+	};
+	
 	
 	var current_bank;
 	function setBillInfo(bankType,bill_amount,pre_bill_amount,remaining_credit,credit){
@@ -1188,6 +1461,7 @@
 		params['travel_expenses'] = ""==$("#travel_expenses").val()?0:$("#travel_expenses").val(); 
 		params['instalment_amount'] = ""==$("#instalment_amount").val()?0:$("#instalment_amount").val(); 
 		params['income_and_expenditure'] = ""==$("#income_and_expenditure").val()?0:$("#income_and_expenditure").val(); 
+		$.wj.c(params['instalment_amount']);
 		$.wj.ajax({
 	      contenttype : 'application/json; charset=utf-8',
 	      async: false,

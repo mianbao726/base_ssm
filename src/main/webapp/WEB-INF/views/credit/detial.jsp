@@ -361,9 +361,9 @@
                   	<table id="datatable-xx" class="table table-striped dt-responsive nowrap projects" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-                          <th>消费时间</th>
-                          <th>金额</th>
                           <th>卡号</th>
+                          <th>金额</th>
+                          <th>消费时间</th>
                           <th>备注</th>
                         </tr>
                       </thead>
@@ -446,7 +446,7 @@
     <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/vfs_fonts.js"></script>
     
     
-   
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/jsencrypt/jsencrypt.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
 				
@@ -552,13 +552,20 @@
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
     		"order": [[0, 'desc']],
     		"columns" : [ 
-   				{"mData" : "cr_date"},
-    			{"mData" : "amount"},
     			{"mData" : "cardno"},
+    			{"mData" : "amount"},
+   				{"mData" : "cr_date"},
     			{"mData" : "remark"},
     			
     		 ],
             "columnDefs": [
+				{"render": function(data, type, row){
+					var tail = "";
+					return "<img src='${pageContext.request.contextPath}/assets/default/production/bank/"+row.bank+".jpg' height='30' width='30' class='profile_img'>&nbsp;&nbsp;"+row.cardno;
+				  },
+				   "orderable": false,
+				   "targets": 0
+					},
             	]
     	});
     
