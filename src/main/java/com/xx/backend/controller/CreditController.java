@@ -102,6 +102,10 @@ public class CreditController extends BaseController {
 		ret = new QMap("200");
 		Map page = super.getParams(request);
 		System.out.println(page);
+		if(page.containsKey("reservation")){
+			page.put("s_date", page.get("reservation").toString().split("-")[0].replaceAll(" ", ""));
+			page.put("e_date", page.get("reservation").toString().split("-")[1].replaceAll(" ", ""));
+		}
 		Map<String, Object> data = criditService.detail(page);
 		ret.put("data", data.get("data"));
 		ret.put("recordsTotal", Integer.valueOf(((List) data.get("data")).size()));
@@ -213,6 +217,51 @@ public class CreditController extends BaseController {
 	 public @ResponseBody String cancel_this(HttpServletRequest request, Model model)throws Exception{
 		 Map<String, Object> paramsMap = super.getParams(request);
 		 criditService.cancel_this(paramsMap);
+		 return JSONObject.toJSONString(paramsMap);
+	 }
+	 /**
+	  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	  */
+	 @RequestMapping("/delete_this.do")
+	 public @ResponseBody String delete_this(HttpServletRequest request, Model model)throws Exception{
+		 Map<String, Object> paramsMap = super.getParams(request);
+		 criditService.delete_this(paramsMap);
+		 return JSONObject.toJSONString(paramsMap);
+	 }
+	 /**
+	  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	  */
+	 @RequestMapping("/repayment.do")
+	 public @ResponseBody String repayment(HttpServletRequest request, Model model)throws Exception{
+		 Map<String, Object> paramsMap = super.getParams(request);
+		 criditService.repayment(paramsMap);
+		 return JSONObject.toJSONString(paramsMap);
+	 }
+	 /**
+	  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	  */
+	 @RequestMapping("/water_arrival.do")
+	 public @ResponseBody String water_arrival(HttpServletRequest request, Model model)throws Exception{
+		 Map<String, Object> paramsMap = super.getParams(request);
+		 criditService.water_arrival(paramsMap);
+		 return JSONObject.toJSONString(paramsMap);
+	 }
+	 /**
+	  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	  */
+	 @RequestMapping("/cash.do")
+	 public @ResponseBody String cash(HttpServletRequest request, Model model)throws Exception{
+		 Map<String, Object> paramsMap = super.getParams(request);
+		 criditService.cash(paramsMap);
+		 return JSONObject.toJSONString(paramsMap);
+	 }
+	 /**
+	  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	  */
+	 @RequestMapping("/alipay.do")
+	 public @ResponseBody String alipay(HttpServletRequest request, Model model)throws Exception{
+		 Map<String, Object> paramsMap = super.getParams(request);
+		 criditService.alipay(paramsMap);
 		 return JSONObject.toJSONString(paramsMap);
 	 }
 }

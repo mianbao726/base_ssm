@@ -1,5 +1,7 @@
 package com.xx.base.util;
 
+import java.math.BigDecimal;
+
 public class C {
 	public static final String PROJECT_NAME = "base";
 	public static final String DEFAULT_DASHBOARD = "dashboard.html";
@@ -12,11 +14,13 @@ public class C {
 
 	// 开发标志 0=>开发中 1=>产品
 	public static final String DEV = "0";
+	// 全局常用数字零
+	public static final BigDecimal ZERO = new BigDecimal("0");
 
 	// 图片类型
 	public static final String[] IMAGE_TYPE = { ".png", ".jpg" };
 	// 资源文件类型
-	public static final String[] RESOURCE_TYPE = { ".js", ".css", ".woff" };
+	public static final String[] RESOURCE_TYPE = { ".js", ".css", ".woff", ".map" };
 	// 过滤文件类型
 	public static final String[] RESOURCE_EXCEPT = Util.concat(IMAGE_TYPE, RESOURCE_TYPE);
 	// 资源文件过滤表达式

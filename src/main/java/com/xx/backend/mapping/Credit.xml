@@ -46,12 +46,14 @@
 		select
 		id,
 		cancel,
+		safty_cost_fee,
 		DATE_FORMAT(cancel_at, '%Y-%m-%d %H:%i:%s') as cancel_at,
 		DATE_FORMAT(cr_date, '%Y-%m-%d %H:%i:%s') as cr_date,amount,cardno,remark,bank
 		from wj_record
 		<include refid="cridit_page_detail_where"/>
-		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
-		<if test="sort == null">ORDER BY cancel, cr_date</if>
+<!-- 		<if test="sort != null">ORDER BY ${sort} ${dir}</if> -->
+<!-- 		<if test="sort == null">ORDER BY cancel, cr_date desc</if> -->
+			ORDER BY  cr_date DESC ,cancel 
 		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>
 	</select>
 
@@ -60,11 +62,43 @@
 		select count(1) from wj_record
 		<include refid="cridit_page_detail_where"/>
 	</select>
+	<!--删除交易记录 -->
+	<update id="delete_water_bank_cancel_record" parameterMap="paraMap" >
+		update wj_record set  del_flag='1'  where id = #{id}
+	</update>
+	<!--次日到帐金额到帐 -->
+	<update id="water_arrival" parameterMap="paraMap" >
+		update wj_financial_information  set bank_amount = bank_amount + next_day_arrival  , next_day_arrival = 0
+	</update>
+	<!--次日到帐金额到帐 -->
+	<update id="cash" parameterMap="paraMap" >
+		update wj_financial_information  set bank_amount = bank_amount - ${cash_amount}
+	</update>
+	<!--支付宝到帐 -->
+	<update id="alipay" parameterMap="paraMap" >
+		update wj_financial_information  
+		set cash = cash - ${amount}
+	</update>
+	<!--删除交易记录 -->
+	<update id="repayment" parameterMap="paraMap" >
+		update wj_bank set  bill_amount=#{bill_amount},  
+		pre_bill_amount=#{pre_bill_amount},
+		remaining_credit = #{remaining_credit}
+		where code = #{repayment_bank}
+	</update>
 	
 	<sql id="cridit_page_detail_where">
 		where 1=1
+		    and del_flag='0'
+		    and cancel='0'
 		<if test="target != null">
 			and bank = #{target}
+		</if>
+		<if test="s_date != null">
+			and DATE_FORMAT(cr_date,'%m/%d/%Y') >=  DATE_FORMAT(str_to_date(#{s_date}, '%m/%d/%Y'), '%m/%d/%Y') 
+		</if>
+		<if test="e_date != null">
+		and  DATE_FORMAT(str_to_date(#{e_date}, '%m/%d/%Y'), '%m/%d/%Y') >= DATE_FORMAT(cr_date,'%m/%d/%Y')  
 		</if>
 	</sql>
 	
@@ -99,6 +133,12 @@
 	</update>
 	
 	
+	<update id="wj_financial_information_next_day_arrival" parameterType="hashmap">
+		update wj_financial_information
+		set
+			next_day_arrival = next_day_arrival + #{amount} -#{safty_cost_fee}
+		where 1=1  
+	</update>
 	<update id="water_bank" parameterType="hashmap">
 		update wj_bank
 		set
@@ -201,7 +241,11 @@
 	</select>
 	
 	<select id="getAllCreditInfos" parameterMap="paraMap" resultType="hashmap">
-		SELECT t.* FROM wj_bank t 
+		SELECT t.* FROM wj_bank t
+		where 1=1 
+		 <if test="repayment_bank != null">
+		 	and code = #{repayment_bank}
+		 </if>
 <!-- 		where code like '%YH'  -->
 	</select>
 	<update id="upate_credit_bill_date" parameterType="hashmap">

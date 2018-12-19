@@ -396,7 +396,7 @@
                             <label>
                               <input id ="type_w_p" type="checkbox" class="js-switch" checked />  
                             </label>
-                            <lable id = "consumption_type">pay2</lable>
+                            <lable id = "consumption_type">water</lable>
                           </div>
                         </div>
                       </div>
@@ -415,6 +415,88 @@
                   <!-- /modals -->
                 </div>
           <!-- 输入金额的modal end -->
+          
+          <!-- 还款 start -->
+           <!-- Small modal -->
+                  <div id= "modal_bs_example-modal-sm" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel2">Repayment</h4>
+                        </div>
+                        <div class="modal-body">
+                          <h4>Repayment</h4>
+                          
+                          <input type="text" class="form-control" id="repayment_amount">
+<!--                           <input type="text" class="form-control" data-inputmask="'mask' : '999 999 999 999.99'"> -->
+<!--                           <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span> -->
+                
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id ="repayment_btn">Save changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+          <!-- 还款 end -->
+          <!-- 现金 start -->
+           <!-- Small modal -->
+                  <div id= "modal_bs_example-modal-sm-cash" class="modal fade bs-example-modal-sm-cash" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel2">Cash</h4>
+                        </div>
+                        <div class="modal-body">
+                          <h4>Cash</h4>
+                          <input type="text" class="form-control" id="cash_amount">
+                          <h4>Remark</h4>
+                          <input type="text" class="form-control" id="cash_amount_remark">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id ="cash_btn">Save changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+          <!-- 现金 end -->
+          <!-- 现金 start -->
+           <!-- Small modal -->
+                  <div id= "modal_bs_example-modal-sm-alipay" class="modal fade modal_bs_example-modal-sm-alipay" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel2">AliPay</h4>
+                        </div>
+                        <div class="modal-body">
+                          <h4>AliPay</h4>
+                          <input type="text" class="form-control" id="alipay_amount">
+                          <h4>Remark</h4>
+                          <input type="text" class="form-control" id="alipay_amount_remark">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id ="alipay_btn">Save changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+          <!-- 现金 end -->
+          
           <!-- 消费明细modal -->
 				<div class="x_content">
 					<div class="modal fade wj-modal-detial" tabindex="-1" role="dialog"
@@ -436,10 +518,11 @@
 													<table id ="detial_list" class="table table-striped dt-responsive nowrap projects" cellspacing="0" width="100%">
 														<thead>
 															<tr>
-																<th>#</th>
-																<th>First Name</th>
-																<th>Last Name</th>
-																<th>Username</th>
+																<th>bank</th>
+																<th>amount</th>
+																<th>remark</th>
+																<th>time</th>
+																<th>status</th>
 																<th>CZ</th>
 															</tr>
 														</thead>
@@ -459,89 +542,6 @@
 					<!-- /modals -->
 				</div>
 				<!-- 消费明细modal end -->
-          <!-- 输入消费金额的modal -->
-           <div class="x_content">
-
-                  <!-- modals -->
-                  <!-- Small modal -->
-<!--                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button> -->
-
-                  <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                      <div class="modal-content">
-
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
-                          </button>
-                          <h4 class="modal-title" id="myModalLabel2">pay</h4>
-                        </div>
-                        <div class="modal-body">
-                          
-                          <div class="x_content">
-                    <br />
-                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-
-                      
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">银行</label>
-                        <div class="col-md-6 col-sm-9 col-xs-12">
-                          <select class="form-control" id = "bank">
-                          </select>
-                        </div>
-                      </div>
-                      
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">卡号</label>
-                        <div class="col-md-6 col-sm-9 col-xs-12">
-                          <select class="form-control" id = "cardno">
-<!--                             <option value ="5201690317587529">交行7529（家乐福）</option> -->
-<!--                             <option value ="6222530319933730">交行3730（航空卡）</option> -->
-<!--                             <option value ="6225758224851922">招商1922（迅雷）</option> -->
-<!--                             <option value ="5236497912127035">招商7035（环球卡）</option> -->
-                          </select>
-                        </div>
-                      </div>
-                      
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">金额</label>
-                        <div class="col-md-6 col-sm-9 col-xs-12">
-                           <input type="text" id="amount" required="required" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
-                        <div class="col-md-6 col-sm-9 col-xs-12">
-                           <input type="text" id="remark" required="required" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                      
-                      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">类型</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                          <div class="">
-                            <label>
-                              <input id ="type" type="checkbox" class="js-switch" checked />  
-                            </label>
-                            <lable id = "consumption_type_list">pay1</lable>
-                          </div>
-                        </div>
-                      </div>
-                      
-                    </form>
-                  </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary" id = "pay">Save changes</button>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                  <!-- /modals -->
-                </div>
-          <!-- 输入金额的modal end -->
-          
           
           <!-- 调整账单的modal -->
            <div class="x_content">
@@ -692,7 +692,7 @@
                       </div>
                       
                       <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">为出账单金额</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">未出账单金额</label>
                         <div class="col-md-6 col-sm-9 col-xs-12">
                            <input type="text" id="unposted_total_bill_amount" readonly required="required" class="form-control col-md-7 col-xs-12">
                         </div>
@@ -828,14 +828,59 @@
     <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/vfs_fonts.js"></script>
     
     
-    
-    
+    <!-- jquery.inputmask -->
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
       <!-- Switchery -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/switchery/dist/switchery.min.js"></script>
    
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jsencrypt/jsencrypt.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
 	<script>
+	var repayment_bank;
+		$("#repayment_btn").click(function(){
+			var params = {};
+			params['repayment_amount']=$("#repayment_amount").val();
+			params['repayment_bank']=repayment_bank;
+			$.wj.ajax({
+				url: '<%=path%>/credit/repayment.do',
+				params:params,
+				 success:function(data){
+					 $("#modal_bs_example-modal-sm").modal('hide');
+					 $('#datatable-xx').DataTable().ajax.reload();
+					 display_summaryInfo();
+				  }
+			});
+		});
+		$("#cash_btn").click(function(){
+			var params = {};
+			params['cash_amount']=$("#cash_amount").val();
+			params['remark']=$("#cash_amount_remark").val();
+			$.wj.ajax({
+				url: '<%=path%>/credit/cash.do',
+				params:params,
+				 success:function(data){
+					 $("#modal_bs_example-modal-sm-cash").modal('hide');
+					 $('#datatable-xx').DataTable().ajax.reload();
+					 display_summaryInfo();
+				  }
+			});
+		});
+		$("#alipay_btn").click(function(){
+			var params = {};
+			params['alipay_amount']=$("#alipay_amount").val();
+			params['remark']=$("#alipay_amount_remark").val();
+			$.wj.ajax({
+				url: '<%=path%>/credit/alipay.do',
+				params:params,
+				 success:function(data){
+					 $("#modal_bs_example-modal-sm-alipay").modal('hide');
+					 $('#datatable-xx').DataTable().ajax.reload();
+					 display_summaryInfo();
+				  }
+			});
+		});
 		$(function(){
 			var params = {};
 				$.wj.ajax({
@@ -983,7 +1028,6 @@
 			params['amount'] = $("#water_amount").val(); 
 			params['type'] = $("#type_w_p").prop("checked")?"0":"1"; 
 			params['remark'] = $("#water_remark").val(); 
-			$.wj.c(params);
 // 			return;
 			$.wj.ajax({
 		      contenttype : 'application/json; charset=utf-8',
@@ -1020,8 +1064,7 @@
 		 
 		 
      </script>
-      <!-- Custom Theme Scripts -->
-    <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
+      
     
   
     <script>
@@ -1074,6 +1117,7 @@
 		"columns" : [ 
 		         	{"mData" : "cardno"},
 	    			{"mData" : "amount"},
+	    			{"mData" : "remark"},
 	   				{"mData" : "cr_date"},
 	    			{"mData" : "remark"},
 		 ],
@@ -1088,13 +1132,14 @@
 			    {"render": function(data, type, row){    
 			    	if(row.cancel=='0'){
 				    	return '<div class="btn-group">'+
-				    	'<a href="#" class="btn btn-danger btn-xs" onclick="cancel_this(\''+row.id+'\')"><i class="fa fa-align-left"></i>&nbsp;撤销</a>'+'</div>';
+				    	'<a href="#" class="btn btn-warning btn-xs" onclick="cancel_this(\''+row.id+'\')"><i class="fa fa-align-left"></i>&nbsp;撤销</a>'+'</div>';
 			    	}else{
-			    		return '';
+				    	return '<div class="btn-group">'+
+				    	'<a href="#" class="btn btn-danger btn-xs" onclick="delete_this(\''+row.id+'\')"><i class="fa fa-align-left"></i>&nbsp;彻底删除</a>'+'</div>';
 			    	}
 			    },
 	             "orderable": false,
-	             "targets": 4
+	             "targets": 5
 	         	}, 
 			    {"render": function(data, type, row){
 // 			    	$.wj.c(row.cancel);
@@ -1105,7 +1150,7 @@
 			    	}
 			    },
 	             "orderable": false,
-	             "targets": 3
+	             "targets": 4
 	         	}, 
         	]
 	});
@@ -1116,6 +1161,22 @@
     	$.wj.ajax({
 		      contenttype : 'application/json; charset=utf-8',
 			  url: '<%=path%>/credit/cancel_this.do',
+			  type:"post",
+			  dataType:"json",
+			  params:params,
+			  success:function(data){
+				  $('#detial_list').DataTable().ajax.reload();
+				  $('#datatable-xx').DataTable().ajax.reload();
+			  }
+		});
+    };
+    function delete_this(id){
+		var params = {};
+		params['id'] = id; 
+		$.wj.c();
+    	$.wj.ajax({
+		      contenttype : 'application/json; charset=utf-8',
+			  url: '<%=path%>/credit/delete_this.do',
 			  type:"post",
 			  dataType:"json",
 			  params:params,
@@ -1148,6 +1209,42 @@
     		},
     		dom: "Bfrtip",
     		buttons: [
+						{
+						    text: 'all detial',
+						    action: function ( e, dt, node, config ) {
+						    	$.wj.location(BASE+"/credit/detial.html");
+						        this.disable(); // disable button
+						    },
+						    className: " btn-info"
+						},
+						{
+						    text: '次日到帐',
+						    action: function ( e, dt, node, config ) {
+						        this.disable(); // disable button
+						    	$.wj.ajax({
+						    		url: '<%=path%>/credit/water_arrival.do',
+						    		});
+						    	$.wj.location(BASE+"/credit/index.html");
+						    },
+						    className: " btn-success"
+						},
+						{
+						    text: '现金',
+						    action: function ( e, dt, node, config ) {
+						    	 $("#modal_bs_example-modal-sm-cash").modal('show');
+// 						        this.disable(); // disable button
+						        
+						    },
+						    className: " btn-danger"
+						},
+						{
+						    text: 'AliPay',
+						    action: function ( e, dt, node, config ) {
+						    	 $("#modal_bs_example-modal-sm-alipay").modal('show');
+// 						        this.disable(); // disable button
+						    },
+						    className: " btn-success"
+						},
 						{
 						    text: 'spend',
 						    action: function ( e, dt, node, config ) {
@@ -1236,7 +1333,7 @@
 		                    '<ul role="menu" class="dropdown-menu">'+
 		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm-amount" onclick="setBillInfo(\''+row.code+'\',\''+row.bill_amount+'\',\''+row.pre_bill_amount+'\',\''+row.remaining_credit+'\',\''+row.total_credit+'\')">set.bill</a>'+
 		                      '</li>'+
-		                      '<li><a href="#">repay</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm" onclick="setCurrentBankInfo(\''+row.code+'\')">repay</a>'+
 		                      '</li>'+
 		                      '<li><a href="#" data-toggle="modal" data-target=".wj-modal-detial" >check</a>'+
 		                      '</li>'+
@@ -1244,15 +1341,11 @@
 		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-water" onclick="setDefaultBankInfo_water(\''+row.code+'\')">water</a>'+
 		                      '</li>'+
 		                      '<li class="divider"></li>'+
-		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm" onclick="setDefaultBankInfo(\''+row.code+'\')">spend</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-water" onclick="setDefaultBankInfo(\''+row.code+'\')">spend</a>'+
 		                      '</li>'+
 		                    '</ul>'+
 		                    '</div>&nbsp;'+
 				    '<div class="btn-group">'+'<a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".wj-modal-detial"  onclick="setDetial_list_bank(\''+row.code+'\')"><i class="fa fa-align-left"></i>&nbsp;detial</a>'+'</div>'+
-// 				    '<div class="btn-group">'+'<a href="#" class="btn btn-primary btn-xs" onclick ="detial(\''+row.code+'\')"><i class="fa fa-align-left"></i>&nbsp;detial</a>'+'</div>'+
-//                 	'&nbsp;<div class="btn-group">'+'<a href="#" class="btn btn-info btn-xs"><i class="fa fa-rmb"></i>&nbsp;add</a>'+'</div>&nbsp;'+
-// 					'<div class="btn-group">'+'<a href="#" class="btn btn-success btn-xs"><i class="fa fa-repeat"></i>&nbsp;repay</a>'+'</div>&nbsp;'+
-// 					'<div class="btn-group">'+'<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-money"></i>&nbsp;pay</a>'+'</div>&nbsp;'+
 					'';
     		    },
                  "orderable": false,
@@ -1323,14 +1416,28 @@
             	]
     	});
     
+    function setCurrentBankInfo(code){
+    	$("#repayment_amount").val("");
+    	repayment_bank = code;
+    }
+    
     function detial(id){
     	$.wj.location(BASE+"/credit/detial.html?id="+id);
 	};
 	
 	function setDefaultBankInfo(bankType){
 		$("#bank").val(bankType);
+		$('#type_w_p').click();
+     	$("#consumption_type").html("消费");
 		$("#bank").change();
 	};
+	
+	function setSwitchery(switchElement, checkedBool) {
+	    if((checkedBool && !switchElement.isChecked()) || (!checkedBool && switchElement.isChecked())) {
+	        switchElement.setPosition(true);
+	        switchElement.handleOnchange(true);
+	    }
+	}
 	
 	function setDefaultBankInfo_water(bankType){
 		$("#water_bank").val(bankType);
@@ -1452,22 +1559,24 @@
 	
 	$("#save_summary_info").click(function(){
 		var params = {};
-		params['next_day_arrival'] = ""==$("#next_day_arrival").val()?0:$("#next_day_arrival").val(); ; 
-		params['bank_amount'] = ""==$("#bank_amount").val()?0:$("#bank_amount").val(); 
-		params['debt'] = ""==$("#debt").val()?0:$("#debt").val(); 
-		params['financial_product_amount'] = ""==$("#financial_product_amount").val()?0:$("#financial_product_amount").val(); 
-		params['financial_product_amount_income'] = ""==$("#financial_product_amount_income").val()?0:$("#financial_product_amount_income").val(); 
-		params['cash'] = ""==$("#cash").val()?0:$("#cash").val(); 
-		params['travel_expenses'] = ""==$("#travel_expenses").val()?0:$("#travel_expenses").val(); 
-		params['instalment_amount'] = ""==$("#instalment_amount").val()?0:$("#instalment_amount").val(); 
-		params['income_and_expenditure'] = ""==$("#income_and_expenditure").val()?0:$("#income_and_expenditure").val(); 
-		$.wj.c(params['instalment_amount']);
+// 		alert(""==$("#instalment_amount").val()?0:$("#instalment_amount").val());
+// 		return;
+		params['next_day_arrival'] = ""==$("#next_day_arrival").val()?'0':$("#next_day_arrival").val(); ; 
+		params['bank_amount'] = ""==$("#bank_amount").val()?'0':$("#bank_amount").val(); 
+		params['debt'] = ""==$("#debt").val()?'0':$("#debt").val(); 
+		params['financial_product_amount'] = ""==$("#financial_product_amount").val()?'0':$("#financial_product_amount").val(); 
+		params['financial_product_amount_income'] = ""==$("#financial_product_amount_income").val()?'0':$("#financial_product_amount_income").val(); 
+		params['cash'] = ""==$("#cash").val()?'0':$("#cash").val(); 
+		params['travel_expenses'] = ""==$("#travel_expenses").val()?'0':$("#travel_expenses").val(); 
+		params['instalment_amount'] = ""==$("#instalment_amount").val()?'0':$("#instalment_amount").val(); 
+		params['income_and_expenditure'] = ""==$("#income_and_expenditure").val()?'0':$("#income_and_expenditure").val(); 
+// 		$.wj.c(params['instalment_amount']);
 		$.wj.ajax({
-	      contenttype : 'application/json; charset=utf-8',
-	      async: false,
+// 	      contenttype : 'application/json; charset=utf-8',
+// 	      async: false,
 		  url: '<%=path%>/credit/setSummaryInfo.do',
-		  type:"post",
-		  dataType:"json",
+// 		  type:"post",
+// 		  dataType:"json",
 		  params:params,
 		  success:function(data){
 			  $.wj.location(BASE+"/credit/index.html");

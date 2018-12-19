@@ -301,18 +301,18 @@
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
-              <div class="count">2500</div>
-              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+              <span class="count_top"><i class="fa fa-user"></i> Total cost</span>
+              <div class="count" id ="total_cost">0</div>
+              <span class="count_bottom"><i class="green">0% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-clock-o"></i> Average Time</span>
-              <div class="count">123.50</div>
+              <span class="count_top"><i class="fa fa-clock-o"></i>Total fee cost</span>
+              <div class="count red" id = "total_fee_cost">0</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Males</span>
-              <div class="count green">2,500</div>
+              <span class="count_top"><i class="fa fa-user"></i> Total repay</span>
+              <div class="count green" id ="total_repay">0</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -332,48 +332,93 @@
             </div>
           </div>
           <!-- /top tiles -->
+				
+				<div class="row" id="searh_all_block" style="display:none">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>
+									高级搜索 <small>Advanced Search</small>
+								</h2>
+								<ul class="nav navbar-right panel_toolbox">
+									<li><a class="collapse-link"><i
+											class="fa fa-chevron-up" title="收放"></i></a></li>
+									<li><a class="close-link_xx"><i class="fa fa-refresh"></i></a>
+									</li>
+									<li onclick="javascript:$('#searh_all_block').toggle();"><a class="close-link1"><i class="fa fa-close"></i></a>
+                    				</li>
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+							<div class="col-md-4">
+										Date Range Picker
+										<form class="form-horizontal">
+											<fieldset>
+												<div class="control-group">
+													<div class="controls">
+														<div class="input-prepend input-group">
+															<span class="add-on input-group-addon"><i
+																class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+															<input type="text" style="width: 200px"
+																name="reservation" id="reservation" class="form-control"
+																value="01/01/2016 - 01/25/2016" />
+														</div>
+													</div>
+												</div>
+											</fieldset>
+										</form>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>CRUD genernate <small>different form elements</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up" title="收放"></i></a>
-                      </li>
-                      <li><a class="collapse-link-xx"><i class="fa fa-file" title="新增"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">高级搜索</a>
-                          </li>
-                          <li><a href="#">近期项目</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link_xx"><i class="fa fa-refresh"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
-                  	<table id="datatable-xx" class="table table-striped dt-responsive nowrap projects" cellspacing="0" width="100%">
-                      <thead>
-                        <tr>
-                          <th>卡号</th>
-                          <th>金额</th>
-                          <th>消费时间</th>
-                          <th>备注</th>
-                        </tr>
-                      </thead>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-          <br />
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>
+									信用卡信息 <small>Credit card information</small>
+								</h2>
+								<ul class="nav navbar-right panel_toolbox">
+									<li><a class="collapse-link"><i
+											class="fa fa-chevron-up" title="收放"></i></a></li>
+									<li><a class="collapse-link-xx"><i class="fa fa-file"
+											title="新增"></i></a></li>
+									<li class="dropdown"><a href="#" class="dropdown-toggle"
+										data-toggle="dropdown" role="button" aria-expanded="false"><i
+											class="fa fa-wrench"></i></a>
+										<ul class="dropdown-menu" role="menu">
+											<li id="search_all"><a href="#">高级搜索</a></li>
+											<li><a href="#">近期项目</a></li>
+										</ul></li>
+									<li><a class="close-link_xx"><i class="fa fa-refresh"></i></a>
+									</li>
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<table id="datatable-xx"
+									class="table table-striped dt-responsive nowrap projects"
+									cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>卡号</th>
+											<th>金额</th>
+											<th>消费时间</th>
+											<th>备注</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<br />
 
         </div>
         <!-- /page content -->
@@ -449,7 +494,36 @@
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jsencrypt/jsencrypt.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
-				
+	
+	
+	$("#search_all").click(function(){
+		$("#searh_all_block").toggle();
+	});
+	
+	var i =0;
+	$(document).ready(function(){
+		$("#reservation").change(function(){
+	 		i++;
+	 		if(i>3){
+	 			var filter = {};
+	 			filter['reservation'] = $("#reservation").val(); 
+	 			table.settings()[0].ajax.data=$.wj.p(filter);
+	 			$('#datatable-xx').DataTable().ajax.reload();
+	 		}
+		});
+	});
+
+	
+	var date=new Date;
+	 var year=date.getFullYear(); 
+	 var month=date.getMonth()+1;
+	 var day = date.getDate(); //获取当前日(1-31)
+	 month =(10> month? "0"+month:month); 
+	 day =(10> day? "0"+day:day); 
+	 var mydate_s = (month.toString()+"/01/"+year.toString());
+	 var mydate_e = (month.toString()+"/+"+day+"+/"+year.toString());
+	 $("#reservation").val(mydate_s+ " - "+mydate_e);
+	 
 	var id = '<%=id %>';
 		$(function(){
 			var params = {};
@@ -488,11 +562,33 @@
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
     
     <script>
+    var Totalnumber =0;
+    var TotalFeenumber =0;
+    var TotalRepaynumber =0;
     var filter = {};
 	filter['target'] = id; 
 	console.log(filter);
-
     var table = $('#datatable-xx').DataTable({
+    	"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+    			if(aData.amount >0){
+    				if(aData.safty_cost_fee==0){
+//     					Totalnumber =  $.wj.cal_float(Totalnumber+aData.amount);
+    				}
+//else{
+//     					TotalFeenumber =  $.wj.cal_float(TotalFeenumber+aData.safty_cost_fee);
+//     				}
+//     			}else {
+//     				TotalRepaynumber =  $.wj.cal_float(TotalRepaynumber+aData.amount);
+    			}
+            }, 
+            "drawCallback": function( settings) {
+    			$("#total_cost").html(Totalnumber);
+    			$("#total_fee_cost").html(TotalFeenumber);
+    			$("#total_repay").html(TotalRepaynumber.toString().replace("-",""));
+    			Totalnumber=0;
+    			TotalFeenumber=0;
+    			TotalRepaynumber=0;
+            }, 
     		"language" : {
     			"info" : "&nbsp;",
     			"oPaginate" : {
@@ -541,7 +637,7 @@
     			"url" :  '<%=path%>/credit/getdetialdata.html',
     			"type" : "POST",
     			"dataType" : "json",
-    			"data":$.wj.p(filter)
+//     			"data":$.wj.p(filter)
     		},
     		
     		"processing" : true,
@@ -550,7 +646,7 @@
     		"bSort" : true, // 排序功能
 //     		"searching" : false,
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
-    		"order": [[0, 'desc']],
+    		"order": [[2, 'desc']],
     		"columns" : [ 
     			{"mData" : "cardno"},
     			{"mData" : "amount"},
@@ -566,9 +662,36 @@
 				   "orderable": false,
 				   "targets": 0
 					},
+				{"render": function(data, type, row){
+					if(row.safty_cost_fee>0){
+// 						return row.amount+"(<font color='red'>"+row.safty_cost_fee+"</font>)";
+						return "<font color='red'>"+row.safty_cost_fee+"</font>";
+					}else if (row.amount <0){
+						return "<font color='green'>"+row.amount.toString().replace('-','')+"</font>";
+					}else{
+						return row.amount+"";
+					}
+				  },
+				   "orderable": false,
+				   "targets": 1
+					},
+				{"render": function(data, type, row){
+					if(row.safty_cost_fee>0){
+						return row.remark + "    <font color='red'>water！<b>" +row.amount+"</b>   => ( cost:<b>"+row.safty_cost_fee+"</b>)   </font>" ;
+// 						return "<font color='red'>"+row.safty_cost_fee+"</font>";
+					}else if (row.amount <0){
+						return row.remark;
+					}else{
+						return row.remark;
+					}
+				  },
+				   "orderable": false,
+				   "targets": 3
+					},
             	]
     	});
     
+    	 
     function detial(id){
     	$.wj.location(BASE+"/credit/detial.html?id="+id);
 	};

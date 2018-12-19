@@ -87,4 +87,29 @@ public interface CriditService extends IBaseService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public String cancel_this(Map<String, Object> map);
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public String delete_this(Map<String, Object> map);
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public String repayment(Map<String, Object> map);
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public String water_arrival(Map<String, Object> map);
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public String cash(Map<String, Object> map);
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public String alipay(Map<String, Object> map);
 }

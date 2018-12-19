@@ -11,6 +11,15 @@ var BASE = "/"+APP;
 		console.log(obj);
 	};
 	
+	wj.cal_float=function(f){
+		return wj.cal_float(obj,2);
+	};
+	
+	wj.cal_float=function(f,digit){
+		var m = Math.pow(10, digit);
+		return parseInt(f * m, 10) / m;
+	};
+	
 	wj.conform = function(info,fun){
 		$("#wjConform").click(fun);
 		$("#ppss").html(info);
@@ -209,7 +218,13 @@ var BASE = "/"+APP;
 			wj_opts.url = opts.url;
 			wj_opts.type = (opts.type == undefined) ? 'post' : opts.type;
 			wj_opts.dataType = "json";
-			
+			wj_opts.contenttype = "application/json; charset=utf-8";
+			wj_opts.type = "post";
+			if(wj_opts.async){
+				wj_opts.async = opts.async;
+			}else{
+				wj_opts.async = false;
+			}
 	         var sendData = new Object();
 	         // 将data数组赋给ajax对象
 	         for (var key in opts.params) {

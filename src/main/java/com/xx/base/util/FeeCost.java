@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class FeeCost {
 	
 	//费率，默认千分之六
-	private static final String FEE_RATE="0.006";
+	private static final String FEE_RATE="0.0065";
 	
 	public static void main(String[] args) {
 		// 168 1.01
