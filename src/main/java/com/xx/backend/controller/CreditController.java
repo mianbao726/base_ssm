@@ -45,7 +45,7 @@ import com.xx.base.util.map.QMap;
 import com.xx.base.util.rsa.way001.*;
 
 /**
- * spend 花销 repay 还款 check 检查 water 线下流水
+ * spend 花销 repay 还款 check 检查 water 线下流水 
  * 
  * @author generate by www.whatgoogle.com (ps : some question? contact
  *         zhuwj726@gmail.com)
