@@ -251,6 +251,14 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 		upateSummaryInfo();
 		return null;
 	}
+	public String refesh_bill_date(Map<String, Object> map) {
+		map.put("type", "3");
+		map.put("amount", map.get("alipay_amount"));
+		add(map);
+		baseDao.update("baseFrame_Cridit.alipay", map);
+		upateSummaryInfo();
+		return null;
+	}
 	/**
 	 * repayment_amount 还款金额
 	 * repayment_bank还款银行

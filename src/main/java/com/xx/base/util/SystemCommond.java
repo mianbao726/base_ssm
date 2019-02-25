@@ -10,7 +10,7 @@ public class SystemCommond {
 	 * @return
 	 */
 	public static String backupDateBase() {
-		String cmd = "mysqldump -h127.0.0.1 -uwb -pwb wb  --result-file=" + PathUtil.getSourcesPath() + DateUtil.getDateTitle() + ".sql";
+		String cmd = "mysqldump -h127.0.0.1 -uwb -pwb wb  --result-file=" + PathUtil.getSourcesPath() + DateUtil.format() + ".sql";
 		return cmd;
 	}
 

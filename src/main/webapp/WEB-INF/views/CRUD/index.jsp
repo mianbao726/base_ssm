@@ -454,9 +454,23 @@
     <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/vfs_fonts.js"></script>
     
     
-   
+   <script src="${pageContext.request.contextPath}/assets/default/vendors/jsencrypt/jsencrypt.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
+// 	$("#save_bill_info").click(function(){
+// 		$.wj.ajax({
+// 		      contenttype : 'application/json; charset=utf-8',
+// 		      async: false,
+<%-- 			  url: '<%=path%>/credit/setBillInfo.do', --%>
+// 			  type:"post",
+// 			  dataType:"json",
+// 			  params:params,
+// 			  success:function(data){
+// 				  $.wj.location(BASE+"/credit/index.html");
+// 			  },
+// 		    });
+// 		});
+	
 		$(function(){
 			var params = {};
 				$.wj.ajax({
@@ -474,6 +488,8 @@
 			$("#gen_code").click(function(){
 				var params = {};
 				params['target'] = $("#col0001").val(); 
+// 				alert(234);
+// 				return;
 				$.wj.ajax({
 			      contenttype : 'application/json; charset=utf-8',
 			      async: false,

@@ -1229,6 +1229,17 @@
 						    className: " btn-success"
 						},
 						{
+						    text: '刷新账单周期',
+						    action: function ( e, dt, node, config ) {
+						        this.disable(); // disable button
+						    	$.wj.ajax({
+						    		url: '<%=path%>/credit/refesh_bill_date.do',
+						    		});
+						    	$.wj.location(BASE+"/credit/index.html");
+						    },
+						    className: " btn-success"
+						},
+						{
 						    text: '现金',
 						    action: function ( e, dt, node, config ) {
 						    	 $("#modal_bs_example-modal-sm-cash").modal('show');
@@ -1543,7 +1554,7 @@
 		params['current_bank'] = current_bank; 
 		params['bill_amount'] = ""==$("#bill_amount").val()?0:$("#bill_amount").val(); 
 		params['pre_bill_amount'] = ""==$("#pre_bill_amount").val()?0:$("#pre_bill_amount").val(); 
-		params['remaining_credit'] = ""==$("#remaining_credit").val()?0:$("#remaining_credit").val(); 
+		params['remaining_credit'] = ""==$("#remaining_credit").val()?0:$("#remaining_credit").val();
 		$.wj.ajax({
 	      contenttype : 'application/json; charset=utf-8',
 	      async: false,

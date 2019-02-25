@@ -112,4 +112,10 @@ public interface CriditService extends IBaseService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public String alipay(Map<String, Object> map);
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public String refesh_bill_date(Map<String, Object> map);
+	
 }

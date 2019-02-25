@@ -24,13 +24,14 @@
  */
 package com.xx.backend.controller;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.ejb.CreateException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -41,8 +42,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.xx.backend.service.CriditService;
 import com.xx.base.controller.BaseController;
+import com.xx.base.util.DateUtil;
 import com.xx.base.util.map.QMap;
-import com.xx.base.util.rsa.way001.*;
 
 /**
  * spend 花销 repay 还款 check 检查 water 线下流水 
@@ -246,6 +247,14 @@ public class CreditController extends BaseController {
 		 criditService.water_arrival(paramsMap);
 		 return JSONObject.toJSONString(paramsMap);
 	 }
+	 
+	 @RequestMapping("/refesh_bill_date.do")
+	 public @ResponseBody String refesh_bill_date(HttpServletRequest request, Model model)throws Exception{
+		 Map<String, Object> paramsMap = super.getParams(request);
+		 criditService.refesh_bill_date(paramsMap);
+		 return JSONObject.toJSONString(paramsMap);
+	 }
+	 
 	 /**
 	  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
 	  */
@@ -264,4 +273,26 @@ public class CreditController extends BaseController {
 		 criditService.alipay(paramsMap);
 		 return JSONObject.toJSONString(paramsMap);
 	 }
+
+	public static void main(String[] args) {
+		String count = "18";//还款日日期
+		String bill_day = "10";//账单日期
+		String bill_amount = "1900";//账单金额
+		String pre_bill_amount ="9822";//未出账单金额
+		String bill_date ="2018-02-10";//账单日期
+		String pay_date =DateUtil.after(bill_date, count);//
+		
+		System.out.println("账单日期: " + bill_date + "  还款日期:" + pay_date);
+		
+		
+		Calendar c = DateUtil.formatCalendar(bill_day);// 设置日期
+		System.out.println(DateUtil.formatCalendar(c));//格式化日期
+		if(Integer.parseInt(bill_amount)>0  ){// 当前账单不为零
+			
+		}
+		System.out.println(DateUtil.compare(
+				DateUtil.formatCalendar(c)));
+		//剩余应还金额 以及 在多少天能应该还款
+		//显示当前刷卡的最长免息期
+	}
 }
