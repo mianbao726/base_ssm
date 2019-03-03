@@ -1072,7 +1072,7 @@
     			{"mData" : "month_bill_date"},
     			{"mData" : "remaining_credit"},
     			{"mData" : "total_credit"},
-    			{"mData" : "bill_date"},
+    			{"mData" : "current_bill_date"},
     			{"mData" : "touch_date"},
     			{"mData" : "touch_date"},
     		 ],

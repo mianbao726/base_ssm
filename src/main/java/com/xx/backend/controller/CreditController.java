@@ -275,24 +275,49 @@ public class CreditController extends BaseController {
 	 }
 
 	public static void main(String[] args) {
-		String count = "18";//还款日日期
+		String count = "18";//还款天数
 		String bill_day = "10";//账单日期
 		String bill_amount = "1900";//账单金额
 		String pre_bill_amount ="9822";//未出账单金额
-		String bill_date ="2018-02-10";//账单日期
-		String pay_date =DateUtil.after(bill_date, count);//
 		
-		System.out.println("账单日期: " + bill_date + "  还款日期:" + pay_date);
+		String bill_date_start =DateUtil.calMonth(DateUtil.setDay(bill_day),-1);//上一个账单日　当前账单的账单日期 开始   (DateUtil.formatCalendar格式化日期)
+		String bill_date_end =DateUtil.formatCalendar(DateUtil.setDay(bill_day));//账单日　当前账单账单日期 结束     (DateUtil.formatCalendar格式化日期)
+		String pay_date =DateUtil.after(bill_date_end, count);//当前账单日的最后还款日期　　根据账单日 和 还款天数 计算出最后还款日
+		String next_bill_date =DateUtil.calMonth(DateUtil.setDay(bill_day),1);//下一月的账单日
+		String next_pay_date =DateUtil.after(next_bill_date, count);//下一月的账单日的最后还款日
+		String current_date = DateUtil.getCurrentDate();//当前日期
 		
-		
-		Calendar c = DateUtil.formatCalendar(bill_day);// 设置日期
-		System.out.println(DateUtil.formatCalendar(c));//格式化日期
+		System.out.println("账单周期: (" +bill_date_start + "~"+  bill_date_end + ")  还款日期:" + pay_date + "  当前日期 :" + current_date);
+		System.out.println("账单金额: " + bill_amount + "  未出账单金额:" + pre_bill_amount);
 		if(Integer.parseInt(bill_amount)>0  ){// 当前账单不为零
+			System.out.println("-----需要生成账单-----");
+			System.out.println("账单周期                               :"+bill_date_start+ " ~ "+  bill_date_end);
+			System.out.println("还款日期                               :"+pay_date + "    " +DateUtil.daysBetween(current_date, pay_date) +  " 天内账单到期"+"        账单金额:"+bill_amount  );
+			if(DateUtil.daysBetween(bill_date_end,current_date ) <0){
+				System.out.println("账单日期                  :"+bill_date_end + "    " + (DateUtil.daysBetween(bill_date_end,current_date )+"").replace("-", "")  + "天后出账    " );
+			}else{
+				System.out.println("下一个账单日期                  :"+next_bill_date + "    当前月账单已出账:" + DateUtil.daysBetween(bill_date_end,current_date )  + "天    " + DateUtil.daysBetween(current_date, next_bill_date) +" 天后出下月账单");
+			}
+			if(DateUtil.daysBetween(bill_date_end,current_date ) <0){
+				System.out.println("账单的还款日期     :" + pay_date +"    " +DateUtil.daysBetween(current_date,  pay_date)+" 天免息期 " );
+			}else{
+				System.out.println("下一个账单的还款日期     :" + next_pay_date +"    " +DateUtil.daysBetween(current_date, next_pay_date)+" 天免息期 " );
+			}
+			//账单信息　
+			//银行`　卡`　账单年`　账单月`　账单年月`　账单统计开始日期`　账单统计结束日期`　账单最后还款日`　账单金额`  剩余未还金额`　*修正账单未还金额`
 			
+			//银行日期
+			//  **部分银行出账期 和 还款期在同一个月 招行     部分不是**
+			//账单日（每月的第几天）　出账后x天内需还款
+			
+			//当前账单年`　当前账单月`　当前账单年月日　当前账单统计开始日期　当前账单统计结束日期　当前最后还款日　当前账单金额   剩余还款金额  *修正当前账单金额　
+			//当前月账单出账x天　x天内账单到期
+			//未出账单金额　x天后出账下月的账单　x天免息期
 		}
-		System.out.println(DateUtil.compare(
-				DateUtil.formatCalendar(c)));
+//		System.out.println(DateUtil.compare(DateUtil.formatCalendar(c)));
+//		System.out.println(DateUtil.compare(DateUtil.after(bill_date_end, "17")));
 		//剩余应还金额 以及 在多少天能应该还款
 		//显示当前刷卡的最长免息期
 	}
 }
+

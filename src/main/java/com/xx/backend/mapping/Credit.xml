@@ -10,8 +10,8 @@
 		select
 		code,
 		DATE_FORMAT(touch_date, '%Y-%m-%d %H:%i:%s') as touch_date,
-		case when bill_date is null then DATE_FORMAT(now(), '%Y-%m-%d') else DATE_FORMAT(bill_date, '%Y-%m-%d') end as bill_date,
-		TIMESTAMPDIFF(DAY,now(),bill_date)+ case when bill_repay_day_count is null then 0 else  bill_repay_day_count end as fee_free_day_count,
+		case when current_bill_date is null then DATE_FORMAT(now(), '%Y-%m-%d') else DATE_FORMAT(current_bill_date, '%Y-%m-%d') end as current_bill_date,
+		TIMESTAMPDIFF(DAY,now(),current_bill_date)+ case when bill_repay_day_count is null then 0 else  bill_repay_day_count end as fee_free_day_count,
 		total_credit - bill_amount - pre_bill_amount - remaining_credit as problem_money, 
 		name,
 		inherent_credit,
@@ -250,8 +250,11 @@
 	</select>
 	<update id="upate_credit_bill_date" parameterType="hashmap">
 		update wb.wj_bank set 
-			bill_date = DATE_FORMAT(#{bill_date}, '%Y-%m-%d %H:%i:%s'),
-			bill_repay_date = DATE_FORMAT(#{bill_repay_date}, '%Y-%m-%d %H:%i:%s')
+			
+		current_bill_date_start= DATE_FORMAT(#{current_bill_date_start}, '%Y-%m-%d %H:%i:%s'),
+		current_bill_date_end= DATE_FORMAT(#{current_bill_date_end}, '%Y-%m-%d %H:%i:%s'),
+			current_bill_date = DATE_FORMAT(#{current_bill_date}, '%Y-%m-%d %H:%i:%s'),
+			current_bill_pay_date = DATE_FORMAT(#{current_bill_pay_date}, '%Y-%m-%d %H:%i:%s')
 		 where id =#{id}
 	</update>
 	
