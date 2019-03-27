@@ -75,6 +75,7 @@ public class CreditController extends BaseController {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping("/getdata.html")
 	public @ResponseBody
 	String getdata(HttpServletRequest request, Model model) throws Exception {
@@ -83,6 +84,7 @@ public class CreditController extends BaseController {
 		// List<Map<String, Object>> data = criditService.index(null);
 		Map<String, Object> data = criditService.index(new HashMap());
 		ret.put("data", data.get("data"));
+//		ret.put("day", DateUtil.getCurrentDate("d"));
 		ret.put("recordsTotal", Integer.valueOf(((List) data.get("data")).size()));
 		ret.put("recordsFiltered", Integer.valueOf(((List) data.get("data")).size()));
 		return JSONObject.toJSONString(ret);
@@ -138,8 +140,51 @@ public class CreditController extends BaseController {
 	@RequestMapping("/getCreditInfos.do")
 	public @ResponseBody
 	String getCreditInfos(HttpServletRequest request, Model model) throws Exception {
-		Map paramsMap = super.getParams(request);
+		Map<String, Object> paramsMap = super.getParams(request);
 		paramsMap.put("creditCardInfo", criditService.getCreditInfos(paramsMap));
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
+	
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/checkRecentRecord.do")
+	public @ResponseBody
+	String checkRecentRecord(HttpServletRequest request, Model model) throws Exception {
+		Map<String, Object> paramsMap = super.getParams(request);
+//		paramsMap.put("records", criditService.checkRecentRecord(paramsMap));
+		paramsMap=  criditService.checkRecentRecord(paramsMap);
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
+	
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/addRemark.do")
+	public @ResponseBody
+	String addRemark(HttpServletRequest request, Model model) throws Exception {
+		Map<String, Object> paramsMap = super.getParams(request);
+		Map<String,Object> info = criditService.addRemark(paramsMap);
+		List<Map<String, Object>> ret =(List<Map<String, Object>>) info.get("newRemarks");
+		paramsMap.put("remarks", ret);
+		paramsMap.put("duplicate", info.get("duplicate"));
+		paramsMap.put("status_code", "200");
+		return JSONObject.toJSONString(paramsMap);
+	}
+	
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/getRemarks.do")
+	public @ResponseBody
+	String getRemarks(HttpServletRequest request, Model model) throws Exception {
+		Map<String, Object> paramsMap = super.getParams(request);
+		paramsMap.put("remarks", criditService.getRemarks(paramsMap));
 		paramsMap.put("status_code", "200");
 		return JSONObject.toJSONString(paramsMap);
 	}
@@ -169,7 +214,7 @@ public class CreditController extends BaseController {
 	@RequestMapping("/setBillInfo.do")
 	public @ResponseBody
 	String setBillInfo(HttpServletRequest request, Model model) throws Exception {
-		Map paramsMap = super.getParams(request);
+		Map<String, Object> paramsMap = super.getParams(request);
 		paramsMap.put("setBillInfo", criditService.setBillInfo(paramsMap));
 		paramsMap.put("status_code", "200");
 		return JSONObject.toJSONString(paramsMap);
@@ -200,7 +245,6 @@ public class CreditController extends BaseController {
 		paramsMap.put("status_code", "200");
 		return JSONObject.toJSONString(paramsMap);
 	}
-	
 
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
@@ -211,6 +255,15 @@ public class CreditController extends BaseController {
 			criditService.water(paramsMap);
 			return JSONObject.toJSONString(paramsMap);
 	}
+	 /**
+	  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	  */
+	 @RequestMapping("/updateRecord.do")
+	 public @ResponseBody String updateRecord(HttpServletRequest request, Model model)throws Exception{
+		 Map<String, Object> paramsMap = super.getParams(request);
+		 criditService.updateRecord(paramsMap);
+		 return JSONObject.toJSONString(paramsMap);
+	 }
 	 /**
 	  * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
 	  */

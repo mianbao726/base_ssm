@@ -10,7 +10,10 @@ import java.math.BigDecimal;
 public class FeeCost {
 	
 	//费率，默认千分之六
-	private static final String FEE_RATE="0.0065";
+	private static final String FEE_RATE_33="0.0033";
+	private static final String FEE_RATE_60="0.0060";
+	private static final String FEE_RATE_55="0.0055";
+	private static final String FEE_RATE_50="0.0050";
 	
 	public static void main(String[] args) {
 		// 168 1.01
@@ -38,6 +41,6 @@ public class FeeCost {
 	 * @return
 	 */
 	public static BigDecimal fee(BigDecimal amount) {
-		return new BigDecimal(amount.multiply(new BigDecimal(FEE_RATE)).add(new BigDecimal(0.009)).movePointRight(2).intValue()).movePointLeft(2);
+		return new BigDecimal(amount.multiply(new BigDecimal(FEE_RATE_33)).add(new BigDecimal(0.009)).movePointRight(2).intValue()).movePointLeft(2);
 	}
 }

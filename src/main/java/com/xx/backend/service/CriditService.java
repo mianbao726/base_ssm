@@ -61,6 +61,16 @@ public interface CriditService extends IBaseService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public Map<String, List> getCreditInfos(Map<String, Object> map);
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public Map<String, Object> addRemark(Map<String, Object> map);
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public List<Map<String, Object>> getRemarks(Map<String, Object> map);
 	
 
 	/**
@@ -76,12 +86,22 @@ public interface CriditService extends IBaseService {
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
 	 */
+	public Map checkRecentRecord(Map<String, Object> map);
+	
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact zhuwj726@gmail.com)
+	 */
 	public List setSummaryInfo(Map<String, Object> map);
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
 	 */
 	public String water(Map<String, Object> map);
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public String updateRecord(Map<String, Object> map);
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)

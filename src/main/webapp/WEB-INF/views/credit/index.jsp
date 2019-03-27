@@ -297,7 +297,6 @@
           </div>
         </div>
         <!-- /top navigation -->
-
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
@@ -344,7 +343,7 @@
                   <!-- Small modal -->
 <!--                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button> -->
 
-                  <div class="modal fade bs-example-modal-water" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div  id= "water_modal" class="modal fade bs-example-modal-water" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                       <div class="modal-content">
 
@@ -377,6 +376,7 @@
                       </div>
                       
                       <div class="form-group">
+                        
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">金额</label>
                         <div class="col-md-6 col-sm-9 col-xs-12">
                            <input type="text" id="water_amount" required="required" class="form-control col-md-7 col-xs-12">
@@ -384,11 +384,13 @@
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
-                        <div class="col-md-6 col-sm-9 col-xs-12">
-                           <input type="text" id="water_remark" required="required" class="form-control col-md-7 col-xs-12">
+                        <div class="col-md-6 col-sm-9 col-xs-12" id ="editable-select-div">
+                          <select class="select2_single form-control" tabindex="-1"  id="editable-select" >
+                            <option></option>
+                          </select>
+                           
                         </div>
                       </div>
-                      
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">类型</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -405,6 +407,7 @@
                   </div>
                         </div>
                         <div class="modal-footer">
+                         <lable id = 'info1'></lable>&nbsp;&nbsp;&nbsp;&nbsp;<lable id = 'info2'></lable> &nbsp;&nbsp;&nbsp;&nbsp;<lable id = 'info3'></lable>
                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                           <button type="button" class="btn btn-primary" id = "water_pay">Save changes</button>
                         </div>
@@ -717,6 +720,7 @@
                 <div class="x_panel">
                   <div class="x_title">
                     <h2>bill info<small>no paging</small></h2>
+                    
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up" title="收放"></i></a>
                       </li>
@@ -742,8 +746,8 @@
                         <tr>
                           <th>bank</th>
                           <th>bill_amount</th>
-                          <th>remaining quota</th>
                           <th>quota</th>
+                          <th>time_info</th>
                           <th>最长账单期</th>
                           <th>touched</th>
                           <th>operation</th>
@@ -835,9 +839,70 @@
    
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jsencrypt/jsencrypt.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
+    
+    <!-- jquery-editable-select-master -->
+<%--     <script src="${pageContext.request.contextPath}/assets/default/additional/jquery-editable-select-master/jquery-editable-select.min.js"></script> --%>
+    <script src="${pageContext.request.contextPath}/assets/default/additional/jquery-editable-select-master/jquery-editable-select.js"></script>
+    
+    <link href="${pageContext.request.contextPath}/assets/default/additional/jquery-editable-select-master/jquery-editable-select.min.css" rel="stylesheet">
+    
     <!-- Custom Theme Scripts -->
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
 	<script>
+	
+	
+	
+	 document.onkeydown = function(e){
+		    var event = e || window.event;  
+		    var code = event.keyCode || event.which || event.charCode;
+		    if (event.ctrlKey && event.keyCode == 13) {
+	            //正在人录入明细时候
+// 				alert($("#water_modal").modal());
+	            $("#water_pay").click();
+	         }else  if (code == 13) {
+
+		    	if($('#editable-select').is(":focus")){//点击回车 且 焦点在备注输入框上
+		    		var remark = $('#editable-select').val();
+		    		//检查是否在当前备注库中
+		    		var params = {};
+					params['remark']=$("#editable-select").val();
+					$.wj.ajax({
+						url: '<%=path%>/credit/addRemark.do',
+						params:params,
+						 success:function(data){
+							 if(data.duplicate == 1){// 1 插入成功  重新加载信息,  0 表示不成功
+								  $("#editable-select").remove();
+								  $("#editable-select-div").append("<select class='select2_single form-control' tabindex='-1'  id='editable-select' >  <option></option> </select>")
+								  setRmarks(data);
+								  $("#editable-select").val(remark);
+								  //加入新选项 ,   先清空之前的 然后重新加载.
+								  
+								  //加入撤销功能TODO
+							 }
+						  }
+					});
+		    	}
+		    }
+		};
+		
+		
+		$(document).ready(function(){
+			//变化后
+			$("#editable-select").change(function(){
+// 				alert(123);
+				var params = {};
+				params['remark']= $("#editable-select").val();
+				$.wj.ajax({
+					url: '<%=path%>/credit/checkRecentRecord.do',
+					params:params,
+					 success:function(data){
+// 						 alert(data.records.length);
+					  }
+				});
+			});
+			
+			});
+		
 	var repayment_bank;
 		$("#repayment_btn").click(function(){
 			var params = {};
@@ -895,6 +960,9 @@
 					 $.wj.left(data.list);
 				  }
 			});
+				
+			
+				
 			$("#gen_code").click(function(){
 				var params = {};
 				params['target'] = $("#col0001").val(); 
@@ -944,7 +1012,20 @@
 						  setOptions(data,"");
 					  }
 				});
-		
+		//可选的选项
+		var remarks;
+		//获取可选备注项目
+		$.wj.ajax({
+		      contenttype : 'application/json; charset=utf-8',
+		      async: false,
+			  url: '<%=path%>/credit/getRemarks.do',
+			  type:"post",
+			  dataType:"json",
+			  success:function(data){
+				  remarks = data;
+				  setRmarks(data);
+			  }
+		});
 		
 		//设置统计信息
 		function display_summaryInfo(){
@@ -980,7 +1061,7 @@
 		function setOptions(data,selected_key){
 			$("#cardno").empty();
 			$("#water_cardno").empty();
-			 $.each(data.creditCardInfo, function(key, val){   
+			 $.each(data.creditCardInfo, function(key, val){
 				var keys = key.split("_");
 				if(0 == first_init_flag){
 					$("#bank").append("<option value='"+keys[0]+"'>"+keys[1]+"</option>");
@@ -996,6 +1077,51 @@
 			  }); 
 			 first_init_flag =1;
 		}
+		function emptyInfos(){
+			  $("#info1").html("");
+			  $("#info2").html("");
+			  $("#info3").html("");
+		}
+		function setRmarks(data){
+			emptyInfos();
+			 $("#editable-select").empty();
+			 $.each(data.remarks, function(key, val){   
+				 $("#editable-select").append("<option value='"+val.id+"'>"+val.name+"</option>");
+			  }); 
+			$('#editable-select').editableSelect();
+			$('#editable-select').on('select.editable-select', function (e) {
+// 			    alert(1012);
+					$.wj.c("tempC  : " + tempC);
+					if(tempC == 0){
+						tempC=tempC+1;
+					}
+					else if(tempC == 1){
+						tempC = 0;
+						var params = {};
+						params['bank']=$("#water_bank").val();
+						params['remark']=$("#editable-select").val();
+						$.wj.ajax({
+							  url: '<%=path%>/credit/checkRecentRecord.do',
+							  params:params,
+							  success:function(data){
+// 								  alert("全部 : " + data.records.all.length+ "  一个月内" + data.records.in1Month.length+
+// 										  "  最新一笔" +data.records.latest[0]['bank']+"("+data.records.latest.length+")" );
+								  $.wj.c(data.all);
+								  $("#info1").html("累计交易次数<font color='red'> "+data.all.length+" </font>次");
+								  $.wj.c(data.in1Month);
+								  $("#info2").html("一个月内<font color='red'> "+data.in1Month.length+" </font>次");
+								  $.wj.c(data.latest);
+								  if(data.latest.length >0){
+									  $("#info3").html("最近一笔<font color='red'> "+data.latest[0].cr_date+" </font>");
+								  }else{
+									  $("#info3").html("");
+								  }
+							  }
+						    });
+					}
+			});
+		}
+		var tempC=0;
 		
 		$("#cardno").change(function(){
 			$("#bank ").val($("#cardno").find("option:selected").attr("rel"));
@@ -1027,14 +1153,13 @@
 			params['cardno'] = $("#water_cardno").val(); 
 			params['amount'] = $("#water_amount").val(); 
 			params['type'] = $("#type_w_p").prop("checked")?"0":"1"; 
-			params['remark'] = $("#water_remark").val(); 
-// 			return;
+			params['remark'] = $("#editable-select").val(); 
 			$.wj.ajax({
-		      contenttype : 'application/json; charset=utf-8',
-		      async: false,
+// 		      contenttype : 'application/json; charset=utf-8',
+// 		      async: false,
 			  url: '<%=path%>/credit/water.do',
-			  type:"post",
-			  dataType:"json",
+// 			  type:"post",
+// 			  dataType:"json",
 			  params:params,
 			  success:function(data){
 				  $.wj.location(BASE+"/credit/index.html");
@@ -1385,18 +1510,47 @@
 	           	},
  				{"render": function(data, type, row){
 	            	
-	           		return $.wj.formatMoney(row.remaining_credit)+"(<font color = 'red'>"+$.wj.formatNumnber(row.remaining_credit/row.total_credit*100)+"%</font>)";
+ 					if(null == row.temporary_credit || "0" == row.temporary_credit){
+		           		return $.wj.formatMoney(row.remaining_credit)+"  /  "+ $.wj.formatMoney(row.total_credit)+"(<font color = 'red'>"+$.wj.formatNumnber(row.remaining_credit/row.total_credit*100)+"%</font>)";
+	            	}else{
+	            		return $.wj.formatMoney(row.remaining_credit)+"  /  "+$.wj.formatMoney(row.total_credit)+" ("+$.wj.formatMoney(row.temporary_credit)+")"+"(<font color = 'red'>"+$.wj.formatNumnber(row.remaining_credit/row.total_credit*100)+"%</font>)";
+	            	}
 	  		    },
 	               "orderable": false,
 	               "targets": 2
 	           	},
 	           	
  				{"render": function(data, type, row){
-	            	if(null == row.temporary_credit || "0" == row.temporary_credit){
-		           		return $.wj.formatMoney(row.total_credit);
-	            	}else{
-	            		return $.wj.formatMoney(row.total_credit)+" ("+$.wj.formatMoney(row.temporary_credit)+")";
-	            	}
+//  					if(row.bill_gen_count <0 ){
+//  						return "<font color = 'red'>"+row.bill_gen_count+"</font>天内出账单"+row.current_bill_pay_date+"<br/>"
+//  					}else 
+					if(row.bill_amount_remaining >0){//账单期内有未还金额
+		            	return "<font color = 'red'  style = 'font-weight:900;font-size:100%'>"+row.util_bill_pay_date+"</font>天内到期"+row.current_bill_pay_date;
+// 		            	+"<br/>" +"<font color = '#5cb85c'>"+row.next_bill_date_count+"</font>天后下期账单"+row.next_bill_date
+ 					}else if (row.bill_amount_remaining == 0  &&  row.bill_gen_count  != undefined ){//账单已经还清或没有应还金额   
+//  						$.wj.c(row.month_bill_date +"  "+data.day);
+//  						$.wj.c(row.month_bill_date  +"   "+row.now_day  +"  "+(parseInt(row.month_bill_date) >parseInt(row.now_day)));
+ 						if(parseInt(row.month_bill_date) <parseInt(row.now_day) ){//当前日期在账单日后
+ 							return "<font color = '#5cb85c'>"+ row.next_bill_date_count + "</font>天出账"+row.next_bill_date;
+ 						}else{//当前日期在账单日前
+	 						var dayInfo;
+	 						var dayInfo_desc="";
+	 						if(row.bill_gen_count ==0){
+	 							dayInfo="今";
+	 						} else if(row.bill_gen_count ==-1){
+	 							dayInfo="明";
+	 						} else{
+	 							dayInfo=row.bill_gen_count;
+	 							dayInfo_desc = "内";
+	  						}
+	 						return "<font color = '5cb85c' >"+dayInfo+"</font>天"+dayInfo_desc+"出账"+row.current_bill_date_end+"<br/>"
+ 						}
+ 					}else if (row.next_bill_date_count != undefined ){//没有应还金额
+		            	return "账单已还清<br/>"+
+		            	"<font color = '#5cb85c'>"+row.next_bill_date_count+"</font>天后下期账单"+row.next_bill_date;
+ 					}else {
+ 						return "";
+ 					}
 	  		    },
 	               "orderable": false,
 	               "targets": 3
@@ -1414,13 +1568,18 @@
 // 	           	},
 	           	
 	           	{"render": function(data, type, row){
-	           		if("" == row.fee_free_day_count || null == row.fee_free_day_count){
-	           			return "0";
-	           		}else{
-		            	return row.fee_free_day_count;
-	           		}
+// 	           		if("" == row.free_day_count || null == row.free_day_count){
+// 	           			return "0";
+// 	           		}else{
+// 		            	return row.free_day_count;
+// 	           		}
+						if(row.free_day_count != undefined ){
+							return  row.free_day_count;
+						}else{
+							return "";
+						}
 	  		    },
-	               "orderable": false,
+	               "orderable": true,
 	               "targets": 4
 	           	},
 	           	

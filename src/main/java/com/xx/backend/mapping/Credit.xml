@@ -8,27 +8,31 @@
 	<select id="cridit_page" parameterMap="paraMap" resultType="hashmap">
 		<if test="start != null"><![CDATA[select t.*  from ( ]]></if>
 		select
-		code,
+		total_credit - bill_amount - pre_bill_amount - remaining_credit as problem_money,
 		DATE_FORMAT(touch_date, '%Y-%m-%d %H:%i:%s') as touch_date,
+		DATE_FORMAT(current_bill_date_end, '%Y-%m-%d') as current_bill_date_end,
+		DATE_FORMAT(current_bill_pay_date, '%Y-%m-%d') as current_bill_pay_date,
 		case when current_bill_date is null then DATE_FORMAT(now(), '%Y-%m-%d') else DATE_FORMAT(current_bill_date, '%Y-%m-%d') end as current_bill_date,
 		TIMESTAMPDIFF(DAY,now(),current_bill_date)+ case when bill_repay_day_count is null then 0 else  bill_repay_day_count end as fee_free_day_count,
-		total_credit - bill_amount - pre_bill_amount - remaining_credit as problem_money, 
-		name,
-		inherent_credit,
-		temporary_credit,
-		total_credit,
-		remaining_credit,
-		remaining_credit_percentage,
-		bill_amount,
-		pre_bill_amount,
-		month_bill_date,
-		count
-		from wj_bank
+		DATE_FORMAT(now(),'%d') as now_day,
+		t.*
+<!-- 		total_credit - bill_amount - pre_bill_amount - remaining_credit as problem_money,  -->
+<!-- 		name, -->
+<!-- 		inherent_credit, -->
+<!-- 		temporary_credit, -->
+<!-- 		total_credit, -->
+<!-- 		remaining_credit, -->
+<!-- 		remaining_credit_percentage, -->
+<!-- 		bill_amount, -->
+<!-- 		pre_bill_amount, -->
+<!-- 		month_bill_date, -->
+<!-- 		count -->
+		from wj_bank t
 		<if test="filter != null">
 			<where>${filter}</where>
 		</if>
 		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
-		<if test="sort == null">ORDER BY ID </if>
+		<if test="sort == null">ORDER BY touch_date desc </if>
 		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>
 	</select>
 
@@ -65,6 +69,14 @@
 	<!--删除交易记录 -->
 	<update id="delete_water_bank_cancel_record" parameterMap="paraMap" >
 		update wj_record set  del_flag='1'  where id = #{id}
+	</update>
+	<update id="updateRecord" parameterMap="paraMap" >
+		update wj_record set  
+		up_date = now()
+		<if test="my_single_cal2_info != null"> , cr_date = #{my_single_cal2_info} 	</if>
+		<if test="detial_amount != null"> , amount = #{detial_amount} 	</if>
+		<if test="editable-select != null"> , remark = #{editable-select} 	</if>
+		 where id = #{id}
 	</update>
 	<!--次日到帐金额到帐 -->
 	<update id="water_arrival" parameterMap="paraMap" >
@@ -122,6 +134,18 @@
 		)
 		<selectKey resultType="int" order="AFTER" keyProperty="ID"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
 	</insert>
+	<insert id="addRemark" parameterMap="paraMap">
+		insert into wj_remarks (
+		name,
+		type,
+		shortcut)
+		values (
+		#{name},
+		#{type},
+		#{shortcut}
+		)
+		<selectKey resultType="int" order="AFTER" keyProperty="ID"><![CDATA[SELECT LAST_INSERT_ID()]]></selectKey>
+	</insert>
 	
 	<update id="pay" parameterType="hashmap">
 		update wj_credit
@@ -144,6 +168,7 @@
 		set
 			remaining_credit = remaining_credit - #{amount},
 			pre_bill_amount = pre_bill_amount+#{amount},
+			touch_date = now(),
 			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
 		where 1=1  
 		and code = #{bank}
@@ -207,6 +232,26 @@
 	<select id="getCredit_List" parameterMap="paraMap" resultType="hashmap">
 		SELECT * FROM wj_credit where type = #{bank} ORDER BY temporary_credit desc
 	</select>
+	
+	<select id="checkRecentRecord" parameterMap="paraMap" resultType="hashmap">
+		select
+			DATE_FORMAT( t.cr_date,'%Y-%m-%d %h:%i:%s') as cr_date,t.*
+		from
+			wj_record t
+			where
+			    1=1
+<!-- 				and cr_date > DATE_ADD(now(), INTERVAL -1 MONTH) -->
+				and remark = #{remark}
+				and bank = #{bank}
+				order by cr_date desc
+	</select>
+	<select id="selectRemark" parameterMap="paraMap" resultType="hashmap">
+		SELECT * FROM wj_remarks
+		where 1=1 
+		 <if test="remark != null">
+		 	and  name = #{remark}
+		 </if>
+	</select>
 	<select id="select_one_wj_record_by_id" parameterMap="paraMap" resultType="hashmap">
 		SELECT * FROM wj_record where id = #{id}
 	</select>
@@ -239,20 +284,36 @@
 	<select id="getCreditInfos" parameterMap="paraMap" resultType="hashmap">
 		SELECT t.*,b.name,b.short_name FROM wj_credit t ,wj_bank b where t.type = b.code ORDER BY type desc
 	</select>
+	<select id="getRemarks" parameterMap="paraMap" resultType="hashmap">
+		select * from wj_remarks
+	</select>
 	
 	<select id="getAllCreditInfos" parameterMap="paraMap" resultType="hashmap">
-		SELECT t.* FROM wj_bank t
+		SELECT DATE_FORMAT(now(),'%d') as now_day,t.* FROM wj_bank t
 		where 1=1 
 		 <if test="repayment_bank != null">
 		 	and code = #{repayment_bank}
 		 </if>
-<!-- 		where code like '%YH'  -->
+		 <if test="repayment_banks != null">
+		 	and code in ( ${repayment_banks})
+		 </if>
+<!-- 		 and isNextMonth = '0' -->
 	</select>
 	<update id="upate_credit_bill_date" parameterType="hashmap">
 		update wb.wj_bank set 
-			
-		current_bill_date_start= DATE_FORMAT(#{current_bill_date_start}, '%Y-%m-%d %H:%i:%s'),
-		current_bill_date_end= DATE_FORMAT(#{current_bill_date_end}, '%Y-%m-%d %H:%i:%s'),
+			next_bill_date = #{next_bill_date},
+			bill_amount_remaining = #{bill_amount_remaining},
+			bill_amount_edit = #{bill_amount_edit},
+			bill_gen_count = #{bill_gen_count},
+			util_bill_pay_date = #{util_bill_pay_date},
+			next_bill_date_count = #{next_bill_date_count},
+			free_day_count = #{free_day_count},
+			pre_bill_amount = #{pre_bill_amount},
+			bill_amount = #{bill_amount},
+			current_bill_year = #{current_bill_year},
+			current_bill_month = #{current_bill_month},
+			current_bill_date_start= DATE_FORMAT(#{current_bill_date_start}, '%Y-%m-%d %H:%i:%s'),
+			current_bill_date_end= DATE_FORMAT(#{current_bill_date_end}, '%Y-%m-%d %H:%i:%s'),
 			current_bill_date = DATE_FORMAT(#{current_bill_date}, '%Y-%m-%d %H:%i:%s'),
 			current_bill_pay_date = DATE_FORMAT(#{current_bill_pay_date}, '%Y-%m-%d %H:%i:%s')
 		 where id =#{id}
@@ -265,6 +326,12 @@
 			unposted_total_bill_amount = (select sum(pre_bill_amount) from wj_bank) ,
 	        income_and_expenditure= next_day_arrival+ bank_amount + debt +financial_product_amount + financial_product_amount_income + cash + travel_expenses - instalment_amount - total_bill_amount - unposted_total_bill_amount
 	    where id>=0
+	</update>
+	
+	<update id="update_touch_date" parameterType="hashmap">
+		update wj_bank 
+		set touch_date = now()
+	    where id= #{id}
 	</update>
 	
 
