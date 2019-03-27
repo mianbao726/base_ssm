@@ -410,6 +410,7 @@
 											<th>金额</th>
 											<th>消费时间</th>
 											<th>备注</th>
+											<th></th>
 										</tr>
 									</thead>
 								</table>
@@ -422,7 +423,78 @@
 
         </div>
         <!-- /page content -->
+<!-- modal start -->
+  <!-- 调整账单的modal -->
+           <div class="x_content" >
 
+                  <!-- modals -->
+                  <!-- Small modal -->
+<!--                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button> -->
+
+                  <div  id = "modal-modal-record-detial" class="modal fade modal-record-detial" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                          </button>
+<!--                           <h4 class="modal-title" id="myModalLabel2">bill info</h4> -->
+                          <img src='' height='70' width='70' class='profile_img'  id = "bankpic">
+                        <label class="" style ="font-size: xx-large;"  id="cardno">
+                        </label>
+                        </div>
+                        <div class="modal-body">
+                          <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+<!--                       <div class="form-group"> -->
+<!--                         <label class="control-label col-md-3 col-sm-3 col-xs-12">消费时间</label> -->
+<!--                         <div id="myreportrange" class="col-md-6 col-sm-9 col-xs-12"  style="background: #fff; cursor: pointer; padding: 5px 10px; border: 0px solid #ccc"> -->
+<!--                            <input type="text" id="detial_time" required="required" class="form-control col-md-7 col-xs-12"> -->
+<!-- 									<i class="glyphicon glyphicon-calendar fa fa-calendar"></i> -->
+<!-- 		                          <span id = "detial_time">December 30, 2014 - January 28, 2015</span> <b class="caret"></b> -->
+<!--                         </div> -->
+<!--                       </div> -->
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">消费时间</label>
+                       <div class="col-md-6 col-sm-9 col-xs-12">
+                                <input type="text" class="form-control has-feedback-left" id="my_single_cal2" placeholder="First Name" aria-describedby="inputSuccess2Status2">
+                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                <span id="inputSuccess2Status2" class="sr-only">(success)</span>
+                                <span id="my_single_cal2_info" class="sr-only" ></span>
+                                <span id="record_id" class="sr-only" >(success)</span>
+                              </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">消费金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="detial_amount" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12" id ="editable-select-div">
+                          <select class="select2_single form-control" tabindex="-1"  id="editable-select" >
+                            <option></option>
+                          </select>
+                        </div>
+                        
+                      </div>
+                    </form>
+                  </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" id = "save_record_info">Save changes</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /modals -->
+                </div>
+          <!-- 调整账单modal end -->
+<!-- modal end -->
         <!-- footer content -->
         <footer>
           <div class="pull-right">
@@ -433,6 +505,9 @@
         <!-- /footer content -->
       </div>
     </div>
+    <!-- hidden start -->
+    <input id = "path" type = "hidden" value = "${pageContext.request.contextPath}" />
+    <!-- hidden end -->
 
     <!-- jQuery -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery/dist/jquery.min.js"></script>
@@ -490,12 +565,60 @@
     <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/vfs_fonts.js"></script>
     
+    <!-- jquery-editable-select-master -->
+    <script src="${pageContext.request.contextPath}/assets/default/additional/jquery-editable-select-master/jquery-editable-select.min.js"></script>
+    <link href="${pageContext.request.contextPath}/assets/default/additional/jquery-editable-select-master/jquery-editable-select.min.css" rel="stylesheet">
     
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jsencrypt/jsencrypt.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/xx/xx.js"></script>
 	<script>
 	
+	 document.onkeydown = function(e){
+		    var event = e || window.event;  
+		    var code = event.keyCode || event.which || event.charCode;
+		    if (code == 13) {
+		    	if($('#editable-select').is(":focus")){//点击回车 且 焦点在备注输入框上
+		    		var remark = $('#editable-select').val();
+		    		//检查是否在当前备注库中
+		    		var params = {};
+					params['remark']=$("#editable-select").val();
+					$.wj.ajax({
+						url: '<%=path%>/credit/addRemark.do',
+						params:params,
+						 success:function(data){
+							 if(data.duplicate == 1){// 1 插入成功  重新加载信息,  0 表示不成功
+								  $("#editable-select").remove();
+								  $("#editable-select-div").append("<select class='select2_single form-control' tabindex='-1'  id='editable-select' >  <option></option> </select>")
+								  setRmarks(data);
+								  $("#editable-select").val(remark);
+								  //加入新选项 ,   先清空之前的 然后重新加载.
+								  
+								  //加入撤销功能TODO
+							 }
+						  }
+					});
+		    	}
+		    }
+		};
+		//可选的选项
+		var remarks;
+		//获取可选备注项目
+		$.wj.ajax({
+			  url: '<%=path%>/credit/getRemarks.do',
+			  success:function(data){
+				  remarks = data;
+				  setRmarks(data);
+			  }
+		});
 	
+		function setRmarks(data){
+// 			 $("#editable-select").empty();
+			 $.each(data.remarks, function(key, val){   
+				 $("#editable-select").append("<option value='"+val.id+"'>"+val.name+"</option>");
+			  }); 
+			$('#editable-select').editableSelect();
+		}
+		
 	$("#search_all").click(function(){
 		$("#searh_all_block").toggle();
 	});
@@ -538,21 +661,6 @@
 					  $.wj.c(data.list);
 					 $.wj.left(data.list);
 				  }
-			});
-			$("#gen_code").click(function(){
-				var params = {};
-				params['target'] = $("#col0001").val(); 
-				$.wj.ajax({
-			      contenttype : 'application/json; charset=utf-8',
-			      async: false,
-				  url: '<%=path%>/CRUD/gen001.html',
-				  type:"post",
-				  dataType:"json",
-				  params:params,
-				  success:function(data){
-					 $.wj.c(data);
-				  }
-			});
 			});
 		});
 		
@@ -652,6 +760,7 @@
     			{"mData" : "amount"},
    				{"mData" : "cr_date"},
     			{"mData" : "remark"},
+    			{"mData" : "remark"},
     			
     		 ],
             "columnDefs": [
@@ -688,9 +797,27 @@
 				   "orderable": false,
 				   "targets": 3
 					},
+				{"render": function(data, type, row){
+					return '<div class="btn-group">'+'<a href="#" class="btn btn-primary btn-xs" data-toggle="modal" data-target=".modal-record-detial"'+
+					'  onclick="edit_detial(\''+row.id+'\',\''+row.cr_date+'\',\''+row.amount+'\',\''+row.bank+'\',\''+row.cardno+'\',\''+row.remark+'\')"><i class="fa fa-align-left"></i>&nbsp;detial</a>'+'</div>';
+				  },
+				   "orderable": false,
+				   "targets": 4
+					},
             	]
     	});
     
+    function edit_detial(id, cr_date,amount,bank ,cardno,remark){
+    	
+//     	alert($("#path").val());
+    	$("#bankpic").attr("src" , $("#path").val()+"/assets/default/production/bank/"+bank+".jpg");
+    	$("#cardno").html(cardno);
+    	$("#detial_time").html(cr_date);
+    	$("#my_single_cal2_info").html(cr_date);
+    	$("#detial_amount").val(amount);
+    	$("#editable-select").val(remark);
+    	$("#record_id").html(id);
+    }
     	 
     function detial(id){
     	$.wj.location(BASE+"/credit/detial.html?id="+id);
@@ -698,9 +825,101 @@
 	table.draw();
     table.buttons( '.csv' ).disable();
     
+    
+    
+    var cb = function(start, end, label) {
+		  console.log(start.toISOString(), end.toISOString(), label);
+		  $('#myreportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+		};
+
+		var optionSet1 = {
+		  startDate: moment().subtract(29, 'days'),
+		  endDate: moment(),
+		  minDate: '01/01/2012',
+		  maxDate: '12/31/2015',
+		  dateLimit: {
+			days: 60
+		  },
+		  showDropdowns: true,
+		  showWeekNumbers: true,
+		  timePicker: false,
+		  timePickerIncrement: 1,
+		  timePicker12Hour: true,
+		  ranges: {
+			'Today': [moment(), moment()],
+			'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+			'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+			'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+			'This Month': [moment().startOf('month'), moment().endOf('month')],
+			'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+		  },
+		  opens: 'left',
+		  buttonClasses: ['btn btn-default'],
+		  applyClass: 'btn-small btn-primary',
+		  cancelClass: 'btn-small',
+		  format: 'MM/DD/YYYY',
+		  separator: ' to ',
+		  locale: {
+			applyLabel: 'Submit',
+			cancelLabel: 'Clear',
+			fromLabel: 'From',
+			toLabel: 'To',
+			customRangeLabel: 'Custom',
+			daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+			monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+			firstDay: 1
+		  }
+		};
+		
+// 		$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+		$('#myreportrange').daterangepicker(optionSet1, cb);
+		
+		$('#my_single_cal2').daterangepicker({
+			  singleDatePicker: true,
+			  timePicker: true, //显示时间
+			  locale: {
+				  format: 'YYYY/MM/DD h:mm A', //设置显示格式
+// 		            applyLabel: '确定', //确定按钮文本
+// 		            cancelLabel: '取消', //取消按钮文本
+// 		            daysOfWeek: ['日', '一', '二', '三', '四', '五', '六'],
+// 		            monthNames: ['一月', '二月', '三月', '四月', '五月', '六月',
+// 		                '七月', '八月', '九月', '十月', '十一月', '十二月'
+// 		            ],
+// 		            firstDay: 1
+		        },
+			  singleClasses: "picker_2"
+			}, function(start, end, label) {
+				$('#my_single_cal2_info').html(start.format( 'YYYY/MM/DD HH:mm:ss'));
+			  console.log(start.toISOString(), end.toISOString(), label);
+			});
 <%--     var id = '<%=id %>'; --%>
 // 	alert(id+"22");
-	
+		$("#save_record_info").click(function(){
+// 			alert(23);
+			var params = {};
+			params['my_single_cal2_info'] = $("#my_single_cal2_info").html();
+			params['detial_amount'] = $("#detial_amount").val();
+			params['editable-select'] = $("#editable-select").val();
+			params['id'] = $("#record_id").html();
+			$.wj.ajax({
+			      url: '<%=path%>/credit/updateRecord.do',
+				  params:params,
+				  success:function(data){
+					  $("#modal-modal-record-detial").modal('hide');
+					  $('#datatable-xx').DataTable().ajax.reload();
+					  $.wj.ajax({
+						  url: '<%=path%>/credit/getRemarks.do',
+						  success:function(datar){
+							  remarks = datar;
+							  $("#editable-select").remove();
+							  $("#editable-select-div").append("<select class='select2_single form-control' tabindex='-1'  id='editable-select' >  <option></option> </select>")
+							  setRmarks(datar);
+						  }
+					});
+					  
+				  }
+			});
+		});
 
 // 	table.ajax.reloadData({'filter':filter});
     </script>

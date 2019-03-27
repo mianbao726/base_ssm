@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * 获取指定格式的日期字符串,主要防止重复,按照日期命名
@@ -13,6 +14,27 @@ import java.util.Date;
 public class DateUtil {
 	private static final String yyyy_MM_dd="yyyy-MM-dd";
 	private static final String yyyy_MM_dd_hh_mm_ss="yyyy-MM-dd hh:mm:ss";
+	
+	/**
+	 * 在x月内
+	 * @param map
+	 * @param x
+	 * @return
+	 */
+	public static boolean inXMonth(Map<String,Object> map , int x,String date_key){
+		String d = map.get(date_key)+"";
+		Calendar c = str2Calendar(d);
+		Calendar now = Calendar.getInstance();
+		now.setTime(new Date());
+		Calendar now_x = Calendar.getInstance();
+		now_x.setTime(new Date());
+		now_x.add(Calendar.MONTH, x);
+		System.out.println(formatCalendar(c)+ "  "+formatCalendar(now)+ "  "+formatCalendar(now_x)+ "  ");
+		if (c.before(now) && c.after(now_x)){
+			return true;
+		}
+		return false;
+	}
 	
 	/**
 	 * 获取完整格式的日期 精确到时分秒
@@ -132,6 +154,26 @@ public class DateUtil {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(d);
 		calendar.add(calendar.DAY_OF_MONTH, Integer.parseInt(count));
+		return sdf.format(calendar.getTime());
+	}
+	/**
+	 * 月份加一 并 设定制定的日期
+	 * @param date
+	 * @param count
+	 * @return
+	 */
+	public  static String nextMonthFixDay(String date , String day){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = null;
+		try {
+			d = sdf.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(d);
+		calendar.add(calendar.MONTH, 1);
+		calendar.set(calendar.DAY_OF_MONTH, Integer.parseInt(day));
 		return sdf.format(calendar.getTime());
 	}
 	/**

@@ -26,7 +26,6 @@ package com.xx.backend.service.impl;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,11 +38,15 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xx.backend.service.CriditService;
 import com.xx.base.dao.BaseDao;
 import com.xx.base.dao.PageServiceDao;
 import com.xx.base.util.C;
+import com.xx.base.util.DateUtil;
 import com.xx.base.util.FeeCost;
+import com.xx.base.util.MapUtil;
 
 /**
  * @author generate by www.whatgoogle.com (ps : some question? contact
@@ -83,16 +86,15 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 			map.put("safty_cost_fee", "0");
 			map.put("type", "repayment");
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:ss:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		map.put("now",sdf.format(new Date()) );
 		int ret = baseDao.insert("baseFrame_Cridit.cridit_insert", map);
 		return ret;
 	}
 	public static void main(String[] args) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:ss:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		System.out.println(sdf.format(new Date()));
-		ZoneId defaultZone = ZoneId.systemDefault();
-		System.out.println(defaultZone); //此处打印为时区所在城市Asia/Shanghai
+//		map.put("now",sdf.format(new Date()) );
 	}
 
 	@Override
@@ -140,6 +142,59 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 			List clist = ret.containsKey(key) ? ret.get(key) : new ArrayList<>();
 			clist.add(m.get("no") + "_" + m.get("card_name"));
 			ret.put(key, clist);
+		}
+		return ret;
+	}
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public List<Map<String, Object>> getRemarks(Map<String, Object> map) {
+		List<Map<String, Object>> l = baseDao.selectList("baseFrame_Cridit.getRemarks", map);
+		return l;
+	}
+	
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public Map<String, Object> checkRecentRecord(Map<String, Object> map) {
+		Map<String, Object> ret = new HashMap<String,Object>();
+		//当前一个月内多少笔
+		List<Map<String,Object>> in1Month = new ArrayList<Map<String,Object>>();
+		List<Map<String,Object>> theLatest = new  ArrayList<Map<String,Object>>();
+		boolean latest = true;
+		List<Map<String, Object>> l = baseDao.selectList("baseFrame_Cridit.checkRecentRecord", map);
+		for (Map<String, Object> map2 : l) {
+			if(latest)theLatest.add(MapUtil.cloneMap(map2)) ;//最近一笔
+			latest=false; // 第一笔标志
+           	if(DateUtil.inXMonth(map2,-1,"cr_date"))in1Month.add(MapUtil.cloneMap(map2)); //在一个月内的交易
+           	else break; //因为是按照交易时间倒序,
+		}
+		//历史共多少比
+		ret.put("all", l);
+		//当前一个月内多少笔
+		ret.put("in1Month", in1Month);
+		//最近一笔
+		ret.put("latest",theLatest);
+		return ret;
+	}
+	
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public Map<String, Object> addRemark(Map<String, Object> map) {
+		Map<String,Object> ret = new HashMap<String, Object>();
+		//检查是否有重复
+		List<Map<String, Object>> ls = baseDao.selectList("baseFrame_Cridit.selectRemark", map);
+		if(ls.size()>0){
+			ret.put("duplicate", "0");
+		}else{
+			ret.put("duplicate", "1");
+			map.put("name",map.get("remark"));
+			baseDao.insert("baseFrame_Cridit.addRemark" , map);
+			ret.put("newRemarks", baseDao.selectList("baseFrame_Cridit.getRemarks", map)) ;//当新输入的没有重复是插入信息的信息
 		}
 		return ret;
 	}
@@ -191,6 +246,10 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 		return count == 1 ? "success" : "fail";
 	}
 
+	public void touchBank(Map<String, Object> map){
+		baseDao.update("baseFrame_Cridit.update_touch_date", map);
+	}
+	
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
 	 *         zhuwj726@gmail.com)
@@ -219,6 +278,13 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 		baseDao.update("baseFrame_Cridit.water_bank", map);
 		add(map);
 		baseDao.update("baseFrame_Cridit.wj_financial_information_next_day_arrival", map);
+		addRemark(map);//检查备注是否需要加入
+		return null;
+	}
+	public String updateRecord(Map<String, Object> map) {
+		baseDao.update("baseFrame_Cridit.updateRecord", map);
+		map.put("remark", map.get("editable-select"));
+		addRemark(map);//检查备注是否需要加入
 		return null;
 	}
 	public String cancel_this(Map<String, Object> map) {
@@ -264,6 +330,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 * repayment_bank还款银行
 	 */
 	public String repayment(Map<String, Object> map) {
+		@SuppressWarnings("unchecked")
 		Map<String, Object> info =  (Map<String, Object>) baseDao.selectList("baseFrame_Cridit.getAllCreditInfos",map).get(0);
 		BigDecimal repayment_amount = new BigDecimal(map.get("repayment_amount").toString()); // 还款金额
 		BigDecimal bill_amount = new BigDecimal(info.get("bill_amount").toString()); // 当前账单金额
