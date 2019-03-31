@@ -27,10 +27,10 @@ public class TestTask {
         System.out.println("使用SpringMVC框架配置定时任务 : "+new Date());
         Map<String ,Object> p = new HashMap<String ,Object>();
         p.put("repayment_banks", "" +"''"+
+        		",'XYYH'" +
         		",'ZSYH'" +
         		",'HFYH'" +
         		",'PFYH'" +
-        		",'XYYH'" +
         		",'PAYH'" +
         		",'MSYH'" +
         		",'ZXYH'" +
