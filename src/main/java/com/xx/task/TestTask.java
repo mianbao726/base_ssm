@@ -34,6 +34,8 @@ public class TestTask {
         		",'PAYH'" +
         		",'MSYH'" +
         		",'ZXYH'" +
+        		",'ZHYH'" +
+        		",'JTYH'" +
         		"");
         List<Map<String,Object>> l = baseDao.selectList("baseFrame_Cridit.getAllCreditInfos",p);
         for(Map<String,Object> m : l){
