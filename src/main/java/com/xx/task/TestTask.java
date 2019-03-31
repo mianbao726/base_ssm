@@ -27,15 +27,22 @@ public class TestTask {
         System.out.println("使用SpringMVC框架配置定时任务 : "+new Date());
         Map<String ,Object> p = new HashMap<String ,Object>();
         p.put("repayment_banks", "" +"''"+
-        		",'XYYH'" +
         		",'ZSYH'" +
         		",'HFYH'" +
         		",'PFYH'" +
+        		",'XYYH'" +
         		",'PAYH'" +
         		",'MSYH'" +
         		",'ZXYH'" +
-        		",'ZHYH'" +
-        		",'JTYH'" +
+        		",'HRYH'" +
+        		",'ZGYH'" +
+        		",'GSYH'" +
+        		",'GFYH'" +
+        		",'SJYH'" +
+        		",'YZYH'" +
+        		",'JSYH'" +
+        		",'GDYH'" +
+        		",'GDYH'" +
         		"");
         List<Map<String,Object>> l = baseDao.selectList("baseFrame_Cridit.getAllCreditInfos",p);
         for(Map<String,Object> m : l){
