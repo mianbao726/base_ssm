@@ -32,7 +32,7 @@
 			<where>${filter}</where>
 		</if>
 		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
-		<if test="sort == null">ORDER BY touch_date desc </if>
+		<if test="sort == null">ORDER BY util_bill_pay_date desc </if>
 		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>
 	</select>
 
@@ -297,6 +297,7 @@
 		 <if test="repayment_banks != null">
 		 	and code in ( ${repayment_banks})
 		 </if>
+		 and code like  "%YH"
 <!-- 		 and isNextMonth = '0' -->
 	</select>
 	<update id="upate_credit_bill_date" parameterType="hashmap">

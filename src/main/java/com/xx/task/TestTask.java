@@ -21,30 +21,75 @@ public class TestTask {
 	@Resource
 	private BaseDao baseDao;
 
-	@Scheduled(cron = "0/10 * * * * ? ")
+	/**
+	 * 当前账单年月信息 账单的年月信息用来区分.<br>
+	 * TODO 暂时不考虑逾期情况。 <br>
+	 * 1=>a1.当前日期在账单日前 （包含账单日当日）&& 有未还金额，则是上个月，表示上个月的账单尚未还清。<br>
+	 * 2=>a2.当前日期在账单日前 （包含账单日当日）&& 无未还金额，当前账单已还清，如果不是当前月则需要更新成当前月份<br>
+	 * 3=>b1.当前日期在账单日第一天 ** 需要有出账单逻辑 ** <br>
+	 * 4=>c1.当前日期在账单日后 && 有未还金额，保留在当前月份即可<br>
+	 * 5=>c1.当前日期在账单日后 && 无未还金额，需要更新到下个月<br>
+	 * 
+	 * @param m
+	 * @return
+	 */
+	protected static int getSituation(Map<String, Object> m) {
+		// 当前日期
+		BigDecimal current_day = new BigDecimal(DateUtil.getCurrentDate().substring(8));
+		// 账单日期
+		BigDecimal bill_day = new BigDecimal(m.get("month_bill_date").toString());
+		BigDecimal bill_day_plusone = bill_day.add(BigDecimal.ONE);
+		// 账单金额
+		BigDecimal bill_amount = new BigDecimal(m.get("bill_amount_remaining").toString());
+		if (current_day.compareTo(bill_day) < 1) {// 当前日期在账单日前（包含账单日当日）
+			if (bill_amount.compareTo(BigDecimal.ZERO) > 0) {// 有未还金额，则是上个月，表示上个月的账单尚未还清
+				return 1;
+			} else { // 当前账单已还清，如果不是当前月则需要更新成当前月份
+				return 2;
+			}
+		} else if (current_day.compareTo(bill_day_plusone) == 0) { // 账单日期后第一天（计算账单）
+			return 3;
+		} else if (current_day.compareTo(bill_day_plusone) > 0) {// 当前日期在账单日后
+			if (bill_amount.compareTo(BigDecimal.ZERO) > 0) {// 有未还金额，保留在当前月份即可
+				return 4;
+			} else { // 无未还金额，需要更新到下个月
+				return 5;
+			}
+		}
+		return 0;
+	}
+
+	public static void main(String[] args) {
+		TestTask t = new TestTask();
+		t.getSituation(null);
+	}
+
 	// 间隔5秒执行
+	 @Scheduled(cron = "0/10 * * * * ? ") // 间隔5秒执行
 	public void taskCycle() {
 		long start = System.currentTimeMillis();
 		System.out.println("使用SpringMVC框架配置定时任务 : " + new Date());
 		Map<String, Object> p = new HashMap<String, Object>();
-		p.put("repayment_banks", "" + "''" +
-		// ",'ZSYH'" +
-		// ",'HFYH'" +
-		// ",'PFYH'" +
-		// ",'XYYH'" +
-		// ",'PAYH'" +
-		// ",'MSYH'" +
-		// ",'ZXYH'" +
-		// ",'HRYH'" +
-		// ",'ZGYH'" +
-		// ",'GSYH'" +
-				",'GFYH'" +
-				// ",'SJYH'" +
-				// ",'YZYH'" +
-				// ",'JSYH'" +
-				// ",'GDYH'" +
-				// ",'GDYH'" +
-				"");
+//		p.put("repayment_banks", "" + "''" +
+//		 ",'ZSYH'" +
+//		 ",'HFYH'" +
+//		 ",'PFYH'" +
+//		 ",'XYYH'" +
+//		 ",'PAYH'" +
+//		 ",'MSYH'" +
+//		 ",'ZXYH'" +
+//		 ",'HRYH'" +
+//		 ",'ZGYH'" +
+//		 ",'GSYH'" +
+//		 ",'ZHYH'" +
+//				",'GFYH'" +
+//				 ",'SJYH'" +
+//				 ",'YZYH'" +
+//				 ",'JSYH'" +
+//				 ",'GDYH'" +
+//				 ",'GDYH'" +
+//				 ",'DYYH'" +
+//				"");
 		List<Map<String, Object>> l = baseDao.selectList("baseFrame_Cridit.getAllCreditInfos", p); // 查询信用银行信息
 		for (Map<String, Object> m : l) {
 			String bill_day = m.get("month_bill_date").toString();// 每月账单日
@@ -58,31 +103,104 @@ public class TestTask {
 
 			/**
 			 * 当前账单年月信息 账单的年月信息用来区分.<br>
-			 * TODO 暂时不考虑逾期情况。
-			 * a1.当前日期在账单日前 （包含账单日当日）&& 有未还金额，则是上个月，表示上个月的账单尚未还清。<br>
-			 * a2.当前日期在账单日前 （包含账单日当日）&& 无未还金额，当前账单已还清，如果不是当前月则需要更新成当前月份<br>
-			 * b1.当前日期在账单日第一天 ** 需要有出账单逻辑 **
-			 * c1.当前日期在账单日后 && 有未还金额，保留在当前月份即可
-			 * c1.当前日期在账单日后 && 无未还金额，需要更新到下个月
+			 * TODO 暂时不考虑逾期情况。 <br>
+			 * 1=>a1.当前日期在账单日前 （包含账单日当日）&&有未还金额，则是上个月，表示上个月的账单尚未还清。<br>
+			 * 2=>a2.当前日期在账单日前 （包含账单日当日）&& 无未还金额，当前账单已还清，如果不是当前月则需要更新成当前月份<br>
+			 * 3=>b1.当前日期在账单日第一天 ** 需要有出账单逻辑 **<br>
+			 * 4=>c1.当前日期在账单日后 有未还金额，保留在当前月份即可 <br>
+			 * 5=>c1.当前日期在账单日后 && 无未还金额，需要更新到下个月<br>
 			 */
-			String current_bill_year = m.get("current_bill_year").toString();
-			String current_bill_month = m.get("current_bill_month").toString();
-			
+			String year_month_info = ""; // 账单年月 用来拆分成年月使用
+			String current_bill_year = ""; // 账单年
+			String current_bill_month = ""; // 账单月
+			String bill_date_start = ""; // 账单开始日期
+			String bill_date_end = ""; // 账单结束日期
+			String next_bill_date = "";// 下一月的账单日
+			// 获取当前情况类型 （1~5种）
+			int situation = getSituation(m);
+			switch (situation) {
+			case 1:
+				// 1=>a1.当前日期在账单日前 （包含账单日当日）&&有未还金额，则是上个月，表示上个月的账单尚未还清。<br>
+				// 月份设置成上个月
+				year_month_info = DateUtil.getCurrentDateAddMonth(-1);
+				current_bill_year = year_month_info.substring(0, 4);
+				current_bill_month = year_month_info.substring(5, 7);
+				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), -2);// 上一个账单日　当前账单的账单日期
+				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), -1);// 账单日　当前账单账单日期
+				
+				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 下一月的账单日
+				break;
+			case 2:
+				// 2=>a2.当前日期在账单日前 （包含账单日当日）&&
+				// 无未还金额，当前账单已还清，如果不是当前月则需要更新成当前月份<br>
+				// 月份设置成上个月
+				year_month_info = DateUtil.getCurrentDateAddMonth(0);
+				current_bill_year = year_month_info.substring(0, 4);
+				current_bill_month = year_month_info.substring(5, 7);
+				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), -1);// 上一个账单日　当前账单的账单日期
+				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 账单日　当前账单账单日期
 
-			String bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), -1);// 上一个账单日　当前账单的账单日期 开始 (DateUtil.formatCalendar格式化日期)
-			String bill_date_end = DateUtil.formatCalendar(DateUtil.setDay(bill_day));// 账单日　当前账单账单日期 结束 (DateUtil.formatCalendar格式化日期)
+				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 下一月的账单日
+				break;
+			case 3:
+				// 3=>b1.当前日期在账单日第一天 ** 需要有出账单逻辑 **<br>
+				// 出账单
+				year_month_info = DateUtil.getCurrentDateAddMonth(0);
+				current_bill_year = year_month_info.substring(0, 4);
+				current_bill_month = year_month_info.substring(5, 7);
+				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), -1);// 上一个账单日　当前账单的账单日期
+				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 账单日　当前账单账单日期
+				
+				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 下一月的账单日
+				break;
+			case 4:
+				// 4=>c1.当前日期在账单日后 有未还金额，保留在当前月份即可 <br>
+				// 出账单后
+				year_month_info = DateUtil.getCurrentDateAddMonth(0);
+				current_bill_year = year_month_info.substring(0, 4);
+				current_bill_month = year_month_info.substring(5, 7);
+				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), -1);// 上一个账单日　当前账单的账单日期
+				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 账单日　当前账单账单日期
+				
+				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 下一月的账单日
+				break;
+			case 5:
+				// 5=>c1.当前日期在账单日后 && 无未还金额，需要更新到下个月<br>
+				// 出账单
+				year_month_info = DateUtil.getCurrentDateAddMonth(1);
+				current_bill_year = year_month_info.substring(0, 4);
+				current_bill_month = year_month_info.substring(5, 7);
+				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 上一个账单日　当前账单的账单日期
+				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 账单日　当前账单账单日期
+				
+				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 下一月的账单日
+				break;
+			default:
+				break;
+			}
+
 			String pay_date = "";
 			// 当前账单日的最后还款日期　　根据账单日 和 还款天数 计算出最后还款日
-			if (m.containsKey("bill_repay_day_fixed") && m.get("bill_repay_day_fixed") != null) {// 账单期后固定时间还款（例如平安 每月15日出账，次月3日固定还款）
-				pay_date = DateUtil.nextMonthFixDay(bill_date_end, bill_repay_day_fixed);// 当前账单日的最后还款日期　　根据账单日 和 还款天数 计算出最后还款日
+			if (m.containsKey("bill_repay_day_fixed") && m.get("bill_repay_day_fixed") != null) {// 账单期后固定时间还款（例如平安
+																									// 每月15日出账，次月3日固定还款）
+				pay_date = DateUtil.nextMonthFixDay(bill_date_end, bill_repay_day_fixed);// 当前账单日的最后还款日期　　根据账单日
+																							// 和
+																							// 还款天数
+																							// 计算出最后还款日
 			} else {// 账单期后若干天到期
-				pay_date = DateUtil.after(bill_date_end, count);// 当前账单日的最后还款日期　　根据账单日 和 还款天数 计算出最后还款日
+				pay_date = DateUtil.after(bill_date_end, count);// 当前账单日的最后还款日期　　根据账单日
+																// 和 还款天数
+																// 计算出最后还款日
 			}
-			String next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 下一月的账单日
+
 			String next_pay_date = "";
 
-			if (m.containsKey("bill_repay_day_fixed") && m.get("bill_repay_day_fixed") != null) {// 账单期后固定时间还款（例如平安 每月15日出账，次月3日固定还款）
-				next_pay_date = DateUtil.nextMonthFixDay(next_bill_date, bill_repay_day_fixed);// 当前账单日的最后还款日期　　根据账单日 和 还款天数 计算出最后还款日
+			if (m.containsKey("bill_repay_day_fixed") && m.get("bill_repay_day_fixed") != null) {// 账单期后固定时间还款（例如平安
+																									// 每月15日出账，次月3日固定还款）
+				next_pay_date = DateUtil.nextMonthFixDay(next_bill_date, bill_repay_day_fixed);// 当前账单日的最后还款日期　　根据账单日
+																								// 和
+																								// 还款天数
+																								// 计算出最后还款日
 			} else {// 账单期后若干天到期
 				next_pay_date = DateUtil.after(next_bill_date, count);// 下一月的账单日的最后还款日
 			}

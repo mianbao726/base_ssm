@@ -55,6 +55,20 @@ public class DateUtil {
     	SimpleDateFormat df=new SimpleDateFormat(yyyy_MM_dd);
 		return df.format(date);
 	}
+	
+	/**
+	 * 获取默认的日期格式 yyyy-MM-dd
+	 * @return
+	 */
+	public static String getCurrentDateAddMonth(int count){
+		Date date=new Date();
+    	SimpleDateFormat df=new SimpleDateFormat(yyyy_MM_dd);
+    	Calendar c =Calendar.getInstance();
+    	c.setTime(date);
+    	c.add(Calendar.MONTH, count);
+		return df.format(c.getTime());
+	}
+	
 	/**
 	 * 获取指定格式的日期
 	 * 

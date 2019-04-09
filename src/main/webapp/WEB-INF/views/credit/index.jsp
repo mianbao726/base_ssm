@@ -1448,7 +1448,7 @@
 //     		"searching" : false,
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
 			"paging": false,
-    		"order": [[5, 'desc']],
+//     		"order": [[5, 'desc']],
     		"columns" : [ 
    				{"mData" : "name"},
     			{"mData" : "month_bill_date"},
@@ -1531,7 +1531,7 @@
 //  						$.wj.c(row.month_bill_date +"  "+data.day);
 //  						$.wj.c(row.month_bill_date  +"   "+row.now_day  +"  "+(parseInt(row.month_bill_date) >parseInt(row.now_day)));
  						if(parseInt(row.month_bill_date) <parseInt(row.now_day) ){//当前日期在账单日后
- 							return "<font color = '#5cb85c'>"+ row.next_bill_date_count + "</font>天出账"+row.next_bill_date;
+ 							return "<font color = '#5cb85c'>"+ row.next_bill_date_count + "</font>天后出账"+row.next_bill_date;
  						}else{//当前日期在账单日前
 	 						var dayInfo;
 	 						var dayInfo_desc="";
