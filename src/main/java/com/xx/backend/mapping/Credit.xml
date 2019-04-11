@@ -32,7 +32,7 @@
 			<where>${filter}</where>
 		</if>
 		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
-		<if test="sort == null">ORDER BY util_bill_pay_date desc </if>
+		<if test="sort == null">ORDER BY account_type ,util_bill_pay_date desc </if>
 		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>
 	</select>
 

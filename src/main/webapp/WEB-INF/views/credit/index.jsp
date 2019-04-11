@@ -1615,6 +1615,18 @@
 	};
 	
 	
+	$.wj.ajax({
+	      contenttype : 'application/json; charset=utf-8',
+	      async: false,
+		  url: '<%=path%>/credit/getdata.html',
+		  type:"post",
+		  dataType:"json",
+		  success:function(data){
+			 	$.wj.c(data);
+		  },
+	    });
+	
+	
 	var current_bank;
 	function setBillInfo(bankType,bill_amount,pre_bill_amount,remaining_credit,credit){
 		//清空数据

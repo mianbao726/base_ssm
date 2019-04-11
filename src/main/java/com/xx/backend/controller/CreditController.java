@@ -43,6 +43,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xx.backend.service.CriditService;
 import com.xx.base.controller.BaseController;
 import com.xx.base.util.DateUtil;
+import com.xx.base.util.ListUtil;
 import com.xx.base.util.map.QMap;
 
 /**
@@ -85,6 +86,7 @@ public class CreditController extends BaseController {
 		Map<String, Object> data = criditService.index(new HashMap());
 		ret.put("data", data.get("data"));
 //		ret.put("day", DateUtil.getCurrentDate("d"));
+		ListUtil.display((List<Map<String,Object>>)data.get("data"));
 		ret.put("recordsTotal", Integer.valueOf(((List) data.get("data")).size()));
 		ret.put("recordsFiltered", Integer.valueOf(((List) data.get("data")).size()));
 		return JSONObject.toJSONString(ret);
