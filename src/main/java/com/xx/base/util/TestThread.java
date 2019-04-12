@@ -10,7 +10,7 @@ public class TestThread {
 
 	public static void insert() {
 		baseDao = new SingleBaseDao();
-		baseDao.insert("baseFrame_Cridit.getCreditInfos");
+		baseDao.insert("credit.getCreditInfos");
 	}
 
 	public static void main(String[] args) throws InterruptedException {

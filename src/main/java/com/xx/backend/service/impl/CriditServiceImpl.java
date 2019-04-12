@@ -88,7 +88,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		map.put("now",sdf.format(new Date()) );
-		int ret = baseDao.insert("baseFrame_Cridit.cridit_insert", map);
+		int ret = baseDao.insert("credit.cridit_insert", map);
 		return ret;
 	}
 	public static void main(String[] args) {
@@ -126,7 +126,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public Map<String, Object> index(Map<String, Object> map) {
-		Map<String, Object> ret = pageServiceDao.index("baseFrame_Cridit.cridit_page", map);
+		Map<String, Object> ret = pageServiceDao.index("credit.cridit_page", map);
 		return ret;
 	}
 
@@ -135,7 +135,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public Map<String, List> getCreditInfos(Map<String, Object> map) {
-		List<Map<String, Object>> l = baseDao.selectList("baseFrame_Cridit.getCreditInfos", map);
+		List<Map<String, Object>> l = baseDao.selectList("credit.getCreditInfos", map);
 		Map<String, List> ret = new HashMap<String, List>();
 		for (Map<String, Object> m : l) {
 			String key = m.get("type").toString() + "_" + m.get("name").toString() + "_" + m.get("short_name").toString();
@@ -150,7 +150,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public List<Map<String, Object>> getRemarks(Map<String, Object> map) {
-		List<Map<String, Object>> l = baseDao.selectList("baseFrame_Cridit.getRemarks", map);
+		List<Map<String, Object>> l = baseDao.selectList("credit.getRemarks", map);
 		return l;
 	}
 	
@@ -164,7 +164,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 		List<Map<String,Object>> in1Month = new ArrayList<Map<String,Object>>();
 		List<Map<String,Object>> theLatest = new  ArrayList<Map<String,Object>>();
 		boolean latest = true;
-		List<Map<String, Object>> l = baseDao.selectList("baseFrame_Cridit.checkRecentRecord", map);
+		List<Map<String, Object>> l = baseDao.selectList("credit.checkRecentRecord", map);
 		for (Map<String, Object> map2 : l) {
 			if(latest)theLatest.add(MapUtil.cloneMap(map2)) ;//最近一笔
 			latest=false; // 第一笔标志
@@ -187,14 +187,14 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	public Map<String, Object> addRemark(Map<String, Object> map) {
 		Map<String,Object> ret = new HashMap<String, Object>();
 		//检查是否有重复
-		List<Map<String, Object>> ls = baseDao.selectList("baseFrame_Cridit.selectRemark", map);
+		List<Map<String, Object>> ls = baseDao.selectList("credit.selectRemark", map);
 		if(ls.size()>0){
 			ret.put("duplicate", "0");
 		}else{
 			ret.put("duplicate", "1");
 			map.put("name",map.get("remark"));
-			baseDao.insert("baseFrame_Cridit.addRemark" , map);
-			ret.put("newRemarks", baseDao.selectList("baseFrame_Cridit.getRemarks", map)) ;//当新输入的没有重复是插入信息的信息
+			baseDao.insert("credit.addRemark" , map);
+			ret.put("newRemarks", baseDao.selectList("credit.getRemarks", map)) ;//当新输入的没有重复是插入信息的信息
 		}
 		return ret;
 	}
@@ -204,7 +204,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public Map<String, Object> detail(Map<String, Object> map) {
-		return pageServiceDao.index("baseFrame_Cridit.cridit_page_detail", map);
+		return pageServiceDao.index("credit.cridit_page_detail", map);
 	}
 
 	/**
@@ -213,20 +213,20 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 */
 	public String pay(Map<String, Object> map) {
 		// 更新信用卡信息
-		baseDao.update("baseFrame_Cridit.pay", map);
+		baseDao.update("credit.pay", map);
 		// 更新银行信息
-		baseDao.update("baseFrame_Cridit.pay_bank", map);
+		baseDao.update("credit.pay_bank", map);
 		// XXX 注释中应该有参数信息
-		List clist = baseDao.selectList("baseFrame_Cridit.getCredit_List", map);
+		List clist = baseDao.selectList("credit.getCredit_List", map);
 		if (1 != clist.size()) {
 			Map<String, Object> mainCredit = (HashMap<String, Object>) clist.get(0);
-			// baseDao.update("baseFrame_Cridit.pay",mainCredit);
+			// baseDao.update("credit.pay",mainCredit);
 			if (map.get("cardno").equals(mainCredit.get("no"))) {// 消费卡是主卡
 				for (int index = 1; index < clist.size(); index++) {
 					Map<String, Object> credit = (HashMap<String, Object>) clist.get(index);
 					credit.put("amount", map.get("amount"));
 					credit.put("remaining_credit_main", mainCredit.get("remaining_credit"));
-					baseDao.update("baseFrame_Cridit.creditOtherCard", credit);
+					baseDao.update("credit.creditOtherCard", credit);
 				}
 			} else {// 消费卡不是主卡
 
@@ -241,13 +241,13 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public String setBillInfo(Map<String, Object> map) {
-		int count = baseDao.update("baseFrame_Cridit.setBillInfo", map);
+		int count = baseDao.update("credit.setBillInfo", map);
 		upateSummaryInfo();
 		return count == 1 ? "success" : "fail";
 	}
 
 	public void touchBank(Map<String, Object> map){
-		baseDao.update("baseFrame_Cridit.update_touch_date", map);
+		baseDao.update("credit.update_touch_date", map);
 	}
 	
 	/**
@@ -255,7 +255,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 *         zhuwj726@gmail.com)
 	 */
 	public List summaryInformation(Map<String, Object> map) {
-		return baseDao.selectList("baseFrame_Cridit.summaryInformation", map);
+		return baseDao.selectList("credit.summaryInformation", map);
 	}
 	
 	/**
@@ -265,47 +265,52 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	@SuppressWarnings("rawtypes")
 	public List setSummaryInfo(Map<String, Object> map) {
 		System.out.println(map);
-		List ret = baseDao.selectList("baseFrame_Cridit.setSummaryInfo", map);
+		List ret = baseDao.selectList("credit.setSummaryInfo", map);
 		upateSummaryInfo();
 		return ret;
 	}
 	
 	public void upateSummaryInfo(){
-		baseDao.update("baseFrame_Cridit.update_summary_info");
+		baseDao.update("credit.update_summary_info");
 	}
 	
+	/**
+	 * 入账方法
+	 */
 	public String water(Map<String, Object> map) {
-		baseDao.update("baseFrame_Cridit.water_bank", map);
-		add(map);
-		baseDao.update("baseFrame_Cridit.wj_financial_information_next_day_arrival", map);
-		addRemark(map);//检查备注是否需要加入
+		baseDao.update("credit.water_bank", map); // 更新银行信息
+		if("0".equals(map.get("type"))){// 判断是否是银行流水类型
+			baseDao.update("credit.wj_financial_information_next_day_arrival", map); // 修改次日到账信息
+		}
+		add(map);// 添加消费记录表信息
+		addRemark(map);//检查消费备注是否需要加入 
 		return null;
 	}
 	public String updateRecord(Map<String, Object> map) {
-		baseDao.update("baseFrame_Cridit.updateRecord", map);
+		baseDao.update("credit.updateRecord", map);
 		map.put("remark", map.get("editable-select"));
 		addRemark(map);//检查备注是否需要加入
 		return null;
 	}
 	public String cancel_this(Map<String, Object> map) {
-		Map<String, Object> p = baseDao.selectOne("baseFrame_Cridit.select_one_wj_record_by_id",map);
-		baseDao.update("baseFrame_Cridit.water_bank_cancel", p);
-		baseDao.update("baseFrame_Cridit.water_bank_cancel_record", map);
+		Map<String, Object> p = baseDao.selectOne("credit.select_one_wj_record_by_id",map);
+		baseDao.update("credit.water_bank_cancel", p);
+		baseDao.update("credit.water_bank_cancel_record", map);
 		return null;
 	}
 	public String delete_this(Map<String, Object> map) {
-		baseDao.update("baseFrame_Cridit.delete_water_bank_cancel_record", map);
+		baseDao.update("credit.delete_water_bank_cancel_record", map);
 		return null;
 	}
 	public String water_arrival(Map<String, Object> map) {
-		baseDao.update("baseFrame_Cridit.water_arrival", map);
+		baseDao.update("credit.water_arrival", map);
 		return null;
 	}
 	public String cash(Map<String, Object> map) {
 		map.put("type", "2");
 		map.put("amount", map.get("cash_amount"));
 		add(map);
-		baseDao.update("baseFrame_Cridit.cash", map);
+		baseDao.update("credit.cash", map);
 		upateSummaryInfo();
 		return null;
 	}
@@ -313,7 +318,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 		map.put("type", "3");
 		map.put("amount", map.get("alipay_amount"));
 		add(map);
-		baseDao.update("baseFrame_Cridit.alipay", map);
+		baseDao.update("credit.alipay", map);
 		upateSummaryInfo();
 		return null;
 	}
@@ -321,7 +326,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 		map.put("type", "3");
 		map.put("amount", map.get("alipay_amount"));
 		add(map);
-		baseDao.update("baseFrame_Cridit.alipay", map);
+		baseDao.update("credit.alipay", map);
 		upateSummaryInfo();
 		return null;
 	}
@@ -331,7 +336,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	 */
 	public String repayment(Map<String, Object> map) {
 		@SuppressWarnings("unchecked")
-		Map<String, Object> info =  (Map<String, Object>) baseDao.selectList("baseFrame_Cridit.getAllCreditInfos",map).get(0);
+		Map<String, Object> info =  (Map<String, Object>) baseDao.selectList("credit.getAllCreditInfos",map).get(0);
 		BigDecimal repayment_amount = new BigDecimal(map.get("repayment_amount").toString()); // 还款金额
 		BigDecimal bill_amount = new BigDecimal(info.get("bill_amount").toString()); // 当前账单金额
 		BigDecimal pre_bill_amount = new BigDecimal(info.get("pre_bill_amount").toString()); // 未出账单金额
@@ -373,7 +378,7 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 		map.put("pre_bill_amount", pre_bill_amount);
 		map.put("remaining_credit", remaining_credit);
 		add(map);
-		baseDao.update("baseFrame_Cridit.repayment", map);
+		baseDao.update("credit.repayment", map);
 		return null;
 	}
 }

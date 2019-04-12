@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="baseFrame_Cridit"> 
+<mapper namespace="credit"> 
 	
 	 <parameterMap type="java.util.HashMap" id="paraMap" />
 
@@ -16,23 +16,12 @@
 		TIMESTAMPDIFF(DAY,now(),current_bill_date)+ case when bill_repay_day_count is null then 0 else  bill_repay_day_count end as fee_free_day_count,
 		DATE_FORMAT(now(),'%d') as now_day,
 		t.*
-<!-- 		total_credit - bill_amount - pre_bill_amount - remaining_credit as problem_money,  -->
-<!-- 		name, -->
-<!-- 		inherent_credit, -->
-<!-- 		temporary_credit, -->
-<!-- 		total_credit, -->
-<!-- 		remaining_credit, -->
-<!-- 		remaining_credit_percentage, -->
-<!-- 		bill_amount, -->
-<!-- 		pre_bill_amount, -->
-<!-- 		month_bill_date, -->
-<!-- 		count -->
 		from wj_bank t
 		<if test="filter != null">
 			<where>${filter}</where>
 		</if>
 		<if test="sort != null">ORDER BY ${sort} ${dir}</if>
-		<if test="sort == null">ORDER BY account_type ,util_bill_pay_date desc </if>
+		<if test="sort == null">ORDER BY account_type ,free_day_count desc </if>
 		<if test="start != null"> <![CDATA[) t limit ${start},${limit}]]></if>
 	</select>
 
@@ -168,6 +157,8 @@
 		set
 			remaining_credit = remaining_credit - #{amount},
 			pre_bill_amount = pre_bill_amount+#{amount},
+			today_trade_amount = today_trade_amount +#{amount},
+			today_trade_count = today_trade_count +1,
 			touch_date = now(),
 			remaining_credit_percentage = ROUND(remaining_credit/total_credit*100,1)
 		where 1=1  

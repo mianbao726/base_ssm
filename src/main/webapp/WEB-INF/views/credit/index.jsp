@@ -831,6 +831,8 @@
     <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/default/vendors/pdfmake/build/vfs_fonts.js"></script>
     
+    <!-- 表格高亮 -->
+    <script src="${pageContext.request.contextPath}/assets/default/vendors/sandbox.js/jquery.highlight.js"></script>
     
     <!-- jquery.inputmask -->
     <script src="${pageContext.request.contextPath}/assets/default/vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
@@ -850,41 +852,57 @@
     <script src="${pageContext.request.contextPath}/assets/default/build/js/custom.min.js"></script>
 	<script>
 	
-	
-	
+	/**
+	*页面快捷键设置
+	*1.流水modal弹出，焦点在商户（备注上）回车 添加流水类型
+	*2.流水modal弹出，焦点在金额上回车 添加流水
+	*
+	*
+	*
+	*
+	*/
 	 document.onkeydown = function(e){
 		    var event = e || window.event;  
 		    var code = event.keyCode || event.which || event.charCode;
-		    if (event.ctrlKey && event.keyCode == 13) {
-	            //正在人录入明细时候
-// 				alert($("#water_modal").modal());
-	            $("#water_pay").click();
-	         }else  if (code == 13) {
-
-		    	if($('#editable-select').is(":focus")){//点击回车 且 焦点在备注输入框上
-		    		var remark = $('#editable-select').val();
-		    		//检查是否在当前备注库中
-		    		var params = {};
-					params['remark']=$("#editable-select").val();
-					$.wj.ajax({
-						url: '<%=path%>/credit/addRemark.do',
-						params:params,
-						 success:function(data){
-							 if(data.duplicate == 1){// 1 插入成功  重新加载信息,  0 表示不成功
-								  $("#editable-select").remove();
-								  $("#editable-select-div").append("<select class='select2_single form-control' tabindex='-1'  id='editable-select' >  <option></option> </select>")
-								  setRmarks(data);
-								  $("#editable-select").val(remark);
-								  //加入新选项 ,   先清空之前的 然后重新加载.
-								  
-								  //加入撤销功能TODO
-							 }
-						  }
-					});
-		    	}
-		    }
+		   if (code == 13) {
+			   if($("#water_modal").css('display')=='block'){//流水账单modal打开状态
+			    	if($('#editable-select').is(":focus")){//焦点在
+			    		addRemark();//点击回车 且 焦点在备注输入框上
+			    	}else{
+			            $("#water_pay").click();
+			    	}
+			    }else if ($("#water_modal").css('display')=='none'){//流水账modal单关闭状态
+			    	$.wj.c("hel");
+// 			    	$("#datatable-xx_filter  .form-control input-sm").val("123");
+					$("[aria-controls='datatable-xx'][type='search']").focus();
+			    }
+		   }
 		};
 		
+		/**
+		*检查备注（消费类型），如果之前没有则加入，如果之前有泽忽略
+		*/
+	   function addRemark(){
+		   var remark = $('#editable-select').val();
+   		//检查是否在当前备注库中
+   		var params = {};
+			params['remark']=$("#editable-select").val();
+			$.wj.ajax({
+				url: '<%=path%>/credit/addRemark.do',
+				params:params,
+				 success:function(data){
+					 if(data.duplicate == 1){// 1 插入成功  重新加载信息,  0 表示不成功
+						  $("#editable-select").remove();
+						  $("#editable-select-div").append("<select class='select2_single form-control' tabindex='-1'  id='editable-select' >  <option></option> </select>")
+						  setRmarks(data);
+						  $("#editable-select").val(remark);
+						  //加入新选项 ,   先清空之前的 然后重新加载.
+						  
+						  //加入撤销功能TODO		*
+					 }
+				  }
+			});
+		}
 		
 		$(document).ready(function(){
 			//变化后
@@ -1434,7 +1452,7 @@
 						},
 					  ],
 //     		"pagingType" : "full_numbers",//用于指定分页器风格 "full_numbers"" or ""two_button""， default ""two_button""
-//     		"bAutoWidth" : false, //是否主动策画表格各列宽度
+    		"bAutoWidth" : false, //是否主动策画表格各列宽度
     		"ajax" : {
     			"url" :  '<%=path%>/credit/getdata.html',
     			"type" : "POST",
@@ -1442,20 +1460,20 @@
     		},
     		
     		"processing" : true,
-//     		"serverSide" : true,
+    		"serverSide" : true,
 //     		"bLengthChange" : false,
 //     		"bSort" : false, // 排序功能
 //     		"searching" : false,
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
 			"paging": false,
-//     		"order": [[5, 'desc']],
+//     		"order": [[4, 'desc']],
     		"columns" : [ 
    				{"mData" : "name"},
     			{"mData" : "month_bill_date"},
     			{"mData" : "remaining_credit"},
     			{"mData" : "total_credit"},
     			{"mData" : "current_bill_date"},
-    			{"mData" : "touch_date"},
+    			{"mData" : "today_trade_amount"},
     			{"mData" : "touch_date"},
     		 ],
 //     		 "preDrawCallback" : function(settings) {
@@ -1495,6 +1513,7 @@
 	            	}
 // 	           		return row.remaining_credit+" ("+row.remaining_credit_percentage+"%)";
 					return "<img src='${pageContext.request.contextPath}/assets/default/production/bank/"+row.code+".jpg' height='30' width='30' class='profile_img'>&nbsp;&nbsp;"+row.name
+					+"<label style='display:none'>"+row.code+"</label>" //用于搜索用
 					//+"("+row.count+")" //卡片数量
 					+ tail;
 	  		    },
@@ -1556,23 +1575,8 @@
 	               "targets": 3
 	           	},
 	           	
-// 	           	{"render": function(data, type, row){
-// 	            	if(null == row.temporary_credit || "0" == row.temporary_credit){
-// 		           		return $.wj.formatMoney(row.total_credit);
-// 	            	}else{
-// 	            		return $.wj.formatMoney(row.total_credit)+" ("+$.wj.formatMoney(row.temporary_credit)+")";
-// 	            	}
-// 	  		    },
-// 	               "orderable": false,
-// 	               "targets": 4
-// 	           	},
 	           	
 	           	{"render": function(data, type, row){
-// 	           		if("" == row.free_day_count || null == row.free_day_count){
-// 	           			return "0";
-// 	           		}else{
-// 		            	return row.free_day_count;
-// 	           		}
 						if(row.free_day_count != undefined ){
 							return  row.free_day_count;
 						}else{
@@ -1582,9 +1586,27 @@
 	               "orderable": true,
 	               "targets": 4
 	           	},
+	           	{"render": function(data, type, row){
+						if(row.today_trade_amount == 0 ){
+							return  $.wj.formatMoney(row.today_trade_amount);
+						}else{
+							return $.wj.formatMoney(row.today_trade_amount)+"("+row.today_trade_count+"次)";
+						}
+	  		    },
+	               "orderable": true,
+	               "targets": 5
+	           	},
 	           	
             	]
     	});
+    
+    table.on( 'draw', function () {
+        //获得需要高亮的容器部分
+        var body = $( table.table().body() );
+        $.wj.c(body);
+        body.unhighlight();
+        body.highlight( table.search() );  
+    } );
     
     function setCurrentBankInfo(code){
     	$("#repayment_amount").val("");
@@ -1615,16 +1637,16 @@
 	};
 	
 	
-	$.wj.ajax({
-	      contenttype : 'application/json; charset=utf-8',
-	      async: false,
-		  url: '<%=path%>/credit/getdata.html',
-		  type:"post",
-		  dataType:"json",
-		  success:function(data){
-			 	$.wj.c(data);
-		  },
-	    });
+// 	$.wj.ajax({
+// 	      contenttype : 'application/json; charset=utf-8',
+// 	      async: false,
+<%-- 		  url: '<%=path%>/credit/getdata.html', --%>
+// 		  type:"post",
+// 		  dataType:"json",
+// 		  success:function(data){
+// 			 	$.wj.c(data);
+// 		  },
+// 	    });
 	
 	
 	var current_bank;

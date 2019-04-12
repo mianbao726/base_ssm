@@ -65,32 +65,33 @@ public class TestTask {
 	}
 
 	// 间隔5秒执行
-	 @Scheduled(cron = "0/10 * * * * ? ") // 间隔5秒执行
+	@Scheduled(cron = "0/10 * * * * ? ")
+	// 间隔5秒执行
 	public void taskCycle() {
 		long start = System.currentTimeMillis();
 		System.out.println("使用SpringMVC框架配置定时任务 : " + new Date());
 		Map<String, Object> p = new HashMap<String, Object>();
 //		p.put("repayment_banks", "" + "''" +
-//		 ",'ZSYH'" +
-//		 ",'HFYH'" +
-//		 ",'PFYH'" +
-//		 ",'XYYH'" +
-//		 ",'PAYH'" +
-//		 ",'MSYH'" +
-//		 ",'ZXYH'" +
-//		 ",'HRYH'" +
-//		 ",'ZGYH'" +
-//		 ",'GSYH'" +
-//		 ",'ZHYH'" +
-//				",'GFYH'" +
-//				 ",'SJYH'" +
-//				 ",'YZYH'" +
-//				 ",'JSYH'" +
-//				 ",'GDYH'" +
-//				 ",'GDYH'" +
-//				 ",'DYYH'" +
+		// ",'ZSYH'" +
+		// ",'HFYH'" +
+		// ",'PFYH'" +
+		// ",'XYYH'" +
+		// ",'PAYH'" +
+		// ",'MSYH'" +
+		// ",'ZXYH'" +
+		// ",'HRYH'" +
+//				",'ZGYH'" +
+				// ",'GSYH'" +
+				// ",'ZHYH'" +
+				// ",'GFYH'" +
+				// ",'SJYH'" +
+				// ",'YZYH'" +
+				// ",'JSYH'" +
+				// ",'GDYH'" +
+				// ",'GDYH'" +
+				// ",'DYYH'" +
 //				"");
-		List<Map<String, Object>> l = baseDao.selectList("baseFrame_Cridit.getAllCreditInfos", p); // 查询信用银行信息
+		List<Map<String, Object>> l = baseDao.selectList("credit.getAllCreditInfos", p); // 查询信用银行信息
 		for (Map<String, Object> m : l) {
 			String bill_day = m.get("month_bill_date").toString();// 每月账单日
 			String count = m.get("bill_repay_day_count").toString();// 某些信用卡非固定还款日，账单日后x天内还款
@@ -127,7 +128,7 @@ public class TestTask {
 				current_bill_month = year_month_info.substring(5, 7);
 				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), -2);// 上一个账单日　当前账单的账单日期
 				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), -1);// 账单日　当前账单账单日期
-				
+
 				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 下一月的账单日
 				break;
 			case 2:
@@ -150,7 +151,7 @@ public class TestTask {
 				current_bill_month = year_month_info.substring(5, 7);
 				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), -1);// 上一个账单日　当前账单的账单日期
 				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 账单日　当前账单账单日期
-				
+
 				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 下一月的账单日
 				break;
 			case 4:
@@ -161,7 +162,7 @@ public class TestTask {
 				current_bill_month = year_month_info.substring(5, 7);
 				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), -1);// 上一个账单日　当前账单的账单日期
 				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 账单日　当前账单账单日期
-				
+
 				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 下一月的账单日
 				break;
 			case 5:
@@ -172,7 +173,7 @@ public class TestTask {
 				current_bill_month = year_month_info.substring(5, 7);
 				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 上一个账单日　当前账单的账单日期
 				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 账单日　当前账单账单日期
-				
+
 				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 下一月的账单日
 				break;
 			default:
@@ -181,26 +182,16 @@ public class TestTask {
 
 			String pay_date = "";
 			// 当前账单日的最后还款日期　　根据账单日 和 还款天数 计算出最后还款日
-			if (m.containsKey("bill_repay_day_fixed") && m.get("bill_repay_day_fixed") != null) {// 账单期后固定时间还款（例如平安
-																									// 每月15日出账，次月3日固定还款）
-				pay_date = DateUtil.nextMonthFixDay(bill_date_end, bill_repay_day_fixed);// 当前账单日的最后还款日期　　根据账单日
-																							// 和
-																							// 还款天数
-																							// 计算出最后还款日
+			if (m.containsKey("isNextMonth") && m.get("isNextMonth").toString().equals("1") && m.containsKey("bill_repay_day_fixed") && m.get("bill_repay_day_fixed") != null) {// 账单期后固定时间还款（例如平安 每月15日出账，次月3日固定还款）
+				pay_date = DateUtil.nextMonthFixDay(bill_date_end, bill_repay_day_fixed);// 当前账单日的最后还款日期,根据账单日 和还款天数计算出最后还款日
 			} else {// 账单期后若干天到期
-				pay_date = DateUtil.after(bill_date_end, count);// 当前账单日的最后还款日期　　根据账单日
-																// 和 还款天数
-																// 计算出最后还款日
+				pay_date = DateUtil.after(bill_date_end, count);// 当前账单日的最后还款日期　　根据账单日 和 还款天数 计算出最后还款日
 			}
 
 			String next_pay_date = "";
 
-			if (m.containsKey("bill_repay_day_fixed") && m.get("bill_repay_day_fixed") != null) {// 账单期后固定时间还款（例如平安
-																									// 每月15日出账，次月3日固定还款）
-				next_pay_date = DateUtil.nextMonthFixDay(next_bill_date, bill_repay_day_fixed);// 当前账单日的最后还款日期　　根据账单日
-																								// 和
-																								// 还款天数
-																								// 计算出最后还款日
+			if (m.containsKey("isNextMonth") && m.get("isNextMonth").toString().equals("1") &&m.containsKey("bill_repay_day_fixed") && m.get("bill_repay_day_fixed") != null) {// 账单期后固定时间还款（例如平安 每月15日出账，次月3日固定还款）
+				next_pay_date = DateUtil.nextMonthFixDay(next_bill_date, bill_repay_day_fixed);// 当前账单日的最后还款日期　　根据账单日 和 还款天数  计算出最后还款日
 			} else {// 账单期后若干天到期
 				next_pay_date = DateUtil.after(next_bill_date, count);// 下一月的账单日的最后还款日
 			}
@@ -266,7 +257,7 @@ public class TestTask {
 			// 下一个账单日
 			m.put("next_bill_date", next_bill_date);
 
-			baseDao.update("baseFrame_Cridit.upate_credit_bill_date", m);
+			baseDao.update("credit.upate_credit_bill_date", m);
 		}
 		long end = System.currentTimeMillis();
 		System.out.println("使用SpringMVC框架配置定时任务 : " + ((end - start) / 1000) + "." + ((end - start) % 1000) + "  end ... ... ");
