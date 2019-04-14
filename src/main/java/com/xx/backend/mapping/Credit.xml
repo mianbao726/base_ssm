@@ -59,6 +59,9 @@
 	<update id="delete_water_bank_cancel_record" parameterMap="paraMap" >
 		update wj_record set  del_flag='1'  where id = #{id}
 	</update>
+	<update id="resetTodayCountAmount" parameterMap="paraMap" >
+		update wj_bank set today_trade_count = 0,today_trade_amount =0 
+	</update>
 	<update id="updateRecord" parameterMap="paraMap" >
 		update wj_record set  
 		up_date = now()

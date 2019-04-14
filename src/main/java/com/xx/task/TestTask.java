@@ -63,10 +63,20 @@ public class TestTask {
 		TestTask t = new TestTask();
 		t.getSituation(null);
 	}
+	
+	public void resetTodayCountAmount(){
+		baseDao.update("credit.resetTodayCountAmount");
+	}
+	
+	/**
+	 * 每日重置信息
+	 */
+//	@Scheduled(cron = "0 0 1 * * ?")
+	public void everydayEmpty() {
+		resetTodayCountAmount();//重置银行的当日总金额与总交易次数
+	}
 
-	// 间隔5秒执行
 	@Scheduled(cron = "0/10 * * * * ? ")
-	// 间隔5秒执行
 	public void taskCycle() {
 		long start = System.currentTimeMillis();
 		System.out.println("使用SpringMVC框架配置定时任务 : " + new Date());
@@ -117,6 +127,8 @@ public class TestTask {
 			String bill_date_start = ""; // 账单开始日期
 			String bill_date_end = ""; // 账单结束日期
 			String next_bill_date = "";// 下一月的账单日
+			
+			String bill_gen_flag = null;//账单生成标志 0 默认 1已经生成 , 每月的账单日后的第一日,将未出账单金额设置到已出账单中. 为了防止重复更新 设置标志
 			// 获取当前情况类型 （1~5种）
 			int situation = getSituation(m);
 			switch (situation) {
@@ -151,8 +163,10 @@ public class TestTask {
 				current_bill_month = year_month_info.substring(5, 7);
 				bill_date_start = DateUtil.calMonth(DateUtil.setDay(bill_day), -1);// 上一个账单日　当前账单的账单日期
 				bill_date_end = DateUtil.calMonth(DateUtil.setDay(bill_day), 0);// 账单日　当前账单账单日期
-
 				next_bill_date = DateUtil.calMonth(DateUtil.setDay(bill_day), 1);// 下一月的账单日
+				
+				
+				
 				break;
 			case 4:
 				// 4=>c1.当前日期在账单日后 有未还金额，保留在当前月份即可 <br>

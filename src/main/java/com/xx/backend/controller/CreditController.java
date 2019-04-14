@@ -134,6 +134,18 @@ public class CreditController extends BaseController {
 		criditService.pay(paramsMap);
 		return JSONObject.toJSONString(paramsMap);
 	}
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	@RequestMapping("/resetTodayTrade.do")
+	public @ResponseBody
+	String resetTodayTrade(HttpServletRequest request, Model model) throws Exception {
+		Map paramsMap = super.getParams(request);
+		paramsMap.put("status_code", "200");
+		criditService.resetTodayTrade(paramsMap);
+		return JSONObject.toJSONString(paramsMap);
+	}
 
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact

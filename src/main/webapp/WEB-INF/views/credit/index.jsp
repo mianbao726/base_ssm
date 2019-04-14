@@ -376,19 +376,21 @@
                       </div>
                       
                       <div class="form-group">
-                        
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">金额</label>
-                        <div class="col-md-6 col-sm-9 col-xs-12">
-                           <input type="text" id="water_amount" required="required" class="form-control col-md-7 col-xs-12">
-                        </div>
-                      </div>
-                      <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
                         <div class="col-md-6 col-sm-9 col-xs-12" id ="editable-select-div">
                           <select class="select2_single form-control" tabindex="-1"  id="editable-select" >
                             <option></option>
                           </select>
                            
+                        </div>
+                      </div>
+                      
+                      <div class="form-group">
+                        
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">金额</label>
+                        <div class="col-md-6 col-sm-9 col-xs-12">
+                           <input type="text" id="water_amount" required="required" class="form-control col-md-7 col-xs-12">
+<!--                            <label id ="arr111" onclick="javascript:$('#editable-select').focus();" >11</label> -->
                         </div>
                       </div>
                       <div class="form-group">
@@ -865,17 +867,42 @@
 		    var event = e || window.event;  
 		    var code = event.keyCode || event.which || event.charCode;
 		   if (code == 13) {
+			    	$.wj.c("step000" + table.rows( {order:'index', search:'applied'} ).data().length);
 			   if($("#water_modal").css('display')=='block'){//流水账单modal打开状态
-			    	if($('#editable-select').is(":focus")){//焦点在
+				   if(!$('#editable-select').is(":focus") && !$('#water_amount').is(":focus")){//不在任何焦点上
+			    		 $("#editable-select").focus();//
+			    	}else if($('#editable-select').is(":focus") && !$('#water_amount').is(":focus")){//焦点在备注输入上
 			    		addRemark();//点击回车 且 焦点在备注输入框上
 			    	}else{
 			            $("#water_pay").click();
 			    	}
 			    }else if ($("#water_modal").css('display')=='none'){//流水账modal单关闭状态
-			    	$.wj.c("hel");
-// 			    	$("#datatable-xx_filter  .form-control input-sm").val("123");
-					$("[aria-controls='datatable-xx'][type='search']").focus();
+			    	$.wj.c("step1");
+			    	if($("[aria-controls='datatable-xx'][type='search']").is(":focus")){//焦点在搜索框
+// 			    		$.wj.c(table.rows( { filter : 'YH'} ).data());
+// 			    		$.wj.c(table.rows( 0 ).data());
+			    		if (1 == table.rows( {order:'index', search:'applied'} ).data().length){
+							var target_id = "water_"+table.rows( {order:'index', search:'applied'} ).row(0).data().code;
+// 							$.wj.c(target_id);
+							$('#'+target_id).click();
+// 							$.wj.c(table.rows( {order:'index', search:'applied'} ).row(0).data().code);
+							var water_il =table.$( 'tr', { 'filter': 'applied' } ).children('td').eq(6).children('div').children('ul').children('li').eq(4).children('a'); 
+							$.wj.c(water_il);
+							water_il.click();
+// 							setDefaultBankInfo_water(table.rows( {order:'index', search:'applied'} ).row(0).data().code);
+// 							setDefaultBankInfo_water("MSYH");
+// 							$("#water_modal").modal('show');
+						}
+			    	}else{//焦点不在搜索框上
+			    	$.wj.c("step2");
+				    	$.wj.c("hel");
+						$("[aria-controls='datatable-xx'][type='search']").focus();
+			    	}
 			    }
+		   }
+// 		   else if((code >= 65 && 90 >= code) || (code >= 48 && 57 >= code)) {
+		   }else if(code == 112) {
+			   $("#editable-select").focus();
 		   }
 		};
 		
@@ -1337,7 +1364,32 @@
     
     </script>
     <script>
+// var x =0 ;
     var table = $('#datatable-xx').DataTable({
+	    	"fnDrawCallback": function()
+	        {
+              //fnDrawCallback runs before the ajax is processed so skip the first callback
+//               if (x > 0)
+//               {
+//               var table = new $.fn.dataTable.Api( '#payments' );
+//               // Get data from the first row
+//               var data = table.column(0).data(); // same as row(0).data()
+//                var data3 = table.$('tr', {"filter": "applied"});
+//                console.log(data3);
+//               }
+//               x = x + 1;
+//               if (x > 0)
+//               {
+// 				$.wj.c(table.rows( {order:'index', search:'applied'} ).row(0).column(0));
+// 				$.wj.c(table.rows( {order:'index', search:'applied'} ).row(0).data());
+// 				$.wj.c(table.rows( {order:'index', search:'applied'} ).row(0).data().code);
+// 				$.wj.c(table.rows( {order:'index', search:'applied'} ).data().length);
+// 				$.wj.c(table.$('tr', {"filter": "applied"}));
+// 				var data = table.column(0).data();
+// 				var data3 = table.$('tr', {"filter": "applied"});
+//               }
+//               x = x + 1;
+	        },
     		"language" : {
     			"info" : "&nbsp;",
     			"oPaginate" : {
@@ -1370,6 +1422,16 @@
 						    	$.wj.location(BASE+"/credit/index.html");
 						    },
 						    className: " btn-success"
+						},
+						{
+						    text: 'reset',
+						    action: function ( e, dt, node, config ) {
+						    	$.wj.ajax({
+						    		url: '<%=path%>/credit/resetTodayTrade.do',
+						    		});
+						    	$('#datatable-xx').DataTable().ajax.reload();
+						    },
+						    className: " btn-info"
 						},
 						{
 						    text: '刷新账单周期',
@@ -1460,13 +1522,13 @@
     		},
     		
     		"processing" : true,
-    		"serverSide" : true,
+//     		"serverSide" : true,
 //     		"bLengthChange" : false,
 //     		"bSort" : false, // 排序功能
 //     		"searching" : false,
 //     		"dom" : '<"top">t<"bottom"lip><"clear">',
 			"paging": false,
-//     		"order": [[4, 'desc']],
+    		"order": [[4, 'desc']],
     		"columns" : [ 
    				{"mData" : "name"},
     			{"mData" : "month_bill_date"},
@@ -1492,7 +1554,7 @@
 		                      '<li><a href="#" data-toggle="modal" data-target=".wj-modal-detial" >check</a>'+
 		                      '</li>'+
 		                      '<li class="divider"></li>'+
-		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-water" onclick="setDefaultBankInfo_water(\''+row.code+'\')">water</a>'+
+		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-water" id = "water_'+row.code+'" onclick="setDefaultBankInfo_water(\''+row.code+'\')">water</a>'+
 		                      '</li>'+
 		                      '<li class="divider"></li>'+
 		                      '<li><a href="#" data-toggle="modal" data-target=".bs-example-modal-water" onclick="setDefaultBankInfo(\''+row.code+'\')">spend</a>'+
@@ -1600,14 +1662,6 @@
             	]
     	});
     
-    table.on( 'draw', function () {
-        //获得需要高亮的容器部分
-        var body = $( table.table().body() );
-        $.wj.c(body);
-        body.unhighlight();
-        body.highlight( table.search() );  
-    } );
-    
     function setCurrentBankInfo(code){
     	$("#repayment_amount").val("");
     	repayment_bank = code;
@@ -1634,7 +1688,30 @@
 	function setDefaultBankInfo_water(bankType){
 		$("#water_bank").val(bankType);
 		$("#water_bank").change();
+// 		$("#editable-select").click();
+// 		$("#editable-select-div input").click();
+// 		$("#water_amount").select();
+// 		document.getElementById("water_amount").select();
+		
+// 		 var pFocus = document.getElementById("water_amount");
+//          pFocus.focus();
+//          pFocus.select();
+// 		$("#water_amount").focus();
+// 		$("#water_amount").select();
+		
+// 		$.wj.c($("#editable-select").val());
 	};
+	
+	$("#water_modal").on('show.bs.modal', function () {
+// 		$("#water_amount").focus();
+// 		$("#arr111").html("ggg");
+// 		$("#arr111").click();
+	});
+	
+	$("#editable-select").focus(function(){
+		$.wj.c($("#editable-select-div input").val());
+		$.wj.c($("#editable-select").val());
+	});
 	
 	
 // 	$.wj.ajax({

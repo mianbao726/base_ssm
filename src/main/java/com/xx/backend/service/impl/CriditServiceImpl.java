@@ -206,6 +206,14 @@ public class CriditServiceImpl extends PageServiceDao implements CriditService {
 	public Map<String, Object> detail(Map<String, Object> map) {
 		return pageServiceDao.index("credit.cridit_page_detail", map);
 	}
+	/**
+	 * @author generate by www.whatgoogle.com (ps : some question? contact
+	 *         zhuwj726@gmail.com)
+	 */
+	public int resetTodayTrade(Map<String, Object> map) {
+		return baseDao.update("credit.resetTodayCountAmount");
+		
+	}
 
 	/**
 	 * @author generate by www.whatgoogle.com (ps : some question? contact
