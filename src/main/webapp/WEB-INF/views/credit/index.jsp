@@ -866,6 +866,7 @@
 	 document.onkeydown = function(e){
 		    var event = e || window.event;  
 		    var code = event.keyCode || event.which || event.charCode;
+		    $.wj.c(code);
 		   if (code == 13) {
 			    	$.wj.c("step000" + table.rows( {order:'index', search:'applied'} ).data().length);
 			   if($("#water_modal").css('display')=='block'){//流水账单modal打开状态
@@ -901,7 +902,7 @@
 			    }
 		   }
 // 		   else if((code >= 65 && 90 >= code) || (code >= 48 && 57 >= code)) {
-		   }else if(code == 112) {
+		   else if(code == 113) {
 			   $("#editable-select").focus();
 		   }
 		};
@@ -1429,7 +1430,8 @@
 						    	$.wj.ajax({
 						    		url: '<%=path%>/credit/resetTodayTrade.do',
 						    		});
-						    	$('#datatable-xx').DataTable().ajax.reload();
+						    	$.wj.location(BASE+"/credit/index.html");
+// 						    	$('#datatable-xx').DataTable().ajax.reload();
 						    },
 						    className: " btn-info"
 						},
@@ -1591,10 +1593,19 @@
 	           	},
  				{"render": function(data, type, row){
 	            	
+ 					var persent = $.wj.formatNumnber(row.remaining_credit/row.total_credit*100);
+ 					var color = "";
+ 					if(persent< 20){
+						color = '#f90404';
+ 					}else if (persent>=20  && persent< 50){
+						color = '#f99f04';
+ 					}else if (persent>=50  && persent< 100){
+						color = '#5cb85c';
+					}
  					if(null == row.temporary_credit || "0" == row.temporary_credit){
-		           		return $.wj.formatMoney(row.remaining_credit)+"  /  "+ $.wj.formatMoney(row.total_credit)+"(<font color = 'red'>"+$.wj.formatNumnber(row.remaining_credit/row.total_credit*100)+"%</font>)";
+		           		return $.wj.formatMoney(row.remaining_credit)+"  /  "+ $.wj.formatMoney(row.total_credit)+"(<font color = '"+color+"'>"+persent+"%</font>)";
 	            	}else{
-	            		return $.wj.formatMoney(row.remaining_credit)+"  /  "+$.wj.formatMoney(row.total_credit)+" ("+$.wj.formatMoney(row.temporary_credit)+")"+"(<font color = 'red'>"+$.wj.formatNumnber(row.remaining_credit/row.total_credit*100)+"%</font>)";
+	            		return $.wj.formatMoney(row.remaining_credit)+"  /  "+$.wj.formatMoney(row.total_credit)+" ("+$.wj.formatMoney(row.temporary_credit)+")"+"(<font color = '"+color+"'>"+persent+"%</font>)";
 	            	}
 	  		    },
 	               "orderable": false,
